@@ -1,0 +1,50 @@
+{
+  "title": "Fuatilia Shehena Yako",
+  "subtitle": "Weka namba yako ya ufuatiliaji ili kuona hali na historia ya moja kwa moja.",
+  "form": {
+    "trackingCode": "Namba ya Ufuatiliaji",
+    "trackButton": "Fuatilia"
+  },
+  "notFound": "Hatukupata shehena yenye namba hiyo ya ufuatiliaji. Tafadhali angalia tena na ujaribu.",
+  "backToHome": "Rudi Mwanzoni",
+  "result": {
+    "shipmentLabel": "Shehena",
+    "route": "Njia",
+    "directionMode": "Mwelekeo / Njia",
+    "etd": "ETD",
+    "eta": "ETA",
+    "timelineTitle": "Historia ya Ufuatiliaji",
+    "empty": "Bado hakuna taarifa za ufuatiliaji."
+  },
+  "statuses": {
+    "booked": "Imehifadhiwa",
+    "in_transit": "Njiani",
+    "arrived": "Imewasili",
+    "cleared": "Imepitishwa Forodha",
+    "delivered": "Imekabidhiwa",
+    "cancelled": "Imeghairiwa"
+  },
+  "direction": {
+    "import": "Uingizaji",
+    "export": "Usafirishaji"
+  },
+  "mode": {
+    "sea": "Baharini",
+    "air": "Angani",
+    "land": "Nchi Kavu"
+  },
+  "eventTypes": {
+    "booked": "Imehifadhiwa",
+    "gate_in": "Kuingia Lango",
+    "loaded": "Imepakiwa",
+    "departed": "Imeondoka",
+    "in_transit": "Njiani",
+    "customs_hold": "Imezuiliwa Forodha",
+    "customs_cleared": "Imepitishwa Forodha",
+    "arrived": "Imewasili",
+    "gate_out": "Kutoka Lango",
+    "out_for_delivery": "Njiani Kukabidhiwa",
+    "delivered": "Imekabidhiwa",
+    "exception": "Tatizo"
+  }
+}

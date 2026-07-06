@@ -1,0 +1,86 @@
+{
+  "actions": {
+    "save": "Hifadhi",
+    "cancel": "Ghairi",
+    "delete": "Futa",
+    "edit": "Hariri",
+    "create": "Unda",
+    "add": "Ongeza",
+    "close": "Funga",
+    "confirm": "Thibitisha",
+    "back": "Rudi",
+    "next": "Endelea",
+    "submit": "Wasilisha",
+    "search": "Tafuta",
+    "filter": "Chuja",
+    "export": "Hamisha",
+    "print": "Chapisha",
+    "download": "Pakua",
+    "upload": "Pakia",
+    "view": "Angalia",
+    "actions": "Vitendo",
+    "clear": "Futa Vichujio"
+  },
+  "labels": {
+    "status": "Hali",
+    "name": "Jina",
+    "email": "Barua Pepe",
+    "phone": "Simu",
+    "date": "Tarehe",
+    "amount": "Kiasi",
+    "total": "Jumla",
+    "currency": "Sarafu",
+    "description": "Maelezo",
+    "notes": "Vidokezo",
+    "createdAt": "Iliundwa",
+    "updatedAt": "Ilisasishwa",
+    "loading": "Inapakia…",
+    "noResults": "Hakuna matokeo yaliyopatikana.",
+    "yes": "Ndiyo",
+    "no": "Hapana"
+  },
+  "validation": {
+    "required": "Sehemu hii inahitajika.",
+    "invalidEmail": "Weka barua pepe sahihi.",
+    "mustBeAfter": "Lazima iwe baada ya {{field}}.",
+    "minLength": "Lazima iwe na angalau herufi {{count}}.",
+    "invalidNumber": "Weka nambari sahihi."
+  },
+  "confirmDialog": {
+    "defaultConfirm": "Thibitisha",
+    "defaultCancel": "Ghairi"
+  },
+  "toast": {
+    "created": "{{item}} imeundwa.",
+    "updated": "{{item}} imesasishwa.",
+    "deleted": "{{item}} imefutwa."
+  },
+  "notifications": {
+    "title": "Arifa",
+    "markAllRead": "Weka zote kama zimesomwa",
+    "caughtUp": "Huna arifa mpya.",
+    "tooltip": "Arifa"
+  },
+  "search": {
+    "placeholder": "Tafuta wateja, nukuu za bei, shehena…",
+    "keepTyping": "Endelea kuandika ili kutafuta…",
+    "noResultsFor": "Hakuna matokeo ya \"{{query}}\".",
+    "tooltip": "Tafuta",
+    "groups": {
+      "customers": "Wateja",
+      "leads": "Fursa",
+      "quotations": "Nukuu za Bei",
+      "shipments": "Shehena",
+      "clearingFiles": "Faili za Forodha",
+      "freightBookings": "Uhifadhi wa Mizigo",
+      "containers": "Makontena",
+      "warehouseItems": "Bidhaa za Ghala",
+      "vehicles": "Magari",
+      "invoices": "Ankara",
+      "documents": "Nyaraka"
+    }
+  },
+  "errors": {
+    "serverError": "Hitilafu imetokea kwa upande wetu. Nambari ya Rejea: {{reference}} — tafadhali wasiliana na huduma kwa wateja ukitumia nambari hii."
+  }
+}

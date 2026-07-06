@@ -1,0 +1,51 @@
+{
+  "title": "Finance",
+  "newInvoice": "New Invoice",
+  "empty": {
+    "title": "No invoices yet",
+    "description": "Create your first invoice to start billing customers."
+  },
+  "table": {
+    "invoiceNo": "Invoice No",
+    "customer": "Customer",
+    "dueDate": "Due Date",
+    "total": "Total"
+  },
+  "statuses": {
+    "draft": "Draft",
+    "sent": "Sent",
+    "paid": "Paid",
+    "overdue": "Overdue",
+    "cancelled": "Cancelled"
+  },
+  "actions": {
+    "downloadInvoice": "Download Invoice",
+    "downloadReceipt": "Download Receipt"
+  },
+  "form": {
+    "dialogTitle": "New Invoice",
+    "customer": "Customer",
+    "shipment": "Shipment (optional)",
+    "issueDate": "Issue Date",
+    "dueDate": "Due Date",
+    "subtotal": "Subtotal",
+    "taxAmount": "Tax Amount"
+  },
+  "validation": {
+    "selectCustomer": "Select a customer",
+    "issueDateRequired": "Issue date is required",
+    "dueDateRequired": "Due date is required",
+    "subtotalMin": "Subtotal must be 0 or more",
+    "taxMin": "Tax must be 0 or more",
+    "dueDateAfterIssue": "Due date must be on or after issue date"
+  },
+  "deleteDialog": {
+    "title": "Delete invoice",
+    "message": "Are you sure you want to delete invoice {{number}}? This cannot be undone."
+  },
+  "toast": {
+    "created": "Invoice created.",
+    "statusUpdated": "Invoice status updated.",
+    "deleted": "Invoice deleted."
+  }
+}

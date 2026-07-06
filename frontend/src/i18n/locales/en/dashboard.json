@@ -1,0 +1,14 @@
+{
+  "welcomeBack": "Welcome back, {{name}}",
+  "subtitle": "Here's what's happening across your operation today.",
+  "widgets": {
+    "dailyShipments": "Daily Shipments",
+    "pendingCustoms": "Pending Customs",
+    "activeContainers": "Active Containers",
+    "outstandingInvoices": "Outstanding Invoices",
+    "revenue": "Revenue",
+    "expenses": "Expenses",
+    "fleetActive": "Fleet Active",
+    "warehouseUtilization": "Warehouse Utilization"
+  }
+}

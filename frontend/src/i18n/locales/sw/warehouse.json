@@ -1,0 +1,45 @@
+{
+  "title": "Ghala",
+  "newItem": "Bidhaa Mpya",
+  "empty": {
+    "title": "Bado hakuna bidhaa za ghala",
+    "description": "Rekodi upokeaji wako wa kwanza wa bidhaa ili kuanza kufuatilia uhifadhi."
+  },
+  "table": {
+    "referenceNo": "Namba ya Rejea",
+    "customer": "Mteja",
+    "description": "Maelezo",
+    "qty": "Idadi",
+    "bin": "Rafu"
+  },
+  "statuses": {
+    "received": "Imepokelewa",
+    "stored": "Imehifadhiwa",
+    "picked": "Imechukuliwa",
+    "dispatched": "Imesafirishwa",
+    "damaged": "Imeharibika"
+  },
+  "form": {
+    "dialogTitle": "Bidhaa Mpya ya Ghala",
+    "customer": "Mteja",
+    "description": "Maelezo",
+    "quantity": "Idadi",
+    "unit": "Kipimo",
+    "binLocation": "Mahali pa Rafu (hiari)"
+  },
+  "validation": {
+    "selectCustomer": "Chagua mteja",
+    "descriptionRequired": "Maelezo yanahitajika",
+    "quantityRequired": "Idadi inahitajika",
+    "quantityMin": "Idadi lazima iwe 0 au zaidi"
+  },
+  "deleteDialog": {
+    "title": "Futa bidhaa ya ghala",
+    "message": "Una uhakika unataka kufuta bidhaa ya ghala {{number}}? Hatua hii haiwezi kutenduliwa."
+  },
+  "toast": {
+    "created": "Bidhaa ya ghala imeundwa.",
+    "statusUpdated": "Hali ya bidhaa ya ghala imesasishwa.",
+    "deleted": "Bidhaa ya ghala imefutwa."
+  }
+}

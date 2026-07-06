@@ -1,0 +1,45 @@
+{
+  "title": "Magari",
+  "newVehicle": "Gari Jipya",
+  "empty": {
+    "title": "Bado hakuna magari",
+    "description": "Sajili gari lako la kwanza ili kuanza kufuatilia magari ya kampuni."
+  },
+  "table": {
+    "registrationNo": "Namba ya Usajili",
+    "type": "Aina",
+    "makeModel": "Chapa / Modeli"
+  },
+  "statuses": {
+    "active": "Linafanya Kazi",
+    "in_maintenance": "Katika Matengenezo",
+    "out_of_service": "Halifanyi Kazi",
+    "retired": "Limeondolewa Kazini"
+  },
+  "types": {
+    "truck": "Lori",
+    "van": "Vani",
+    "trailer": "Treila",
+    "forklift": "Forklift",
+    "other": "Nyingine"
+  },
+  "form": {
+    "dialogTitle": "Gari Jipya",
+    "registrationNumber": "Namba ya Usajili",
+    "type": "Aina",
+    "make": "Chapa (hiari)",
+    "model": "Modeli (hiari)"
+  },
+  "validation": {
+    "registrationNumberRequired": "Namba ya usajili inahitajika"
+  },
+  "deleteDialog": {
+    "title": "Futa gari",
+    "message": "Una uhakika unataka kufuta gari {{number}}? Hatua hii haiwezi kutenduliwa."
+  },
+  "toast": {
+    "created": "Gari limeundwa.",
+    "statusUpdated": "Hali ya gari imesasishwa.",
+    "deleted": "Gari limefutwa."
+  }
+}

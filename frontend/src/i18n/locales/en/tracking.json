@@ -1,0 +1,50 @@
+{
+  "title": "Track Your Shipment",
+  "subtitle": "Enter your tracking code to see live status and history.",
+  "form": {
+    "trackingCode": "Tracking Code",
+    "trackButton": "Track"
+  },
+  "notFound": "We couldn't find a shipment with that tracking code. Please double-check and try again.",
+  "backToHome": "Back to Home",
+  "result": {
+    "shipmentLabel": "Shipment",
+    "route": "Route",
+    "directionMode": "Direction / Mode",
+    "etd": "ETD",
+    "eta": "ETA",
+    "timelineTitle": "Tracking History",
+    "empty": "No tracking updates yet."
+  },
+  "statuses": {
+    "booked": "Booked",
+    "in_transit": "In Transit",
+    "arrived": "Arrived",
+    "cleared": "Cleared",
+    "delivered": "Delivered",
+    "cancelled": "Cancelled"
+  },
+  "direction": {
+    "import": "Import",
+    "export": "Export"
+  },
+  "mode": {
+    "sea": "Sea",
+    "air": "Air",
+    "land": "Land"
+  },
+  "eventTypes": {
+    "booked": "Booked",
+    "gate_in": "Gate In",
+    "loaded": "Loaded",
+    "departed": "Departed",
+    "in_transit": "In Transit",
+    "customs_hold": "Customs Hold",
+    "customs_cleared": "Customs Cleared",
+    "arrived": "Arrived",
+    "gate_out": "Gate Out",
+    "out_for_delivery": "Out for Delivery",
+    "delivered": "Delivered",
+    "exception": "Exception"
+  }
+}

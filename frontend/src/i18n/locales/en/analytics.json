@@ -1,0 +1,43 @@
+{
+  "title": "Analytics",
+  "subtitle": "Operational and financial performance over the last 90 days.",
+  "kpis": {
+    "onTimeDelivery": "On-Time Delivery",
+    "avgClearanceDays": "Avg Customs Clearance",
+    "avgDwellDays": "Avg Container Dwell",
+    "fleetUtilization": "Fleet Utilization",
+    "days": "{{count}} days",
+    "noData": "No data yet"
+  },
+  "charts": {
+    "transitTimeByMode": "Avg Transit Time by Mode",
+    "transitTimeByModeSeries": "Days",
+    "revenueByMonth": "Revenue by Month",
+    "revenueByMonthSeries": "Revenue",
+    "shipmentVolume": "Shipment Volume by Month",
+    "arAging": "Accounts Receivable Aging",
+    "arAgingSeries": "Outstanding Amount",
+    "topCustomersByRevenue": "Top Customers by Revenue",
+    "topCustomersByVolume": "Top Customers by Shipment Volume",
+    "margins": "Quotation vs. Invoice Margin"
+  },
+  "direction": {
+    "import": "Import",
+    "export": "Export"
+  },
+  "agingBuckets": {
+    "current": "Current",
+    "days_1_30": "1-30 days",
+    "days_31_60": "31-60 days",
+    "days_61_90": "61-90 days",
+    "days_over_90": "90+ days"
+  },
+  "marginsTable": {
+    "shipment": "Shipment",
+    "quoted": "Quoted",
+    "invoiced": "Invoiced",
+    "variance": "Variance",
+    "empty": "No shipments with both a quotation and an invoice yet."
+  },
+  "empty": "Not enough data yet — create some shipments, invoices, and clearing files to see analytics."
+}

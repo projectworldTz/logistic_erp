@@ -1,0 +1,58 @@
+{
+  "title": "Nukuu za Bei",
+  "newQuotation": "Nukuu Mpya",
+  "empty": {
+    "title": "Bado hakuna nukuu za bei",
+    "description": "Unda nukuu yako ya kwanza ya bei ili kuanza mchakato wa mauzo."
+  },
+  "table": {
+    "quotationNo": "Namba ya Nukuu",
+    "customer": "Mteja",
+    "directionMode": "Mwelekeo / Njia",
+    "validUntil": "Halali Hadi",
+    "total": "Jumla"
+  },
+  "statuses": {
+    "draft": "Rasimu",
+    "sent": "Imetumwa",
+    "accepted": "Imekubaliwa",
+    "rejected": "Imekataliwa",
+    "expired": "Imepitwa na Wakati"
+  },
+  "direction": {
+    "import": "Uingizaji",
+    "export": "Usafirishaji"
+  },
+  "mode": {
+    "sea": "Baharini",
+    "air": "Angani",
+    "land": "Nchi Kavu"
+  },
+  "form": {
+    "dialogTitle": "Nukuu Mpya",
+    "customer": "Mteja",
+    "direction": "Mwelekeo",
+    "mode": "Njia",
+    "issueDate": "Tarehe ya Kutolewa",
+    "validUntil": "Halali Hadi",
+    "subtotal": "Jumla Ndogo",
+    "taxAmount": "Kiasi cha Kodi"
+  },
+  "validation": {
+    "selectCustomer": "Chagua mteja",
+    "issueDateRequired": "Tarehe ya kutolewa inahitajika",
+    "validUntilRequired": "Tarehe ya kuisha muda inahitajika",
+    "subtotalMin": "Jumla ndogo lazima iwe 0 au zaidi",
+    "taxMin": "Kodi lazima iwe 0 au zaidi",
+    "validUntilAfterIssue": "Tarehe ya kuisha muda lazima iwe sawa na au baada ya tarehe ya kutolewa"
+  },
+  "deleteDialog": {
+    "title": "Futa nukuu ya bei",
+    "message": "Una uhakika unataka kufuta nukuu ya bei {{number}}? Hatua hii haiwezi kutenduliwa."
+  },
+  "toast": {
+    "created": "Nukuu ya bei imeundwa.",
+    "statusUpdated": "Hali ya nukuu ya bei imesasishwa.",
+    "deleted": "Nukuu ya bei imefutwa."
+  }
+}

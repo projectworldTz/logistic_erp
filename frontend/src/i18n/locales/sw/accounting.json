@@ -1,0 +1,89 @@
+{
+  "tabs": {
+    "chartOfAccounts": "Chati ya Akaunti",
+    "journalEntries": "Kumbukumbu za Uhasibu"
+  },
+  "accounts": {
+    "title": "Chati ya Akaunti",
+    "newAccount": "Akaunti Mpya",
+    "errors": {
+      "hasJournalLines": "Haiwezekani kufuta akaunti iliyo na mistari ya kumbukumbu za uhasibu."
+    },
+    "empty": {
+      "title": "Bado hakuna akaunti",
+      "description": "Weka chati yako ya akaunti ili kuanza kurekodi kumbukumbu za uhasibu."
+    },
+    "table": {
+      "code": "Msimbo",
+      "type": "Aina"
+    },
+    "types": {
+      "asset": "Mali",
+      "liability": "Dhima",
+      "equity": "Mtaji",
+      "revenue": "Mapato",
+      "expense": "Matumizi"
+    },
+    "form": {
+      "dialogTitle": "Akaunti Mpya",
+      "code": "Msimbo",
+      "type": "Aina"
+    },
+    "validation": {
+      "codeRequired": "Msimbo unahitajika",
+      "nameRequired": "Jina linahitajika"
+    },
+    "deleteDialog": {
+      "title": "Futa akaunti",
+      "message": "Una uhakika unataka kufuta akaunti {{code}} — {{name}}? Hatua hii haiwezi kutenduliwa."
+    },
+    "toast": {
+      "created": "Akaunti imeundwa.",
+      "deleted": "Akaunti imefutwa."
+    }
+  },
+  "journalEntries": {
+    "title": "Kumbukumbu za Uhasibu",
+    "newEntry": "Kumbukumbu Mpya ya Uhasibu",
+    "errors": {
+      "saveFailed": "Imeshindwa kuhifadhi kumbukumbu hii ya uhasibu — hakikisha mistari inalingana."
+    },
+    "empty": {
+      "title": "Bado hakuna kumbukumbu za uhasibu",
+      "description": "Rekodi kumbukumbu yako ya kwanza ya uhasibu ili kuanza kitabu kikuu."
+    },
+    "table": {
+      "entryNo": "Namba ya Kumbukumbu"
+    },
+    "statuses": {
+      "draft": "Rasimu",
+      "posted": "Imethibitishwa",
+      "voided": "Imefutiliwa Mbali"
+    },
+    "actions": {
+      "post": "Thibitisha",
+      "void": "Futilia Mbali"
+    },
+    "form": {
+      "dialogTitle": "Kumbukumbu Mpya ya Uhasibu",
+      "entryDate": "Tarehe ya Kumbukumbu",
+      "description": "Maelezo (hiari)",
+      "lines": "Mistari",
+      "account": "Akaunti",
+      "debit": "Debiti",
+      "credit": "Krediti",
+      "addLine": "Ongeza Mstari",
+      "balanceSummary": "Debiti {{debit}} / Krediti {{credit}}",
+      "balanced": "inalingana",
+      "mustBalance": "lazima ilingane kabla ya kuhifadhi"
+    },
+    "deleteDialog": {
+      "title": "Futa kumbukumbu ya uhasibu",
+      "message": "Una uhakika unataka kufuta kumbukumbu ya uhasibu {{number}}? Hatua hii haiwezi kutenduliwa."
+    },
+    "toast": {
+      "created": "Kumbukumbu ya uhasibu imeundwa.",
+      "deleted": "Kumbukumbu ya uhasibu imefutwa."
+    }
+  }
+}

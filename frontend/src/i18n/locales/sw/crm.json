@@ -1,0 +1,139 @@
+{
+  "tabs": {
+    "leads": "Fursa",
+    "customers": "Wateja"
+  },
+  "statuses": {
+    "active": "Hai",
+    "inactive": "Haifanyi Kazi",
+    "new": "Mpya",
+    "contacted": "Amewasiliana",
+    "qualified": "Amehitimu",
+    "converted": "Amebadilishwa",
+    "lost": "Imepotea"
+  },
+  "customers": {
+    "title": "Wateja",
+    "newCustomer": "Mteja Mpya",
+    "empty": {
+      "title": "Bado hakuna wateja",
+      "description": "Badilisha fursa kuwa mteja au unda mteja moja kwa moja."
+    },
+    "table": {
+      "company": "Kampuni",
+      "industry": "Sekta"
+    },
+    "form": {
+      "dialogTitle": "Mteja Mpya",
+      "companyName": "Jina la Kampuni",
+      "industry": "Sekta (hiari)",
+      "email": "Barua Pepe (hiari)",
+      "phone": "Simu (hiari)",
+      "address": "Anwani (hiari)",
+      "city": "Jiji (hiari)",
+      "country": "Nchi (hiari)",
+      "currency": "Sarafu (hiari)"
+    },
+    "validation": {
+      "companyNameRequired": "Jina la kampuni linahitajika"
+    }
+  },
+  "leads": {
+    "title": "Fursa",
+    "newLead": "Fursa Mpya",
+    "convertError": "Imeshindikana kubadilisha fursa hii kuwa mteja.",
+    "empty": {
+      "title": "Bado hakuna fursa",
+      "description": "Unda fursa yako ya kwanza ili kuanza mchakato wa mauzo."
+    },
+    "table": {
+      "company": "Kampuni",
+      "contact": "Mawasiliano",
+      "source": "Chanzo"
+    },
+    "tooltip": {
+      "alreadyConverted": "Tayari imebadilishwa",
+      "convertToCustomer": "Badilisha kuwa Mteja"
+    },
+    "source": {
+      "website": "Tovuti",
+      "referral": "Mapendekezo",
+      "cold_call": "Simu ya Moja kwa Moja",
+      "social": "Mitandao ya Kijamii",
+      "other": "Nyingine"
+    },
+    "form": {
+      "dialogTitle": "Fursa Mpya",
+      "companyName": "Jina la Kampuni",
+      "contactName": "Jina la Mawasiliano",
+      "email": "Barua Pepe (hiari)",
+      "phone": "Simu (hiari)",
+      "source": "Chanzo",
+      "notes": "Vidokezo (hiari)"
+    },
+    "validation": {
+      "companyNameRequired": "Jina la kampuni linahitajika",
+      "contactNameRequired": "Jina la mawasiliano linahitajika"
+    }
+  },
+  "customerDetail": {
+    "backToCustomers": "← Rudi kwa Wateja",
+    "fields": {
+      "industry": "Sekta",
+      "email": "Barua Pepe",
+      "phone": "Simu",
+      "location": "Mahali"
+    },
+    "contactsTitle": "Anwani za Mawasiliano",
+    "addContact": "Ongeza Anwani",
+    "empty": {
+      "title": "Bado hakuna anwani za mawasiliano",
+      "description": "Ongeza mtu wa mawasiliano kwa mteja huyu."
+    },
+    "table": {
+      "name": "Jina",
+      "jobTitle": "Wadhifa",
+      "email": "Barua Pepe",
+      "phone": "Simu",
+      "primary": "Msingi"
+    },
+    "primaryChip": "Msingi",
+    "dialog": {
+      "editTitle": "Hariri Anwani",
+      "addTitle": "Ongeza Anwani"
+    },
+    "form": {
+      "name": "Jina",
+      "jobTitle": "Wadhifa (hiari)",
+      "email": "Barua Pepe (hiari)",
+      "phone": "Simu (hiari)",
+      "primaryContact": "Anwani ya msingi"
+    },
+    "validation": {
+      "nameRequired": "Jina linahitajika"
+    },
+    "deleteDialog": {
+      "title": "Futa Anwani",
+      "message": "Una uhakika unataka kufuta anwani ya {{name}}? Hatua hii haiwezi kutenduliwa."
+    },
+    "toast": {
+      "created": "Anwani imeundwa.",
+      "updated": "Anwani imesasishwa.",
+      "deleted": "Anwani imefutwa."
+    },
+    "invitePortal": {
+      "action": "Alika kwenye Portal",
+      "alreadyInvited": "Tayari ana ufikiaji wa portal",
+      "dialogTitle": "Alika kwenye Portal ya Mteja",
+      "description": "Hii huunda kuingia kwa portal kwa anwani hii, kikomo kwa data ya mteja huyu pekee.",
+      "form": { "email": "Barua Pepe", "password": "Nenosiri la Muda" },
+      "toast": "Mwaliko wa portal umetumwa."
+    },
+    "messages": {
+      "title": "Ujumbe",
+      "empty": "Bado hakuna ujumbe.",
+      "placeholder": "Andika jibu…",
+      "send": "Tuma"
+    }
+  }
+}

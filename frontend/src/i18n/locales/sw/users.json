@@ -1,0 +1,57 @@
+{
+  "title": "Watumiaji wa Kampuni",
+  "inviteUser": "Alika Mtumiaji",
+  "table": {
+    "role": "Wadhifa"
+  },
+  "statuses": {
+    "active": "Hai",
+    "invited": "Amealikwa",
+    "suspended": "Amesimamishwa"
+  },
+  "actions": {
+    "suspend": "Simamisha",
+    "activate": "Wezesha",
+    "invite": "Alika",
+    "changeRole": "Badilisha wadhifa"
+  },
+  "tooltips": {
+    "cantChangeOwnRole": "Huwezi kubadilisha wadhifa wako mwenyewe",
+    "cantSuspendSelf": "Huwezi kusimamisha akaunti yako mwenyewe"
+  },
+  "errors": {
+    "invite": "Imeshindwa kumwalika mtumiaji huyu. Kagua taarifa na ujaribu tena.",
+    "roleUpdate": "Imeshindwa kubadilisha wadhifa wa mtumiaji huyu.",
+    "statusUpdate": "Imeshindwa kubadilisha hali ya mtumiaji huyu.",
+    "noPermission": "Huna ruhusa ya kuona watumiaji wa kampuni."
+  },
+  "inviteDialog": {
+    "title": "Alika Mtumiaji"
+  },
+  "form": {
+    "branch": "Tawi",
+    "noBranch": "Hakuna",
+    "role": "Wadhifa",
+    "password": "Nenosiri",
+    "passwordHelper": "Mpe mtumiaji mpya nenosiri hili"
+  },
+  "validation": {
+    "nameRequired": "Jina linahitajika",
+    "roleRequired": "Chagua wadhifa"
+  },
+  "suspendDialog": {
+    "title": "Simamisha mtumiaji",
+    "message": "Una uhakika unataka kumsimamisha {{name}}? Atapoteza uwezo wa kuingia mara moja."
+  },
+  "roleDialog": {
+    "title": "Badilisha wadhifa",
+    "message": "Una uhakika unataka kubadilisha wadhifa wa {{name}} kuwa \"{{role}}\"? Hii itabadilisha mara moja anachoweza kufikia.",
+    "confirm": "Badilisha wadhifa"
+  },
+  "toast": {
+    "invited": "Mtumiaji amealikwa.",
+    "roleUpdated": "Wadhifa wa mtumiaji umesasishwa.",
+    "suspended": "Mtumiaji amesimamishwa.",
+    "activated": "Mtumiaji amewezeshwa."
+  }
+}

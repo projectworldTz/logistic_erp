@@ -1,0 +1,10 @@
+{
+  "title": "Branches",
+  "table": {
+    "code": "Code",
+    "city": "City",
+    "country": "Country",
+    "default": "Default"
+  },
+  "defaultChip": "Default"
+}

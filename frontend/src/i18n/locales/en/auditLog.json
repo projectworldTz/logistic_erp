@@ -1,0 +1,13 @@
+{
+  "title": "Audit Log",
+  "empty": {
+    "title": "No activity yet",
+    "description": "Actions taken in your workspace will appear here."
+  },
+  "table": {
+    "action": "Action",
+    "user": "User",
+    "ipAddress": "IP Address",
+    "when": "When"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "wizard": {
+    "title": "Anza jaribio lako la bure",
+    "alreadyHaveCompany": "Tayari una kampuni?",
+    "logIn": "Ingia",
+    "steps": {
+      "choosePlan": "Chagua Mpango",
+      "ownerAccount": "Akaunti ya Mmiliki",
+      "companyDetails": "Taarifa za Kampuni",
+      "reviewSubmit": "Pitia na Tuma"
+    }
+  },
+  "actions": {
+    "continue": "Endelea"
+  },
+  "plan": {
+    "heading": "Chagua mpango wako",
+    "perMonth": "/mwezi"
+  },
+  "ownerAccount": {
+    "heading": "Unda akaunti yako ya mmiliki",
+    "form": {
+      "fullName": "Jina Kamili",
+      "email": "Barua Pepe",
+      "phoneOptional": "Simu (si lazima)",
+      "password": "Nenosiri"
+    },
+    "validation": {
+      "nameRequired": "Jina kamili linahitajika",
+      "passwordMin": "Nenosiri lazima liwe na herufi angalau {{count}}"
+    }
+  },
+  "companyDetails": {
+    "heading": "Tuambie kuhusu kampuni yako",
+    "form": {
+      "companyName": "Jina la Kampuni",
+      "registrationNumberOptional": "Namba ya Usajili (si lazima)",
+      "taxNumberOptional": "Namba ya Ushuru (si lazima)",
+      "country": "Nchi",
+      "city": "Mji",
+      "address": "Anwani",
+      "currency": "Sarafu (mfano USD)",
+      "timezone": "Eneo la Saa",
+      "industry": "Sekta",
+      "uploadLogo": "Pakia Nembo ya Kampuni (si lazima)"
+    },
+    "validation": {
+      "nameRequired": "Jina la kampuni linahitajika",
+      "countryRequired": "Nchi inahitajika",
+      "cityRequired": "Mji unahitajika",
+      "addressRequired": "Anwani inahitajika",
+      "currencyFormat": "Tumia msimbo wa herufi 3 za sarafu (mfano USD)",
+      "timezoneRequired": "Eneo la saa linahitajika",
+      "industryRequired": "Sekta inahitajika"
+    }
+  },
+  "reviewSubmit": {
+    "heading": "Pitia na thibitisha",
+    "error": "Hitilafu imetokea wakati wa kuunda kampuni yako. Tafadhali kagua taarifa zako na ujaribu tena.",
+    "sections": {
+      "plan": "Mpango",
+      "ownerAccount": "Akaunti ya Mmiliki",
+      "company": "Kampuni"
+    },
+    "fields": {
+      "selectedPlan": "Mpango uliochaguliwa",
+      "name": "Jina",
+      "email": "Barua Pepe",
+      "phone": "Simu",
+      "country": "Nchi",
+      "city": "Mji",
+      "currency": "Sarafu",
+      "timezone": "Eneo la Saa",
+      "industry": "Sekta",
+      "logo": "Nembo"
+    },
+    "submitting": "Inaunda nafasi yako ya kazi…",
+    "submit": "Unda Kampuni Yangu"
+  }
+}

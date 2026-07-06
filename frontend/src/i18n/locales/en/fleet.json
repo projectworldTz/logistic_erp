@@ -1,0 +1,45 @@
+{
+  "title": "Fleet",
+  "newVehicle": "New Vehicle",
+  "empty": {
+    "title": "No vehicles yet",
+    "description": "Register your first vehicle to start tracking the fleet."
+  },
+  "table": {
+    "registrationNo": "Registration No",
+    "type": "Type",
+    "makeModel": "Make / Model"
+  },
+  "statuses": {
+    "active": "Active",
+    "in_maintenance": "In Maintenance",
+    "out_of_service": "Out of Service",
+    "retired": "Retired"
+  },
+  "types": {
+    "truck": "Truck",
+    "van": "Van",
+    "trailer": "Trailer",
+    "forklift": "Forklift",
+    "other": "Other"
+  },
+  "form": {
+    "dialogTitle": "New Vehicle",
+    "registrationNumber": "Registration Number",
+    "type": "Type",
+    "make": "Make (optional)",
+    "model": "Model (optional)"
+  },
+  "validation": {
+    "registrationNumberRequired": "Registration number is required"
+  },
+  "deleteDialog": {
+    "title": "Delete vehicle",
+    "message": "Are you sure you want to delete vehicle {{number}}? This cannot be undone."
+  },
+  "toast": {
+    "created": "Vehicle created.",
+    "statusUpdated": "Vehicle status updated.",
+    "deleted": "Vehicle deleted."
+  }
+}

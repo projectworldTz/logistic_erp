@@ -1,0 +1,63 @@
+{
+  "brand": "Logistics ERP",
+  "nav": {
+    "features": "Vipengele",
+    "pricing": "Bei",
+    "industries": "Sekta",
+    "about": "Kuhusu",
+    "faq": "Maswali",
+    "contact": "Wasiliana",
+    "logIn": "Ingia",
+    "startFreeTrial": "Anza Jaribio la Bure"
+  },
+  "footer": {
+    "tagline": "Mfumo kamili wa makampuni ya uwakala wa forodha na usafirishaji — shehena, forodha, magari, ghala, na fedha katika jukwaa moja.",
+    "product": "Bidhaa",
+    "company": "Kampuni",
+    "getStarted": "Anza sasa",
+    "getStartedBody": "Anza jaribio la siku 14 bila malipo — hakuna kadi ya benki inayohitajika.",
+    "copyright": "© {{year}} Logistics ERP. Haki zote zimehifadhiwa."
+  },
+  "pricing": {
+    "heading": "Bei rahisi na wazi",
+    "subheading": "Chagua mpango unaofaa shughuli zako. Boresha wakati wowote.",
+    "mostPopular": "Unaopendwa Zaidi",
+    "perMonth": "/mwezi",
+    "getStarted": "Anza Sasa"
+  },
+  "contact": {
+    "heading": "Tuzungumze",
+    "subheading": "Una swali, au unataka kuona jukwaa likifanya kazi?",
+    "tabs": {
+      "contactUs": "Wasiliana Nasi",
+      "bookDemo": "Panga Onyesho"
+    },
+    "contactForm": {
+      "successAlert": "Asante — tutawasiliana nawe hivi karibuni.",
+      "name": "Jina",
+      "email": "Barua Pepe",
+      "companyOptional": "Kampuni (si lazima)",
+      "message": "Ujumbe",
+      "sending": "Inatuma…",
+      "send": "Tuma Ujumbe",
+      "validation": {
+        "nameRequired": "Jina linahitajika",
+        "messageRequired": "Ujumbe unahitajika"
+      }
+    },
+    "demoForm": {
+      "successAlert": "Ombi la onyesho limepokelewa — tutawasiliana nawe hivi karibuni.",
+      "name": "Jina",
+      "email": "Barua Pepe",
+      "company": "Kampuni",
+      "phoneOptional": "Simu (si lazima)",
+      "preferredTimeOptional": "Muda unaopendelea (si lazima)",
+      "sending": "Inatuma…",
+      "send": "Omba Onyesho",
+      "validation": {
+        "nameRequired": "Jina linahitajika",
+        "companyRequired": "Kampuni inahitajika"
+      }
+    }
+  }
+}

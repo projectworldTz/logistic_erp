@@ -1,0 +1,62 @@
+{
+  "title": "Makontena",
+  "newContainer": "Kontena Jipya",
+  "errors": {
+    "duplicateNumber": "Namba ya kontena tayari ipo kwa kampuni hii"
+  },
+  "empty": {
+    "title": "Bado hakuna makontena",
+    "description": "Sajili kontena lako la kwanza ili kuanza kulifuatilia uwanjani."
+  },
+  "table": {
+    "containerNo": "Namba ya Kontena",
+    "customer": "Mteja",
+    "type": "Aina",
+    "location": "Mahali",
+    "gateIn": "Kuingia Lango",
+    "gateOut": "Kutoka Lango"
+  },
+  "statuses": {
+    "at_port": "Bandarini",
+    "in_transit": "Njiani",
+    "at_warehouse": "Ghalani",
+    "delivered": "Limewasilishwa",
+    "returned": "Limerejeshwa",
+    "empty_return": "Kurejesha Tupu"
+  },
+  "types": {
+    "dry_20": "Kavu futi 20",
+    "dry_40": "Kavu futi 40",
+    "dry_40_hc": "High Cube futi 40",
+    "reefer_20": "Friji futi 20",
+    "reefer_40": "Friji futi 40",
+    "open_top": "Wazi Juu",
+    "flat_rack": "Flat Rack",
+    "tank": "Tangi"
+  },
+  "form": {
+    "dialogTitle": "Kontena Jipya",
+    "editDialogTitle": "Hariri Kontena",
+    "customer": "Mteja",
+    "containerNumber": "Namba ya Kontena",
+    "type": "Aina",
+    "sealNumber": "Namba ya Muhuri (hiari)",
+    "location": "Mahali (hiari)",
+    "gateInDate": "Tarehe ya Kuingia Lango (hiari)",
+    "gateOutDate": "Tarehe ya Kutoka Lango (hiari)"
+  },
+  "validation": {
+    "selectCustomer": "Chagua mteja",
+    "containerNumberRequired": "Namba ya kontena inahitajika"
+  },
+  "deleteDialog": {
+    "title": "Futa kontena",
+    "message": "Una uhakika unataka kufuta kontena {{number}}? Hatua hii haiwezi kutenduliwa."
+  },
+  "toast": {
+    "created": "Kontena limeundwa.",
+    "updated": "Kontena limesasishwa.",
+    "statusUpdated": "Hali ya kontena imesasishwa.",
+    "deleted": "Kontena limefutwa."
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "title": "Fedha",
+  "newInvoice": "Ankara Mpya",
+  "empty": {
+    "title": "Bado hakuna ankara",
+    "description": "Unda ankara yako ya kwanza ili kuanza kutoza wateja."
+  },
+  "table": {
+    "invoiceNo": "Namba ya Ankara",
+    "customer": "Mteja",
+    "dueDate": "Tarehe ya Malipo",
+    "total": "Jumla"
+  },
+  "statuses": {
+    "draft": "Rasimu",
+    "sent": "Imetumwa",
+    "paid": "Imelipwa",
+    "overdue": "Imechelewa",
+    "cancelled": "Imeghairiwa"
+  },
+  "actions": {
+    "downloadInvoice": "Pakua Ankara",
+    "downloadReceipt": "Pakua Risiti"
+  },
+  "form": {
+    "dialogTitle": "Ankara Mpya",
+    "customer": "Mteja",
+    "shipment": "Shehena (hiari)",
+    "issueDate": "Tarehe ya Kutolewa",
+    "dueDate": "Tarehe ya Malipo",
+    "subtotal": "Jumla Ndogo",
+    "taxAmount": "Kiasi cha Kodi"
+  },
+  "validation": {
+    "selectCustomer": "Chagua mteja",
+    "issueDateRequired": "Tarehe ya kutolewa inahitajika",
+    "dueDateRequired": "Tarehe ya malipo inahitajika",
+    "subtotalMin": "Jumla ndogo lazima iwe 0 au zaidi",
+    "taxMin": "Kodi lazima iwe 0 au zaidi",
+    "dueDateAfterIssue": "Tarehe ya malipo lazima iwe sawa na au baada ya tarehe ya kutolewa"
+  },
+  "deleteDialog": {
+    "title": "Futa ankara",
+    "message": "Una uhakika unataka kufuta ankara {{number}}? Hatua hii haiwezi kutenduliwa."
+  },
+  "toast": {
+    "created": "Ankara imeundwa.",
+    "statusUpdated": "Hali ya ankara imesasishwa.",
+    "deleted": "Ankara imefutwa."
+  }
+}

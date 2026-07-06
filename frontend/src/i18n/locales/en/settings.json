@@ -1,0 +1,18 @@
+{
+  "title": "Company Settings",
+  "saveSuccess": "Company profile updated.",
+  "logoCaption": "Company logo (set during registration)",
+  "fields": {
+    "companyName": "Company Name",
+    "country": "Country",
+    "city": "City",
+    "address": "Address",
+    "timezone": "Timezone",
+    "industry": "Industry",
+    "registrationNumber": "Registration Number",
+    "taxNumber": "Tax Number",
+    "website": "Website"
+  },
+  "saving": "Saving…",
+  "saveChanges": "Save Changes"
+}

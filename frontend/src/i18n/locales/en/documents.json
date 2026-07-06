@@ -1,0 +1,36 @@
+{
+  "title": "Documents",
+  "uploadDocument": "Upload Document",
+  "errors": {
+    "uploadFailed": "Upload failed — check the file type and size (max 10MB)."
+  },
+  "empty": {
+    "title": "No documents yet",
+    "description": "Upload your first document to start building the archive."
+  },
+  "table": {
+    "fileName": "File Name",
+    "category": "Category",
+    "size": "Size",
+    "uploaded": "Uploaded"
+  },
+  "categories": {
+    "invoice": "Invoice",
+    "bill_of_lading": "Bill of Lading",
+    "customs_declaration": "Customs Declaration",
+    "contract": "Contract",
+    "id_document": "ID Document",
+    "other": "Other"
+  },
+  "form": {
+    "chooseFile": "Choose File"
+  },
+  "deleteDialog": {
+    "title": "Delete document",
+    "message": "Are you sure you want to delete document {{name}}? This cannot be undone."
+  },
+  "toast": {
+    "created": "Document created.",
+    "deleted": "Document deleted."
+  }
+}

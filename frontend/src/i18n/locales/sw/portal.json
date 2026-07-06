@@ -1,0 +1,57 @@
+{
+  "nav": {
+    "dashboard": "Dashibodi",
+    "shipments": "Shehena",
+    "invoices": "Ankara",
+    "quotations": "Bei Elekezi",
+    "documents": "Nyaraka",
+    "messages": "Ujumbe",
+    "logOut": "Toka"
+  },
+  "dashboard": {
+    "title": "Karibu tena",
+    "activeShipments": "Shehena Zinazoendelea",
+    "outstandingBalance": "Salio Linalodaiwa",
+    "unreadMessages": "Ujumbe Ambao Haujasomwa",
+    "unreadNotifications": "Arifa Ambazo Hazijasomwa"
+  },
+  "shipments": {
+    "title": "Shehena",
+    "empty": "Bado huna shehena.",
+    "table": { "shipmentNo": "Namba ya Shehena", "directionMode": "Mwelekeo / Njia", "route": "Njia ya Usafiri", "status": "Hali" },
+    "detail": {
+      "backToShipments": "Rudi kwenye Shehena",
+      "trackingCodeLabel": "Namba ya Ufuatiliaji",
+      "timelineTitle": "Ratiba ya Ufuatiliaji",
+      "empty": "Bado hakuna taarifa za ufuatiliaji."
+    }
+  },
+  "invoices": {
+    "title": "Ankara",
+    "empty": "Bado huna ankara.",
+    "table": { "invoiceNo": "Namba ya Ankara", "dueDate": "Tarehe ya Malipo", "total": "Jumla", "status": "Hali" },
+    "download": "Pakua PDF"
+  },
+  "quotations": {
+    "title": "Bei Elekezi",
+    "empty": "Bado huna bei elekezi.",
+    "table": { "quotationNo": "Namba ya Bei Elekezi", "validUntil": "Sahihi Hadi", "total": "Jumla", "status": "Hali" },
+    "approve": "Kubali",
+    "reject": "Kataa",
+    "toast": { "approved": "Bei elekezi imekubaliwa.", "rejected": "Bei elekezi imekataliwa." }
+  },
+  "documents": {
+    "title": "Nyaraka",
+    "empty": "Bado hakuna nyaraka.",
+    "upload": "Pakia Hati",
+    "dialog": { "title": "Pakia Hati" },
+    "form": { "file": "Faili", "category": "Aina", "description": "Maelezo (hiari)" },
+    "toast": { "uploaded": "Hati imepakiwa." }
+  },
+  "messages": {
+    "title": "Ujumbe",
+    "empty": "Bado hakuna ujumbe. Tuma mmoja kuwasiliana na mtoa huduma wako wa usafirishaji.",
+    "placeholder": "Andika ujumbe…",
+    "send": "Tuma"
+  }
+}

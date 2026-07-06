@@ -1,0 +1,57 @@
+{
+  "title": "Company Users",
+  "inviteUser": "Invite User",
+  "table": {
+    "role": "Role"
+  },
+  "statuses": {
+    "active": "Active",
+    "invited": "Invited",
+    "suspended": "Suspended"
+  },
+  "actions": {
+    "suspend": "Suspend",
+    "activate": "Activate",
+    "invite": "Invite",
+    "changeRole": "Change role"
+  },
+  "tooltips": {
+    "cantChangeOwnRole": "You can't change your own role",
+    "cantSuspendSelf": "You can't suspend your own account"
+  },
+  "errors": {
+    "invite": "Could not invite this user. Check the details and try again.",
+    "roleUpdate": "Could not update this user's role.",
+    "statusUpdate": "Could not update this user's status.",
+    "noPermission": "You don't have permission to view company users."
+  },
+  "inviteDialog": {
+    "title": "Invite User"
+  },
+  "form": {
+    "branch": "Branch",
+    "noBranch": "None",
+    "role": "Role",
+    "password": "Password",
+    "passwordHelper": "Share this password with the new user"
+  },
+  "validation": {
+    "nameRequired": "Name is required",
+    "roleRequired": "Select a role"
+  },
+  "suspendDialog": {
+    "title": "Suspend user",
+    "message": "Are you sure you want to suspend {{name}}? They will immediately lose access to log in."
+  },
+  "roleDialog": {
+    "title": "Change role",
+    "message": "Are you sure you want to change {{name}}'s role to \"{{role}}\"? This immediately changes what they can access.",
+    "confirm": "Change role"
+  },
+  "toast": {
+    "invited": "User invited.",
+    "roleUpdated": "User role updated.",
+    "suspended": "User suspended.",
+    "activated": "User activated."
+  }
+}

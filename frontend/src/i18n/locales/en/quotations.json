@@ -1,0 +1,58 @@
+{
+  "title": "Quotations",
+  "newQuotation": "New Quotation",
+  "empty": {
+    "title": "No quotations yet",
+    "description": "Create your first quotation to start the sales pipeline."
+  },
+  "table": {
+    "quotationNo": "Quotation No",
+    "customer": "Customer",
+    "directionMode": "Direction / Mode",
+    "validUntil": "Valid Until",
+    "total": "Total"
+  },
+  "statuses": {
+    "draft": "Draft",
+    "sent": "Sent",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "expired": "Expired"
+  },
+  "direction": {
+    "import": "Import",
+    "export": "Export"
+  },
+  "mode": {
+    "sea": "Sea",
+    "air": "Air",
+    "land": "Land"
+  },
+  "form": {
+    "dialogTitle": "New Quotation",
+    "customer": "Customer",
+    "direction": "Direction",
+    "mode": "Mode",
+    "issueDate": "Issue Date",
+    "validUntil": "Valid Until",
+    "subtotal": "Subtotal",
+    "taxAmount": "Tax Amount"
+  },
+  "validation": {
+    "selectCustomer": "Select a customer",
+    "issueDateRequired": "Issue date is required",
+    "validUntilRequired": "Valid-until date is required",
+    "subtotalMin": "Subtotal must be 0 or more",
+    "taxMin": "Tax must be 0 or more",
+    "validUntilAfterIssue": "Valid until must be on or after issue date"
+  },
+  "deleteDialog": {
+    "title": "Delete quotation",
+    "message": "Are you sure you want to delete quotation {{number}}? This cannot be undone."
+  },
+  "toast": {
+    "created": "Quotation created.",
+    "statusUpdated": "Quotation status updated.",
+    "deleted": "Quotation deleted."
+  }
+}

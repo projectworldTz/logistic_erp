@@ -1,0 +1,63 @@
+{
+  "brand": "Logistics ERP",
+  "nav": {
+    "features": "Features",
+    "pricing": "Pricing",
+    "industries": "Industries",
+    "about": "About",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "logIn": "Log in",
+    "startFreeTrial": "Start Free Trial"
+  },
+  "footer": {
+    "tagline": "The operating system for clearing & forwarding companies — shipments, customs, fleet, warehouse, and finance in one platform.",
+    "product": "Product",
+    "company": "Company",
+    "getStarted": "Get started",
+    "getStartedBody": "Start a 14-day free trial — no credit card required.",
+    "copyright": "© {{year}} Logistics ERP. All rights reserved."
+  },
+  "pricing": {
+    "heading": "Simple, transparent pricing",
+    "subheading": "Choose the plan that fits your operation. Upgrade anytime.",
+    "mostPopular": "Most Popular",
+    "perMonth": "/mo",
+    "getStarted": "Get Started"
+  },
+  "contact": {
+    "heading": "Let's talk",
+    "subheading": "Have a question, or want to see the platform in action?",
+    "tabs": {
+      "contactUs": "Contact Us",
+      "bookDemo": "Book a Demo"
+    },
+    "contactForm": {
+      "successAlert": "Thanks — we'll be in touch shortly.",
+      "name": "Name",
+      "email": "Email",
+      "companyOptional": "Company (optional)",
+      "message": "Message",
+      "sending": "Sending…",
+      "send": "Send Message",
+      "validation": {
+        "nameRequired": "Name is required",
+        "messageRequired": "Message is required"
+      }
+    },
+    "demoForm": {
+      "successAlert": "Demo request received — we'll reach out shortly.",
+      "name": "Name",
+      "email": "Email",
+      "company": "Company",
+      "phoneOptional": "Phone (optional)",
+      "preferredTimeOptional": "Preferred time (optional)",
+      "sending": "Sending…",
+      "send": "Request Demo",
+      "validation": {
+        "nameRequired": "Name is required",
+        "companyRequired": "Company is required"
+      }
+    }
+  }
+}

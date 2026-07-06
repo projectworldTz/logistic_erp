@@ -1,0 +1,14 @@
+{
+  "welcomeBack": "Karibu tena, {{name}}",
+  "subtitle": "Haya ndiyo yanayoendelea katika shughuli zako leo.",
+  "widgets": {
+    "dailyShipments": "Shehena za Kila Siku",
+    "pendingCustoms": "Forodha Zinazosubiri",
+    "activeContainers": "Makontena Yanayotumika",
+    "outstandingInvoices": "Ankara Zinazodaiwa",
+    "revenue": "Mapato",
+    "expenses": "Matumizi",
+    "fleetActive": "Magari Yanayofanya Kazi",
+    "warehouseUtilization": "Matumizi ya Ghala"
+  }
+}

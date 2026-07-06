@@ -1,0 +1,57 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "shipments": "Shipments",
+    "invoices": "Invoices",
+    "quotations": "Quotations",
+    "documents": "Documents",
+    "messages": "Messages",
+    "logOut": "Log out"
+  },
+  "dashboard": {
+    "title": "Welcome back",
+    "activeShipments": "Active Shipments",
+    "outstandingBalance": "Outstanding Balance",
+    "unreadMessages": "Unread Messages",
+    "unreadNotifications": "Unread Notifications"
+  },
+  "shipments": {
+    "title": "Shipments",
+    "empty": "You have no shipments yet.",
+    "table": { "shipmentNo": "Shipment No", "directionMode": "Direction / Mode", "route": "Route", "status": "Status" },
+    "detail": {
+      "backToShipments": "Back to Shipments",
+      "trackingCodeLabel": "Tracking Code",
+      "timelineTitle": "Tracking Timeline",
+      "empty": "No tracking updates yet."
+    }
+  },
+  "invoices": {
+    "title": "Invoices",
+    "empty": "You have no invoices yet.",
+    "table": { "invoiceNo": "Invoice No", "dueDate": "Due Date", "total": "Total", "status": "Status" },
+    "download": "Download PDF"
+  },
+  "quotations": {
+    "title": "Quotations",
+    "empty": "You have no quotations yet.",
+    "table": { "quotationNo": "Quotation No", "validUntil": "Valid Until", "total": "Total", "status": "Status" },
+    "approve": "Approve",
+    "reject": "Reject",
+    "toast": { "approved": "Quotation approved.", "rejected": "Quotation rejected." }
+  },
+  "documents": {
+    "title": "Documents",
+    "empty": "No documents yet.",
+    "upload": "Upload Document",
+    "dialog": { "title": "Upload Document" },
+    "form": { "file": "File", "category": "Category", "description": "Description (optional)" },
+    "toast": { "uploaded": "Document uploaded." }
+  },
+  "messages": {
+    "title": "Messages",
+    "empty": "No messages yet. Send one to reach your logistics provider.",
+    "placeholder": "Type a message…",
+    "send": "Send"
+  }
+}

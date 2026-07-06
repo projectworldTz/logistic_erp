@@ -1,0 +1,62 @@
+{
+  "title": "Containers",
+  "newContainer": "New Container",
+  "errors": {
+    "duplicateNumber": "Container number already exists for this company"
+  },
+  "empty": {
+    "title": "No containers yet",
+    "description": "Register your first container to start tracking it through the yard."
+  },
+  "table": {
+    "containerNo": "Container No",
+    "customer": "Customer",
+    "type": "Type",
+    "location": "Location",
+    "gateIn": "Gate In",
+    "gateOut": "Gate Out"
+  },
+  "statuses": {
+    "at_port": "At Port",
+    "in_transit": "In Transit",
+    "at_warehouse": "At Warehouse",
+    "delivered": "Delivered",
+    "returned": "Returned",
+    "empty_return": "Empty Return"
+  },
+  "types": {
+    "dry_20": "20' Dry",
+    "dry_40": "40' Dry",
+    "dry_40_hc": "40' High Cube",
+    "reefer_20": "20' Reefer",
+    "reefer_40": "40' Reefer",
+    "open_top": "Open Top",
+    "flat_rack": "Flat Rack",
+    "tank": "Tank"
+  },
+  "form": {
+    "dialogTitle": "New Container",
+    "editDialogTitle": "Edit Container",
+    "customer": "Customer",
+    "containerNumber": "Container Number",
+    "type": "Type",
+    "sealNumber": "Seal Number (optional)",
+    "location": "Location (optional)",
+    "gateInDate": "Gate In Date (optional)",
+    "gateOutDate": "Gate Out Date (optional)"
+  },
+  "validation": {
+    "selectCustomer": "Select a customer",
+    "containerNumberRequired": "Container number is required"
+  },
+  "deleteDialog": {
+    "title": "Delete container",
+    "message": "Are you sure you want to delete container {{number}}? This cannot be undone."
+  },
+  "toast": {
+    "created": "Container created.",
+    "updated": "Container updated.",
+    "statusUpdated": "Container status updated.",
+    "deleted": "Container deleted."
+  }
+}

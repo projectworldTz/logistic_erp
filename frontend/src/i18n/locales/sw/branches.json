@@ -1,0 +1,10 @@
+{
+  "title": "Matawi",
+  "table": {
+    "code": "Nambari",
+    "city": "Jiji",
+    "country": "Nchi",
+    "default": "Chaguo-msingi"
+  },
+  "defaultChip": "Chaguo-msingi"
+}

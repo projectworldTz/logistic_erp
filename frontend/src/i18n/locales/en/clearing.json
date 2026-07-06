@@ -1,0 +1,53 @@
+{
+  "title": "Clearing",
+  "newClearingFile": "New Clearing File",
+  "empty": {
+    "title": "No clearing files yet",
+    "description": "Create your first customs clearing file to start tracking a job."
+  },
+  "table": {
+    "referenceNo": "Reference No",
+    "customer": "Customer",
+    "directionMode": "Direction / Mode",
+    "blAwb": "BL / AWB"
+  },
+  "statuses": {
+    "pending": "Pending",
+    "documents_received": "Documents Received",
+    "under_clearance": "Under Clearance",
+    "customs_hold": "Customs Hold",
+    "cleared": "Cleared",
+    "delivered": "Delivered",
+    "cancelled": "Cancelled"
+  },
+  "direction": {
+    "import": "Import",
+    "export": "Export"
+  },
+  "mode": {
+    "sea": "Sea",
+    "air": "Air",
+    "land": "Land"
+  },
+  "form": {
+    "dialogTitle": "New Clearing File",
+    "customer": "Customer",
+    "direction": "Direction",
+    "mode": "Mode",
+    "portOfLoading": "Port of Loading (optional)",
+    "portOfDischarge": "Port of Discharge (optional)",
+    "blAwbNumber": "BL / AWB Number (optional)"
+  },
+  "validation": {
+    "selectCustomer": "Select a customer"
+  },
+  "deleteDialog": {
+    "title": "Delete clearing file",
+    "message": "Are you sure you want to delete clearing file {{number}}? This cannot be undone."
+  },
+  "toast": {
+    "created": "Clearing file created.",
+    "statusUpdated": "Clearing file status updated.",
+    "deleted": "Clearing file deleted."
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "title": "Reports",
+  "subtitle": "A cross-module rollup of everything tracked across the operation.",
+  "printReport": "Print Report",
+  "reportGeneratedAt": "Report generated {{date}}",
+  "totalCount": "{{count}} total",
+  "noRecords": "No records yet.",
+  "widgets": {
+    "customers": "Customers",
+    "leads": "Leads",
+    "revenueCollected": "Revenue Collected",
+    "outstanding": "Outstanding"
+  },
+  "breakdown": {
+    "quotations": "Quotations",
+    "shipments": "Shipments",
+    "clearingFiles": "Clearing Files",
+    "freightBookings": "Freight Bookings",
+    "containers": "Containers",
+    "warehouseItems": "Warehouse Items",
+    "fleetVehicles": "Fleet Vehicles",
+    "invoices": "Invoices",
+    "journalEntries": "Journal Entries"
+  },
+  "chartOfAccounts": {
+    "title": "Chart of Accounts & Documents",
+    "accountsConfigured": "Accounts configured",
+    "documentsArchived": "Documents archived"
+  }
+}

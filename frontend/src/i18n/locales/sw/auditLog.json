@@ -1,0 +1,13 @@
+{
+  "title": "Kumbukumbu za Ukaguzi",
+  "empty": {
+    "title": "Bado hakuna shughuli",
+    "description": "Vitendo vilivyofanywa katika eneo lako la kazi vitaonekana hapa."
+  },
+  "table": {
+    "action": "Kitendo",
+    "user": "Mtumiaji",
+    "ipAddress": "Anwani ya IP",
+    "when": "Wakati"
+  }
+}

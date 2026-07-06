@@ -1,0 +1,53 @@
+{
+  "title": "Freight Forwarding",
+  "newBooking": "New Booking",
+  "empty": {
+    "title": "No freight bookings yet",
+    "description": "Create your first freight booking to start tracking a shipment."
+  },
+  "table": {
+    "referenceNo": "Reference No",
+    "customer": "Customer",
+    "directionMode": "Direction / Mode",
+    "carrier": "Carrier",
+    "route": "Route"
+  },
+  "statuses": {
+    "booked": "Booked",
+    "cargo_received": "Cargo Received",
+    "in_transit": "In Transit",
+    "arrived": "Arrived",
+    "delivered": "Delivered",
+    "cancelled": "Cancelled"
+  },
+  "direction": {
+    "import": "Import",
+    "export": "Export"
+  },
+  "mode": {
+    "sea": "Sea",
+    "air": "Air",
+    "land": "Land"
+  },
+  "form": {
+    "dialogTitle": "New Freight Booking",
+    "customer": "Customer",
+    "direction": "Direction",
+    "mode": "Mode",
+    "carrier": "Carrier (optional)",
+    "originPort": "Origin Port (optional)",
+    "destinationPort": "Destination Port (optional)"
+  },
+  "validation": {
+    "selectCustomer": "Select a customer"
+  },
+  "deleteDialog": {
+    "title": "Delete freight booking",
+    "message": "Are you sure you want to delete freight booking {{number}}? This cannot be undone."
+  },
+  "toast": {
+    "created": "Freight booking created.",
+    "statusUpdated": "Freight booking status updated.",
+    "deleted": "Freight booking deleted."
+  }
+}

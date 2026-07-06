@@ -1,0 +1,39 @@
+import { api } from '../axios';
+import type { Paginated, PublicShipmentTracking, Shipment, TrackingEvent } from '../../types';
+
+export async function fetchShipments(page = 1): Promise<Paginated<Shipment>> {
+  const { data } = await api.get<Paginated<Shipment>>('/shipments/items', { params: { page } });
+  return data;
+}
+
+export async function fetchShipment(id: number): Promise<Shipment> {
+  const { data } = await api.get<{ data: Shipment }>(`/shipments/items/${id}`);
+  return data.data;
+}
+
+export async function addShipmentMilestone(
+  shipmentId: number,
+  payload: { event_type: string; location?: string; occurred_at: string; notes?: string; is_customer_visible?: boolean },
+): Promise<TrackingEvent> {
+  const { data } = await api.post<{ data: TrackingEvent }>(`/shipments/items/${shipmentId}/milestones`, payload);
+  return data.data;
+}
+
+export async function fetchPublicTracking(trackingCode: string): Promise<PublicShipmentTracking> {
+  const { data } = await api.get<{ data: PublicShipmentTracking }>(`/public/track/${trackingCode}`);
+  return data.data;
+}
+
+export async function createShipment(payload: Partial<Shipment>): Promise<Shipment> {
+  const { data } = await api.post<{ data: Shipment }>('/shipments/items', payload);
+  return data.data;
+}
+
+export async function updateShipment(id: number, payload: Partial<Shipment>): Promise<Shipment> {
+  const { data } = await api.put<{ data: Shipment }>(`/shipments/items/${id}`, payload);
+  return data.data;
+}
+
+export async function deleteShipment(id: number): Promise<void> {
+  await api.delete(`/shipments/items/${id}`);
+}

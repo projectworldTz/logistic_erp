@@ -1,0 +1,139 @@
+{
+  "tabs": {
+    "leads": "Leads",
+    "customers": "Customers"
+  },
+  "statuses": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "new": "New",
+    "contacted": "Contacted",
+    "qualified": "Qualified",
+    "converted": "Converted",
+    "lost": "Lost"
+  },
+  "customers": {
+    "title": "Customers",
+    "newCustomer": "New Customer",
+    "empty": {
+      "title": "No customers yet",
+      "description": "Convert a lead or create a customer directly."
+    },
+    "table": {
+      "company": "Company",
+      "industry": "Industry"
+    },
+    "form": {
+      "dialogTitle": "New Customer",
+      "companyName": "Company Name",
+      "industry": "Industry (optional)",
+      "email": "Email (optional)",
+      "phone": "Phone (optional)",
+      "address": "Address (optional)",
+      "city": "City (optional)",
+      "country": "Country (optional)",
+      "currency": "Currency (optional)"
+    },
+    "validation": {
+      "companyNameRequired": "Company name is required"
+    }
+  },
+  "leads": {
+    "title": "Leads",
+    "newLead": "New Lead",
+    "convertError": "Could not convert this lead.",
+    "empty": {
+      "title": "No leads yet",
+      "description": "Create your first lead to start the sales pipeline."
+    },
+    "table": {
+      "company": "Company",
+      "contact": "Contact",
+      "source": "Source"
+    },
+    "tooltip": {
+      "alreadyConverted": "Already converted",
+      "convertToCustomer": "Convert to Customer"
+    },
+    "source": {
+      "website": "Website",
+      "referral": "Referral",
+      "cold_call": "Cold Call",
+      "social": "Social",
+      "other": "Other"
+    },
+    "form": {
+      "dialogTitle": "New Lead",
+      "companyName": "Company Name",
+      "contactName": "Contact Name",
+      "email": "Email (optional)",
+      "phone": "Phone (optional)",
+      "source": "Source",
+      "notes": "Notes (optional)"
+    },
+    "validation": {
+      "companyNameRequired": "Company name is required",
+      "contactNameRequired": "Contact name is required"
+    }
+  },
+  "customerDetail": {
+    "backToCustomers": "← Back to Customers",
+    "fields": {
+      "industry": "Industry",
+      "email": "Email",
+      "phone": "Phone",
+      "location": "Location"
+    },
+    "contactsTitle": "Contacts",
+    "addContact": "Add Contact",
+    "empty": {
+      "title": "No contacts yet",
+      "description": "Add a contact person for this customer."
+    },
+    "table": {
+      "name": "Name",
+      "jobTitle": "Job Title",
+      "email": "Email",
+      "phone": "Phone",
+      "primary": "Primary"
+    },
+    "primaryChip": "Primary",
+    "dialog": {
+      "editTitle": "Edit Contact",
+      "addTitle": "Add Contact"
+    },
+    "form": {
+      "name": "Name",
+      "jobTitle": "Job Title (optional)",
+      "email": "Email (optional)",
+      "phone": "Phone (optional)",
+      "primaryContact": "Primary contact"
+    },
+    "validation": {
+      "nameRequired": "Name is required"
+    },
+    "deleteDialog": {
+      "title": "Delete Contact",
+      "message": "Are you sure you want to delete Contact {{name}}? This cannot be undone."
+    },
+    "toast": {
+      "created": "Contact created.",
+      "updated": "Contact updated.",
+      "deleted": "Contact deleted."
+    },
+    "invitePortal": {
+      "action": "Invite to Portal",
+      "alreadyInvited": "Already has portal access",
+      "dialogTitle": "Invite to Client Portal",
+      "description": "This creates a portal login for this contact, scoped to this customer's own data only.",
+      "form": { "email": "Email", "password": "Temporary Password" },
+      "toast": "Portal invitation sent."
+    },
+    "messages": {
+      "title": "Messages",
+      "empty": "No messages yet.",
+      "placeholder": "Type a reply…",
+      "send": "Send"
+    }
+  }
+}

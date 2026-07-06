@@ -1,0 +1,86 @@
+{
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "add": "Add",
+    "close": "Close",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "print": "Print",
+    "download": "Download",
+    "upload": "Upload",
+    "view": "View",
+    "actions": "Actions",
+    "clear": "Clear"
+  },
+  "labels": {
+    "status": "Status",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "date": "Date",
+    "amount": "Amount",
+    "total": "Total",
+    "currency": "Currency",
+    "description": "Description",
+    "notes": "Notes",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "loading": "Loading…",
+    "noResults": "No results found.",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "validation": {
+    "required": "This field is required.",
+    "invalidEmail": "Enter a valid email address.",
+    "mustBeAfter": "Must be after {{field}}.",
+    "minLength": "Must be at least {{count}} characters.",
+    "invalidNumber": "Enter a valid number."
+  },
+  "confirmDialog": {
+    "defaultConfirm": "Confirm",
+    "defaultCancel": "Cancel"
+  },
+  "toast": {
+    "created": "{{item}} created.",
+    "updated": "{{item}} updated.",
+    "deleted": "{{item}} deleted."
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "caughtUp": "You're all caught up.",
+    "tooltip": "Notifications"
+  },
+  "search": {
+    "placeholder": "Search customers, quotations, shipments…",
+    "keepTyping": "Keep typing to search…",
+    "noResultsFor": "No results for \"{{query}}\".",
+    "tooltip": "Search",
+    "groups": {
+      "customers": "Customers",
+      "leads": "Leads",
+      "quotations": "Quotations",
+      "shipments": "Shipments",
+      "clearingFiles": "Clearing Files",
+      "freightBookings": "Freight Bookings",
+      "containers": "Containers",
+      "warehouseItems": "Warehouse Items",
+      "vehicles": "Fleet Vehicles",
+      "invoices": "Invoices",
+      "documents": "Documents"
+    }
+  },
+  "errors": {
+    "serverError": "Something went wrong on our end. Reference: {{reference}} — please contact support with this code."
+  }
+}

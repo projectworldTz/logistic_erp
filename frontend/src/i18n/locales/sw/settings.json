@@ -1,0 +1,18 @@
+{
+  "title": "Mipangilio ya Kampuni",
+  "saveSuccess": "Wasifu wa kampuni umesasishwa.",
+  "logoCaption": "Nembo ya kampuni (imewekwa wakati wa usajili)",
+  "fields": {
+    "companyName": "Jina la Kampuni",
+    "country": "Nchi",
+    "city": "Jiji",
+    "address": "Anwani",
+    "timezone": "Saa za Eneo",
+    "industry": "Sekta",
+    "registrationNumber": "Namba ya Usajili",
+    "taxNumber": "Namba ya Kodi",
+    "website": "Tovuti"
+  },
+  "saving": "Inahifadhi…",
+  "saveChanges": "Hifadhi Mabadiliko"
+}

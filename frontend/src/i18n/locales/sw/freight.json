@@ -1,0 +1,53 @@
+{
+  "title": "Usafirishaji wa Mizigo",
+  "newBooking": "Uhifadhi Mpya",
+  "empty": {
+    "title": "Bado hakuna uhifadhi wa mizigo",
+    "description": "Unda uhifadhi wako wa kwanza wa mizigo ili kuanza kufuatilia shehena."
+  },
+  "table": {
+    "referenceNo": "Namba ya Rejea",
+    "customer": "Mteja",
+    "directionMode": "Mwelekeo / Njia",
+    "carrier": "Kampuni ya Usafirishaji",
+    "route": "Njia ya Usafiri"
+  },
+  "statuses": {
+    "booked": "Imehifadhiwa",
+    "cargo_received": "Mizigo Imepokelewa",
+    "in_transit": "Njiani",
+    "arrived": "Imewasili",
+    "delivered": "Imekabidhiwa",
+    "cancelled": "Imeghairiwa"
+  },
+  "direction": {
+    "import": "Uingizaji",
+    "export": "Usafirishaji"
+  },
+  "mode": {
+    "sea": "Baharini",
+    "air": "Angani",
+    "land": "Nchi Kavu"
+  },
+  "form": {
+    "dialogTitle": "Uhifadhi Mpya wa Mizigo",
+    "customer": "Mteja",
+    "direction": "Mwelekeo",
+    "mode": "Njia",
+    "carrier": "Kampuni ya Usafirishaji (hiari)",
+    "originPort": "Bandari ya Kutoka (hiari)",
+    "destinationPort": "Bandari ya Kufika (hiari)"
+  },
+  "validation": {
+    "selectCustomer": "Chagua mteja"
+  },
+  "deleteDialog": {
+    "title": "Futa uhifadhi wa mizigo",
+    "message": "Una uhakika unataka kufuta uhifadhi wa mizigo {{number}}? Hatua hii haiwezi kutenduliwa."
+  },
+  "toast": {
+    "created": "Uhifadhi wa mizigo umeundwa.",
+    "statusUpdated": "Hali ya uhifadhi wa mizigo imesasishwa.",
+    "deleted": "Uhifadhi wa mizigo umefutwa."
+  }
+}

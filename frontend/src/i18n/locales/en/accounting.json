@@ -1,0 +1,89 @@
+{
+  "tabs": {
+    "chartOfAccounts": "Chart of Accounts",
+    "journalEntries": "Journal Entries"
+  },
+  "accounts": {
+    "title": "Chart of Accounts",
+    "newAccount": "New Account",
+    "errors": {
+      "hasJournalLines": "Cannot delete an account that has journal entry lines."
+    },
+    "empty": {
+      "title": "No accounts yet",
+      "description": "Set up your chart of accounts to start recording journal entries."
+    },
+    "table": {
+      "code": "Code",
+      "type": "Type"
+    },
+    "types": {
+      "asset": "Asset",
+      "liability": "Liability",
+      "equity": "Equity",
+      "revenue": "Revenue",
+      "expense": "Expense"
+    },
+    "form": {
+      "dialogTitle": "New Account",
+      "code": "Code",
+      "type": "Type"
+    },
+    "validation": {
+      "codeRequired": "Code is required",
+      "nameRequired": "Name is required"
+    },
+    "deleteDialog": {
+      "title": "Delete account",
+      "message": "Are you sure you want to delete account {{code}} — {{name}}? This cannot be undone."
+    },
+    "toast": {
+      "created": "Account created.",
+      "deleted": "Account deleted."
+    }
+  },
+  "journalEntries": {
+    "title": "Journal Entries",
+    "newEntry": "New Journal Entry",
+    "errors": {
+      "saveFailed": "Could not save this journal entry — check that the lines balance."
+    },
+    "empty": {
+      "title": "No journal entries yet",
+      "description": "Record your first journal entry to start the general ledger."
+    },
+    "table": {
+      "entryNo": "Entry No"
+    },
+    "statuses": {
+      "draft": "Draft",
+      "posted": "Posted",
+      "voided": "Voided"
+    },
+    "actions": {
+      "post": "Post",
+      "void": "Void"
+    },
+    "form": {
+      "dialogTitle": "New Journal Entry",
+      "entryDate": "Entry Date",
+      "description": "Description (optional)",
+      "lines": "Lines",
+      "account": "Account",
+      "debit": "Debit",
+      "credit": "Credit",
+      "addLine": "Add Line",
+      "balanceSummary": "Debit {{debit}} / Credit {{credit}}",
+      "balanced": "balanced",
+      "mustBalance": "must balance before saving"
+    },
+    "deleteDialog": {
+      "title": "Delete journal entry",
+      "message": "Are you sure you want to delete journal entry {{number}}? This cannot be undone."
+    },
+    "toast": {
+      "created": "Journal entry created.",
+      "deleted": "Journal entry deleted."
+    }
+  }
+}

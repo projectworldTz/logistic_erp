@@ -1,0 +1,36 @@
+{
+  "title": "Nyaraka",
+  "uploadDocument": "Pakia Hati",
+  "errors": {
+    "uploadFailed": "Upakiaji umeshindwa — hakikisha aina na ukubwa wa faili (upeo MB 10)."
+  },
+  "empty": {
+    "title": "Bado hakuna nyaraka",
+    "description": "Pakia hati yako ya kwanza ili kuanza kujenga kumbukumbu."
+  },
+  "table": {
+    "fileName": "Jina la Faili",
+    "category": "Aina",
+    "size": "Ukubwa",
+    "uploaded": "Ilipakiwa"
+  },
+  "categories": {
+    "invoice": "Ankara",
+    "bill_of_lading": "Hati ya Usafirishaji (B/L)",
+    "customs_declaration": "Tamko la Forodha",
+    "contract": "Mkataba",
+    "id_document": "Kitambulisho",
+    "other": "Nyingine"
+  },
+  "form": {
+    "chooseFile": "Chagua Faili"
+  },
+  "deleteDialog": {
+    "title": "Futa hati",
+    "message": "Una uhakika unataka kufuta hati {{name}}? Hatua hii haiwezi kutenduliwa."
+  },
+  "toast": {
+    "created": "Hati imeundwa.",
+    "deleted": "Hati imefutwa."
+  }
+}

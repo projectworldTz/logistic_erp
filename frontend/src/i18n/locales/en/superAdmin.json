@@ -1,0 +1,193 @@
+{
+  "tenantsList": {
+    "title": "Tenants",
+    "table": {
+      "company": "Company",
+      "plan": "Plan",
+      "created": "Created"
+    },
+    "statuses": {
+      "trial": "Trial",
+      "active": "Active",
+      "suspended": "Suspended",
+      "cancelled": "Cancelled"
+    },
+    "actions": {
+      "activate": "Activate",
+      "suspend": "Suspend"
+    }
+  },
+  "plans": {
+    "title": "Subscription Plans",
+    "newPlan": "New Plan",
+    "table": {
+      "code": "Code",
+      "monthly": "Monthly",
+      "yearly": "Yearly"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "form": {
+      "dialogTitle": "New Plan",
+      "code": "Code",
+      "monthlyPrice": "Monthly Price",
+      "yearlyPrice": "Yearly Price"
+    },
+    "validation": {
+      "codeRequired": "Code is required",
+      "nameRequired": "Name is required"
+    },
+    "deleteDialog": {
+      "title": "Delete plan",
+      "message": "Are you sure you want to delete the \"{{name}}\" plan? This cannot be undone."
+    },
+    "toast": {
+      "created": "Plan created.",
+      "deleted": "Plan deleted."
+    }
+  },
+  "metrics": {
+    "title": "Platform Metrics",
+    "cards": {
+      "totalTenants": "Total Tenants",
+      "activeTenants": "Active Tenants",
+      "trialTenants": "Trial Tenants",
+      "activeUsers": "Active Users",
+      "revenueMtd": "Revenue (MTD)",
+      "storageUsed": "Storage Used"
+    }
+  },
+  "auditLog": {
+    "title": "Platform Audit Log",
+    "empty": {
+      "title": "No activity yet"
+    },
+    "table": {
+      "action": "Action",
+      "user": "User",
+      "ipAddress": "IP Address",
+      "when": "When"
+    }
+  },
+  "landingContent": {
+    "title": "Landing Page Content",
+    "tabs": {
+      "hero": "Hero",
+      "about": "About",
+      "features": "Features",
+      "industries": "Industries",
+      "testimonials": "Testimonials",
+      "faqs": "FAQ"
+    },
+    "validation": {
+      "required": "Required",
+      "addAtLeastOne": "Add at least one {{item}}"
+    },
+    "imageUpload": {
+      "uploading": "Uploading…",
+      "uploadFailed": "Upload failed. Please try again."
+    },
+    "hero": {
+      "saved": "Saved.",
+      "eyebrowText": "Eyebrow text",
+      "headline": "Headline",
+      "subheadline": "Subheadline",
+      "uploadHeroImage": "Upload hero image",
+      "primaryCtaLabel": "Primary CTA label",
+      "primaryCtaLink": "Primary CTA link",
+      "secondaryCtaLabel": "Secondary CTA label",
+      "secondaryCtaLink": "Secondary CTA link",
+      "microcopy": "Microcopy"
+    },
+    "about": {
+      "saved": "Saved.",
+      "heading": "Heading",
+      "paragraph1": "Paragraph 1",
+      "paragraph2": "Paragraph 2",
+      "statsSectionTitle": "Stats",
+      "stat": "Stat",
+      "statLabel": "Label",
+      "addStat": "Add stat",
+      "statItem": "stat"
+    },
+    "features": {
+      "saved": "Saved.",
+      "heading": "Heading",
+      "subheading": "Subheading",
+      "sectionTitle": "Features",
+      "icon": "Icon",
+      "itemTitle": "Title",
+      "addFeature": "Add feature",
+      "featureItem": "feature"
+    },
+    "industries": {
+      "saved": "Saved.",
+      "heading": "Heading",
+      "subheading": "Subheading",
+      "sectionTitle": "Industries",
+      "itemTitle": "Title",
+      "addIndustry": "Add industry",
+      "industryItem": "industry"
+    },
+    "testimonials": {
+      "saved": "Saved.",
+      "heading": "Heading",
+      "sectionTitle": "Testimonials",
+      "uploadAvatar": "Upload avatar",
+      "quote": "Quote",
+      "role": "Role",
+      "addTestimonial": "Add testimonial",
+      "testimonialItem": "testimonial"
+    },
+    "faqs": {
+      "saved": "Saved.",
+      "heading": "Heading",
+      "sectionTitle": "FAQs",
+      "question": "Question",
+      "answer": "Answer",
+      "addFaq": "Add FAQ",
+      "faqItem": "FAQ"
+    }
+  },
+  "errorLogs": {
+    "title": "Error Log",
+    "filters": {
+      "search": "Search",
+      "status": "Status",
+      "all": "All",
+      "unresolved": "Unresolved",
+      "resolved": "Resolved"
+    },
+    "table": {
+      "reference": "Reference",
+      "tenant": "Tenant",
+      "exception": "Exception",
+      "message": "Message",
+      "status": "Status",
+      "when": "When",
+      "resolved": "Resolved"
+    },
+    "resolvedYes": "Resolved",
+    "resolvedNo": "Unresolved",
+    "empty": {
+      "title": "No errors logged",
+      "description": "When something breaks for a tenant, it will show up here with full technical detail."
+    },
+    "detail": {
+      "title": "Error detail",
+      "user": "User",
+      "request": "Request",
+      "location": "Location",
+      "ipAddress": "IP Address",
+      "trace": "Stack trace",
+      "requestPayload": "Request payload",
+      "close": "Close",
+      "markResolved": "Mark Resolved"
+    },
+    "toast": {
+      "resolved": "Error marked as resolved."
+    }
+  }
+}

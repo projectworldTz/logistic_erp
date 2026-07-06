@@ -1,0 +1,193 @@
+{
+  "tenantsList": {
+    "title": "Wateja wa Jukwaa",
+    "table": {
+      "company": "Kampuni",
+      "plan": "Mpango",
+      "created": "Iliundwa"
+    },
+    "statuses": {
+      "trial": "Jaribio",
+      "active": "Hai",
+      "suspended": "Imesimamishwa",
+      "cancelled": "Imeghairiwa"
+    },
+    "actions": {
+      "activate": "Washa",
+      "suspend": "Simamisha"
+    }
+  },
+  "plans": {
+    "title": "Mipango ya Usajili",
+    "newPlan": "Mpango Mpya",
+    "table": {
+      "code": "Msimbo",
+      "monthly": "Kila Mwezi",
+      "yearly": "Kila Mwaka"
+    },
+    "status": {
+      "active": "Hai",
+      "inactive": "Haifanyi Kazi"
+    },
+    "form": {
+      "dialogTitle": "Mpango Mpya",
+      "code": "Msimbo",
+      "monthlyPrice": "Bei ya Kila Mwezi",
+      "yearlyPrice": "Bei ya Kila Mwaka"
+    },
+    "validation": {
+      "codeRequired": "Msimbo unahitajika",
+      "nameRequired": "Jina linahitajika"
+    },
+    "deleteDialog": {
+      "title": "Futa mpango",
+      "message": "Una uhakika unataka kufuta mpango \"{{name}}\"? Hatua hii haiwezi kutenduliwa."
+    },
+    "toast": {
+      "created": "Mpango umeundwa.",
+      "deleted": "Mpango umefutwa."
+    }
+  },
+  "metrics": {
+    "title": "Takwimu za Jukwaa",
+    "cards": {
+      "totalTenants": "Jumla ya Wateja wa Jukwaa",
+      "activeTenants": "Wateja Hai",
+      "trialTenants": "Wateja wa Jaribio",
+      "activeUsers": "Watumiaji Hai",
+      "revenueMtd": "Mapato (Mwezi Huu)",
+      "storageUsed": "Hifadhi Iliyotumika"
+    }
+  },
+  "auditLog": {
+    "title": "Kumbukumbu za Ukaguzi za Jukwaa",
+    "empty": {
+      "title": "Hakuna shughuli bado"
+    },
+    "table": {
+      "action": "Kitendo",
+      "user": "Mtumiaji",
+      "ipAddress": "Anwani ya IP",
+      "when": "Muda"
+    }
+  },
+  "landingContent": {
+    "title": "Maudhui ya Ukurasa wa Mwanzo",
+    "tabs": {
+      "hero": "Sehemu Kuu",
+      "about": "Kuhusu",
+      "features": "Vipengele",
+      "industries": "Sekta",
+      "testimonials": "Ushuhuda",
+      "faqs": "Maswali Yanayoulizwa Mara kwa Mara"
+    },
+    "validation": {
+      "required": "Inahitajika",
+      "addAtLeastOne": "Ongeza angalau {{item}} moja"
+    },
+    "imageUpload": {
+      "uploading": "Inapakia…",
+      "uploadFailed": "Upakiaji umeshindwa. Tafadhali jaribu tena."
+    },
+    "hero": {
+      "saved": "Imehifadhiwa.",
+      "eyebrowText": "Maandishi Madogo ya Juu",
+      "headline": "Kichwa Kikuu",
+      "subheadline": "Kichwa Kidogo",
+      "uploadHeroImage": "Pakia Picha ya Sehemu Kuu",
+      "primaryCtaLabel": "Lebo ya Kitufe cha Msingi",
+      "primaryCtaLink": "Kiungo cha Kitufe cha Msingi",
+      "secondaryCtaLabel": "Lebo ya Kitufe cha Pili",
+      "secondaryCtaLink": "Kiungo cha Kitufe cha Pili",
+      "microcopy": "Maandishi Madogo"
+    },
+    "about": {
+      "saved": "Imehifadhiwa.",
+      "heading": "Kichwa",
+      "paragraph1": "Aya ya Kwanza",
+      "paragraph2": "Aya ya Pili",
+      "statsSectionTitle": "Takwimu",
+      "stat": "Takwimu",
+      "statLabel": "Maelezo",
+      "addStat": "Ongeza Takwimu",
+      "statItem": "takwimu"
+    },
+    "features": {
+      "saved": "Imehifadhiwa.",
+      "heading": "Kichwa",
+      "subheading": "Kichwa Kidogo",
+      "sectionTitle": "Vipengele",
+      "icon": "Aikoni",
+      "itemTitle": "Kichwa",
+      "addFeature": "Ongeza Kipengele",
+      "featureItem": "kipengele"
+    },
+    "industries": {
+      "saved": "Imehifadhiwa.",
+      "heading": "Kichwa",
+      "subheading": "Kichwa Kidogo",
+      "sectionTitle": "Sekta",
+      "itemTitle": "Kichwa",
+      "addIndustry": "Ongeza Sekta",
+      "industryItem": "sekta"
+    },
+    "testimonials": {
+      "saved": "Imehifadhiwa.",
+      "heading": "Kichwa",
+      "sectionTitle": "Ushuhuda",
+      "uploadAvatar": "Pakia Picha ya Wasifu",
+      "quote": "Nukuu",
+      "role": "Wadhifa",
+      "addTestimonial": "Ongeza Ushuhuda",
+      "testimonialItem": "ushuhuda"
+    },
+    "faqs": {
+      "saved": "Imehifadhiwa.",
+      "heading": "Kichwa",
+      "sectionTitle": "Maswali",
+      "question": "Swali",
+      "answer": "Jibu",
+      "addFaq": "Ongeza Swali",
+      "faqItem": "swali"
+    }
+  },
+  "errorLogs": {
+    "title": "Kumbukumbu za Hitilafu",
+    "filters": {
+      "search": "Tafuta",
+      "status": "Hali",
+      "all": "Zote",
+      "unresolved": "Hazijatatuliwa",
+      "resolved": "Zimetatuliwa"
+    },
+    "table": {
+      "reference": "Nambari ya Rejea",
+      "tenant": "Mteja wa Jukwaa",
+      "exception": "Aina ya Hitilafu",
+      "message": "Ujumbe",
+      "status": "Hali",
+      "when": "Wakati",
+      "resolved": "Imetatuliwa"
+    },
+    "resolvedYes": "Imetatuliwa",
+    "resolvedNo": "Haijatatuliwa",
+    "empty": {
+      "title": "Hakuna hitilafu zilizorekodiwa",
+      "description": "Hitilafu ikitokea kwa mteja wa jukwaa, itaonekana hapa na maelezo kamili ya kiufundi."
+    },
+    "detail": {
+      "title": "Maelezo ya hitilafu",
+      "user": "Mtumiaji",
+      "request": "Ombi",
+      "location": "Mahali",
+      "ipAddress": "Anwani ya IP",
+      "trace": "Mfuatano wa Hitilafu",
+      "requestPayload": "Data ya Ombi",
+      "close": "Funga",
+      "markResolved": "Weka Imetatuliwa"
+    },
+    "toast": {
+      "resolved": "Hitilafu imewekwa kama imetatuliwa."
+    }
+  }
+}

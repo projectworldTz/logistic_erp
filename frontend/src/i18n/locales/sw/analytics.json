@@ -1,0 +1,43 @@
+{
+  "title": "Uchambuzi",
+  "subtitle": "Utendaji wa uendeshaji na kifedha katika siku 90 zilizopita.",
+  "kpis": {
+    "onTimeDelivery": "Uwasilishaji kwa Wakati",
+    "avgClearanceDays": "Wastani wa Kupitisha Forodha",
+    "avgDwellDays": "Wastani wa Ukaaji wa Kontena",
+    "fleetUtilization": "Matumizi ya Magari",
+    "days": "siku {{count}}",
+    "noData": "Bado hakuna data"
+  },
+  "charts": {
+    "transitTimeByMode": "Wastani wa Muda wa Usafiri kwa Njia",
+    "transitTimeByModeSeries": "Siku",
+    "revenueByMonth": "Mapato kwa Mwezi",
+    "revenueByMonthSeries": "Mapato",
+    "shipmentVolume": "Idadi ya Shehena kwa Mwezi",
+    "arAging": "Umri wa Madeni ya Wateja",
+    "arAgingSeries": "Kiasi Kinachodaiwa",
+    "topCustomersByRevenue": "Wateja Bora kwa Mapato",
+    "topCustomersByVolume": "Wateja Bora kwa Idadi ya Shehena",
+    "margins": "Faida ya Bei Elekezi dhidi ya Ankara"
+  },
+  "direction": {
+    "import": "Uingizaji",
+    "export": "Usafirishaji"
+  },
+  "agingBuckets": {
+    "current": "Sasa",
+    "days_1_30": "siku 1-30",
+    "days_31_60": "siku 31-60",
+    "days_61_90": "siku 61-90",
+    "days_over_90": "zaidi ya siku 90"
+  },
+  "marginsTable": {
+    "shipment": "Shehena",
+    "quoted": "Bei Elekezi",
+    "invoiced": "Ankara",
+    "variance": "Tofauti",
+    "empty": "Bado hakuna shehena zenye bei elekezi na ankara zote mbili."
+  },
+  "empty": "Bado hakuna data ya kutosha — unda shehena, ankara, na faili za forodha ili kuona uchambuzi."
+}

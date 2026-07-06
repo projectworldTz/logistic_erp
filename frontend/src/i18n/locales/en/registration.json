@@ -1,0 +1,80 @@
+{
+  "wizard": {
+    "title": "Start your free trial",
+    "alreadyHaveCompany": "Already have a company?",
+    "logIn": "Log in",
+    "steps": {
+      "choosePlan": "Choose Plan",
+      "ownerAccount": "Owner Account",
+      "companyDetails": "Company Details",
+      "reviewSubmit": "Review & Submit"
+    }
+  },
+  "actions": {
+    "continue": "Continue"
+  },
+  "plan": {
+    "heading": "Choose your plan",
+    "perMonth": "/mo"
+  },
+  "ownerAccount": {
+    "heading": "Create your owner account",
+    "form": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "phoneOptional": "Phone (optional)",
+      "password": "Password"
+    },
+    "validation": {
+      "nameRequired": "Full name is required",
+      "passwordMin": "Password must be at least {{count}} characters"
+    }
+  },
+  "companyDetails": {
+    "heading": "Tell us about your company",
+    "form": {
+      "companyName": "Company Name",
+      "registrationNumberOptional": "Registration Number (optional)",
+      "taxNumberOptional": "Tax Number (optional)",
+      "country": "Country",
+      "city": "City",
+      "address": "Address",
+      "currency": "Currency (e.g. USD)",
+      "timezone": "Timezone",
+      "industry": "Industry",
+      "uploadLogo": "Upload Company Logo (optional)"
+    },
+    "validation": {
+      "nameRequired": "Company name is required",
+      "countryRequired": "Country is required",
+      "cityRequired": "City is required",
+      "addressRequired": "Address is required",
+      "currencyFormat": "Use a 3-letter currency code (e.g. USD)",
+      "timezoneRequired": "Timezone is required",
+      "industryRequired": "Industry is required"
+    }
+  },
+  "reviewSubmit": {
+    "heading": "Review & confirm",
+    "error": "Something went wrong creating your company. Please check your details and try again.",
+    "sections": {
+      "plan": "Plan",
+      "ownerAccount": "Owner Account",
+      "company": "Company"
+    },
+    "fields": {
+      "selectedPlan": "Selected plan",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "country": "Country",
+      "city": "City",
+      "currency": "Currency",
+      "timezone": "Timezone",
+      "industry": "Industry",
+      "logo": "Logo"
+    },
+    "submitting": "Creating your workspace…",
+    "submit": "Create My Company"
+  }
+}

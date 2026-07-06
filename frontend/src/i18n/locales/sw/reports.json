@@ -1,0 +1,30 @@
+{
+  "title": "Ripoti",
+  "subtitle": "Muhtasari wa jumla wa kila kinachofuatiliwa katika shughuli zote za kampuni.",
+  "printReport": "Chapisha Ripoti",
+  "reportGeneratedAt": "Ripoti imetolewa {{date}}",
+  "totalCount": "jumla {{count}}",
+  "noRecords": "Bado hakuna kumbukumbu.",
+  "widgets": {
+    "customers": "Wateja",
+    "leads": "Fursa",
+    "revenueCollected": "Mapato Yaliyokusanywa",
+    "outstanding": "Madeni Yanayosubiri"
+  },
+  "breakdown": {
+    "quotations": "Nukuu za Bei",
+    "shipments": "Shehena",
+    "clearingFiles": "Faili za Forodha",
+    "freightBookings": "Uhifadhi wa Mizigo",
+    "containers": "Makontena",
+    "warehouseItems": "Bidhaa za Ghala",
+    "fleetVehicles": "Magari ya Kampuni",
+    "invoices": "Ankara",
+    "journalEntries": "Kumbukumbu za Hesabu"
+  },
+  "chartOfAccounts": {
+    "title": "Mpangilio wa Akaunti na Nyaraka",
+    "accountsConfigured": "Akaunti zilizosanidiwa",
+    "documentsArchived": "Nyaraka zilizohifadhiwa"
+  }
+}

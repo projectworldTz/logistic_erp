@@ -1,0 +1,45 @@
+{
+  "title": "Warehouse",
+  "newItem": "New Item",
+  "empty": {
+    "title": "No warehouse items yet",
+    "description": "Record your first goods receipt to start tracking storage."
+  },
+  "table": {
+    "referenceNo": "Reference No",
+    "customer": "Customer",
+    "description": "Description",
+    "qty": "Qty",
+    "bin": "Bin"
+  },
+  "statuses": {
+    "received": "Received",
+    "stored": "Stored",
+    "picked": "Picked",
+    "dispatched": "Dispatched",
+    "damaged": "Damaged"
+  },
+  "form": {
+    "dialogTitle": "New Warehouse Item",
+    "customer": "Customer",
+    "description": "Description",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "binLocation": "Bin Location (optional)"
+  },
+  "validation": {
+    "selectCustomer": "Select a customer",
+    "descriptionRequired": "Description is required",
+    "quantityRequired": "Quantity is required",
+    "quantityMin": "Quantity must be 0 or more"
+  },
+  "deleteDialog": {
+    "title": "Delete warehouse item",
+    "message": "Are you sure you want to delete warehouse item {{number}}? This cannot be undone."
+  },
+  "toast": {
+    "created": "Warehouse item created.",
+    "statusUpdated": "Warehouse item status updated.",
+    "deleted": "Warehouse item deleted."
+  }
+}
