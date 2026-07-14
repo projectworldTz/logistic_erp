@@ -2,7 +2,9 @@ import { CircularProgress, Grid, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchPortalDashboardSummary } from '../../../api/endpoints/portal';
+import { fetchCompany } from '../../../api/endpoints/dashboard';
 import { StatWidgetCard } from '../../../components/common/StatWidgetCard';
+import { formatCurrency } from '../../../utils/currency';
 
 export function PortalDashboardPage() {
   const { t } = useTranslation('portal');
@@ -10,6 +12,7 @@ export function PortalDashboardPage() {
     queryKey: ['portal', 'dashboard', 'summary'],
     queryFn: fetchPortalDashboardSummary,
   });
+  const { data: company } = useQuery({ queryKey: ['tenant', 'company'], queryFn: fetchCompany, retry: false });
 
   if (isLoading || !data) {
     return <CircularProgress />;
@@ -26,7 +29,7 @@ export function PortalDashboardPage() {
           <StatWidgetCard label={t('dashboard.activeShipments')} value={data.active_shipments} />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <StatWidgetCard label={t('dashboard.outstandingBalance')} value={`$${data.outstanding_balance.toLocaleString()}`} />
+          <StatWidgetCard label={t('dashboard.outstandingBalance')} value={formatCurrency(data.outstanding_balance, company?.currency)} />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <StatWidgetCard label={t('dashboard.unreadMessages')} value={data.unread_messages} />

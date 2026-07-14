@@ -40,7 +40,7 @@
       "country": "Nchi",
       "city": "Mji",
       "address": "Anwani",
-      "currency": "Sarafu (mfano USD)",
+      "currency": "Sarafu (mfano TZS)",
       "timezone": "Eneo la Saa",
       "industry": "Sekta",
       "uploadLogo": "Pakia Nembo ya Kampuni (si lazima)"
@@ -50,7 +50,7 @@
       "countryRequired": "Nchi inahitajika",
       "cityRequired": "Mji unahitajika",
       "addressRequired": "Anwani inahitajika",
-      "currencyFormat": "Tumia msimbo wa herufi 3 za sarafu (mfano USD)",
+      "currencyFormat": "Tumia msimbo wa herufi 3 za sarafu (mfano TZS)",
       "timezoneRequired": "Eneo la saa linahitajika",
       "industryRequired": "Sekta inahitajika"
     }

@@ -92,7 +92,7 @@ export function DemurrageDashboardPage() {
   const accruingCount = rows.filter((row) => row.risk_level === 'accruing').length;
   const atRiskCount = rows.filter((row) => row.risk_level === 'at_risk').length;
   const totalAccrued = rows.reduce((sum, row) => sum + row.accrued_amount, 0);
-  const currency = rows[0]?.currency ?? 'USD';
+  const currency = rows[0]?.currency ?? 'TZS';
 
   if (isLoading) {
     return <CircularProgress />;

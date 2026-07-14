@@ -1,9 +1,10 @@
 import { CircularProgress, Grid, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { fetchDashboardSummary } from '../../../api/endpoints/dashboard';
+import { fetchCompany, fetchDashboardSummary } from '../../../api/endpoints/dashboard';
 import { StatWidgetCard } from '../../../components/common/StatWidgetCard';
 import { useAuthStore } from '../../../hooks/useAuth';
+import { formatCurrency } from '../../../utils/currency';
 
 export function DashboardHomePage() {
   const { t } = useTranslation('dashboard');
@@ -12,6 +13,7 @@ export function DashboardHomePage() {
     queryKey: ['tenant', 'dashboard-summary'],
     queryFn: fetchDashboardSummary,
   });
+  const { data: company } = useQuery({ queryKey: ['tenant', 'company'], queryFn: fetchCompany });
 
   const widgets = data?.widgets;
 
@@ -52,12 +54,12 @@ export function DashboardHomePage() {
           )}
           {widgets.revenue !== undefined && (
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <StatWidgetCard label={t('widgets.revenue')} value={`$${widgets.revenue}`} />
+              <StatWidgetCard label={t('widgets.revenue')} value={formatCurrency(widgets.revenue, company?.currency)} />
             </Grid>
           )}
           {widgets.expenses !== undefined && (
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <StatWidgetCard label={t('widgets.expenses')} value={`$${widgets.expenses}`} />
+              <StatWidgetCard label={t('widgets.expenses')} value={formatCurrency(widgets.expenses, company?.currency)} />
             </Grid>
           )}
           {widgets.fleet_status !== undefined && (

@@ -104,7 +104,7 @@ export function DemurrageRateCardsPage() {
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      currency: 'USD',
+      currency: 'TZS',
       free_days: 5,
       is_default: false,
       tiers: [{ from_day: 1, to_day: null, daily_rate: 0 }],

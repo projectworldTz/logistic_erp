@@ -13,15 +13,13 @@ import {
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { fetchBranchRollup, fetchBranches } from '../../../api/endpoints/dashboard';
-
-function formatCurrency(amount: number): string {
-  return `$${amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-}
+import { fetchBranchRollup, fetchBranches, fetchCompany } from '../../../api/endpoints/dashboard';
+import { formatCurrency } from '../../../utils/currency';
 
 function BranchRollupSection() {
   const { t } = useTranslation('branches');
   const { data: rollup, isLoading } = useQuery({ queryKey: ['tenant', 'branches', 'rollup'], queryFn: fetchBranchRollup });
+  const { data: company } = useQuery({ queryKey: ['tenant', 'company'], queryFn: fetchCompany });
 
   if (isLoading) return <CircularProgress />;
   if (!rollup) return null;
@@ -60,8 +58,8 @@ function BranchRollupSection() {
                   <TableCell align="right">{row.warehouse_items_total}</TableCell>
                   <TableCell align="right">{row.shipments_total}</TableCell>
                   <TableCell align="right">{row.invoices_total}</TableCell>
-                  <TableCell align="right">{formatCurrency(row.revenue_paid)}</TableCell>
-                  <TableCell align="right">{formatCurrency(row.revenue_outstanding)}</TableCell>
+                  <TableCell align="right">{formatCurrency(row.revenue_paid, company?.currency)}</TableCell>
+                  <TableCell align="right">{formatCurrency(row.revenue_outstanding, company?.currency)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

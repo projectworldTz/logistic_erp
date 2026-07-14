@@ -1,4 +1,12 @@
 {
+  "groups": {
+    "sales": "Sales",
+    "operations": "Operations",
+    "finance": "Finance",
+    "people": "People",
+    "insights": "Insights",
+    "administration": "Administration"
+  },
   "dashboard": "Dashboard",
   "crm": "CRM",
   "quotations": "Quotations",

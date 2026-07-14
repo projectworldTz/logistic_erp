@@ -41,7 +41,7 @@ const emptyCompany: CompanyDraft = {
   country: '',
   city: '',
   address: '',
-  currency: 'USD',
+  currency: 'TZS',
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone ?? 'UTC',
   industry: '',
 };

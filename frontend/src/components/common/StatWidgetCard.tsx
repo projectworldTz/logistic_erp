@@ -16,7 +16,7 @@ export function StatWidgetCard({ label, value, icon }: StatWidgetCardProps) {
             <Typography variant="body2" color="text.secondary">
               {label}
             </Typography>
-            <Typography variant="h4" fontWeight={600}>
+            <Typography variant="h5" fontWeight={600} sx={{ overflowWrap: 'break-word' }}>
               {value}
             </Typography>
           </Stack>

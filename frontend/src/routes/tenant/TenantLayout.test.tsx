@@ -1,3 +1,4 @@
+import userEvent from '@testing-library/user-event';
 import { Route, Routes } from 'react-router-dom';
 import { render, screen } from '../../test/test-utils';
 import { useAuthStore } from '../../hooks/useAuth';
@@ -40,25 +41,36 @@ describe('TenantLayout permission-based nav filtering', () => {
     renderWithPermissions([]);
 
     expect(screen.getByRole('link', { name: 'Dashboard' })).toBeInTheDocument();
-    expect(screen.queryByRole('link', { name: 'CRM' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('link', { name: 'Quotations' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Sales' })).not.toBeInTheDocument();
     expect(screen.queryByRole('link', { name: 'Users' })).not.toBeInTheDocument();
   });
 
-  it('shows exactly the nav items matching the permissions the user has', () => {
+  it('shows a group header only for modules the user has permission for, collapsed by default', () => {
     renderWithPermissions(['crm.customers.view', 'quotations.items.view']);
 
     expect(screen.getByRole('link', { name: 'Dashboard' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'CRM' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Quotations' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Sales' })).toBeInTheDocument();
 
-    // Not granted — must not render, not just be disabled.
-    expect(screen.queryByRole('link', { name: 'Shipments' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('link', { name: 'Users' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('link', { name: 'Finance' })).not.toBeInTheDocument();
+    // Not granted — the whole group must not render, not just be disabled.
+    expect(screen.queryByRole('button', { name: 'Operations' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Finance' })).not.toBeInTheDocument();
+
+    // Collapsed by default — the leaf links aren't in the document yet.
+    expect(screen.queryByRole('link', { name: 'CRM' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'Quotations' })).not.toBeInTheDocument();
   });
 
-  it('shows every module when the user has every permission', () => {
+  it('reveals a group\'s links once its header is clicked', async () => {
+    const user = userEvent.setup();
+    renderWithPermissions(['crm.customers.view', 'quotations.items.view']);
+
+    await user.click(screen.getByRole('button', { name: 'Sales' }));
+
+    expect(screen.getByRole('link', { name: 'CRM' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Quotations' })).toBeInTheDocument();
+  });
+
+  it('shows every relevant group header when the user has every permission', () => {
     renderWithPermissions([
       'crm.customers.view',
       'quotations.items.view',
@@ -78,8 +90,8 @@ describe('TenantLayout permission-based nav filtering', () => {
       'core.company.view',
     ]);
 
-    for (const label of ['CRM', 'Quotations', 'Shipments', 'Clearing', 'Users', 'Company Settings']) {
-      expect(screen.getByRole('link', { name: label })).toBeInTheDocument();
+    for (const group of ['Sales', 'Operations', 'Finance', 'People', 'Insights', 'Administration']) {
+      expect(screen.getByRole('button', { name: group })).toBeInTheDocument();
     }
   });
 });

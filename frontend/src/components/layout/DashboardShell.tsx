@@ -3,11 +3,13 @@ import {
   Avatar,
   Box,
   Chip,
+  Collapse,
   Divider,
   Drawer,
   IconButton,
   List,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
@@ -16,12 +18,14 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import SecurityIcon from '@mui/icons-material/Security';
 import { useMutation } from '@tanstack/react-query';
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { logout as apiLogout } from '../../api/endpoints/auth';
@@ -37,11 +41,19 @@ export interface ShellNavItem {
   label: string;
   path: string;
   enabled: boolean;
+  icon?: ReactNode;
+}
+
+export interface ShellNavGroup {
+  /** Omit for a top-level, ungrouped item list (no collapsible header). */
+  label?: string;
+  icon?: ReactNode;
+  items: ShellNavItem[];
 }
 
 interface DashboardShellProps {
   title: string;
-  navItems: ShellNavItem[];
+  navItems: ShellNavGroup[];
   children: ReactNode;
 }
 
@@ -52,6 +64,31 @@ export function DashboardShell({ title, navItems, children }: DashboardShellProp
   const { user, logout } = useAuthStore();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  // Every group starts collapsed; the group containing the active page is
+  // opened automatically (below) so the current location is never hidden.
+  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set());
+
+  // Whenever the route changes, make sure the group containing it is expanded
+  // — this only ever adds to the open set, so a manual collapse elsewhere isn't fought.
+  useEffect(() => {
+    const activeGroup = navItems.find((g) => g.label && g.items.some((item) => item.path === location.pathname));
+    if (activeGroup?.label) {
+      setOpenGroups((prev) => (prev.has(activeGroup.label!) ? prev : new Set(prev).add(activeGroup.label!)));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
+
+  const toggleGroup = (label: string) => {
+    setOpenGroups((prev) => {
+      const next = new Set(prev);
+      if (next.has(label)) {
+        next.delete(label);
+      } else {
+        next.add(label);
+      }
+      return next;
+    });
+  };
 
   const logoutMutation = useMutation({
     mutationFn: apiLogout,
@@ -60,6 +97,57 @@ export function DashboardShell({ title, navItems, children }: DashboardShellProp
       navigate('/login');
     },
   });
+
+  const renderItem = (item: ShellNavItem, nested: boolean) => {
+    const selected = location.pathname === item.path;
+
+    if (!item.enabled) {
+      return (
+        <Tooltip key={item.path} title={t('comingSoon')} placement="right">
+          <span>
+            <ListItemButton disabled sx={{ borderRadius: 1.5, mb: 0.25, pl: nested ? 3.5 : 2 }}>
+              {item.icon && <ListItemIcon sx={{ minWidth: 34 }}>{item.icon}</ListItemIcon>}
+              <ListItemText primary={item.label} />
+              <Chip label={t('soon')} size="small" variant="outlined" />
+            </ListItemButton>
+          </span>
+        </Tooltip>
+      );
+    }
+
+    return (
+      <ListItemButton
+        key={item.path}
+        component={RouterLink}
+        to={item.path}
+        selected={selected}
+        onClick={() => setMobileOpen(false)}
+        sx={{
+          borderRadius: 1.5,
+          mb: 0.25,
+          pl: nested ? 3.5 : 2,
+          transition: 'background-color 0.15s ease, transform 0.15s ease, color 0.15s ease',
+          '&:hover': { transform: 'translateX(3px)' },
+          ...(selected && {
+            bgcolor: (theme) =>
+              theme.palette.mode === 'dark' ? 'rgba(59, 130, 246, 0.16)' : 'rgba(26, 86, 219, 0.1)',
+            borderLeft: 3,
+            borderColor: 'primary.main',
+            pl: nested ? 2.75 : 1.75,
+            '& .MuiListItemIcon-root': { color: 'primary.main' },
+            '& .MuiListItemText-primary': { color: 'primary.main', fontWeight: 700 },
+            '&:hover': {
+              bgcolor: (theme) =>
+                theme.palette.mode === 'dark' ? 'rgba(59, 130, 246, 0.22)' : 'rgba(26, 86, 219, 0.16)',
+            },
+          }),
+        }}
+      >
+        {item.icon && <ListItemIcon sx={{ minWidth: 34 }}>{item.icon}</ListItemIcon>}
+        <ListItemText primary={item.label} />
+      </ListItemButton>
+    );
+  };
 
   const drawerContent = (
     <>
@@ -73,33 +161,72 @@ export function DashboardShell({ title, navItems, children }: DashboardShellProp
       </Toolbar>
       <Divider />
       <List sx={{ px: 1, py: 1 }}>
-        {navItems.map((item) => {
-          const selected = location.pathname === item.path;
-
-          if (!item.enabled) {
-            return (
-              <Tooltip key={item.path} title={t('comingSoon')} placement="right">
-                <span>
-                  <ListItemButton disabled sx={{ borderRadius: 1, mb: 0.25 }}>
-                    <ListItemText primary={item.label} />
-                    <Chip label={t('soon')} size="small" variant="outlined" />
-                  </ListItemButton>
-                </span>
-              </Tooltip>
-            );
+        {navItems.map((group, groupIndex) => {
+          if (!group.label) {
+            return <Box key={`group-${groupIndex}`}>{group.items.map((item) => renderItem(item, false))}</Box>;
           }
 
+          const isOpen = openGroups.has(group.label);
+          const hasActiveChild = group.items.some((item) => item.path === location.pathname);
+
           return (
-            <ListItemButton
-              key={item.path}
-              component={RouterLink}
-              to={item.path}
-              selected={selected}
-              onClick={() => setMobileOpen(false)}
-              sx={{ borderRadius: 1, mb: 0.25 }}
-            >
-              <ListItemText primary={item.label} />
-            </ListItemButton>
+            <Box key={group.label} sx={{ mt: 0.5 }}>
+              <ListItemButton
+                onClick={() => toggleGroup(group.label!)}
+                sx={{
+                  borderRadius: 1.5,
+                  mb: 0.25,
+                  transition: 'background-color 0.15s ease',
+                  ...(hasActiveChild && {
+                    '& .MuiListItemIcon-root': { color: 'primary.main' },
+                  }),
+                }}
+              >
+                {group.icon && <ListItemIcon sx={{ minWidth: 34 }}>{group.icon}</ListItemIcon>}
+                <ListItemText
+                  primary={group.label}
+                  slotProps={{
+                    primary: {
+                      sx: {
+                        fontSize: '0.72rem',
+                        fontWeight: 700,
+                        letterSpacing: 0.6,
+                        textTransform: 'uppercase',
+                        color: 'text.secondary',
+                      },
+                    },
+                  }}
+                />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    transition: 'transform 0.2s ease',
+                    transform: isOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
+                  }}
+                >
+                  {isOpen ? (
+                    <ExpandLessIcon fontSize="small" sx={{ color: 'text.secondary' }} />
+                  ) : (
+                    <ExpandMoreIcon fontSize="small" sx={{ color: 'text.secondary' }} />
+                  )}
+                </Box>
+              </ListItemButton>
+              <Collapse in={isOpen} timeout={200} unmountOnExit>
+                <Box
+                  sx={{
+                    bgcolor: (theme) =>
+                      theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.035)' : 'rgba(15, 23, 42, 0.035)',
+                    borderRadius: 1.5,
+                    py: 0.5,
+                    mb: 0.5,
+                  }}
+                >
+                  <List component="div" disablePadding>
+                    {group.items.map((item) => renderItem(item, true))}
+                  </List>
+                </Box>
+              </Collapse>
+            </Box>
           );
         })}
       </List>

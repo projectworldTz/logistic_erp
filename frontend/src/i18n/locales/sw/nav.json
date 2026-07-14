@@ -1,4 +1,12 @@
 {
+  "groups": {
+    "sales": "Mauzo",
+    "operations": "Uendeshaji",
+    "finance": "Fedha",
+    "people": "Watu",
+    "insights": "Uchambuzi",
+    "administration": "Utawala"
+  },
   "dashboard": "Dashibodi",
   "crm": "Uhusiano na Wateja",
   "quotations": "Nukuu za Bei",

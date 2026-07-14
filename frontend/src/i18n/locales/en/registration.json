@@ -40,7 +40,7 @@
       "country": "Country",
       "city": "City",
       "address": "Address",
-      "currency": "Currency (e.g. USD)",
+      "currency": "Currency (e.g. TZS)",
       "timezone": "Timezone",
       "industry": "Industry",
       "uploadLogo": "Upload Company Logo (optional)"
@@ -50,7 +50,7 @@
       "countryRequired": "Country is required",
       "cityRequired": "City is required",
       "addressRequired": "Address is required",
-      "currencyFormat": "Use a 3-letter currency code (e.g. USD)",
+      "currencyFormat": "Use a 3-letter currency code (e.g. TZS)",
       "timezoneRequired": "Timezone is required",
       "industryRequired": "Industry is required"
     }

@@ -23,6 +23,7 @@ import { fetchCompany } from '../../../api/endpoints/dashboard';
 import { StatWidgetCard } from '../../../components/common/StatWidgetCard';
 import { StatusBreakdownBar } from '../../../components/common/StatusBreakdownBar';
 import { useAuthStore } from '../../../hooks/useAuth';
+import { formatCurrency } from '../../../utils/currency';
 
 const EXPORT_MODULES: { value: ExportModule; labelKey: string; permission: string }[] = [
   { value: 'customers', labelKey: 'export.modules.customers', permission: 'crm.customers.view' },
@@ -243,10 +244,10 @@ export function ReportsPage() {
               <StatWidgetCard label={t('widgets.leads')} value={data.crm.leads_total} />
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <StatWidgetCard label={t('widgets.revenueCollected')} value={`$${data.finance.paid_amount.toLocaleString()}`} />
+              <StatWidgetCard label={t('widgets.revenueCollected')} value={formatCurrency(data.finance.paid_amount, company?.currency)} />
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <StatWidgetCard label={t('widgets.outstanding')} value={`$${data.finance.outstanding_amount.toLocaleString()}`} />
+              <StatWidgetCard label={t('widgets.outstanding')} value={formatCurrency(data.finance.outstanding_amount, company?.currency)} />
             </Grid>
           </Grid>
 
