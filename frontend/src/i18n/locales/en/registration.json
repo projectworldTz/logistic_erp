@@ -15,7 +15,8 @@
   },
   "plan": {
     "heading": "Choose your plan",
-    "perMonth": "/mo"
+    "perMonth": "/mo",
+    "loadError": "We couldn't load the available plans. Please check your connection and try again."
   },
   "ownerAccount": {
     "heading": "Create your owner account",

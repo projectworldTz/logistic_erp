@@ -24,6 +24,11 @@ export async function fetchPortalShipment(id: number): Promise<Shipment> {
   return data.data;
 }
 
+export async function fetchPortalShipmentTrackingQr(id: number): Promise<Blob> {
+  const { data } = await api.get(`/portal/shipments/${id}/tracking-qr`, { responseType: 'blob' });
+  return data;
+}
+
 export async function fetchPortalInvoices(page = 1): Promise<Paginated<Invoice>> {
   const { data } = await api.get<Paginated<Invoice>>('/portal/invoices', { params: { page } });
   return data;

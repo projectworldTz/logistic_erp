@@ -1,0 +1,43 @@
+{
+  "title": "Approval Workflows",
+  "newWorkflow": "New Workflow",
+  "empty": {
+    "title": "No approval workflows yet",
+    "description": "Create a workflow to require one or more approval steps before an expense is finalized."
+  },
+  "table": {
+    "name": "Name",
+    "subjectType": "Applies To",
+    "minAmount": "Min Amount",
+    "anyAmount": "Any amount",
+    "steps": "Steps"
+  },
+  "subjectTypes": {
+    "expense": "Expenses"
+  },
+  "form": {
+    "dialogTitle": "New Approval Workflow",
+    "name": "Name",
+    "subjectType": "Applies To",
+    "minAmount": "Minimum Amount (optional)",
+    "minAmountHelp": "Leave blank to apply to all amounts. When multiple workflows match, the one with the highest minimum amount wins.",
+    "isActive": "Active",
+    "stepsTitle": "Approval Steps (in order)",
+    "approverRole": "Role",
+    "selectRole": "Select a role…",
+    "addStep": "Add Step"
+  },
+  "deleteDialog": {
+    "title": "Delete Workflow",
+    "message": "Are you sure you want to delete the workflow {{name}}? This cannot be undone."
+  },
+  "toast": {
+    "created": "Workflow created.",
+    "deleted": "Workflow deleted."
+  },
+  "validation": {
+    "nameRequired": "Name is required",
+    "roleRequired": "A role is required for each step",
+    "atLeastOneStep": "At least one approval step is required"
+  }
+}

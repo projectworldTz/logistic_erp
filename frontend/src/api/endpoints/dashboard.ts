@@ -1,5 +1,5 @@
 import { api } from '../axios';
-import type { Branch, Company, DashboardSummary, Paginated, AuditLog, User } from '../../types';
+import type { Branch, BranchRollupRow, Company, DashboardSummary, Paginated, AuditLog, LoginAttempt, User } from '../../types';
 
 export async function fetchDashboardSummary(): Promise<DashboardSummary> {
   const { data } = await api.get<{ data: DashboardSummary }>('/dashboard/summary');
@@ -16,8 +16,23 @@ export async function updateCompany(payload: Partial<Company>): Promise<Company>
   return data.data;
 }
 
+export async function uploadCompanyLogo(file: File): Promise<Company> {
+  const form = new FormData();
+  form.append('logo', file);
+
+  const { data } = await api.post<{ data: Company }>('/company/logo', form, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return data.data;
+}
+
 export async function fetchBranches(): Promise<Branch[]> {
   const { data } = await api.get<{ data: Branch[] }>('/branches');
+  return data.data;
+}
+
+export async function fetchBranchRollup(): Promise<BranchRollupRow[]> {
+  const { data } = await api.get<{ data: BranchRollupRow[] }>('/branches/rollup');
   return data.data;
 }
 
@@ -28,5 +43,10 @@ export async function fetchUsers(): Promise<User[]> {
 
 export async function fetchAuditLogs(page = 1): Promise<Paginated<AuditLog>> {
   const { data } = await api.get<Paginated<AuditLog>>('/audit-logs', { params: { page } });
+  return data;
+}
+
+export async function fetchLoginHistory(page = 1): Promise<Paginated<LoginAttempt>> {
+  const { data } = await api.get<Paginated<LoginAttempt>>('/login-history', { params: { page } });
   return data;
 }

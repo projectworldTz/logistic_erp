@@ -25,6 +25,8 @@
   "form": {
     "dialogTitle": "New Invoice",
     "customer": "Customer",
+    "branch": "Branch (optional)",
+    "noBranch": "No branch",
     "shipment": "Shipment (optional)",
     "issueDate": "Issue Date",
     "dueDate": "Due Date",

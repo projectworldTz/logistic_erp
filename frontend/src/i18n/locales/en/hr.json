@@ -1,0 +1,119 @@
+{
+  "title": "Human Resources",
+  "tabs": {
+    "employees": "Employees",
+    "departments": "Departments",
+    "attendance": "Attendance"
+  },
+  "statuses": {
+    "active": "Active",
+    "on_leave": "On Leave",
+    "terminated": "Terminated"
+  },
+  "employmentTypes": {
+    "full_time": "Full Time",
+    "part_time": "Part Time",
+    "contract": "Contract",
+    "intern": "Intern"
+  },
+  "attendanceStatuses": {
+    "present": "Present",
+    "absent": "Absent",
+    "late": "Late",
+    "on_leave": "On Leave",
+    "half_day": "Half Day"
+  },
+  "validation": {
+    "nameRequired": "Name is required",
+    "invalidEmail": "Enter a valid email address",
+    "hireDateRequired": "Hire date is required",
+    "dateRequired": "Date is required",
+    "employeeRequired": "Select an employee"
+  },
+  "departments": {
+    "title": "Departments",
+    "newDepartment": "New Department",
+    "empty": {
+      "title": "No departments yet",
+      "description": "Create a department to organize your employees."
+    },
+    "table": {
+      "name": "Name",
+      "branch": "Branch",
+      "employees": "Employees"
+    },
+    "form": {
+      "dialogTitle": "New Department",
+      "name": "Name",
+      "branch": "Branch (optional)",
+      "description": "Description (optional)"
+    },
+    "deleteDialog": {
+      "title": "Delete Department",
+      "message": "Are you sure you want to delete department {{name}}? Employees in this department will become unassigned."
+    }
+  },
+  "employees": {
+    "title": "Employees",
+    "newEmployee": "New Employee",
+    "empty": {
+      "title": "No employees yet",
+      "description": "Add your first employee to start tracking your team."
+    },
+    "table": {
+      "employeeNo": "Employee No",
+      "name": "Name",
+      "jobTitle": "Job Title",
+      "department": "Department",
+      "employmentType": "Employment Type"
+    },
+    "form": {
+      "dialogTitle": "New Employee",
+      "editDialogTitle": "Edit Employee",
+      "name": "Name",
+      "jobTitle": "Job Title (optional)",
+      "email": "Email (optional)",
+      "phone": "Phone (optional)",
+      "department": "Department (optional)",
+      "branch": "Branch (optional)",
+      "employmentType": "Employment Type",
+      "hireDate": "Hire Date"
+    },
+    "deleteDialog": {
+      "title": "Delete Employee",
+      "message": "Are you sure you want to delete {{name}}? This cannot be undone."
+    }
+  },
+  "attendance": {
+    "title": "Attendance",
+    "newRecord": "New Record",
+    "empty": {
+      "title": "No attendance records yet",
+      "description": "Record attendance for an employee to start building the register."
+    },
+    "table": {
+      "employee": "Employee",
+      "date": "Date"
+    },
+    "form": {
+      "dialogTitle": "New Attendance Record",
+      "employee": "Employee",
+      "date": "Date",
+      "status": "Status"
+    },
+    "deleteDialog": {
+      "title": "Delete Attendance Record",
+      "message": "Are you sure you want to delete the attendance record for {{name}} on {{date}}?"
+    }
+  },
+  "toast": {
+    "departmentCreated": "Department created.",
+    "departmentDeleted": "Department deleted.",
+    "employeeCreated": "Employee created.",
+    "employeeUpdated": "Employee updated.",
+    "employeeDeleted": "Employee deleted.",
+    "attendanceCreated": "Attendance record created.",
+    "attendanceUpdated": "Attendance record updated.",
+    "attendanceDeleted": "Attendance record deleted."
+  }
+}

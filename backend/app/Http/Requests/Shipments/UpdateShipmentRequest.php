@@ -23,6 +23,7 @@ class UpdateShipmentRequest extends FormRequest
 
         return [
             'customer_id' => ['sometimes', Rule::exists('customers', 'id')->where('tenant_id', $tenantId)],
+            'branch_id' => ['nullable', Rule::exists('branches', 'id')->where('tenant_id', $tenantId)],
             'quotation_id' => ['nullable', Rule::exists('quotations', 'id')->where('tenant_id', $tenantId)],
             'clearing_file_id' => ['nullable', Rule::exists('clearing_files', 'id')->where('tenant_id', $tenantId)],
             'freight_booking_id' => ['nullable', Rule::exists('freight_bookings', 'id')->where('tenant_id', $tenantId)],

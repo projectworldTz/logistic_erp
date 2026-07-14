@@ -2,13 +2,19 @@
 
 namespace App\Providers;
 
+use App\Contracts\Notifications\SmsChannel;
+use App\Contracts\Notifications\WhatsAppChannel;
 use App\Models\Account;
 use App\Models\ClearingFile;
 use App\Models\Container;
 use App\Models\Customer;
 use App\Models\CustomerMessage;
+use App\Models\AttendanceRecord;
+use App\Models\Department;
 use App\Models\DemurrageCharge;
 use App\Models\Document;
+use App\Models\Employee;
+use App\Models\Expense;
 use App\Models\FreightBooking;
 use App\Models\Invoice;
 use App\Models\JournalEntry;
@@ -20,12 +26,16 @@ use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\WarehouseItem;
 use App\Observers\AccountObserver;
+use App\Observers\AttendanceRecordObserver;
 use App\Observers\ClearingFileObserver;
 use App\Observers\ContainerObserver;
 use App\Observers\CustomerMessageObserver;
 use App\Observers\CustomerObserver;
 use App\Observers\DemurrageChargeObserver;
+use App\Observers\DepartmentObserver;
 use App\Observers\DocumentObserver;
+use App\Observers\EmployeeObserver;
+use App\Observers\ExpenseObserver;
 use App\Observers\FreightBookingObserver;
 use App\Observers\InvoiceObserver;
 use App\Observers\JournalEntryObserver;
@@ -36,6 +46,8 @@ use App\Observers\TrackingEventObserver;
 use App\Observers\UserObserver;
 use App\Observers\VehicleObserver;
 use App\Observers\WarehouseItemObserver;
+use App\Services\Notifications\Channels\LogSmsChannel;
+use App\Services\Notifications\Channels\LogWhatsAppChannel;
 use App\Support\Tenancy\TenantContext;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
@@ -49,6 +61,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(TenantContext::class);
+        $this->app->bind(SmsChannel::class, LogSmsChannel::class);
+        $this->app->bind(WhatsAppChannel::class, LogWhatsAppChannel::class);
     }
 
     /**
@@ -75,5 +89,9 @@ class AppServiceProvider extends ServiceProvider
         TrackingEvent::observe(TrackingEventObserver::class);
         CustomerMessage::observe(CustomerMessageObserver::class);
         DemurrageCharge::observe(DemurrageChargeObserver::class);
+        Expense::observe(ExpenseObserver::class);
+        Department::observe(DepartmentObserver::class);
+        Employee::observe(EmployeeObserver::class);
+        AttendanceRecord::observe(AttendanceRecordObserver::class);
     }
 }

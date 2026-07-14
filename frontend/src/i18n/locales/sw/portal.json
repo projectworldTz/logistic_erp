@@ -23,7 +23,12 @@
       "backToShipments": "Rudi kwenye Shehena",
       "trackingCodeLabel": "Namba ya Ufuatiliaji",
       "timelineTitle": "Ratiba ya Ufuatiliaji",
-      "empty": "Bado hakuna taarifa za ufuatiliaji."
+      "empty": "Bado hakuna taarifa za ufuatiliaji.",
+      "qr": {
+        "alt": "Msimbo wa QR unaoelekeza kwenye ukurasa wa ufuatiliaji wa umma",
+        "caption": "Changanua ili kufuatilia shehena hii",
+        "download": "Pakua QR"
+      }
     }
   },
   "invoices": {

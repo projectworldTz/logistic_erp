@@ -15,7 +15,8 @@
   },
   "plan": {
     "heading": "Chagua mpango wako",
-    "perMonth": "/mwezi"
+    "perMonth": "/mwezi",
+    "loadError": "Hatukuweza kupakia mipango inayopatikana. Tafadhali angalia muunganisho wako na ujaribu tena."
   },
   "ownerAccount": {
     "heading": "Unda akaunti yako ya mmiliki",

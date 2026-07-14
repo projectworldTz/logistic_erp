@@ -8,6 +8,7 @@ export interface User {
   phone: string | null;
   is_super_admin: boolean;
   status: 'active' | 'invited' | 'suspended';
+  two_factor_enabled: boolean;
   roles: string[];
   permissions: string[];
 }
@@ -24,6 +25,11 @@ export interface Company {
   timezone: string;
   industry: string;
   logo_url: string | null;
+  primary_color: string | null;
+  secondary_color: string | null;
+  notify_email_enabled: boolean;
+  notify_sms_enabled: boolean;
+  notify_whatsapp_enabled: boolean;
   phone: string | null;
   email: string | null;
   website: string | null;
@@ -40,6 +46,20 @@ export interface Branch {
   phone: string | null;
   email: string | null;
   timezone: string | null;
+}
+
+export interface BranchRollupRow {
+  branch_id: number | null;
+  branch_name: string;
+  is_default: boolean;
+  employees_total: number;
+  vehicles_total: number;
+  warehouse_items_total: number;
+  shipments_total: number;
+  shipments_by_status: Record<string, number>;
+  invoices_total: number;
+  revenue_paid: number;
+  revenue_outstanding: number;
 }
 
 export interface Plan {
@@ -151,6 +171,28 @@ export interface Paginated<T> {
 export interface AuthResponse {
   token: string;
   user: User;
+}
+
+export interface TwoFactorChallenge {
+  requires_2fa: true;
+  challenge_token: string;
+}
+
+export type LoginResult = AuthResponse | TwoFactorChallenge;
+
+export function isTwoFactorChallenge(result: LoginResult): result is TwoFactorChallenge {
+  return 'requires_2fa' in result;
+}
+
+export interface LoginAttempt {
+  id: number;
+  email: string;
+  ip_address: string | null;
+  user_agent: string | null;
+  successful: boolean;
+  reason: string | null;
+  user: { id: number; name: string } | null;
+  created_at: string;
 }
 
 export interface Lead {
@@ -283,6 +325,8 @@ export interface Invoice {
   id: number;
   customer_id: number;
   customer?: Customer;
+  branch_id: number | null;
+  branch?: Branch | null;
   shipment_id: number | null;
   invoice_number: string | null;
   issue_date: string;
@@ -292,6 +336,115 @@ export interface Invoice {
   tax_amount: string;
   total_amount: string;
   currency: string;
+  notes: string | null;
+  created_at: string;
+}
+
+export interface Expense {
+  id: number;
+  expense_number: string | null;
+  customer_id: number | null;
+  customer?: Customer;
+  shipment_id: number | null;
+  shipment?: Shipment;
+  clearing_file_id: number | null;
+  freight_booking_id: number | null;
+  category: 'customs_duty' | 'trucking' | 'port_fees' | 'documentation' | 'warehousing' | 'insurance' | 'utilities' | 'office_supplies' | 'other';
+  description: string;
+  amount: string;
+  currency: string;
+  expense_date: string;
+  is_billable: boolean;
+  status: 'draft' | 'submitted' | 'approved' | 'rejected' | 'paid';
+  created_by: number | null;
+  creator?: User;
+  approved_by: number | null;
+  approver?: User;
+  rejection_reason: string | null;
+  paid_at: string | null;
+  notes: string | null;
+  approval_request?: ApprovalRequest | null;
+  created_at: string;
+}
+
+export interface ApprovalWorkflowStep {
+  id: number;
+  position: number;
+  approver_role: string;
+}
+
+export interface ApprovalWorkflow {
+  id: number;
+  name: string;
+  subject_type: 'expense';
+  min_amount: string | null;
+  is_active: boolean;
+  steps: ApprovalWorkflowStep[];
+  created_at: string;
+}
+
+export interface ApprovalDecision {
+  id: number;
+  step_position: number;
+  approver_role: string;
+  decided_by: number | null;
+  decided_by_name: string | null;
+  decision: 'approved' | 'rejected';
+  comment: string | null;
+  decided_at: string | null;
+}
+
+export interface ApprovalRequest {
+  id: number;
+  workflow_id: number | null;
+  workflow_name: string | null;
+  status: 'pending' | 'approved' | 'rejected';
+  current_step_position: number;
+  total_steps: number | null;
+  current_step_role: string | null;
+  decisions: ApprovalDecision[];
+}
+
+export interface Department {
+  id: number;
+  name: string;
+  branch_id: number | null;
+  branch?: Branch;
+  description: string | null;
+  employees_count?: number;
+  created_at: string;
+}
+
+export interface Employee {
+  id: number;
+  employee_number: string | null;
+  department_id: number | null;
+  department?: Department;
+  branch_id: number | null;
+  branch?: Branch;
+  user_id: number | null;
+  user?: User;
+  name: string;
+  email: string | null;
+  phone: string | null;
+  job_title: string | null;
+  employment_type: 'full_time' | 'part_time' | 'contract' | 'intern';
+  status: 'active' | 'on_leave' | 'terminated';
+  hire_date: string;
+  termination_date: string | null;
+  salary: string | null;
+  notes: string | null;
+  created_at: string;
+}
+
+export interface AttendanceRecord {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  date: string;
+  status: 'present' | 'absent' | 'late' | 'on_leave' | 'half_day';
+  check_in: string | null;
+  check_out: string | null;
   notes: string | null;
   created_at: string;
 }
@@ -445,6 +598,8 @@ export interface Shipment {
   id: number;
   customer_id: number;
   customer?: Customer;
+  branch_id: number | null;
+  branch?: Branch | null;
   quotation_id: number | null;
   clearing_file_id: number | null;
   freight_booking_id: number | null;

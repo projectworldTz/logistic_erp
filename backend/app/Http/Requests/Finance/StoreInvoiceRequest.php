@@ -21,6 +21,7 @@ class StoreInvoiceRequest extends FormRequest
 
         return [
             'customer_id' => ['required', Rule::exists('customers', 'id')->where('tenant_id', $tenantId)],
+            'branch_id' => ['nullable', Rule::exists('branches', 'id')->where('tenant_id', $tenantId)],
             'shipment_id' => ['nullable', Rule::exists('shipments', 'id')->where('tenant_id', $tenantId)],
             'issue_date' => ['required', 'date'],
             'due_date' => ['required', 'date', 'after_or_equal:issue_date'],

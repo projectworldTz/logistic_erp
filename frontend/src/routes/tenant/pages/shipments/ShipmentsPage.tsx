@@ -33,6 +33,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { z } from 'zod';
 import { createShipment, deleteShipment, fetchShipments, updateShipment } from '../../../../api/endpoints/shipments';
 import { fetchCustomers } from '../../../../api/endpoints/crm';
+import { fetchBranches } from '../../../../api/endpoints/dashboard';
 import type { Shipment } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
@@ -52,6 +53,7 @@ const STATUS_OPTIONS: Shipment['status'][] = ['booked', 'in_transit', 'arrived',
 function buildSchema(t: (key: string) => string) {
   return z.object({
     customer_id: z.number({ message: t('validation.selectCustomer') }),
+    branch_id: z.number().optional(),
     direction: z.enum(['import', 'export']),
     mode: z.enum(['sea', 'air', 'land']),
     origin_port: z.string().optional(),
@@ -72,6 +74,7 @@ export function ShipmentsPage() {
   const [pendingDelete, setPendingDelete] = useState<Shipment | null>(null);
   const { data, isLoading } = useQuery({ queryKey: ['shipments', 'items'], queryFn: () => fetchShipments() });
   const { data: customers } = useQuery({ queryKey: ['crm', 'customers'], queryFn: () => fetchCustomers() });
+  const { data: branches } = useQuery({ queryKey: ['tenant', 'branches'], queryFn: fetchBranches });
 
   const invalidateShipments = () => queryClient.invalidateQueries({ queryKey: ['shipments', 'items'] });
 
@@ -218,9 +221,32 @@ export function ShipmentsPage() {
                     error={!!errors.customer_id}
                     helperText={errors.customer_id?.message}
                   >
+                    <MenuItem value="" disabled>
+                      {tc('labels.loading')}
+                    </MenuItem>
                     {customers?.data.map((customer) => (
                       <MenuItem key={customer.id} value={customer.id}>
                         {customer.company_name}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                )}
+              />
+              <Controller
+                name="branch_id"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label={t('form.branch')}
+                    select
+                    fullWidth
+                    value={field.value ?? ''}
+                    onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
+                  >
+                    <MenuItem value="">{t('form.noBranch')}</MenuItem>
+                    {branches?.map((branch) => (
+                      <MenuItem key={branch.id} value={branch.id}>
+                        {branch.name}
                       </MenuItem>
                     ))}
                   </TextField>

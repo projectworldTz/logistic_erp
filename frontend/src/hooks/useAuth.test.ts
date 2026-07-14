@@ -11,6 +11,7 @@ const mockUser: User = {
   phone: null,
   is_super_admin: false,
   status: 'active',
+  two_factor_enabled: false,
   roles: ['Company Owner'],
   permissions: ['crm.customers.view'],
 };

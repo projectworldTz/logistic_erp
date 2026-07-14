@@ -2,6 +2,21 @@
   "title": "Company Settings",
   "saveSuccess": "Company profile updated.",
   "logoCaption": "Company logo (set during registration)",
+  "branding": {
+    "title": "Branding",
+    "uploadLogo": "Upload Logo",
+    "uploading": "Uploading…",
+    "logoUploadFailed": "Could not upload the logo. Please try a different image.",
+    "primaryColor": "Primary Color",
+    "secondaryColor": "Secondary Color"
+  },
+  "notifications": {
+    "title": "Notification Channels",
+    "email": "Email",
+    "sms": "SMS",
+    "whatsapp": "WhatsApp",
+    "help": "In-app notifications always apply. Enable additional channels to also deliver them by email, SMS, or WhatsApp to users with a phone number on file."
+  },
   "fields": {
     "companyName": "Company Name",
     "country": "Country",

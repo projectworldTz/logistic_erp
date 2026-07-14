@@ -6,5 +6,18 @@
     "country": "Nchi",
     "default": "Chaguo-msingi"
   },
-  "defaultChip": "Chaguo-msingi"
+  "defaultChip": "Chaguo-msingi",
+  "rollup": {
+    "title": "Utendaji wa Tawi",
+    "table": {
+      "branch": "Tawi",
+      "employees": "Wafanyakazi",
+      "vehicles": "Magari",
+      "warehouseItems": "Bidhaa za Ghala",
+      "shipments": "Shehena",
+      "invoices": "Ankara",
+      "revenuePaid": "Mapato Yaliyolipwa",
+      "revenueOutstanding": "Yanayosubiri"
+    }
+  }
 }

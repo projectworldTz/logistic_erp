@@ -6,6 +6,7 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\Tenant;
 use App\Support\Rbac\PermissionRegistry;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\PermissionRegistrar;
 
 class RolePermissionSeederService
@@ -44,22 +45,64 @@ class RolePermissionSeederService
     }
 
     /**
-     * Create a tenant's own copies of the 19 tenant-level roles, scoped
-     * to that tenant via the teams feature. Called during provisioning.
+     * Create a tenant's own copies of the 19 tenant-level roles, scoped to
+     * that tenant via the teams feature, and grant every role's default
+     * permissions in one pass.
+     *
+     * Deliberately bypasses Spatie's per-role syncPermissions()/
+     * givePermissionTo() here: each of those calls forgetCachedPermissions()
+     * internally, which forces the *next* role's permission lookup to
+     * rebuild Spatie's full permission cache from every role/permission
+     * pivot row in the database — for every one of the 19 roles. That cache
+     * rebuild cost scales with total roles/permissions across ALL tenants,
+     * so registration got dramatically slower as more tenants were
+     * provisioned (seconds, then tens of seconds). Bulk-inserting the pivot
+     * rows directly and forgetting the cache exactly once avoids the
+     * (existing tenant count) × (roles per tenant) blowup entirely.
      */
     public function seedForTenant(int $tenantId): void
     {
         app(PermissionRegistrar::class)->setPermissionsTeamId($tenantId);
 
-        foreach (config('rbac.tenant_roles', []) as $roleName) {
-            $role = Role::query()->create([
-                'name' => $roleName,
-                'guard_name' => 'web',
-                'tenant_id' => $tenantId,
-            ]);
+        $tenantRoles = config('rbac.tenant_roles', []);
+        $now = now();
 
-            $this->syncRolePermissions($role, $roleName);
+        DB::table('roles')->insert(array_map(fn (string $roleName) => [
+            'name' => $roleName,
+            'guard_name' => 'web',
+            'tenant_id' => $tenantId,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ], $tenantRoles));
+
+        $roleIds = Role::query()
+            ->where('tenant_id', $tenantId)
+            ->whereIn('name', $tenantRoles)
+            ->pluck('id', 'name');
+
+        $permissionIds = Permission::query()->pluck('id', 'name');
+
+        $pivotRows = [];
+        foreach ($tenantRoles as $roleName) {
+            $expanded = PermissionRegistry::expand(config("rbac.default_role_permissions.{$roleName}", []));
+
+            foreach ($expanded as $permissionName) {
+                if (! isset($permissionIds[$permissionName])) {
+                    continue;
+                }
+
+                $pivotRows[] = [
+                    'permission_id' => $permissionIds[$permissionName],
+                    'role_id' => $roleIds[$roleName],
+                ];
+            }
         }
+
+        if (! empty($pivotRows)) {
+            DB::table('role_has_permissions')->insert($pivotRows);
+        }
+
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
     }
 
     /**

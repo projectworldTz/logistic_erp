@@ -15,6 +15,7 @@ class Invoice extends Model
     protected $fillable = [
         'tenant_id',
         'customer_id',
+        'branch_id',
         'shipment_id',
         'invoice_number',
         'issue_date',
@@ -39,6 +40,11 @@ class Invoice extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
     }
 
     public function shipment(): BelongsTo

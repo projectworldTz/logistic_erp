@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
 import { DashboardShell } from '../../components/layout/DashboardShell';
 import { useAuthStore } from '../../hooks/useAuth';
+import { BrandThemeProvider } from '../../app/theme/BrandThemeProvider';
 import { TENANT_NAV_ITEMS } from './nav/navConfig';
 
 export function TenantLayout() {
@@ -12,8 +13,10 @@ export function TenantLayout() {
   );
 
   return (
-    <DashboardShell title="Logistics ERP" navItems={navItems}>
-      <Outlet />
-    </DashboardShell>
+    <BrandThemeProvider>
+      <DashboardShell title="Logistics ERP" navItems={navItems}>
+        <Outlet />
+      </DashboardShell>
+    </BrandThemeProvider>
   );
 }

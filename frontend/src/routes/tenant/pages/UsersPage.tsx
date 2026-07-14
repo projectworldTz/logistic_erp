@@ -283,6 +283,9 @@ export function UsersPage() {
                     error={!!errors.role}
                     helperText={errors.role?.message}
                   >
+                    <MenuItem value="" disabled>
+                      —
+                    </MenuItem>
                     {roles?.map((role) => (
                       <MenuItem key={role} value={role}>
                         {role}

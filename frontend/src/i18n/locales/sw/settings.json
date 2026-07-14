@@ -2,6 +2,21 @@
   "title": "Mipangilio ya Kampuni",
   "saveSuccess": "Wasifu wa kampuni umesasishwa.",
   "logoCaption": "Nembo ya kampuni (imewekwa wakati wa usajili)",
+  "branding": {
+    "title": "Chapa",
+    "uploadLogo": "Pakia Nembo",
+    "uploading": "Inapakia…",
+    "logoUploadFailed": "Imeshindikana kupakia nembo. Tafadhali jaribu picha nyingine.",
+    "primaryColor": "Rangi Kuu",
+    "secondaryColor": "Rangi ya Pili"
+  },
+  "notifications": {
+    "title": "Njia za Arifa",
+    "email": "Barua Pepe",
+    "sms": "SMS",
+    "whatsapp": "WhatsApp",
+    "help": "Arifa za ndani ya programu hutumika kila wakati. Washa njia za ziada ili pia kuzipeleka kwa barua pepe, SMS, au WhatsApp kwa watumiaji wenye namba ya simu iliyosajiliwa."
+  },
   "fields": {
     "companyName": "Jina la Kampuni",
     "country": "Nchi",

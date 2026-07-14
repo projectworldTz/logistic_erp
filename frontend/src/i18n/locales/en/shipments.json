@@ -31,6 +31,8 @@
   "form": {
     "dialogTitle": "New Shipment",
     "customer": "Customer",
+    "branch": "Branch (optional)",
+    "noBranch": "No branch",
     "direction": "Direction",
     "mode": "Mode",
     "originPort": "Origin Port (optional)",
@@ -64,6 +66,11 @@
     },
     "timelineTitle": "Tracking Timeline",
     "addMilestone": "Add Milestone",
+    "qr": {
+      "alt": "QR code linking to the public tracking page",
+      "caption": "Scan to track this shipment",
+      "download": "Download QR"
+    },
     "empty": {
       "title": "No milestones yet",
       "description": "Add the first tracking event to start this shipment's timeline."

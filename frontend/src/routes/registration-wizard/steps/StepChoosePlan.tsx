@@ -1,4 +1,4 @@
-import { Button, Card, CardActionArea, CardContent, CircularProgress, Grid, Stack, Typography } from '@mui/material';
+import { Alert, Button, Card, CardActionArea, CardContent, CircularProgress, Grid, Stack, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
@@ -13,7 +13,7 @@ interface StepChoosePlanProps {
 
 export function StepChoosePlan({ onNext }: StepChoosePlanProps) {
   const { t } = useTranslation('registration');
-  const { data: plans, isLoading } = useQuery({ queryKey: ['public', 'plans'], queryFn: fetchPlans });
+  const { data: plans, isLoading, isError } = useQuery({ queryKey: ['public', 'plans'], queryFn: fetchPlans });
   const { planCode, setPlanCode } = useRegistrationStore();
   const [searchParams] = useSearchParams();
 
@@ -35,6 +35,7 @@ export function StepChoosePlan({ onNext }: StepChoosePlanProps) {
       <Typography variant="h5" fontWeight={700}>
         {t('plan.heading')}
       </Typography>
+      {isError && <Alert severity="error">{t('plan.loadError')}</Alert>}
       <Grid container spacing={2}>
         {plans?.map((plan) => (
           <Grid key={plan.code} size={{ xs: 12, sm: 4 }}>

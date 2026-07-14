@@ -19,6 +19,7 @@ import {
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
+import SecurityIcon from '@mui/icons-material/Security';
 import { useMutation } from '@tanstack/react-query';
 import { useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -163,6 +164,16 @@ export function DashboardShell({ title, navItems, children }: DashboardShellProp
               <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={() => setAnchorEl(null)}>
                 <MenuItem disabled>{user?.email}</MenuItem>
                 <Divider />
+                {!user?.is_super_admin && !user?.customer_id && (
+                  <MenuItem
+                    component={RouterLink}
+                    to="/app/security"
+                    onClick={() => setAnchorEl(null)}
+                  >
+                    <SecurityIcon fontSize="small" sx={{ mr: 1 }} />
+                    {t('accountSecurity')}
+                  </MenuItem>
+                )}
                 <MenuItem onClick={() => logoutMutation.mutate()}>
                   <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
                   {t('logOut')}

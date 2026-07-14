@@ -1,0 +1,56 @@
+{
+  "title": "Usalama wa Akaunti",
+  "twoFactor": {
+    "title": "Uthibitishaji wa hatua mbili",
+    "enabled": "Imewashwa",
+    "disabled": "Imezimwa",
+    "description": "Ongeza kiwango cha ulinzi kwenye akaunti yako kwa kuhitaji msimbo kutoka kwenye programu ya uthibitishaji wakati wa kuingia.",
+    "enable": "Washa uthibitishaji wa hatua mbili",
+    "startingSetup": "Inaanza…",
+    "disable": "Zima uthibitishaji wa hatua mbili"
+  },
+  "setup": {
+    "scanInstructions": "Changanua msimbo huu wa QR kwa programu ya uthibitishaji (Google Authenticator, Authy, 1Password, n.k.), kisha weka nambari 6 inazoonyesha ili kuthibitisha.",
+    "manualEntry": "Au weka funguo hii mwenyewe",
+    "invalidCode": "Msimbo huo si sahihi. Tafadhali jaribu tena.",
+    "codeLabel": "Nambari 6",
+    "codeRequired": "Tafadhali weka msimbo",
+    "confirm": "Thibitisha na uwashe",
+    "confirming": "Inathibitisha…",
+    "cancel": "Ghairi"
+  },
+  "recoveryCodes": {
+    "title": "Hifadhi misimbo yako ya kurejesha",
+    "description": "Kila msimbo unaweza kutumika mara moja kuingia ukipoteza ufikiaji wa programu yako ya uthibitishaji. Iwahifadhi mahali salama — haitaonyeshwa tena.",
+    "dismiss": "Nimehifadhi misimbo hii"
+  },
+  "disable": {
+    "title": "Zima uthibitishaji wa hatua mbili",
+    "description": "Weka nenosiri lako la sasa kuthibitisha unataka kuzima uthibitishaji wa hatua mbili.",
+    "invalidPassword": "Nenosiri hilo si sahihi.",
+    "passwordLabel": "Nenosiri la sasa",
+    "passwordRequired": "Tafadhali weka nenosiri lako",
+    "cancel": "Ghairi",
+    "confirm": "Zima",
+    "disabling": "Inazima…",
+    "success": "Uthibitishaji wa hatua mbili umezimwa."
+  },
+  "loginHistory": {
+    "title": "Historia ya Kuingia",
+    "empty": {
+      "title": "Hakuna majaribio ya kuingia bado",
+      "description": "Majaribio ya kuingia kwa kampuni yako yataonekana hapa."
+    },
+    "table": {
+      "email": "Barua Pepe",
+      "status": "Hali",
+      "reason": "Sababu",
+      "ipAddress": "Anwani ya IP",
+      "when": "Wakati"
+    },
+    "status": {
+      "success": "Imefanikiwa",
+      "failed": "Imeshindwa"
+    }
+  }
+}

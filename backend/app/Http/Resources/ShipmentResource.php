@@ -13,6 +13,8 @@ class ShipmentResource extends JsonResource
             'id' => $this->id,
             'customer_id' => $this->customer_id,
             'customer' => new CustomerResource($this->whenLoaded('customer')),
+            'branch_id' => $this->branch_id,
+            'branch' => new BranchResource($this->whenLoaded('branch')),
             'quotation_id' => $this->quotation_id,
             'clearing_file_id' => $this->clearing_file_id,
             'freight_booking_id' => $this->freight_booking_id,

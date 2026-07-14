@@ -1,9 +1,13 @@
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
 import { DashboardShell } from '../../components/layout/DashboardShell';
+import { BrandThemeProvider } from '../../app/theme/BrandThemeProvider';
+import { fetchCompany } from '../../api/endpoints/dashboard';
 
 export function PortalLayout() {
   const { t } = useTranslation('portal');
+  const { data: company } = useQuery({ queryKey: ['tenant', 'company'], queryFn: fetchCompany, retry: false });
 
   const navItems = [
     { label: t('nav.dashboard'), path: '/portal/dashboard', enabled: true },
@@ -15,8 +19,10 @@ export function PortalLayout() {
   ];
 
   return (
-    <DashboardShell title="Client Portal" navItems={navItems}>
-      <Outlet />
-    </DashboardShell>
+    <BrandThemeProvider>
+      <DashboardShell title={company?.name ? `${company.name} Portal` : 'Client Portal'} navItems={navItems}>
+        <Outlet />
+      </DashboardShell>
+    </BrandThemeProvider>
   );
 }

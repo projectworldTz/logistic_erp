@@ -25,6 +25,7 @@ class UserResource extends JsonResource
             'phone' => $this->phone,
             'is_super_admin' => $this->is_super_admin,
             'status' => $this->status,
+            'two_factor_enabled' => $this->two_factor_enabled_at !== null,
             'roles' => $this->getRoleNames(),
             'permissions' => $this->getAllPermissions()->pluck('name'),
         ];

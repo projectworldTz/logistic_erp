@@ -1,0 +1,56 @@
+{
+  "title": "Account Security",
+  "twoFactor": {
+    "title": "Two-factor authentication",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "description": "Add an extra layer of security to your account by requiring a code from an authenticator app when you log in.",
+    "enable": "Enable two-factor authentication",
+    "startingSetup": "Starting…",
+    "disable": "Disable two-factor authentication"
+  },
+  "setup": {
+    "scanInstructions": "Scan this QR code with an authenticator app (Google Authenticator, Authy, 1Password, etc.), then enter the 6-digit code it shows to confirm.",
+    "manualEntry": "Or enter this key manually",
+    "invalidCode": "That code is incorrect. Please try again.",
+    "codeLabel": "6-digit code",
+    "codeRequired": "Please enter the code",
+    "confirm": "Confirm & enable",
+    "confirming": "Confirming…",
+    "cancel": "Cancel"
+  },
+  "recoveryCodes": {
+    "title": "Save your recovery codes",
+    "description": "Each code can be used once to log in if you lose access to your authenticator app. Store them somewhere safe — they won't be shown again.",
+    "dismiss": "I've saved these codes"
+  },
+  "disable": {
+    "title": "Disable two-factor authentication",
+    "description": "Enter your current password to confirm you want to disable two-factor authentication.",
+    "invalidPassword": "That password is incorrect.",
+    "passwordLabel": "Current password",
+    "passwordRequired": "Please enter your password",
+    "cancel": "Cancel",
+    "confirm": "Disable",
+    "disabling": "Disabling…",
+    "success": "Two-factor authentication disabled."
+  },
+  "loginHistory": {
+    "title": "Login History",
+    "empty": {
+      "title": "No login attempts yet",
+      "description": "Login attempts for your company will appear here."
+    },
+    "table": {
+      "email": "Email",
+      "status": "Status",
+      "reason": "Reason",
+      "ipAddress": "IP Address",
+      "when": "When"
+    },
+    "status": {
+      "success": "Success",
+      "failed": "Failed"
+    }
+  }
+}

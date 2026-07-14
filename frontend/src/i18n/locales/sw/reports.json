@@ -26,5 +26,21 @@
     "title": "Mpangilio wa Akaunti na Nyaraka",
     "accountsConfigured": "Akaunti zilizosanidiwa",
     "documentsArchived": "Nyaraka zilizohifadhiwa"
+  },
+  "export": {
+    "title": "Kupakua Data",
+    "subtitle": "Pakua kumbukumbu za moduli kama faili ya CSV au Excel.",
+    "moduleLabel": "Seti ya data",
+    "download": "Pakua",
+    "downloading": "Inapakua…",
+    "error": "Kupakua kumeshindwa. Tafadhali jaribu tena.",
+    "modules": {
+      "customers": "Wateja",
+      "leads": "Fursa",
+      "quotations": "Nukuu za Bei",
+      "shipments": "Shehena",
+      "invoices": "Ankara",
+      "expenses": "Matumizi"
+    }
   }
 }

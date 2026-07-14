@@ -81,6 +81,17 @@
         </div>
     @endif
 
+    @if($trackingQrDataUri)
+        <table style="width:100%; margin-top: 24px;">
+            <tr>
+                <td style="text-align:center;">
+                    <img src="{{ $trackingQrDataUri }}" style="width:100px; height:100px;"><br>
+                    <span class="muted" style="font-size:10px;">Scan to track shipment {{ $invoice->shipment->shipment_number }}</span>
+                </td>
+            </tr>
+        </table>
+    @endif
+
     <div class="footer">
         {{ $company->name }}
         @if($company->registration_number) &middot; Reg. No. {{ $company->registration_number }} @endif

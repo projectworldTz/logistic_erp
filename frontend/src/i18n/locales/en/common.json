@@ -37,7 +37,9 @@
     "loading": "Loading…",
     "noResults": "No results found.",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "active": "Active",
+    "inactive": "Inactive"
   },
   "validation": {
     "required": "This field is required.",

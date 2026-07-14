@@ -12,6 +12,8 @@ import { UsersPage } from './routes/tenant/pages/UsersPage';
 import { BranchesPage } from './routes/tenant/pages/BranchesPage';
 import { AuditLogPage as TenantAuditLogPage } from './routes/tenant/pages/AuditLogPage';
 import { CompanySettingsPage } from './routes/tenant/pages/CompanySettingsPage';
+import { AccountSecurityPage } from './routes/tenant/pages/AccountSecurityPage';
+import { LoginHistoryPage } from './routes/tenant/pages/LoginHistoryPage';
 import { LeadsPage } from './routes/tenant/pages/crm/LeadsPage';
 import { CustomersPage } from './routes/tenant/pages/crm/CustomersPage';
 import { CustomerDetailPage } from './routes/tenant/pages/crm/CustomerDetailPage';
@@ -23,6 +25,11 @@ import { DemurrageRateCardsPage } from './routes/tenant/pages/demurrage/Demurrag
 import { WarehouseItemsPage } from './routes/tenant/pages/warehouse/WarehouseItemsPage';
 import { VehiclesPage } from './routes/tenant/pages/fleet/VehiclesPage';
 import { InvoicesPage } from './routes/tenant/pages/finance/InvoicesPage';
+import { ExpensesPage } from './routes/tenant/pages/finance/ExpensesPage';
+import { WorkflowDefinitionsPage } from './routes/tenant/pages/workflow/WorkflowDefinitionsPage';
+import { EmployeesPage } from './routes/tenant/pages/hr/EmployeesPage';
+import { DepartmentsPage } from './routes/tenant/pages/hr/DepartmentsPage';
+import { AttendancePage } from './routes/tenant/pages/hr/AttendancePage';
 import { AccountsPage } from './routes/tenant/pages/accounting/AccountsPage';
 import { JournalEntriesPage } from './routes/tenant/pages/accounting/JournalEntriesPage';
 import { DocumentsPage } from './routes/tenant/pages/documents/DocumentsPage';
@@ -76,6 +83,11 @@ export default function App() {
           <Route path="warehouse" element={<WarehouseItemsPage />} />
           <Route path="fleet" element={<VehiclesPage />} />
           <Route path="finance" element={<InvoicesPage />} />
+          <Route path="expenses" element={<ExpensesPage />} />
+          <Route path="workflows" element={<WorkflowDefinitionsPage />} />
+          <Route path="hr" element={<EmployeesPage />} />
+          <Route path="hr/departments" element={<DepartmentsPage />} />
+          <Route path="hr/attendance" element={<AttendancePage />} />
           <Route path="accounting" element={<AccountsPage />} />
           <Route path="accounting/journal-entries" element={<JournalEntriesPage />} />
           <Route path="documents" element={<DocumentsPage />} />
@@ -85,6 +97,8 @@ export default function App() {
           <Route path="branches" element={<BranchesPage />} />
           <Route path="audit-log" element={<TenantAuditLogPage />} />
           <Route path="settings" element={<CompanySettingsPage />} />
+          <Route path="security" element={<AccountSecurityPage />} />
+          <Route path="login-history" element={<LoginHistoryPage />} />
         </Route>
       </Route>
 

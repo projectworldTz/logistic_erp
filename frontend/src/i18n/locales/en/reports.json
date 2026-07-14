@@ -26,5 +26,21 @@
     "title": "Chart of Accounts & Documents",
     "accountsConfigured": "Accounts configured",
     "documentsArchived": "Documents archived"
+  },
+  "export": {
+    "title": "Data Export",
+    "subtitle": "Download a module's records as a CSV or Excel file.",
+    "moduleLabel": "Data set",
+    "download": "Download",
+    "downloading": "Downloading…",
+    "error": "The export failed. Please try again.",
+    "modules": {
+      "customers": "Customers",
+      "leads": "Leads",
+      "quotations": "Quotations",
+      "shipments": "Shipments",
+      "invoices": "Invoices",
+      "expenses": "Expenses"
+    }
   }
 }

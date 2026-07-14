@@ -1,0 +1,119 @@
+{
+  "title": "Rasilimali Watu",
+  "tabs": {
+    "employees": "Wafanyakazi",
+    "departments": "Idara",
+    "attendance": "Mahudhurio"
+  },
+  "statuses": {
+    "active": "Hai",
+    "on_leave": "Likizo",
+    "terminated": "Ameachishwa"
+  },
+  "employmentTypes": {
+    "full_time": "Muda Kamili",
+    "part_time": "Muda Sehemu",
+    "contract": "Mkataba",
+    "intern": "Mwanafunzi wa Mafunzo"
+  },
+  "attendanceStatuses": {
+    "present": "Yupo",
+    "absent": "Hayupo",
+    "late": "Amechelewa",
+    "on_leave": "Likizo",
+    "half_day": "Nusu Siku"
+  },
+  "validation": {
+    "nameRequired": "Jina linahitajika",
+    "invalidEmail": "Weka barua pepe sahihi",
+    "hireDateRequired": "Tarehe ya kuajiriwa inahitajika",
+    "dateRequired": "Tarehe inahitajika",
+    "employeeRequired": "Chagua mfanyakazi"
+  },
+  "departments": {
+    "title": "Idara",
+    "newDepartment": "Idara Mpya",
+    "empty": {
+      "title": "Bado hakuna idara",
+      "description": "Unda idara ili kupanga wafanyakazi wako."
+    },
+    "table": {
+      "name": "Jina",
+      "branch": "Tawi",
+      "employees": "Wafanyakazi"
+    },
+    "form": {
+      "dialogTitle": "Idara Mpya",
+      "name": "Jina",
+      "branch": "Tawi (hiari)",
+      "description": "Maelezo (hiari)"
+    },
+    "deleteDialog": {
+      "title": "Futa Idara",
+      "message": "Una uhakika unataka kufuta idara {{name}}? Wafanyakazi wa idara hii hawatakuwa na idara tena."
+    }
+  },
+  "employees": {
+    "title": "Wafanyakazi",
+    "newEmployee": "Mfanyakazi Mpya",
+    "empty": {
+      "title": "Bado hakuna wafanyakazi",
+      "description": "Ongeza mfanyakazi wako wa kwanza ili kuanza kufuatilia timu yako."
+    },
+    "table": {
+      "employeeNo": "Namba ya Mfanyakazi",
+      "name": "Jina",
+      "jobTitle": "Wadhifa",
+      "department": "Idara",
+      "employmentType": "Aina ya Ajira"
+    },
+    "form": {
+      "dialogTitle": "Mfanyakazi Mpya",
+      "editDialogTitle": "Hariri Mfanyakazi",
+      "name": "Jina",
+      "jobTitle": "Wadhifa (hiari)",
+      "email": "Barua Pepe (hiari)",
+      "phone": "Simu (hiari)",
+      "department": "Idara (hiari)",
+      "branch": "Tawi (hiari)",
+      "employmentType": "Aina ya Ajira",
+      "hireDate": "Tarehe ya Kuajiriwa"
+    },
+    "deleteDialog": {
+      "title": "Futa Mfanyakazi",
+      "message": "Una uhakika unataka kufuta {{name}}? Hatua hii haiwezi kutenduliwa."
+    }
+  },
+  "attendance": {
+    "title": "Mahudhurio",
+    "newRecord": "Rekodi Mpya",
+    "empty": {
+      "title": "Bado hakuna rekodi za mahudhurio",
+      "description": "Rekodi mahudhurio ya mfanyakazi ili kuanza kujenga daftari."
+    },
+    "table": {
+      "employee": "Mfanyakazi",
+      "date": "Tarehe"
+    },
+    "form": {
+      "dialogTitle": "Rekodi Mpya ya Mahudhurio",
+      "employee": "Mfanyakazi",
+      "date": "Tarehe",
+      "status": "Hali"
+    },
+    "deleteDialog": {
+      "title": "Futa Rekodi ya Mahudhurio",
+      "message": "Una uhakika unataka kufuta rekodi ya mahudhurio ya {{name}} tarehe {{date}}?"
+    }
+  },
+  "toast": {
+    "departmentCreated": "Idara imeundwa.",
+    "departmentDeleted": "Idara imefutwa.",
+    "employeeCreated": "Mfanyakazi ameongezwa.",
+    "employeeUpdated": "Mfanyakazi amesasishwa.",
+    "employeeDeleted": "Mfanyakazi amefutwa.",
+    "attendanceCreated": "Rekodi ya mahudhurio imeundwa.",
+    "attendanceUpdated": "Rekodi ya mahudhurio imesasishwa.",
+    "attendanceDeleted": "Rekodi ya mahudhurio imefutwa."
+  }
+}

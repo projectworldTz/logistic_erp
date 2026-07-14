@@ -2,8 +2,9 @@ import { Button, Chip, CircularProgress, Divider, Grid, Paper, Stack, Typography
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchPortalShipment } from '../../../api/endpoints/portal';
+import { fetchPortalShipment, fetchPortalShipmentTrackingQr } from '../../../api/endpoints/portal';
 import { EmptyState } from '../../../components/common/EmptyState';
+import { TrackingQrCode } from '../../../components/common/TrackingQrCode';
 
 const STATUS_COLOR: Record<string, 'default' | 'info' | 'warning' | 'success' | 'error'> = {
   booked: 'default',
@@ -62,6 +63,15 @@ export function PortalShipmentDetailPage() {
           </Grid>
         </Grid>
       </Paper>
+
+      <TrackingQrCode
+        queryKey={['portal', 'shipment', shipmentId, 'tracking-qr']}
+        fetchQr={() => fetchPortalShipmentTrackingQr(shipmentId)}
+        trackingCode={shipment.tracking_code ?? null}
+        alt={t('shipments.detail.qr.alt')}
+        caption={t('shipments.detail.qr.caption')}
+        downloadLabel={t('shipments.detail.qr.download')}
+      />
 
       <Typography variant="h6" fontWeight={700}>
         {t('shipments.detail.timelineTitle')}

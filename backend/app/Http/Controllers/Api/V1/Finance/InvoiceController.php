@@ -9,6 +9,7 @@ use App\Http\Requests\Finance\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceResource;
 use App\Models\Company;
 use App\Models\Invoice;
+use App\Services\Tracking\ShipmentTrackingQrService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -19,7 +20,7 @@ class InvoiceController extends Controller
     {
         return InvoiceResource::collection(
             Invoice::query()
-                ->with(['customer'])
+                ->with(['customer', 'branch'])
                 ->when($request->query('status'), fn ($query, $status) => $query->where('status', $status))
                 ->latest()
                 ->paginate(20)
@@ -30,19 +31,19 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::query()->create($request->validated())->refresh();
 
-        return new InvoiceResource($invoice->load(['customer']));
+        return new InvoiceResource($invoice->load(['customer', 'branch']));
     }
 
     public function show(Invoice $invoice)
     {
-        return new InvoiceResource($invoice->load(['customer']));
+        return new InvoiceResource($invoice->load(['customer', 'branch']));
     }
 
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
         $invoice->update($request->validated());
 
-        return new InvoiceResource($invoice->load(['customer']));
+        return new InvoiceResource($invoice->load(['customer', 'branch']));
     }
 
     public function destroy(Invoice $invoice)
@@ -52,10 +53,10 @@ class InvoiceController extends Controller
         return response()->json(status: 204);
     }
 
-    public function pdf(Invoice $invoice)
+    public function pdf(Invoice $invoice, ShipmentTrackingQrService $qrService)
     {
         $company = Company::query()->firstOrFail();
-        $invoice->load('customer');
+        $invoice->load(['customer', 'shipment']);
 
         $logoBase64 = null;
         if ($company->logo_path && Storage::disk('public')->exists($company->logo_path)) {
@@ -64,11 +65,16 @@ class InvoiceController extends Controller
             $logoBase64 = "data:{$mime};base64,".base64_encode(file_get_contents($path));
         }
 
+        $trackingQrDataUri = $invoice->shipment
+            ? 'data:image/svg+xml;base64,'.base64_encode($qrService->generateSvg($invoice->shipment->tracking_code))
+            : null;
+
         $pdf = Pdf::loadView('pdf.invoice', [
             'invoice' => $invoice,
             'company' => $company,
             'logoBase64' => $logoBase64,
             'isReceipt' => $invoice->status === InvoiceStatus::Paid,
+            'trackingQrDataUri' => $trackingQrDataUri,
         ]);
 
         $prefix = $invoice->status === InvoiceStatus::Paid ? 'receipt' : 'invoice';

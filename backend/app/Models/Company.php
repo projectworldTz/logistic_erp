@@ -23,9 +23,20 @@ class Company extends Model
         'timezone',
         'industry',
         'logo_path',
+        'primary_color',
+        'secondary_color',
+        'notify_email_enabled',
+        'notify_sms_enabled',
+        'notify_whatsapp_enabled',
         'phone',
         'email',
         'website',
+    ];
+
+    protected $casts = [
+        'notify_email_enabled' => 'boolean',
+        'notify_sms_enabled' => 'boolean',
+        'notify_whatsapp_enabled' => 'boolean',
     ];
 
     public function tenant(): BelongsTo

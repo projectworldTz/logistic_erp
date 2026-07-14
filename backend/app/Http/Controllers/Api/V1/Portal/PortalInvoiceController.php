@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\InvoiceResource;
 use App\Models\Company;
 use App\Models\Invoice;
+use App\Services\Tracking\ShipmentTrackingQrService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -34,11 +35,11 @@ class PortalInvoiceController extends Controller
         return new InvoiceResource($invoice);
     }
 
-    public function pdf(Request $request, int $invoice)
+    public function pdf(Request $request, int $invoice, ShipmentTrackingQrService $qrService)
     {
         $invoice = Invoice::query()
             ->where('customer_id', $request->user()->customer_id)
-            ->with(['customer'])
+            ->with(['customer', 'shipment'])
             ->findOrFail($invoice);
 
         $company = Company::query()->firstOrFail();
@@ -50,11 +51,16 @@ class PortalInvoiceController extends Controller
             $logoBase64 = "data:{$mime};base64,".base64_encode(file_get_contents($path));
         }
 
+        $trackingQrDataUri = $invoice->shipment
+            ? 'data:image/svg+xml;base64,'.base64_encode($qrService->generateSvg($invoice->shipment->tracking_code))
+            : null;
+
         $pdf = Pdf::loadView('pdf.invoice', [
             'invoice' => $invoice,
             'company' => $company,
             'logoBase64' => $logoBase64,
             'isReceipt' => $invoice->status === InvoiceStatus::Paid,
+            'trackingQrDataUri' => $trackingQrDataUri,
         ]);
 
         $prefix = $invoice->status === InvoiceStatus::Paid ? 'receipt' : 'invoice';

@@ -18,6 +18,9 @@ export const TENANT_NAV_ITEMS: NavItem[] = [
   { labelKey: 'warehouse', path: '/app/warehouse', enabled: true, permission: 'warehouse.items.view' },
   { labelKey: 'fleet', path: '/app/fleet', enabled: true, permission: 'fleet.vehicles.view' },
   { labelKey: 'finance', path: '/app/finance', enabled: true, permission: 'finance.invoices.view' },
+  { labelKey: 'expenses', path: '/app/expenses', enabled: true, permission: 'expenses.items.view' },
+  { labelKey: 'workflows', path: '/app/workflows', enabled: true, permission: 'workflows.definitions.view' },
+  { labelKey: 'hr', path: '/app/hr', enabled: true, permission: 'hr.employees.view' },
   { labelKey: 'accounting', path: '/app/accounting', enabled: true, permission: 'accounting.accounts.view' },
   { labelKey: 'documents', path: '/app/documents', enabled: true, permission: 'documents.files.view' },
   { labelKey: 'reports', path: '/app/reports', enabled: true, permission: 'reports.view' },
@@ -25,5 +28,6 @@ export const TENANT_NAV_ITEMS: NavItem[] = [
   { labelKey: 'users', path: '/app/users', enabled: true, permission: 'core.users.view' },
   { labelKey: 'branches', path: '/app/branches', enabled: true, permission: 'core.branches.view' },
   { labelKey: 'auditLog', path: '/app/audit-log', enabled: true, permission: 'core.audit.view' },
+  { labelKey: 'loginHistory', path: '/app/login-history', enabled: true, permission: 'core.audit.view' },
   { labelKey: 'companySettings', path: '/app/settings', enabled: true, permission: 'core.company.view' },
 ];

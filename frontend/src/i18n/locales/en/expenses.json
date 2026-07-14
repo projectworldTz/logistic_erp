@@ -1,0 +1,79 @@
+{
+  "title": "Expenses",
+  "newExpense": "New Expense",
+  "empty": {
+    "title": "No expenses yet",
+    "description": "Log your first operational expense to start tracking costs."
+  },
+  "filters": {
+    "allStatuses": "All Statuses"
+  },
+  "table": {
+    "expenseNo": "Expense No",
+    "category": "Category",
+    "description": "Description",
+    "amount": "Amount",
+    "date": "Date"
+  },
+  "statuses": {
+    "draft": "Draft",
+    "submitted": "Submitted",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "paid": "Paid"
+  },
+  "categories": {
+    "customs_duty": "Customs Duty",
+    "trucking": "Trucking",
+    "port_fees": "Port Fees",
+    "documentation": "Documentation",
+    "warehousing": "Warehousing",
+    "insurance": "Insurance",
+    "utilities": "Utilities",
+    "office_supplies": "Office Supplies",
+    "other": "Other"
+  },
+  "actions": {
+    "submit": "Submit",
+    "approve": "Approve",
+    "reject": "Reject",
+    "markPaid": "Mark Paid"
+  },
+  "approval": {
+    "stepProgress": "Step {{current}} of {{total}} — awaiting {{role}}"
+  },
+  "form": {
+    "dialogTitle": "New Expense",
+    "editDialogTitle": "Edit Expense",
+    "category": "Category",
+    "description": "Description",
+    "amount": "Amount",
+    "expenseDate": "Expense Date",
+    "customer": "Customer (optional, if billable)",
+    "shipment": "Shipment (optional)",
+    "isBillable": "Billable to customer"
+  },
+  "validation": {
+    "descriptionRequired": "Description is required",
+    "amountRequired": "Amount is required",
+    "dateRequired": "Expense date is required"
+  },
+  "rejectDialog": {
+    "title": "Reject Expense",
+    "description": "Provide a reason for rejecting this expense so the submitter knows what to fix.",
+    "reason": "Reason"
+  },
+  "deleteDialog": {
+    "title": "Delete Expense",
+    "message": "Are you sure you want to delete expense {{number}}? This cannot be undone."
+  },
+  "toast": {
+    "created": "Expense created.",
+    "updated": "Expense updated.",
+    "deleted": "Expense deleted.",
+    "submitted": "Expense submitted for approval.",
+    "approved": "Expense approved.",
+    "rejected": "Expense rejected.",
+    "markedPaid": "Expense marked as paid."
+  }
+}

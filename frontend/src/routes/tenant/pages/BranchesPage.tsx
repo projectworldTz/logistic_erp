@@ -1,7 +1,76 @@
-import { Chip, CircularProgress, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import {
+  Chip,
+  CircularProgress,
+  Paper,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { fetchBranches } from '../../../api/endpoints/dashboard';
+import { fetchBranchRollup, fetchBranches } from '../../../api/endpoints/dashboard';
+
+function formatCurrency(amount: number): string {
+  return `$${amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
+function BranchRollupSection() {
+  const { t } = useTranslation('branches');
+  const { data: rollup, isLoading } = useQuery({ queryKey: ['tenant', 'branches', 'rollup'], queryFn: fetchBranchRollup });
+
+  if (isLoading) return <CircularProgress />;
+  if (!rollup) return null;
+
+  return (
+    <Stack spacing={2}>
+      <Typography variant="h6" fontWeight={700}>
+        {t('rollup.title')}
+      </Typography>
+      <Paper variant="outlined">
+        <TableContainer>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>{t('rollup.table.branch')}</TableCell>
+                <TableCell align="right">{t('rollup.table.employees')}</TableCell>
+                <TableCell align="right">{t('rollup.table.vehicles')}</TableCell>
+                <TableCell align="right">{t('rollup.table.warehouseItems')}</TableCell>
+                <TableCell align="right">{t('rollup.table.shipments')}</TableCell>
+                <TableCell align="right">{t('rollup.table.invoices')}</TableCell>
+                <TableCell align="right">{t('rollup.table.revenuePaid')}</TableCell>
+                <TableCell align="right">{t('rollup.table.revenueOutstanding')}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rollup.map((row) => (
+                <TableRow key={row.branch_id ?? 'unassigned'}>
+                  <TableCell>
+                    <Stack direction="row" spacing={1} alignItems="center">
+                      <span>{row.branch_name}</span>
+                      {row.is_default && <Chip label={t('defaultChip')} size="small" color="primary" />}
+                    </Stack>
+                  </TableCell>
+                  <TableCell align="right">{row.employees_total}</TableCell>
+                  <TableCell align="right">{row.vehicles_total}</TableCell>
+                  <TableCell align="right">{row.warehouse_items_total}</TableCell>
+                  <TableCell align="right">{row.shipments_total}</TableCell>
+                  <TableCell align="right">{row.invoices_total}</TableCell>
+                  <TableCell align="right">{formatCurrency(row.revenue_paid)}</TableCell>
+                  <TableCell align="right">{formatCurrency(row.revenue_outstanding)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </Stack>
+  );
+}
 
 export function BranchesPage() {
   const { t } = useTranslation('branches');
@@ -44,6 +113,8 @@ export function BranchesPage() {
           </TableContainer>
         </Paper>
       )}
+
+      <BranchRollupSection />
     </Stack>
   );
 }

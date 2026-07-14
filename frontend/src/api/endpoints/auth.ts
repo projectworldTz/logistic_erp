@@ -1,9 +1,19 @@
 import { api } from '../axios';
-import type { AuthResponse, User } from '../../types';
+import type { AuthResponse, LoginResult, User } from '../../types';
 
 export interface LoginPayload {
   email: string;
   password: string;
+}
+
+export interface TwoFactorVerifyPayload {
+  challenge_token: string;
+  code: string;
+}
+
+export interface EnableTwoFactorPayload {
+  secret: string;
+  code: string;
 }
 
 export interface ForgotPasswordPayload {
@@ -17,8 +27,28 @@ export interface ResetPasswordPayload {
   password_confirmation: string;
 }
 
-export async function login(payload: LoginPayload): Promise<AuthResponse> {
-  const { data } = await api.post<AuthResponse>('/auth/login', payload);
+export async function login(payload: LoginPayload): Promise<LoginResult> {
+  const { data } = await api.post<LoginResult>('/auth/login', payload);
+  return data;
+}
+
+export async function verifyTwoFactor(payload: TwoFactorVerifyPayload): Promise<AuthResponse> {
+  const { data } = await api.post<AuthResponse>('/auth/2fa/verify', payload);
+  return data;
+}
+
+export async function setupTwoFactor(): Promise<{ secret: string; qr_svg: string }> {
+  const { data } = await api.post<{ secret: string; qr_svg: string }>('/auth/2fa/setup');
+  return data;
+}
+
+export async function enableTwoFactor(payload: EnableTwoFactorPayload): Promise<{ recovery_codes: string[] }> {
+  const { data } = await api.post<{ recovery_codes: string[] }>('/auth/2fa/enable', payload);
+  return data;
+}
+
+export async function disableTwoFactor(password: string): Promise<{ message: string }> {
+  const { data } = await api.post<{ message: string }>('/auth/2fa/disable', { password });
   return data;
 }
 

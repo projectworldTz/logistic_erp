@@ -1,0 +1,79 @@
+{
+  "title": "Matumizi",
+  "newExpense": "Matumizi Mapya",
+  "empty": {
+    "title": "Bado hakuna matumizi",
+    "description": "Rekodi matumizi yako ya kwanza ya uendeshaji ili kuanza kufuatilia gharama."
+  },
+  "filters": {
+    "allStatuses": "Hali Zote"
+  },
+  "table": {
+    "expenseNo": "Namba ya Matumizi",
+    "category": "Aina",
+    "description": "Maelezo",
+    "amount": "Kiasi",
+    "date": "Tarehe"
+  },
+  "statuses": {
+    "draft": "Rasimu",
+    "submitted": "Imewasilishwa",
+    "approved": "Imeidhinishwa",
+    "rejected": "Imekataliwa",
+    "paid": "Imelipwa"
+  },
+  "categories": {
+    "customs_duty": "Ushuru wa Forodha",
+    "trucking": "Usafirishaji wa Malori",
+    "port_fees": "Ada za Bandari",
+    "documentation": "Nyaraka",
+    "warehousing": "Uhifadhi Ghalani",
+    "insurance": "Bima",
+    "utilities": "Huduma",
+    "office_supplies": "Vifaa vya Ofisi",
+    "other": "Nyingine"
+  },
+  "actions": {
+    "submit": "Wasilisha",
+    "approve": "Idhinisha",
+    "reject": "Kataa",
+    "markPaid": "Weka Imelipwa"
+  },
+  "approval": {
+    "stepProgress": "Hatua {{current}} kati ya {{total}} — inasubiri {{role}}"
+  },
+  "form": {
+    "dialogTitle": "Matumizi Mapya",
+    "editDialogTitle": "Hariri Matumizi",
+    "category": "Aina",
+    "description": "Maelezo",
+    "amount": "Kiasi",
+    "expenseDate": "Tarehe ya Matumizi",
+    "customer": "Mteja (hiari, ikiwa yanatozwa)",
+    "shipment": "Shehena (hiari)",
+    "isBillable": "Yanatozwa kwa mteja"
+  },
+  "validation": {
+    "descriptionRequired": "Maelezo yanahitajika",
+    "amountRequired": "Kiasi kinahitajika",
+    "dateRequired": "Tarehe ya matumizi inahitajika"
+  },
+  "rejectDialog": {
+    "title": "Kataa Matumizi",
+    "description": "Toa sababu ya kukataa matumizi haya ili muwasilishaji ajue la kurekebisha.",
+    "reason": "Sababu"
+  },
+  "deleteDialog": {
+    "title": "Futa Matumizi",
+    "message": "Una uhakika unataka kufuta matumizi {{number}}? Hatua hii haiwezi kutenduliwa."
+  },
+  "toast": {
+    "created": "Matumizi yameundwa.",
+    "updated": "Matumizi yamesasishwa.",
+    "deleted": "Matumizi yamefutwa.",
+    "submitted": "Matumizi yamewasilishwa kwa idhini.",
+    "approved": "Matumizi yameidhinishwa.",
+    "rejected": "Matumizi yamekataliwa.",
+    "markedPaid": "Matumizi yamewekwa kama yamelipwa."
+  }
+}

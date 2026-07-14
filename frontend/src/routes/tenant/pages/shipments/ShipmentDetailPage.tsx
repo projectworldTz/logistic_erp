@@ -24,9 +24,10 @@ import { useForm, Controller } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import { addShipmentMilestone, fetchShipment } from '../../../../api/endpoints/shipments';
+import { addShipmentMilestone, fetchShipment, fetchShipmentTrackingQr } from '../../../../api/endpoints/shipments';
 import type { TrackingEventType } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
+import { TrackingQrCode } from '../../../../components/common/TrackingQrCode';
 import { useToast } from '../../../../hooks/useToast';
 
 const STATUS_COLOR: Record<string, 'default' | 'info' | 'warning' | 'success' | 'error'> = {
@@ -157,6 +158,15 @@ export function ShipmentDetailPage() {
           </Grid>
         </Grid>
       </Paper>
+
+      <TrackingQrCode
+        queryKey={['shipments', 'item', shipmentId, 'tracking-qr']}
+        fetchQr={() => fetchShipmentTrackingQr(shipmentId)}
+        trackingCode={shipment.tracking_code ?? null}
+        alt={t('detail.qr.alt')}
+        caption={t('detail.qr.caption')}
+        downloadLabel={t('detail.qr.download')}
+      />
 
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography variant="h6" fontWeight={700}>

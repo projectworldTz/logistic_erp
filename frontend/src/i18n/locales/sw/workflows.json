@@ -1,0 +1,43 @@
+{
+  "title": "Mtiririko wa Idhini",
+  "newWorkflow": "Mtiririko Mpya",
+  "empty": {
+    "title": "Bado hakuna mtiririko wa idhini",
+    "description": "Unda mtiririko ili kuhitaji hatua moja au zaidi za idhini kabla ya matumizi kukamilika."
+  },
+  "table": {
+    "name": "Jina",
+    "subjectType": "Inatumika Kwa",
+    "minAmount": "Kiasi cha Chini",
+    "anyAmount": "Kiasi chochote",
+    "steps": "Hatua"
+  },
+  "subjectTypes": {
+    "expense": "Matumizi"
+  },
+  "form": {
+    "dialogTitle": "Mtiririko Mpya wa Idhini",
+    "name": "Jina",
+    "subjectType": "Inatumika Kwa",
+    "minAmount": "Kiasi cha Chini (hiari)",
+    "minAmountHelp": "Acha wazi ili itumike kwa kiasi chochote. Mitiririko mingi ikilingana, ile yenye kiasi cha chini kikubwa zaidi hushinda.",
+    "isActive": "Hai",
+    "stepsTitle": "Hatua za Idhini (kwa mpangilio)",
+    "approverRole": "Wadhifa",
+    "selectRole": "Chagua wadhifa…",
+    "addStep": "Ongeza Hatua"
+  },
+  "deleteDialog": {
+    "title": "Futa Mtiririko",
+    "message": "Una uhakika unataka kufuta mtiririko {{name}}? Hatua hii haiwezi kutenduliwa."
+  },
+  "toast": {
+    "created": "Mtiririko umeundwa.",
+    "deleted": "Mtiririko umefutwa."
+  },
+  "validation": {
+    "nameRequired": "Jina linahitajika",
+    "roleRequired": "Wadhifa unahitajika kwa kila hatua",
+    "atLeastOneStep": "Hatua moja ya idhini angalau inahitajika"
+  }
+}

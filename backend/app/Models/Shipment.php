@@ -18,6 +18,7 @@ class Shipment extends Model
     protected $fillable = [
         'tenant_id',
         'customer_id',
+        'branch_id',
         'quotation_id',
         'clearing_file_id',
         'freight_booking_id',
@@ -45,6 +46,11 @@ class Shipment extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
     }
 
     public function quotation(): BelongsTo

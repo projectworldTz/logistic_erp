@@ -39,6 +39,14 @@ export function AppThemeProvider({ children }: { children: ReactNode }) {
           mode,
           primary: { main: '#1a56db' },
           secondary: { main: '#0f766e' },
+          // A near-black neutral reads as flat/dull — a subtle blue-slate tint
+          // keeps dark mode feeling intentional and ties it to the brand blue.
+          ...(mode === 'dark' && {
+            background: {
+              default: '#0f172a',
+              paper: '#182338',
+            },
+          }),
         },
         shape: { borderRadius: 8 },
       }),

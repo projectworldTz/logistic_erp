@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\Accounting;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Auth\PasswordResetController;
+use App\Http\Controllers\Api\V1\Auth\TwoFactorController;
 use App\Http\Controllers\Api\V1\Clearing;
 use App\Http\Controllers\Api\V1\Containers;
 use App\Http\Controllers\Api\V1\Crm;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Api\V1\Documents;
 use App\Http\Controllers\Api\V1\Finance;
 use App\Http\Controllers\Api\V1\Fleet;
 use App\Http\Controllers\Api\V1\Freight;
+use App\Http\Controllers\Api\V1\Hr;
 use App\Http\Controllers\Api\V1\Platform;
 use App\Http\Controllers\Api\V1\Portal;
 use App\Http\Controllers\Api\V1\Public;
@@ -18,10 +20,12 @@ use App\Http\Controllers\Api\V1\Quotations;
 use App\Http\Controllers\Api\V1\Shipments;
 use App\Http\Controllers\Api\V1\Tenant;
 use App\Http\Controllers\Api\V1\Warehouse;
+use App\Http\Controllers\Api\V1\Workflow;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::post('auth/login', [AuthController::class, 'login'])->middleware('throttle:10,1');
+    Route::post('auth/2fa/verify', [AuthController::class, 'verifyTwoFactor'])->middleware('throttle:10,1');
     Route::post('auth/forgot-password', [PasswordResetController::class, 'forgotPassword'])->middleware('throttle:5,1');
     Route::post('auth/reset-password', [PasswordResetController::class, 'reset'])->middleware('throttle:5,1');
     Route::post('tenants/register', [Tenant\TenantRegistrationController::class, 'store'])->middleware('throttle:5,1');
@@ -35,13 +39,20 @@ Route::prefix('v1')->group(function () {
         Route::post('auth/logout', [AuthController::class, 'logout']);
         Route::get('auth/me', [AuthController::class, 'me']);
 
+        Route::post('auth/2fa/setup', [TwoFactorController::class, 'setup']);
+        Route::post('auth/2fa/enable', [TwoFactorController::class, 'enable']);
+        Route::post('auth/2fa/disable', [TwoFactorController::class, 'disable']);
+
         Route::middleware('tenant')->group(function () {
             Route::get('dashboard/summary', [Tenant\DashboardController::class, 'summary']);
             Route::get('reports/overview', [Tenant\ReportsController::class, 'overview'])->middleware('permission:reports.view');
+            Route::get('reports/export/{module}', [Tenant\ReportExportController::class, 'export']);
             Route::get('analytics/overview', [Tenant\AnalyticsController::class, 'overview'])->middleware('permission:analytics.view');
             Route::get('company', [Tenant\CompanyController::class, 'show']);
             Route::put('company', [Tenant\CompanyController::class, 'update']);
+            Route::post('company/logo', [Tenant\CompanyController::class, 'uploadLogo']);
             Route::get('branches', [Tenant\BranchController::class, 'index']);
+            Route::get('branches/rollup', [Tenant\BranchRollupController::class, 'index'])->middleware('permission:core.branches.view');
             Route::get('users', [Tenant\UserController::class, 'index'])->middleware('permission:core.users.view');
             Route::get('roles', [Tenant\RoleController::class, 'index'])->middleware('permission:core.users.view');
             Route::post('users', [Tenant\UserController::class, 'store'])->middleware('permission:core.users.manage');
@@ -49,6 +60,7 @@ Route::prefix('v1')->group(function () {
             Route::post('users/{user}/suspend', [Tenant\UserController::class, 'suspend'])->middleware('permission:core.users.manage');
             Route::post('users/{user}/activate', [Tenant\UserController::class, 'activate'])->middleware('permission:core.users.manage');
             Route::get('audit-logs', [Tenant\AuditLogController::class, 'index']);
+            Route::get('login-history', [Tenant\LoginHistoryController::class, 'index'])->middleware('permission:core.audit.view');
             Route::get('notifications', [Tenant\NotificationController::class, 'index']);
             Route::get('notifications/unread-count', [Tenant\NotificationController::class, 'unreadCount']);
             Route::post('notifications/read-all', [Tenant\NotificationController::class, 'markAllRead']);
@@ -145,6 +157,44 @@ Route::prefix('v1')->group(function () {
                 Route::get('invoices/{invoice}/pdf', [Finance\InvoiceController::class, 'pdf'])->middleware('permission:finance.invoices.view');
                 Route::put('invoices/{invoice}', [Finance\InvoiceController::class, 'update'])->middleware('permission:finance.invoices.manage');
                 Route::delete('invoices/{invoice}', [Finance\InvoiceController::class, 'destroy'])->middleware('permission:finance.invoices.manage');
+
+                Route::get('expenses', [Finance\ExpenseController::class, 'index'])->middleware('permission:expenses.items.view');
+                Route::post('expenses', [Finance\ExpenseController::class, 'store'])->middleware('permission:expenses.items.manage');
+                Route::get('expenses/{expense}', [Finance\ExpenseController::class, 'show'])->middleware('permission:expenses.items.view');
+                Route::put('expenses/{expense}', [Finance\ExpenseController::class, 'update'])->middleware('permission:expenses.items.manage');
+                Route::delete('expenses/{expense}', [Finance\ExpenseController::class, 'destroy'])->middleware('permission:expenses.items.manage');
+                Route::post('expenses/{expense}/submit', [Finance\ExpenseController::class, 'submit'])->middleware('permission:expenses.items.manage');
+                Route::post('expenses/{expense}/approve', [Finance\ExpenseController::class, 'approve'])->middleware('permission:expenses.items.view');
+                Route::post('expenses/{expense}/reject', [Finance\ExpenseController::class, 'reject'])->middleware('permission:expenses.items.view');
+                Route::post('expenses/{expense}/mark-paid', [Finance\ExpenseController::class, 'markPaid'])->middleware('permission:expenses.items.manage');
+            });
+
+            Route::prefix('workflows')->group(function () {
+                Route::get('definitions', [Workflow\ApprovalWorkflowController::class, 'index'])->middleware('permission:workflows.definitions.view');
+                Route::post('definitions', [Workflow\ApprovalWorkflowController::class, 'store'])->middleware('permission:workflows.definitions.manage');
+                Route::get('definitions/{workflow}', [Workflow\ApprovalWorkflowController::class, 'show'])->middleware('permission:workflows.definitions.view');
+                Route::put('definitions/{workflow}', [Workflow\ApprovalWorkflowController::class, 'update'])->middleware('permission:workflows.definitions.manage');
+                Route::delete('definitions/{workflow}', [Workflow\ApprovalWorkflowController::class, 'destroy'])->middleware('permission:workflows.definitions.manage');
+            });
+
+            Route::prefix('hr')->group(function () {
+                Route::get('departments', [Hr\DepartmentController::class, 'index'])->middleware('permission:hr.departments.view');
+                Route::post('departments', [Hr\DepartmentController::class, 'store'])->middleware('permission:hr.departments.manage');
+                Route::get('departments/{department}', [Hr\DepartmentController::class, 'show'])->middleware('permission:hr.departments.view');
+                Route::put('departments/{department}', [Hr\DepartmentController::class, 'update'])->middleware('permission:hr.departments.manage');
+                Route::delete('departments/{department}', [Hr\DepartmentController::class, 'destroy'])->middleware('permission:hr.departments.manage');
+
+                Route::get('employees', [Hr\EmployeeController::class, 'index'])->middleware('permission:hr.employees.view');
+                Route::post('employees', [Hr\EmployeeController::class, 'store'])->middleware('permission:hr.employees.manage');
+                Route::get('employees/{employee}', [Hr\EmployeeController::class, 'show'])->middleware('permission:hr.employees.view');
+                Route::put('employees/{employee}', [Hr\EmployeeController::class, 'update'])->middleware('permission:hr.employees.manage');
+                Route::delete('employees/{employee}', [Hr\EmployeeController::class, 'destroy'])->middleware('permission:hr.employees.manage');
+
+                Route::get('attendance', [Hr\AttendanceRecordController::class, 'index'])->middleware('permission:hr.attendance.view');
+                Route::post('attendance', [Hr\AttendanceRecordController::class, 'store'])->middleware('permission:hr.attendance.manage');
+                Route::get('attendance/{attendanceRecord}', [Hr\AttendanceRecordController::class, 'show'])->middleware('permission:hr.attendance.view');
+                Route::put('attendance/{attendanceRecord}', [Hr\AttendanceRecordController::class, 'update'])->middleware('permission:hr.attendance.manage');
+                Route::delete('attendance/{attendanceRecord}', [Hr\AttendanceRecordController::class, 'destroy'])->middleware('permission:hr.attendance.manage');
             });
 
             Route::prefix('accounting')->group(function () {
@@ -184,6 +234,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('items/{shipment}', [Shipments\ShipmentController::class, 'show'])->middleware('permission:shipments.items.view');
                 Route::put('items/{shipment}', [Shipments\ShipmentController::class, 'update'])->middleware('permission:shipments.items.manage');
                 Route::delete('items/{shipment}', [Shipments\ShipmentController::class, 'destroy'])->middleware('permission:shipments.items.manage');
+                Route::get('items/{shipment}/tracking-qr', [Shipments\ShipmentController::class, 'trackingQr'])->middleware('permission:shipments.items.view');
                 Route::post('items/{shipment}/milestones', [Shipments\ShipmentMilestoneController::class, 'store'])->middleware('permission:shipments.items.manage');
             });
 
@@ -192,6 +243,7 @@ Route::prefix('v1')->group(function () {
 
                 Route::get('shipments', [Portal\PortalShipmentController::class, 'index'])->middleware('permission:portal.access');
                 Route::get('shipments/{shipment}', [Portal\PortalShipmentController::class, 'show'])->middleware('permission:portal.access');
+                Route::get('shipments/{shipment}/tracking-qr', [Portal\PortalShipmentController::class, 'trackingQr'])->middleware('permission:portal.access');
 
                 Route::get('invoices', [Portal\PortalInvoiceController::class, 'index'])->middleware('permission:portal.access');
                 Route::get('invoices/{invoice}', [Portal\PortalInvoiceController::class, 'show'])->middleware('permission:portal.access');

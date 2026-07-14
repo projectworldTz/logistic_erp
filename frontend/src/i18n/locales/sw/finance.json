@@ -25,6 +25,8 @@
   "form": {
     "dialogTitle": "Ankara Mpya",
     "customer": "Mteja",
+    "branch": "Tawi (hiari)",
+    "noBranch": "Hakuna tawi",
     "shipment": "Shehena (hiari)",
     "issueDate": "Tarehe ya Kutolewa",
     "dueDate": "Tarehe ya Malipo",

@@ -17,6 +17,7 @@ function renderWithPermissions(permissions: string[]) {
       phone: null,
       is_super_admin: false,
       status: 'active',
+      two_factor_enabled: false,
       roles: ['Sales Executive'],
       permissions,
     } satisfies User,

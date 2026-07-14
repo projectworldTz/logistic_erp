@@ -7,6 +7,7 @@ use App\Http\Requests\Shipments\StoreShipmentRequest;
 use App\Http\Requests\Shipments\UpdateShipmentRequest;
 use App\Http\Resources\ShipmentResource;
 use App\Models\Shipment;
+use App\Services\Tracking\ShipmentTrackingQrService;
 use Illuminate\Http\Request;
 
 class ShipmentController extends Controller
@@ -15,7 +16,7 @@ class ShipmentController extends Controller
     {
         return ShipmentResource::collection(
             Shipment::query()
-                ->with(['customer'])
+                ->with(['customer', 'branch'])
                 ->when($request->query('status'), fn ($query, $status) => $query->where('status', $status))
                 ->latest()
                 ->paginate(20)
@@ -26,19 +27,19 @@ class ShipmentController extends Controller
     {
         $shipment = Shipment::query()->create($request->validated())->refresh();
 
-        return new ShipmentResource($shipment->load(['customer']));
+        return new ShipmentResource($shipment->load(['customer', 'branch']));
     }
 
     public function show(Shipment $shipment)
     {
-        return new ShipmentResource($shipment->load(['customer', 'milestones.recordedBy']));
+        return new ShipmentResource($shipment->load(['customer', 'branch', 'milestones.recordedBy']));
     }
 
     public function update(UpdateShipmentRequest $request, Shipment $shipment)
     {
         $shipment->update($request->validated());
 
-        return new ShipmentResource($shipment->load(['customer']));
+        return new ShipmentResource($shipment->load(['customer', 'branch']));
     }
 
     public function destroy(Shipment $shipment)
@@ -46,5 +47,11 @@ class ShipmentController extends Controller
         $shipment->delete();
 
         return response()->json(status: 204);
+    }
+
+    public function trackingQr(Shipment $shipment, ShipmentTrackingQrService $service)
+    {
+        return response($service->generateSvg($shipment->tracking_code), 200)
+            ->header('Content-Type', 'image/svg+xml');
     }
 }

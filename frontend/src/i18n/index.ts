@@ -17,6 +17,9 @@ import demurrageEn from './locales/en/demurrage.json';
 import warehouseEn from './locales/en/warehouse.json';
 import fleetEn from './locales/en/fleet.json';
 import financeEn from './locales/en/finance.json';
+import expensesEn from './locales/en/expenses.json';
+import workflowsEn from './locales/en/workflows.json';
+import hrEn from './locales/en/hr.json';
 import accountingEn from './locales/en/accounting.json';
 import documentsEn from './locales/en/documents.json';
 import reportsEn from './locales/en/reports.json';
@@ -24,6 +27,7 @@ import usersEn from './locales/en/users.json';
 import branchesEn from './locales/en/branches.json';
 import settingsEn from './locales/en/settings.json';
 import auditLogEn from './locales/en/auditLog.json';
+import securityEn from './locales/en/security.json';
 import superAdminEn from './locales/en/superAdmin.json';
 import trackingEn from './locales/en/tracking.json';
 import analyticsEn from './locales/en/analytics.json';
@@ -45,6 +49,9 @@ import demurrageSw from './locales/sw/demurrage.json';
 import warehouseSw from './locales/sw/warehouse.json';
 import fleetSw from './locales/sw/fleet.json';
 import financeSw from './locales/sw/finance.json';
+import expensesSw from './locales/sw/expenses.json';
+import workflowsSw from './locales/sw/workflows.json';
+import hrSw from './locales/sw/hr.json';
 import accountingSw from './locales/sw/accounting.json';
 import documentsSw from './locales/sw/documents.json';
 import reportsSw from './locales/sw/reports.json';
@@ -52,6 +59,7 @@ import usersSw from './locales/sw/users.json';
 import branchesSw from './locales/sw/branches.json';
 import settingsSw from './locales/sw/settings.json';
 import auditLogSw from './locales/sw/auditLog.json';
+import securitySw from './locales/sw/security.json';
 import superAdminSw from './locales/sw/superAdmin.json';
 import trackingSw from './locales/sw/tracking.json';
 import analyticsSw from './locales/sw/analytics.json';
@@ -86,6 +94,9 @@ void i18n.use(initReactI18next).init({
     'warehouse',
     'fleet',
     'finance',
+    'expenses',
+    'workflows',
+    'hr',
     'accounting',
     'documents',
     'reports',
@@ -93,6 +104,7 @@ void i18n.use(initReactI18next).init({
     'branches',
     'settings',
     'auditLog',
+    'security',
     'superAdmin',
     'tracking',
     'analytics',
@@ -116,6 +128,9 @@ void i18n.use(initReactI18next).init({
       warehouse: warehouseEn,
       fleet: fleetEn,
       finance: financeEn,
+      expenses: expensesEn,
+      workflows: workflowsEn,
+      hr: hrEn,
       accounting: accountingEn,
       documents: documentsEn,
       reports: reportsEn,
@@ -123,6 +138,7 @@ void i18n.use(initReactI18next).init({
       branches: branchesEn,
       settings: settingsEn,
       auditLog: auditLogEn,
+      security: securityEn,
       superAdmin: superAdminEn,
       tracking: trackingEn,
       analytics: analyticsEn,
@@ -145,6 +161,9 @@ void i18n.use(initReactI18next).init({
       warehouse: warehouseSw,
       fleet: fleetSw,
       finance: financeSw,
+      expenses: expensesSw,
+      workflows: workflowsSw,
+      hr: hrSw,
       accounting: accountingSw,
       documents: documentsSw,
       reports: reportsSw,
@@ -152,6 +171,7 @@ void i18n.use(initReactI18next).init({
       branches: branchesSw,
       settings: settingsSw,
       auditLog: auditLogSw,
+      security: securitySw,
       superAdmin: superAdminSw,
       tracking: trackingSw,
       analytics: analyticsSw,

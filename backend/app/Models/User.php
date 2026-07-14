@@ -35,6 +35,8 @@ class User extends Authenticatable implements CanResetPasswordContract
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_secret',
+        'two_factor_recovery_codes',
     ];
 
     protected function casts(): array
@@ -45,6 +47,11 @@ class User extends Authenticatable implements CanResetPasswordContract
             'password' => 'hashed',
             'is_super_admin' => 'boolean',
             'status' => UserStatus::class,
+            'two_factor_secret' => 'encrypted',
+            'two_factor_recovery_codes' => 'encrypted:array',
+            'two_factor_enabled_at' => 'datetime',
+            'locked_until' => 'datetime',
+            'failed_login_attempts' => 'integer',
         ];
     }
 

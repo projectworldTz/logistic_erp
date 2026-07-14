@@ -10,9 +10,13 @@ use Spatie\Permission\PermissionRegistrar;
 
 class NotificationService
 {
+    public function __construct(private readonly ExternalNotificationDispatcher $externalDispatcher) {}
+
     /**
      * Notify every tenant user with the given view permission that a new
-     * record was created, excluding the user who created it.
+     * record was created, excluding the user who created it. Also fans the
+     * same notification out to any external channels (email/SMS/WhatsApp)
+     * the tenant has enabled.
      */
     public function notifyModuleUsers(
         string $permission,
@@ -26,20 +30,20 @@ class NotificationService
 
         app(PermissionRegistrar::class)->setPermissionsTeamId($tenantId);
 
-        $recipientIds = User::query()->permission($permission)
+        $recipients = User::query()->permission($permission)
             ->where('tenant_id', $tenantId)
             ->when($actorId, fn ($query) => $query->where('id', '!=', $actorId))
-            ->pluck('id');
+            ->get(['id', 'email', 'phone']);
 
-        if ($recipientIds->isEmpty()) {
+        if ($recipients->isEmpty()) {
             return;
         }
 
         $now = now();
 
-        UserNotification::query()->insert($recipientIds->map(fn ($id) => [
+        UserNotification::query()->insert($recipients->map(fn (User $recipient) => [
             'tenant_id' => $tenantId,
-            'user_id' => $id,
+            'user_id' => $recipient->id,
             'actor_id' => $actorId,
             'type' => $type,
             'notifiable_type' => $notifiable->getMorphClass(),
@@ -49,5 +53,9 @@ class NotificationService
             'created_at' => $now,
             'updated_at' => $now,
         ])->all());
+
+        foreach ($recipients as $recipient) {
+            $this->externalDispatcher->dispatch($recipient, $title, $message);
+        }
     }
 }

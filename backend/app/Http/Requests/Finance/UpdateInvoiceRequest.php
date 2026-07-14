@@ -21,6 +21,7 @@ class UpdateInvoiceRequest extends FormRequest
 
         return [
             'customer_id' => ['sometimes', Rule::exists('customers', 'id')->where('tenant_id', $tenantId)],
+            'branch_id' => ['nullable', Rule::exists('branches', 'id')->where('tenant_id', $tenantId)],
             'shipment_id' => ['nullable', Rule::exists('shipments', 'id')->where('tenant_id', $tenantId)],
             'issue_date' => ['sometimes', 'date'],
             'due_date' => ['sometimes', 'date', 'after_or_equal:issue_date'],

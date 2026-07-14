@@ -37,3 +37,8 @@ export async function updateShipment(id: number, payload: Partial<Shipment>): Pr
 export async function deleteShipment(id: number): Promise<void> {
   await api.delete(`/shipments/items/${id}`);
 }
+
+export async function fetchShipmentTrackingQr(id: number): Promise<Blob> {
+  const { data } = await api.get(`/shipments/items/${id}/tracking-qr`, { responseType: 'blob' });
+  return data;
+}

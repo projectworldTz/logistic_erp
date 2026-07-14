@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\Portal;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ShipmentResource;
 use App\Models\Shipment;
+use App\Services\Tracking\ShipmentTrackingQrService;
 use Illuminate\Http\Request;
 
 class PortalShipmentController extends Controller
@@ -28,5 +29,15 @@ class PortalShipmentController extends Controller
             ->findOrFail($shipment);
 
         return new ShipmentResource($shipment);
+    }
+
+    public function trackingQr(Request $request, int $shipment, ShipmentTrackingQrService $service)
+    {
+        $shipment = Shipment::query()
+            ->where('customer_id', $request->user()->customer_id)
+            ->findOrFail($shipment);
+
+        return response($service->generateSvg($shipment->tracking_code), 200)
+            ->header('Content-Type', 'image/svg+xml');
     }
 }

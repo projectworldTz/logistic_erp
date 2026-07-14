@@ -13,6 +13,8 @@ class InvoiceResource extends JsonResource
             'id' => $this->id,
             'customer_id' => $this->customer_id,
             'customer' => new CustomerResource($this->whenLoaded('customer')),
+            'branch_id' => $this->branch_id,
+            'branch' => new BranchResource($this->whenLoaded('branch')),
             'shipment_id' => $this->shipment_id,
             'invoice_number' => $this->invoice_number,
             'issue_date' => $this->issue_date,

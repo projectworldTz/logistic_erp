@@ -39,6 +39,7 @@ import {
 } from '../../../../api/endpoints/finance';
 import { fetchCustomers } from '../../../../api/endpoints/crm';
 import { fetchShipments } from '../../../../api/endpoints/shipments';
+import { fetchBranches } from '../../../../api/endpoints/dashboard';
 import type { Invoice } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
@@ -60,6 +61,7 @@ function buildSchema(t: (key: string) => string) {
   return z
     .object({
       customer_id: z.number({ message: t('validation.selectCustomer') }),
+      branch_id: z.number().optional(),
       shipment_id: z.number().optional(),
       issue_date: z.string().min(1, t('validation.issueDateRequired')),
       due_date: z.string().min(1, t('validation.dueDateRequired')),
@@ -85,6 +87,7 @@ export function InvoicesPage() {
   const { data, isLoading } = useQuery({ queryKey: ['finance', 'invoices'], queryFn: () => fetchInvoices() });
   const { data: customers } = useQuery({ queryKey: ['crm', 'customers'], queryFn: () => fetchCustomers() });
   const { data: shipments } = useQuery({ queryKey: ['shipments', 'items'], queryFn: () => fetchShipments() });
+  const { data: branches } = useQuery({ queryKey: ['tenant', 'branches'], queryFn: fetchBranches });
 
   const invalidateInvoices = () => queryClient.invalidateQueries({ queryKey: ['finance', 'invoices'] });
 
@@ -249,6 +252,9 @@ export function InvoicesPage() {
                     error={!!errors.customer_id}
                     helperText={errors.customer_id?.message}
                   >
+                    <MenuItem value="" disabled>
+                      {tc('labels.loading')}
+                    </MenuItem>
                     {customers?.data.map((customer) => (
                       <MenuItem key={customer.id} value={customer.id}>
                         {customer.company_name}
@@ -272,6 +278,26 @@ export function InvoicesPage() {
                     {shipments?.data.map((shipment) => (
                       <MenuItem key={shipment.id} value={shipment.id}>
                         {shipment.shipment_number}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                )}
+              />
+              <Controller
+                name="branch_id"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label={t('form.branch')}
+                    select
+                    fullWidth
+                    value={field.value ?? ''}
+                    onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
+                  >
+                    <MenuItem value="">{t('form.noBranch')}</MenuItem>
+                    {branches?.map((branch) => (
+                      <MenuItem key={branch.id} value={branch.id}>
+                        {branch.name}
                       </MenuItem>
                     ))}
                   </TextField>

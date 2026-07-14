@@ -37,7 +37,9 @@
     "loading": "Inapakia…",
     "noResults": "Hakuna matokeo yaliyopatikana.",
     "yes": "Ndiyo",
-    "no": "Hapana"
+    "no": "Hapana",
+    "active": "Hai",
+    "inactive": "Haifanyi Kazi"
   },
   "validation": {
     "required": "Sehemu hii inahitajika.",
