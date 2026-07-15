@@ -15,11 +15,15 @@ class Document extends Model
     protected $fillable = [
         'tenant_id',
         'customer_id',
+        'shipment_id',
         'category',
         'file_name',
         'file_path',
         'file_size',
         'mime_type',
+        'version',
+        'parent_document_id',
+        'root_document_id',
         'uploaded_by',
         'description',
     ];
@@ -33,8 +37,18 @@ class Document extends Model
         return $this->belongsTo(Customer::class);
     }
 
+    public function shipment(): BelongsTo
+    {
+        return $this->belongsTo(Shipment::class);
+    }
+
     public function uploadedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'uploaded_by');
+    }
+
+    public function parentDocument(): BelongsTo
+    {
+        return $this->belongsTo(Document::class, 'parent_document_id');
     }
 }

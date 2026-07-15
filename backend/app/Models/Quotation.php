@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Quotation extends Model
 {
@@ -52,5 +54,20 @@ class Quotation extends Model
     public function shipments(): HasMany
     {
         return $this->hasMany(Shipment::class);
+    }
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(QuotationItem::class)->orderBy('position');
+    }
+
+    public function approvalRequests(): MorphMany
+    {
+        return $this->morphMany(ApprovalRequest::class, 'subject');
+    }
+
+    public function latestApprovalRequest(): MorphOne
+    {
+        return $this->morphOne(ApprovalRequest::class, 'subject')->latestOfMany();
     }
 }

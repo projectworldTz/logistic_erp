@@ -1,0 +1,109 @@
+{
+  "title": "Ada za Kushikilia Kontena",
+  "tabs": {
+    "dashboard": "Dashibodi ya Moja kwa Moja",
+    "rateCards": "Kadi za Viwango"
+  },
+  "stats": {
+    "accruing": "Makontena Yanayolimbikiza Ada",
+    "atRisk": "Yanayokaribia Kumaliza Muda Huru",
+    "totalAccrued": "Jumla Iliyolimbikizwa"
+  },
+  "exceptionBoard": {
+    "title": "Ubao wa Tahadhari",
+    "empty": {
+      "title": "Hakuna makontena yaliyo kwa wateja",
+      "description": "Makontena yenye tarehe ya kutoka bandarini bila tarehe ya kurejeshwa tupu yataonekana hapa."
+    }
+  },
+  "pendingCharges": {
+    "title": "Ada Zinazosubiri",
+    "empty": {
+      "title": "Hakuna ada zinazosubiri",
+      "description": "Ada zilizohesabiwa zinazosubiri ankara au msamaha zitaonekana hapa."
+    }
+  },
+  "table": {
+    "containerNo": "Namba ya Kontena",
+    "customer": "Mteja",
+    "detentionDays": "Siku za Kushikilia",
+    "freeDaysRemaining": "Siku Huru Zilizobaki",
+    "chargeableDays": "Siku za Kutozwa",
+    "accruedAmount": "Kiasi Kilicholimbikizwa",
+    "risk": "Hali"
+  },
+  "risk": {
+    "within_free": "Ndani ya Muda Huru",
+    "at_risk": "Hatarini",
+    "accruing": "Inalimbikiza"
+  },
+  "actions": {
+    "calculate": "Hesabu na Rekodi Ada",
+    "waive": "Samehe",
+    "generateInvoice": "Tengeneza Ankara"
+  },
+  "waiveDialog": {
+    "title": "Samehe Ada ya Kushikilia Kontena",
+    "description": "Ada hii haitaweza kutozwa tena. Toa sababu kwa ajili ya kumbukumbu ya ukaguzi.",
+    "reason": "Sababu"
+  },
+  "toast": {
+    "calculated": "Ada ya kushikilia kontena imehesabiwa.",
+    "waived": "Ada ya kushikilia kontena imesamehewa.",
+    "invoiced": "Ankara imetengenezwa kutoka kwa ada ya kushikilia kontena.",
+    "rateCardCreated": "Kadi ya viwango imeundwa.",
+    "rateCardDeleted": "Kadi ya viwango imefutwa."
+  },
+  "types": {
+    "dry_20": "20' Kavu",
+    "dry_40": "40' Kavu",
+    "dry_40_hc": "40' Ujazo wa Juu",
+    "reefer_20": "20' Friji",
+    "reefer_40": "40' Friji",
+    "open_top": "Juu Wazi",
+    "flat_rack": "Rafu Bapa",
+    "tank": "Tangi"
+  },
+  "rateCards": {
+    "title": "Kadi za Viwango",
+    "newRateCard": "Kadi Mpya ya Viwango",
+    "defaultChip": "Chaguo-msingi",
+    "allTypes": "Aina Zote",
+    "empty": {
+      "title": "Bado hakuna kadi za viwango",
+      "description": "Unda kadi ya viwango ili kuanza kuhesabu ada za kushikilia kontena."
+    },
+    "table": {
+      "name": "Jina",
+      "containerType": "Aina ya Kontena",
+      "freeDays": "Siku Huru",
+      "currency": "Sarafu",
+      "tiers": "Ngazi"
+    },
+    "form": {
+      "dialogTitle": "Kadi Mpya ya Viwango",
+      "name": "Jina",
+      "containerType": "Aina ya Kontena",
+      "freeDays": "Siku Huru",
+      "currency": "Sarafu",
+      "isDefault": "Tumia kama chaguo-msingi la kampuni",
+      "tiersTitle": "Ngazi za Viwango (kwa siku inayotozwa, baada ya siku huru)",
+      "fromDay": "Kutoka Siku",
+      "toDay": "Hadi Siku",
+      "openEnded": "Bila kikomo",
+      "dailyRate": "Kiwango cha Siku",
+      "addTier": "Ongeza Ngazi"
+    },
+    "deleteDialog": {
+      "title": "Futa Kadi ya Viwango",
+      "message": "Una uhakika unataka kufuta kadi ya viwango {{name}}? Hatua hii haiwezi kutenduliwa."
+    }
+  },
+  "validation": {
+    "nameRequired": "Jina linahitajika",
+    "freeDaysRequired": "Siku huru zinahitajika",
+    "fromDayRequired": "Siku ya kuanzia inahitajika",
+    "dailyRateRequired": "Kiwango cha siku kinahitajika",
+    "atLeastOneTier": "Ngazi moja angalau inahitajika"
+  }
+}

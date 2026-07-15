@@ -13,8 +13,11 @@
     "customer": "Customer",
     "type": "Type",
     "location": "Location",
+    "vesselVoyage": "Vessel / Voyage",
+    "eta": "ETA",
     "gateIn": "Gate In",
-    "gateOut": "Gate Out"
+    "gateOut": "Gate Out",
+    "emptyReturn": "Empty Return"
   },
   "statuses": {
     "at_port": "At Port",
@@ -42,8 +45,16 @@
     "type": "Type",
     "sealNumber": "Seal Number (optional)",
     "location": "Location (optional)",
+    "shippingLine": "Shipping Line (optional)",
+    "vesselName": "Vessel Name (optional)",
+    "voyageNumber": "Voyage Number (optional)",
+    "portOfLoading": "Port of Loading (optional)",
+    "portOfDischarge": "Port of Discharge (optional)",
     "gateInDate": "Gate In Date (optional)",
-    "gateOutDate": "Gate Out Date (optional)"
+    "eta": "ETA (optional)",
+    "ata": "ATA (optional)",
+    "gateOutDate": "Gate Out Date (optional)",
+    "emptyReturnDate": "Empty Return Date (optional)"
   },
   "validation": {
     "selectCustomer": "Select a customer",

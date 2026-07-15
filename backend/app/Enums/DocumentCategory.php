@@ -9,5 +9,10 @@ enum DocumentCategory: string
     case CustomsDeclaration = 'customs_declaration';
     case Contract = 'contract';
     case IdDocument = 'id_document';
+    case PackingList = 'packing_list';
+    case CertificateOfOrigin = 'certificate_of_origin';
+    case InsuranceCertificate = 'insurance_certificate';
+    case DeliveryNote = 'delivery_note';
+    case ReleaseOrder = 'release_order';
     case Other = 'other';
 }

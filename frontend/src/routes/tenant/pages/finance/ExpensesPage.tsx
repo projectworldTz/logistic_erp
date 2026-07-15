@@ -51,6 +51,11 @@ import { useToast } from '../../../../hooks/useToast';
 import { usePermission } from '../../../../hooks/usePermission';
 import { useAuthStore } from '../../../../hooks/useAuth';
 
+// Stable reference: an inline `?? []` fallback in a Zustand selector returns
+// a new array every call, which useSyncExternalStore treats as "changed" and
+// loops forever re-rendering.
+const EMPTY_ROLES: string[] = [];
+
 const STATUS_COLOR: Record<Expense['status'], 'default' | 'info' | 'warning' | 'success' | 'error'> = {
   draft: 'default',
   submitted: 'info',
@@ -95,7 +100,7 @@ export function ExpensesPage() {
   const canApprove = usePermission('expenses.items.approve');
   const canViewCustomers = usePermission('crm.customers.view');
   const canViewShipments = usePermission('shipments.items.view');
-  const currentUserRoles = useAuthStore((s) => s.user?.roles ?? []);
+  const currentUserRoles = useAuthStore((s) => s.user?.roles ?? EMPTY_ROLES);
   const schema = buildSchema(t);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null);

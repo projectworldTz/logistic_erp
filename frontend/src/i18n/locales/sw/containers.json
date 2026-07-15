@@ -13,8 +13,11 @@
     "customer": "Mteja",
     "type": "Aina",
     "location": "Mahali",
+    "vesselVoyage": "Meli / Safari",
+    "eta": "ETA",
     "gateIn": "Kuingia Lango",
-    "gateOut": "Kutoka Lango"
+    "gateOut": "Kutoka Lango",
+    "emptyReturn": "Kurejesha Tupu"
   },
   "statuses": {
     "at_port": "Bandarini",
@@ -42,8 +45,16 @@
     "type": "Aina",
     "sealNumber": "Namba ya Muhuri (hiari)",
     "location": "Mahali (hiari)",
+    "shippingLine": "Kampuni ya Meli (hiari)",
+    "vesselName": "Jina la Meli (hiari)",
+    "voyageNumber": "Namba ya Safari (hiari)",
+    "portOfLoading": "Bandari ya Kupakia (hiari)",
+    "portOfDischarge": "Bandari ya Kushusha (hiari)",
     "gateInDate": "Tarehe ya Kuingia Lango (hiari)",
-    "gateOutDate": "Tarehe ya Kutoka Lango (hiari)"
+    "eta": "Tarehe Inayotarajiwa Kuwasili (hiari)",
+    "ata": "Tarehe Halisi ya Kuwasili (hiari)",
+    "gateOutDate": "Tarehe ya Kutoka Lango (hiari)",
+    "emptyReturnDate": "Tarehe ya Kurejesha Tupu (hiari)"
   },
   "validation": {
     "selectCustomer": "Chagua mteja",

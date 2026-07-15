@@ -6,7 +6,14 @@ import {
   CircularProgress,
   Grid,
   MenuItem,
+  Paper,
   Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   TextField,
   ToggleButton,
   ToggleButtonGroup,
@@ -18,8 +25,16 @@ import { useMutation } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { downloadReportExport, fetchReportsOverview, type ExportFormat, type ExportModule } from '../../../api/endpoints/reports';
-import { fetchCompany } from '../../../api/endpoints/dashboard';
+import {
+  downloadReportExport,
+  fetchCustomsReport,
+  fetchProfitReport,
+  fetchReportsOverview,
+  fetchTaxReport,
+  type ExportFormat,
+  type ExportModule,
+} from '../../../api/endpoints/reports';
+import { fetchBranches, fetchCompany } from '../../../api/endpoints/dashboard';
 import { StatWidgetCard } from '../../../components/common/StatWidgetCard';
 import { StatusBreakdownBar } from '../../../components/common/StatusBreakdownBar';
 import { useAuthStore } from '../../../hooks/useAuth';
@@ -32,6 +47,7 @@ const EXPORT_MODULES: { value: ExportModule; labelKey: string; permission: strin
   { value: 'shipments', labelKey: 'export.modules.shipments', permission: 'shipments.items.view' },
   { value: 'invoices', labelKey: 'export.modules.invoices', permission: 'finance.invoices.view' },
   { value: 'expenses', labelKey: 'export.modules.expenses', permission: 'expenses.items.view' },
+  { value: 'profit', labelKey: 'export.modules.profit', permission: 'reports.view' },
 ];
 
 const STATUS_COLORS: Record<string, string> = {
@@ -202,8 +218,22 @@ function DataExportCard() {
 
 export function ReportsPage() {
   const { t } = useTranslation('reports');
-  const { data, isLoading } = useQuery({ queryKey: ['reports', 'overview'], queryFn: fetchReportsOverview });
+  const permissions = useAuthStore((s) => s.user?.permissions) ?? [];
+  const canViewReports = permissions.includes('reports.view');
+  const [branchId, setBranchId] = useState<number | ''>('');
+  const { data: branches } = useQuery({ queryKey: ['branches'], queryFn: fetchBranches });
+  const { data, isLoading } = useQuery({
+    queryKey: ['reports', 'overview', branchId],
+    queryFn: () => fetchReportsOverview(branchId),
+  });
   const { data: company } = useQuery({ queryKey: ['tenant', 'company'], queryFn: fetchCompany });
+  const { data: profit } = useQuery({
+    queryKey: ['reports', 'profit', branchId],
+    queryFn: () => fetchProfitReport(branchId),
+    enabled: canViewReports,
+  });
+  const { data: customs } = useQuery({ queryKey: ['reports', 'customs'], queryFn: fetchCustomsReport, enabled: canViewReports });
+  const { data: tax } = useQuery({ queryKey: ['reports', 'tax'], queryFn: fetchTaxReport, enabled: canViewReports });
 
   return (
     <Stack spacing={3}>
@@ -225,9 +255,28 @@ export function ReportsPage() {
             {t('subtitle')}
           </Typography>
         </Stack>
-        <Button className="no-print" variant="outlined" startIcon={<PrintIcon />} onClick={() => window.print()}>
-          {t('printReport')}
-        </Button>
+        <Stack direction="row" spacing={2} alignItems="center" className="no-print">
+          {branches && branches.length > 1 && (
+            <TextField
+              select
+              size="small"
+              label={t('branchFilter.label')}
+              value={branchId}
+              onChange={(e) => setBranchId(e.target.value === '' ? '' : Number(e.target.value))}
+              sx={{ minWidth: 200 }}
+            >
+              <MenuItem value="">{t('branchFilter.allBranches')}</MenuItem>
+              {branches.map((branch) => (
+                <MenuItem key={branch.id} value={branch.id}>
+                  {branch.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+          <Button variant="outlined" startIcon={<PrintIcon />} onClick={() => window.print()}>
+            {t('printReport')}
+          </Button>
+        </Stack>
       </Stack>
 
       <DataExportCard />
@@ -312,6 +361,83 @@ export function ReportsPage() {
             </Grid>
           </Grid>
         </>
+      )}
+
+      {(profit || customs || tax) && (
+        <Stack spacing={2}>
+          <Typography variant="h6" fontWeight={700}>
+            {t('advanced.sectionTitle')}
+          </Typography>
+
+          <Grid container spacing={2}>
+            {customs && (
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <StatWidgetCard label={t('advanced.customs.totalDeclarations')} value={customs.total_declarations} />
+              </Grid>
+            )}
+            {customs && (
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <StatWidgetCard
+                  label={t('advanced.customs.avgClearanceDays')}
+                  value={customs.avg_clearance_days === null ? '—' : t('advanced.customs.daysValue', { count: customs.avg_clearance_days })}
+                />
+              </Grid>
+            )}
+            {tax && (
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <StatWidgetCard label={t('advanced.tax.vatCollected')} value={formatCurrency(tax.totals.vat_collected, company?.currency)} />
+              </Grid>
+            )}
+            {tax && (
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <StatWidgetCard label={t('advanced.tax.dutyPaid')} value={formatCurrency(tax.totals.duty_paid, company?.currency)} />
+              </Grid>
+            )}
+          </Grid>
+
+          {profit && profit.rows.length > 0 && (
+            <Card variant="outlined">
+              <CardContent>
+                <Stack spacing={2}>
+                  <Stack direction="row" justifyContent="space-between" alignItems="baseline">
+                    <Typography variant="subtitle1" fontWeight={700}>
+                      {t('advanced.profit.title')}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {t('advanced.profit.totalProfit', { amount: formatCurrency(profit.totals.profit, company?.currency) })}
+                    </Typography>
+                  </Stack>
+                  <TableContainer component={Paper} variant="outlined">
+                    <Table size="small">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>{t('advanced.profit.table.shipment')}</TableCell>
+                          <TableCell>{t('advanced.profit.table.customer')}</TableCell>
+                          <TableCell align="right">{t('advanced.profit.table.revenue')}</TableCell>
+                          <TableCell align="right">{t('advanced.profit.table.cost')}</TableCell>
+                          <TableCell align="right">{t('advanced.profit.table.profit')}</TableCell>
+                          <TableCell align="right">{t('advanced.profit.table.margin')}</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {profit.rows.map((row) => (
+                          <TableRow key={row.shipment_id}>
+                            <TableCell>{row.shipment_number ?? '—'}</TableCell>
+                            <TableCell>{row.customer ?? '—'}</TableCell>
+                            <TableCell align="right">{formatCurrency(row.revenue, company?.currency)}</TableCell>
+                            <TableCell align="right">{formatCurrency(row.cost, company?.currency)}</TableCell>
+                            <TableCell align="right">{formatCurrency(row.profit, company?.currency)}</TableCell>
+                            <TableCell align="right">{row.margin_percent === null ? '—' : `${row.margin_percent}%`}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Stack>
+              </CardContent>
+            </Card>
+          )}
+        </Stack>
       )}
     </Stack>
   );

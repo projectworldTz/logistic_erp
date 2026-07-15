@@ -25,18 +25,26 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { z } from 'zod';
-import { createShipment, deleteShipment, fetchShipments, updateShipment } from '../../../../api/endpoints/shipments';
+import {
+  checkShipmentSla,
+  createShipment,
+  deleteShipment,
+  fetchShipments,
+  updateShipment,
+} from '../../../../api/endpoints/shipments';
 import { fetchCustomers } from '../../../../api/endpoints/crm';
 import { fetchBranches } from '../../../../api/endpoints/dashboard';
 import type { Shipment } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
+import { useAuthStore } from '../../../../hooks/useAuth';
 import { useToast } from '../../../../hooks/useToast';
 
 const STATUS_COLOR: Record<Shipment['status'], 'default' | 'info' | 'warning' | 'success' | 'error'> = {
@@ -72,6 +80,8 @@ export function ShipmentsPage() {
   const schema = buildSchema(t);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [pendingDelete, setPendingDelete] = useState<Shipment | null>(null);
+  const permissions = useAuthStore((s) => s.user?.permissions) ?? [];
+  const canManageShipments = permissions.includes('shipments.items.manage');
   const { data, isLoading } = useQuery({ queryKey: ['shipments', 'items'], queryFn: () => fetchShipments() });
   const { data: customers } = useQuery({ queryKey: ['crm', 'customers'], queryFn: () => fetchCustomers() });
   const { data: branches } = useQuery({ queryKey: ['tenant', 'branches'], queryFn: fetchBranches });
@@ -104,6 +114,14 @@ export function ShipmentsPage() {
     },
   });
 
+  const slaCheckMutation = useMutation({
+    mutationFn: checkShipmentSla,
+    onSuccess: (result) => {
+      invalidateShipments();
+      showToast(t('toast.slaChecked', { delayed: result.delayed_alerted, nearDeadline: result.near_deadline_alerted }));
+    },
+  });
+
   const {
     register,
     control,
@@ -120,16 +138,28 @@ export function ShipmentsPage() {
         <Typography variant="h5" fontWeight={700}>
           {t('title')}
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => {
-            reset();
-            setDialogOpen(true);
-          }}
-        >
-          {t('newShipment')}
-        </Button>
+        <Stack direction="row" spacing={1.5}>
+          {canManageShipments && (
+            <Button
+              variant="outlined"
+              startIcon={<NotificationsActiveIcon />}
+              disabled={slaCheckMutation.isPending}
+              onClick={() => slaCheckMutation.mutate()}
+            >
+              {t('checkSla')}
+            </Button>
+          )}
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={() => {
+              reset();
+              setDialogOpen(true);
+            }}
+          >
+            {t('newShipment')}
+          </Button>
+        </Stack>
       </Stack>
 
       {isLoading && <CircularProgress />}

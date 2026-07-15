@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\V1\Tenant;
 
+use App\Enums\ExpenseStatus;
+use App\Enums\InvoiceStatus;
 use App\Exports\ArrayExport;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
@@ -28,6 +30,7 @@ class ReportExportController extends Controller
         'shipments' => 'shipments.items.view',
         'invoices' => 'finance.invoices.view',
         'expenses' => 'expenses.items.view',
+        'profit' => 'reports.view',
     ];
 
     public function export(Request $request, string $module)
@@ -170,6 +173,37 @@ class ReportExportController extends Controller
 
         return [
             ['ID', 'Expense #', 'Category', 'Description', 'Currency', 'Amount', 'Billable', 'Customer', 'Status', 'Created By', 'Approved By', 'Expense Date'],
+            $rows,
+        ];
+    }
+
+    private function buildProfit(): array
+    {
+        $shipments = Shipment::query()->with(['customer', 'invoices', 'expenses'])
+            ->whereHas('invoices')
+            ->orWhereHas('expenses')
+            ->get();
+
+        $rows = $shipments->map(function (Shipment $shipment) {
+            $revenue = (float) $shipment->invoices
+                ->whereIn('status', [InvoiceStatus::Sent, InvoiceStatus::Paid, InvoiceStatus::Overdue])
+                ->sum('total_amount');
+            $cost = (float) $shipment->expenses
+                ->whereIn('status', [ExpenseStatus::Approved, ExpenseStatus::Paid])
+                ->sum('amount');
+
+            return [
+                $shipment->id,
+                $shipment->shipment_number,
+                $shipment->customer?->company_name,
+                $revenue,
+                $cost,
+                $revenue - $cost,
+            ];
+        })->all();
+
+        return [
+            ['ID', 'Shipment #', 'Customer', 'Revenue', 'Cost', 'Profit'],
             $rows,
         ];
     }

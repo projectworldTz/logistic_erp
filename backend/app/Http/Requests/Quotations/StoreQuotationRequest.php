@@ -30,11 +30,15 @@ class StoreQuotationRequest extends FormRequest
             'issue_date' => ['required', 'date'],
             'valid_until' => ['required', 'date', 'after_or_equal:issue_date'],
             'status' => ['sometimes', new Enum(QuotationStatus::class)],
-            'subtotal' => ['required', 'numeric', 'min:0'],
+            'subtotal' => ['required_without:items', 'numeric', 'min:0'],
             'tax_amount' => ['sometimes', 'numeric', 'min:0'],
-            'total_amount' => ['required', 'numeric', 'min:0'],
+            'total_amount' => ['required_without:items', 'numeric', 'min:0'],
             'currency' => ['sometimes', 'string', 'size:3'],
             'notes' => ['nullable', 'string'],
+            'items' => ['sometimes', 'array', 'min:1'],
+            'items.*.description' => ['required_with:items', 'string', 'max:255'],
+            'items.*.quantity' => ['required_with:items', 'numeric', 'min:0.01'],
+            'items.*.unit_price' => ['required_with:items', 'numeric', 'min:0'],
         ];
     }
 }

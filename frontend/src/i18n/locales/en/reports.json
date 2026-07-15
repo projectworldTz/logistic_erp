@@ -2,6 +2,10 @@
   "title": "Reports",
   "subtitle": "A cross-module rollup of everything tracked across the operation.",
   "printReport": "Print Report",
+  "branchFilter": {
+    "label": "Branch",
+    "allBranches": "All Branches"
+  },
   "reportGeneratedAt": "Report generated {{date}}",
   "totalCount": "{{count}} total",
   "noRecords": "No records yet.",
@@ -40,7 +44,32 @@
       "quotations": "Quotations",
       "shipments": "Shipments",
       "invoices": "Invoices",
-      "expenses": "Expenses"
+      "expenses": "Expenses",
+      "profit": "Shipment Profit"
+    }
+  },
+  "advanced": {
+    "sectionTitle": "Advanced Reports",
+    "customs": {
+      "totalDeclarations": "Customs Declarations",
+      "avgClearanceDays": "Avg. Clearance Time",
+      "daysValue": "{{count}} days"
+    },
+    "tax": {
+      "vatCollected": "VAT Collected",
+      "dutyPaid": "Duty Paid"
+    },
+    "profit": {
+      "title": "Profit by Shipment",
+      "totalProfit": "Total profit: {{amount}}",
+      "table": {
+        "shipment": "Shipment",
+        "customer": "Customer",
+        "revenue": "Revenue",
+        "cost": "Cost",
+        "profit": "Profit",
+        "margin": "Margin"
+      }
     }
   }
 }

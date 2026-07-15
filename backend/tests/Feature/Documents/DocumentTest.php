@@ -81,6 +81,58 @@ class DocumentTest extends TestCase
         $this->assertDatabaseHas('audit_logs', ['action' => 'document.created']);
     }
 
+    public function test_document_can_be_linked_to_a_shipment_and_uploaded_as_new_versions(): void
+    {
+        $registration = $this->registerTenant();
+        $token = $registration['token'];
+
+        $customerId = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson('/api/v1/crm/customers', [
+                'company_name' => 'Shipper Co',
+                'email' => 'ops@shipperco.test',
+                'status' => 'active',
+            ])->json('data.id');
+
+        $shipmentId = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson('/api/v1/shipments/items', [
+                'customer_id' => $customerId,
+                'direction' => 'import',
+                'mode' => 'sea',
+            ])->json('data.id');
+
+        $v1File = UploadedFile::fake()->create('packing-list.pdf', 100, 'application/pdf');
+        $v1 = $this->withHeader('Authorization', "Bearer {$token}")
+            ->post('/api/v1/documents/files', [
+                'file' => $v1File,
+                'shipment_id' => $shipmentId,
+                'category' => 'packing_list',
+            ]);
+        $v1->assertCreated();
+        $v1->assertJsonPath('data.shipment_id', $shipmentId);
+        $v1->assertJsonPath('data.version', 1);
+        $v1->assertJsonPath('data.is_previewable', true);
+        $documentId = $v1->json('data.id');
+
+        $v2File = UploadedFile::fake()->create('packing-list-revised.pdf', 100, 'application/pdf');
+        $v2 = $this->withHeader('Authorization', "Bearer {$token}")
+            ->post('/api/v1/documents/files', [
+                'file' => $v2File,
+                'shipment_id' => $shipmentId,
+                'category' => 'packing_list',
+                'parent_document_id' => $documentId,
+            ]);
+        $v2->assertCreated();
+        $v2->assertJsonPath('data.version', 2);
+        $v2->assertJsonPath('data.parent_document_id', $documentId);
+
+        $versions = $this->withHeader('Authorization', "Bearer {$token}")
+            ->getJson("/api/v1/documents/files/{$documentId}/versions");
+        $versions->assertOk();
+        $versions->assertJsonCount(2, 'data');
+        $versions->assertJsonPath('data.0.version', 2);
+        $versions->assertJsonPath('data.1.version', 1);
+    }
+
     public function test_disallowed_file_type_is_rejected(): void
     {
         $registration = $this->registerTenant();

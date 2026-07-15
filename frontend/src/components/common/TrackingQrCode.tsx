@@ -10,9 +10,19 @@ interface TrackingQrCodeProps {
   alt: string;
   caption: string;
   downloadLabel: string;
+  /** Prefix for the downloaded file name (default "tracking-qr") — set a distinct value when a page renders more than one QR code, so downloads don't collide. */
+  filenamePrefix?: string;
 }
 
-export function TrackingQrCode({ queryKey, fetchQr, trackingCode, alt, caption, downloadLabel }: TrackingQrCodeProps) {
+export function TrackingQrCode({
+  queryKey,
+  fetchQr,
+  trackingCode,
+  alt,
+  caption,
+  downloadLabel,
+  filenamePrefix = 'tracking-qr',
+}: TrackingQrCodeProps) {
   const [objectUrl, setObjectUrl] = useState<string | null>(null);
 
   const { data: blob } = useQuery({ queryKey, queryFn: fetchQr, enabled: !!trackingCode });
@@ -29,7 +39,7 @@ export function TrackingQrCode({ queryKey, fetchQr, trackingCode, alt, caption, 
   const handleDownload = () => {
     const link = document.createElement('a');
     link.href = objectUrl;
-    link.download = `tracking-qr-${trackingCode}.svg`;
+    link.download = `${filenamePrefix}-${trackingCode}.svg`;
     link.click();
   };
 

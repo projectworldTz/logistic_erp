@@ -22,7 +22,9 @@ class StoreDocumentRequest extends FormRequest
         return [
             'file' => ['required', 'file', 'max:10240', 'mimes:pdf,jpg,jpeg,png,doc,docx,xls,xlsx'],
             'customer_id' => ['nullable', Rule::exists('customers', 'id')->where('tenant_id', $tenantId)],
+            'shipment_id' => ['nullable', Rule::exists('shipments', 'id')->where('tenant_id', $tenantId)],
             'category' => ['sometimes', new Enum(DocumentCategory::class)],
+            'parent_document_id' => ['nullable', Rule::exists('documents', 'id')->where('tenant_id', $tenantId)],
             'description' => ['nullable', 'string'],
         ];
     }

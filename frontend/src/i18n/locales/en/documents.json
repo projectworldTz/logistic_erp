@@ -11,6 +11,7 @@
   "table": {
     "fileName": "File Name",
     "category": "Category",
+    "shipment": "Shipment",
     "size": "Size",
     "uploaded": "Uploaded"
   },
@@ -20,10 +21,26 @@
     "customs_declaration": "Customs Declaration",
     "contract": "Contract",
     "id_document": "ID Document",
+    "packing_list": "Packing List",
+    "certificate_of_origin": "Certificate of Origin",
+    "insurance_certificate": "Insurance Certificate",
+    "delivery_note": "Delivery Note",
+    "release_order": "Release Order",
     "other": "Other"
   },
+  "actions": {
+    "preview": "Preview",
+    "versions": "Version History",
+    "newVersion": "Upload New Version"
+  },
   "form": {
-    "chooseFile": "Choose File"
+    "chooseFile": "Choose File",
+    "shipment": "Shipment (optional)",
+    "noShipment": "No shipment",
+    "newVersionTitle": "New Version — {{name}}"
+  },
+  "versionsDialog": {
+    "title": "Version History"
   },
   "deleteDialog": {
     "title": "Delete document",

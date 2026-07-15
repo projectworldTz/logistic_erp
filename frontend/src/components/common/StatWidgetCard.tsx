@@ -5,9 +5,11 @@ interface StatWidgetCardProps {
   label: string;
   value: string | number;
   icon?: ReactNode;
+  /** Colors the value text to draw attention (e.g. a non-zero "delayed" count). */
+  tone?: 'error' | 'warning' | 'success';
 }
 
-export function StatWidgetCard({ label, value, icon }: StatWidgetCardProps) {
+export function StatWidgetCard({ label, value, icon, tone }: StatWidgetCardProps) {
   return (
     <Card variant="outlined" sx={{ height: '100%' }}>
       <CardContent>
@@ -16,7 +18,11 @@ export function StatWidgetCard({ label, value, icon }: StatWidgetCardProps) {
             <Typography variant="body2" color="text.secondary">
               {label}
             </Typography>
-            <Typography variant="h5" fontWeight={600} sx={{ overflowWrap: 'break-word' }}>
+            <Typography
+              variant="h5"
+              fontWeight={600}
+              sx={{ overflowWrap: 'break-word', color: tone ? `${tone}.main` : undefined }}
+            >
               {value}
             </Typography>
           </Stack>

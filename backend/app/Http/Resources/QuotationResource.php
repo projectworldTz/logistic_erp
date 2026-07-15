@@ -26,6 +26,12 @@ class QuotationResource extends JsonResource
             'total_amount' => $this->total_amount,
             'currency' => $this->currency,
             'notes' => $this->notes,
+            'items' => QuotationItemResource::collection($this->whenLoaded('items')),
+            'has_shipment' => $this->shipments()->exists(),
+            'approval_request' => $this->whenLoaded(
+                'latestApprovalRequest',
+                fn () => $this->latestApprovalRequest ? new ApprovalRequestResource($this->latestApprovalRequest) : null,
+            ),
             'created_at' => $this->created_at,
         ];
     }

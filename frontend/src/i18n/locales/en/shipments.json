@@ -1,6 +1,7 @@
 {
   "title": "Shipments",
   "newShipment": "New Shipment",
+  "checkSla": "Check SLA Now",
   "empty": {
     "title": "No shipments yet",
     "description": "Create your first shipment to start tracking it end-to-end."
@@ -49,7 +50,8 @@
   "toast": {
     "created": "Shipment created.",
     "statusUpdated": "Shipment status updated.",
-    "deleted": "Shipment deleted."
+    "deleted": "Shipment deleted.",
+    "slaChecked": "SLA check complete — {{delayed}} delayed, {{nearDeadline}} near deadline."
   },
   "riskBadge": {
     "atRisk": "At Risk"
@@ -71,6 +73,11 @@
       "caption": "Scan to track this shipment",
       "download": "Download QR"
     },
+    "deliveryNoteQr": {
+      "alt": "QR code linking to the public delivery note verification page",
+      "caption": "Scan to verify this delivery note",
+      "download": "Download QR"
+    },
     "empty": {
       "title": "No milestones yet",
       "description": "Add the first tracking event to start this shipment's timeline."
@@ -87,6 +94,25 @@
     },
     "toast": {
       "milestoneAdded": "Milestone added."
+    },
+    "costs": {
+      "title": "Cost & Profit",
+      "billedRevenue": "Billed Revenue",
+      "confirmedCost": "Confirmed Cost",
+      "profit": "Profit",
+      "margin": "Margin",
+      "breakdownTitle": "Cost Breakdown by Category",
+      "invoicesTitle": "Linked Invoices",
+      "expensesTitle": "Linked Expenses",
+      "table": {
+        "invoiceNumber": "Invoice No",
+        "description": "Description",
+        "amount": "Amount"
+      },
+      "empty": {
+        "title": "No costs recorded yet",
+        "description": "Approved expenses linked to this shipment will appear here."
+      }
     }
   },
   "eventTypes": {

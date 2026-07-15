@@ -41,5 +41,44 @@
     "created": "Vehicle created.",
     "statusUpdated": "Vehicle status updated.",
     "deleted": "Vehicle deleted."
+  },
+  "logs": {
+    "title": "Logs",
+    "dialogTitle": "Logs — {{number}}",
+    "empty": "No logs recorded yet for this vehicle.",
+    "types": {
+      "maintenance": "Maintenance",
+      "fuel": "Fuel",
+      "insurance": "Insurance",
+      "trip": "Trip"
+    },
+    "table": {
+      "type": "Type",
+      "date": "Date",
+      "description": "Description",
+      "cost": "Cost"
+    },
+    "form": {
+      "type": "Type",
+      "logDate": "Date",
+      "description": "Description",
+      "cost": "Cost (optional)",
+      "odometerKm": "Odometer (km, optional)",
+      "liters": "Liters (optional)",
+      "policyNumber": "Policy Number (optional)",
+      "expiryDate": "Expiry Date (optional)",
+      "origin": "Origin (optional)",
+      "destination": "Destination (optional)",
+      "distanceKm": "Distance (km, optional)",
+      "addLog": "Add Log"
+    },
+    "validation": {
+      "dateRequired": "Date is required",
+      "descriptionRequired": "Description is required"
+    },
+    "toast": {
+      "created": "Log entry added.",
+      "deleted": "Log entry deleted."
+    }
   }
 }

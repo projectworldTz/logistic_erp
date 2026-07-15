@@ -10,5 +10,28 @@
     "expenses": "Matumizi",
     "fleetActive": "Magari Yanayofanya Kazi",
     "warehouseUtilization": "Matumizi ya Ghala"
+  },
+  "shipmentIntelligence": {
+    "sectionTitle": "Uchambuzi wa Shehena",
+    "active": "Shehena Zinazoendelea",
+    "released": "Zilizokamilika",
+    "delayed": "Zilizochelewa",
+    "nearDeadline": "Karibu na Muda wa Mwisho (siku 3)",
+    "customersServed": "Wateja Waliohudumiwa",
+    "avgCustomsClearance": "Wastani wa Uondoshaji Forodha",
+    "daysValue": "siku {{count}}"
+  },
+  "charts": {
+    "sectionTitle": "Utendaji na Mienendo",
+    "revenueTrend": "Mwenendo wa Mapato",
+    "revenueTrendSeries": "Mapato",
+    "fleetStatus": "Hali ya Magari",
+    "fleetActiveLabel": "Yanayofanya Kazi",
+    "fleetMaintenanceLabel": "Yanayohudumiwa",
+    "shipmentVolumeTrend": "Mwenendo wa Idadi ya Shehena",
+    "import": "Uingizaji",
+    "export": "Usafirishaji",
+    "shipmentStatusBreakdown": "Mgawanyo wa Hali za Shehena",
+    "noData": "Bado hakuna data."
   }
 }

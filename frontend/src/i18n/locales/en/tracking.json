@@ -33,6 +33,19 @@
     "air": "Air",
     "land": "Land"
   },
+  "verify": {
+    "notFound": "This document could not be verified. It may be invalid or expired.",
+    "genuine": "Verified Genuine",
+    "releaseOrderTitle": "Release Order Verification",
+    "releaseOrderNumber": "Release Order Number",
+    "reference": "Reference No",
+    "status": "Status",
+    "customsOffice": "Customs Office",
+    "clearedDate": "Cleared Date",
+    "deliveryNoteTitle": "Delivery Note Verification",
+    "destination": "Destination",
+    "deliveredAt": "Delivered At"
+  },
   "eventTypes": {
     "booked": "Booked",
     "gate_in": "Gate In",

@@ -6,6 +6,8 @@ import { ForgotPasswordPage } from './routes/public/ForgotPasswordPage';
 import { ResetPasswordPage } from './routes/public/ResetPasswordPage';
 import { RegistrationWizard } from './routes/registration-wizard/RegistrationWizard';
 import { TrackShipmentPage } from './routes/public/TrackShipmentPage';
+import { VerifyReleaseOrderPage } from './routes/public/VerifyReleaseOrderPage';
+import { VerifyDeliveryNotePage } from './routes/public/VerifyDeliveryNotePage';
 import { TenantLayout } from './routes/tenant/TenantLayout';
 import { DashboardHomePage } from './routes/tenant/pages/DashboardHomePage';
 import { UsersPage } from './routes/tenant/pages/UsersPage';
@@ -22,10 +24,13 @@ import { FreightBookingsPage } from './routes/tenant/pages/freight/FreightBookin
 import { ContainersPage } from './routes/tenant/pages/containers/ContainersPage';
 import { DemurrageDashboardPage } from './routes/tenant/pages/demurrage/DemurrageDashboardPage';
 import { DemurrageRateCardsPage } from './routes/tenant/pages/demurrage/DemurrageRateCardsPage';
+import { DetentionDashboardPage } from './routes/tenant/pages/detention/DetentionDashboardPage';
+import { DetentionRateCardsPage } from './routes/tenant/pages/detention/DetentionRateCardsPage';
 import { WarehouseItemsPage } from './routes/tenant/pages/warehouse/WarehouseItemsPage';
 import { VehiclesPage } from './routes/tenant/pages/fleet/VehiclesPage';
 import { InvoicesPage } from './routes/tenant/pages/finance/InvoicesPage';
 import { ExpensesPage } from './routes/tenant/pages/finance/ExpensesPage';
+import { ExchangeRatesPage } from './routes/tenant/pages/finance/ExchangeRatesPage';
 import { WorkflowDefinitionsPage } from './routes/tenant/pages/workflow/WorkflowDefinitionsPage';
 import { EmployeesPage } from './routes/tenant/pages/hr/EmployeesPage';
 import { DepartmentsPage } from './routes/tenant/pages/hr/DepartmentsPage';
@@ -64,6 +69,8 @@ export default function App() {
       <Route path="/register" element={<RegistrationWizard />} />
       <Route path="/track" element={<TrackShipmentPage />} />
       <Route path="/track/:code" element={<TrackShipmentPage />} />
+      <Route path="/verify/release-order/:token" element={<VerifyReleaseOrderPage />} />
+      <Route path="/verify/delivery-note/:code" element={<VerifyDeliveryNotePage />} />
 
       <Route element={<ProtectedRoute />}>
         <Route path="/app" element={<TenantLayout />}>
@@ -80,10 +87,13 @@ export default function App() {
           <Route path="containers" element={<ContainersPage />} />
           <Route path="demurrage" element={<DemurrageDashboardPage />} />
           <Route path="demurrage/rate-cards" element={<DemurrageRateCardsPage />} />
+          <Route path="detention" element={<DetentionDashboardPage />} />
+          <Route path="detention/rate-cards" element={<DetentionRateCardsPage />} />
           <Route path="warehouse" element={<WarehouseItemsPage />} />
           <Route path="fleet" element={<VehiclesPage />} />
           <Route path="finance" element={<InvoicesPage />} />
           <Route path="expenses" element={<ExpensesPage />} />
+          <Route path="exchange-rates" element={<ExchangeRatesPage />} />
           <Route path="workflows" element={<WorkflowDefinitionsPage />} />
           <Route path="hr" element={<EmployeesPage />} />
           <Route path="hr/departments" element={<DepartmentsPage />} />

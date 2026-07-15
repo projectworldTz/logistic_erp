@@ -21,12 +21,20 @@ class Container extends Model
         'freight_booking_id',
         'container_number',
         'container_type',
+        'shipping_line',
+        'vessel_name',
+        'voyage_number',
+        'port_of_loading',
+        'port_of_discharge',
         'seal_number',
         'status',
         'gross_weight_kg',
         'location',
         'gate_in_date',
+        'eta',
+        'ata',
         'gate_out_date',
+        'empty_return_date',
         'notes',
     ];
 
@@ -35,7 +43,10 @@ class Container extends Model
         'status' => ContainerStatus::class,
         'gross_weight_kg' => 'decimal:2',
         'gate_in_date' => 'date',
+        'eta' => 'date',
+        'ata' => 'date',
         'gate_out_date' => 'date',
+        'empty_return_date' => 'date',
     ];
 
     public function customer(): BelongsTo
@@ -56,5 +67,10 @@ class Container extends Model
     public function demurrageCharges(): HasMany
     {
         return $this->hasMany(DemurrageCharge::class);
+    }
+
+    public function detentionCharges(): HasMany
+    {
+        return $this->hasMany(DetentionCharge::class);
     }
 }

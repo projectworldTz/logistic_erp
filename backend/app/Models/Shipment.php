@@ -9,6 +9,7 @@ use App\Models\Concerns\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Shipment extends Model
@@ -41,6 +42,8 @@ class Shipment extends Model
         'status' => ShipmentStatus::class,
         'etd' => 'date',
         'eta' => 'date',
+        'delayed_alert_sent_at' => 'datetime',
+        'near_deadline_alert_sent_at' => 'datetime',
     ];
 
     public function customer(): BelongsTo
@@ -71,5 +74,15 @@ class Shipment extends Model
     public function milestones(): MorphMany
     {
         return $this->morphMany(TrackingEvent::class, 'trackable')->orderBy('occurred_at');
+    }
+
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function expenses(): HasMany
+    {
+        return $this->hasMany(Expense::class);
     }
 }

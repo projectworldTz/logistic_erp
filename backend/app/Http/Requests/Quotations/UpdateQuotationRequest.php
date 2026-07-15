@@ -35,6 +35,10 @@ class UpdateQuotationRequest extends FormRequest
             'total_amount' => ['sometimes', 'numeric', 'min:0'],
             'currency' => ['sometimes', 'string', 'size:3'],
             'notes' => ['nullable', 'string'],
+            'items' => ['sometimes', 'array', 'min:1'],
+            'items.*.description' => ['required_with:items', 'string', 'max:255'],
+            'items.*.quantity' => ['required_with:items', 'numeric', 'min:0.01'],
+            'items.*.unit_price' => ['required_with:items', 'numeric', 'min:0'],
         ];
     }
 }

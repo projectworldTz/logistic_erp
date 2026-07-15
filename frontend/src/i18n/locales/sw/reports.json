@@ -2,6 +2,10 @@
   "title": "Ripoti",
   "subtitle": "Muhtasari wa jumla wa kila kinachofuatiliwa katika shughuli zote za kampuni.",
   "printReport": "Chapisha Ripoti",
+  "branchFilter": {
+    "label": "Tawi",
+    "allBranches": "Matawi Yote"
+  },
   "reportGeneratedAt": "Ripoti imetolewa {{date}}",
   "totalCount": "jumla {{count}}",
   "noRecords": "Bado hakuna kumbukumbu.",
@@ -40,7 +44,32 @@
       "quotations": "Nukuu za Bei",
       "shipments": "Shehena",
       "invoices": "Ankara",
-      "expenses": "Matumizi"
+      "expenses": "Matumizi",
+      "profit": "Faida ya Shehena"
+    }
+  },
+  "advanced": {
+    "sectionTitle": "Ripoti za Kina",
+    "customs": {
+      "totalDeclarations": "Matamko ya Forodha",
+      "avgClearanceDays": "Wastani wa Muda wa Kuachiliwa",
+      "daysValue": "siku {{count}}"
+    },
+    "tax": {
+      "vatCollected": "VAT Iliyokusanywa",
+      "dutyPaid": "Ushuru Uliolipwa"
+    },
+    "profit": {
+      "title": "Faida kwa Shehena",
+      "totalProfit": "Jumla ya faida: {{amount}}",
+      "table": {
+        "shipment": "Shehena",
+        "customer": "Mteja",
+        "revenue": "Mapato",
+        "cost": "Gharama",
+        "profit": "Faida",
+        "margin": "Kiwango cha Faida"
+      }
     }
   }
 }

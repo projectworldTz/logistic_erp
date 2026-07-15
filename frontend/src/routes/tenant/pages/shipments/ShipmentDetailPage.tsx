@@ -14,21 +14,40 @@ import {
   MenuItem,
   Paper,
   Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   TextField,
   Typography,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { PieChart } from '@mui/x-charts/PieChart';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import { addShipmentMilestone, fetchShipment, fetchShipmentTrackingQr } from '../../../../api/endpoints/shipments';
+import {
+  addShipmentMilestone,
+  fetchDeliveryNoteQr,
+  fetchShipment,
+  fetchShipmentCostSummary,
+  fetchShipmentTrackingQr,
+} from '../../../../api/endpoints/shipments';
 import type { TrackingEventType } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
+import { StatWidgetCard } from '../../../../components/common/StatWidgetCard';
 import { TrackingQrCode } from '../../../../components/common/TrackingQrCode';
+import { useAuthStore } from '../../../../hooks/useAuth';
 import { useToast } from '../../../../hooks/useToast';
+import { formatCurrency } from '../../../../utils/currency';
+
+// Validated categorical slots from the design system's reference palette (dataviz skill).
+const CATEGORY_COLORS = ['#2a78d6', '#008300', '#e87ba4', '#eda100', '#1baf7a', '#eb6834', '#4a3aa7', '#e34948'];
 
 const STATUS_COLOR: Record<string, 'default' | 'info' | 'warning' | 'success' | 'error'> = {
   booked: 'default',
@@ -84,10 +103,18 @@ export function ShipmentDetailPage() {
   const { showToast } = useToast();
   const schema = buildSchema(t);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const permissions = useAuthStore((s) => s.user?.permissions) ?? [];
+  const canViewCosts = permissions.includes('shipments.costs.view');
 
   const { data: shipment, isLoading } = useQuery({
     queryKey: ['shipments', 'item', shipmentId],
     queryFn: () => fetchShipment(shipmentId),
+  });
+
+  const { data: costSummary, isLoading: costsLoading } = useQuery({
+    queryKey: ['shipments', 'item', shipmentId, 'cost-summary'],
+    queryFn: () => fetchShipmentCostSummary(shipmentId),
+    enabled: canViewCosts,
   });
 
   const addMilestoneMutation = useMutation({
@@ -159,6 +186,137 @@ export function ShipmentDetailPage() {
         </Grid>
       </Paper>
 
+      {canViewCosts && (
+        <Stack spacing={2}>
+          <Typography variant="h6" fontWeight={700}>
+            {t('detail.costs.title')}
+          </Typography>
+
+          {costsLoading && <CircularProgress size={28} />}
+
+          {!costsLoading && costSummary && (
+            <>
+              <Grid container spacing={2}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                  <StatWidgetCard
+                    label={t('detail.costs.billedRevenue')}
+                    value={formatCurrency(costSummary.revenue.billed, costSummary.currency)}
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                  <StatWidgetCard
+                    label={t('detail.costs.confirmedCost')}
+                    value={formatCurrency(costSummary.cost.confirmed, costSummary.currency)}
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                  <StatWidgetCard
+                    label={t('detail.costs.profit')}
+                    value={formatCurrency(costSummary.profit, costSummary.currency)}
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                  <StatWidgetCard
+                    label={t('detail.costs.margin')}
+                    value={costSummary.margin_percent === null ? '—' : `${costSummary.margin_percent}%`}
+                  />
+                </Grid>
+              </Grid>
+
+              {costSummary.cost_breakdown.length === 0 && (
+                <EmptyState
+                  title={t('detail.costs.empty.title')}
+                  description={t('detail.costs.empty.description')}
+                />
+              )}
+
+              {costSummary.cost_breakdown.length > 0 && (
+                <Paper variant="outlined" sx={{ p: 2 }}>
+                  <Typography variant="subtitle2" sx={{ mb: 1 }}>
+                    {t('detail.costs.breakdownTitle')}
+                  </Typography>
+                  <PieChart
+                    series={[
+                      {
+                        data: costSummary.cost_breakdown.map((item, index) => ({
+                          id: item.category,
+                          value: item.amount,
+                          label: t(`categories.${item.category}`, { ns: 'expenses' }),
+                          color: CATEGORY_COLORS[index % CATEGORY_COLORS.length],
+                        })),
+                        innerRadius: 40,
+                        highlightScope: { fade: 'global', highlight: 'item' },
+                      },
+                    ]}
+                    height={220}
+                  />
+                </Paper>
+              )}
+
+              {costSummary.invoices.length > 0 && (
+                <Paper variant="outlined">
+                  <Typography variant="subtitle2" sx={{ p: 2, pb: 0 }}>
+                    {t('detail.costs.invoicesTitle')}
+                  </Typography>
+                  <TableContainer>
+                    <Table size="small">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>{t('detail.costs.table.invoiceNumber')}</TableCell>
+                          <TableCell>{tc('labels.status')}</TableCell>
+                          <TableCell align="right">{t('detail.costs.table.amount')}</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {costSummary.invoices.map((invoice) => (
+                          <TableRow key={invoice.id}>
+                            <TableCell>{invoice.invoice_number ?? '—'}</TableCell>
+                            <TableCell>
+                              <Chip label={invoice.status} size="small" />
+                            </TableCell>
+                            <TableCell align="right">{formatCurrency(invoice.total_amount, invoice.currency)}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Paper>
+              )}
+
+              {costSummary.expenses.length > 0 && (
+                <Paper variant="outlined">
+                  <Typography variant="subtitle2" sx={{ p: 2, pb: 0 }}>
+                    {t('detail.costs.expensesTitle')}
+                  </Typography>
+                  <TableContainer>
+                    <Table size="small">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>{t('detail.costs.table.description')}</TableCell>
+                          <TableCell>{tc('labels.status')}</TableCell>
+                          <TableCell align="right">{t('detail.costs.table.amount')}</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {costSummary.expenses.map((expense) => (
+                          <TableRow key={expense.id}>
+                            <TableCell>{expense.description}</TableCell>
+                            <TableCell>
+                              <Chip label={expense.status} size="small" />
+                            </TableCell>
+                            <TableCell align="right">{formatCurrency(expense.amount, expense.currency)}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Paper>
+              )}
+            </>
+          )}
+        </Stack>
+      )}
+
       <TrackingQrCode
         queryKey={['shipments', 'item', shipmentId, 'tracking-qr']}
         fetchQr={() => fetchShipmentTrackingQr(shipmentId)}
@@ -167,6 +325,18 @@ export function ShipmentDetailPage() {
         caption={t('detail.qr.caption')}
         downloadLabel={t('detail.qr.download')}
       />
+
+      {shipment.status === 'delivered' && (
+        <TrackingQrCode
+          queryKey={['shipments', 'item', shipmentId, 'delivery-note-qr']}
+          fetchQr={() => fetchDeliveryNoteQr(shipmentId)}
+          trackingCode={shipment.tracking_code ?? null}
+          alt={t('detail.deliveryNoteQr.alt')}
+          caption={t('detail.deliveryNoteQr.caption')}
+          downloadLabel={t('detail.deliveryNoteQr.download')}
+          filenamePrefix="delivery-note-qr"
+        />
+      )}
 
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography variant="h6" fontWeight={700}>

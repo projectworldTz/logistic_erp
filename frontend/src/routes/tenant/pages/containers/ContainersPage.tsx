@@ -71,10 +71,18 @@ function buildSchema(t: (key: string) => string) {
     customer_id: z.number({ message: t('validation.selectCustomer') }),
     container_number: z.string().min(1, t('validation.containerNumberRequired')).max(20),
     container_type: z.enum(['dry_20', 'dry_40', 'dry_40_hc', 'reefer_20', 'reefer_40', 'open_top', 'flat_rack', 'tank']),
+    shipping_line: z.string().optional(),
+    vessel_name: z.string().optional(),
+    voyage_number: z.string().optional(),
+    port_of_loading: z.string().optional(),
+    port_of_discharge: z.string().optional(),
     seal_number: z.string().optional(),
     location: z.string().optional(),
     gate_in_date: z.string().optional(),
+    eta: z.string().optional(),
+    ata: z.string().optional(),
     gate_out_date: z.string().optional(),
+    empty_return_date: z.string().optional(),
   });
 }
 
@@ -158,10 +166,18 @@ export function ContainersPage() {
       customer_id: container.customer_id,
       container_number: container.container_number,
       container_type: container.container_type,
+      shipping_line: container.shipping_line ?? '',
+      vessel_name: container.vessel_name ?? '',
+      voyage_number: container.voyage_number ?? '',
+      port_of_loading: container.port_of_loading ?? '',
+      port_of_discharge: container.port_of_discharge ?? '',
       seal_number: container.seal_number ?? '',
       location: container.location ?? '',
       gate_in_date: container.gate_in_date ?? '',
+      eta: container.eta ?? '',
+      ata: container.ata ?? '',
       gate_out_date: container.gate_out_date ?? '',
+      empty_return_date: container.empty_return_date ?? '',
     });
     setDialogOpen(true);
   };
@@ -194,9 +210,12 @@ export function ContainersPage() {
                   <TableCell>{t('table.containerNo')}</TableCell>
                   <TableCell>{t('table.customer')}</TableCell>
                   <TableCell>{t('table.type')}</TableCell>
+                  <TableCell>{t('table.vesselVoyage')}</TableCell>
+                  <TableCell>{t('table.eta')}</TableCell>
                   <TableCell>{t('table.location')}</TableCell>
                   <TableCell>{t('table.gateIn')}</TableCell>
                   <TableCell>{t('table.gateOut')}</TableCell>
+                  <TableCell>{t('table.emptyReturn')}</TableCell>
                   <TableCell>{tc('labels.status')}</TableCell>
                   <TableCell align="right">{tc('actions.actions')}</TableCell>
                 </TableRow>
@@ -207,9 +226,16 @@ export function ContainersPage() {
                     <TableCell>{container.container_number}</TableCell>
                     <TableCell>{container.customer?.company_name ?? '—'}</TableCell>
                     <TableCell>{t(`types.${container.container_type}`)}</TableCell>
+                    <TableCell>
+                      {container.vessel_name || container.voyage_number
+                        ? `${container.vessel_name ?? '—'} / ${container.voyage_number ?? '—'}`
+                        : '—'}
+                    </TableCell>
+                    <TableCell>{container.eta ?? '—'}</TableCell>
                     <TableCell>{container.location ?? '—'}</TableCell>
                     <TableCell>{container.gate_in_date ?? '—'}</TableCell>
                     <TableCell>{container.gate_out_date ?? '—'}</TableCell>
+                    <TableCell>{container.empty_return_date ?? '—'}</TableCell>
                     <TableCell>
                       <Select
                         size="small"
@@ -292,6 +318,11 @@ export function ContainersPage() {
                   </MenuItem>
                 ))}
               </TextField>
+              <TextField label={t('form.shippingLine')} fullWidth {...register('shipping_line')} />
+              <TextField label={t('form.vesselName')} fullWidth {...register('vessel_name')} />
+              <TextField label={t('form.voyageNumber')} fullWidth {...register('voyage_number')} />
+              <TextField label={t('form.portOfLoading')} fullWidth {...register('port_of_loading')} />
+              <TextField label={t('form.portOfDischarge')} fullWidth {...register('port_of_discharge')} />
               <TextField label={t('form.sealNumber')} fullWidth {...register('seal_number')} />
               <TextField label={t('form.location')} fullWidth {...register('location')} />
               <TextField
@@ -302,11 +333,32 @@ export function ContainersPage() {
                 {...register('gate_in_date')}
               />
               <TextField
+                label={t('form.eta')}
+                type="date"
+                fullWidth
+                slotProps={{ inputLabel: { shrink: true } }}
+                {...register('eta')}
+              />
+              <TextField
+                label={t('form.ata')}
+                type="date"
+                fullWidth
+                slotProps={{ inputLabel: { shrink: true } }}
+                {...register('ata')}
+              />
+              <TextField
                 label={t('form.gateOutDate')}
                 type="date"
                 fullWidth
                 slotProps={{ inputLabel: { shrink: true } }}
                 {...register('gate_out_date')}
+              />
+              <TextField
+                label={t('form.emptyReturnDate')}
+                type="date"
+                fullWidth
+                slotProps={{ inputLabel: { shrink: true } }}
+                {...register('empty_return_date')}
               />
             </Stack>
           </DialogContent>

@@ -44,7 +44,7 @@ import { useToast } from '../../../../hooks/useToast';
 function buildSchema(t: (key: string) => string) {
   return z.object({
     name: z.string().min(1, t('validation.nameRequired')).max(255),
-    subject_type: z.literal('expense'),
+    subject_type: z.enum(['expense', 'quotation']),
     min_amount: z.number().nullable().optional(),
     is_active: z.boolean().optional(),
     steps: z
@@ -195,6 +195,7 @@ export function WorkflowDefinitionsPage() {
               />
               <TextField label={t('form.subjectType')} select fullWidth defaultValue="expense" {...register('subject_type')}>
                 <MenuItem value="expense">{t('subjectTypes.expense')}</MenuItem>
+                <MenuItem value="quotation">{t('subjectTypes.quotation')}</MenuItem>
               </TextField>
               <Controller
                 name="min_amount"

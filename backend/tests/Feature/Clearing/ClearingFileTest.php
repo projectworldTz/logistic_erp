@@ -87,6 +87,41 @@ class ClearingFileTest extends TestCase
         $this->assertDatabaseHas('audit_logs', ['action' => 'clearing_file.created']);
     }
 
+    public function test_clearing_file_can_be_created_and_updated_with_customs_assessment_fields(): void
+    {
+        $registration = $this->registerTenant();
+        $token = $registration['token'];
+        $customerId = $this->createCustomer($token);
+
+        $create = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson('/api/v1/clearing/files', [
+                'customer_id' => $customerId,
+                'direction' => 'import',
+                'mode' => 'sea',
+                'declaration_number' => 'DEC-2026-001',
+                'sad_number' => 'SAD-2026-9001',
+                'hs_code' => '8703.23',
+                'customs_value' => 25000,
+            ]);
+
+        $create->assertCreated();
+        $create->assertJsonPath('data.sad_number', 'SAD-2026-9001');
+        $create->assertJsonPath('data.customs_value', '25000.00');
+        $create->assertJsonPath('data.assessment_status', 'pending');
+
+        $fileId = $create->json('data.id');
+
+        $this->withHeader('Authorization', "Bearer {$token}")
+            ->putJson("/api/v1/clearing/files/{$fileId}", [
+                'assessment_status' => 'assessed',
+                'release_order_number' => 'RO-2026-777',
+            ])
+            ->assertOk()
+            ->assertJsonPath('data.assessment_status', 'assessed')
+            ->assertJsonPath('data.release_order_number', 'RO-2026-777')
+            ->assertJsonPath('data.sad_number', 'SAD-2026-9001');
+    }
+
     public function test_clearing_files_are_isolated_per_tenant(): void
     {
         $registrationA = $this->registerTenant('jane@acme.test', 'Acme Logistics');

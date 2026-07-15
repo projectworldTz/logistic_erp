@@ -14,10 +14,12 @@ import clearingEn from './locales/en/clearing.json';
 import freightEn from './locales/en/freight.json';
 import containersEn from './locales/en/containers.json';
 import demurrageEn from './locales/en/demurrage.json';
+import detentionEn from './locales/en/detention.json';
 import warehouseEn from './locales/en/warehouse.json';
 import fleetEn from './locales/en/fleet.json';
 import financeEn from './locales/en/finance.json';
 import expensesEn from './locales/en/expenses.json';
+import exchangeRatesEn from './locales/en/exchangeRates.json';
 import workflowsEn from './locales/en/workflows.json';
 import hrEn from './locales/en/hr.json';
 import accountingEn from './locales/en/accounting.json';
@@ -46,10 +48,12 @@ import clearingSw from './locales/sw/clearing.json';
 import freightSw from './locales/sw/freight.json';
 import containersSw from './locales/sw/containers.json';
 import demurrageSw from './locales/sw/demurrage.json';
+import detentionSw from './locales/sw/detention.json';
 import warehouseSw from './locales/sw/warehouse.json';
 import fleetSw from './locales/sw/fleet.json';
 import financeSw from './locales/sw/finance.json';
 import expensesSw from './locales/sw/expenses.json';
+import exchangeRatesSw from './locales/sw/exchangeRates.json';
 import workflowsSw from './locales/sw/workflows.json';
 import hrSw from './locales/sw/hr.json';
 import accountingSw from './locales/sw/accounting.json';
@@ -91,10 +95,12 @@ void i18n.use(initReactI18next).init({
     'freight',
     'containers',
     'demurrage',
+    'detention',
     'warehouse',
     'fleet',
     'finance',
     'expenses',
+    'exchangeRates',
     'workflows',
     'hr',
     'accounting',
@@ -125,10 +131,12 @@ void i18n.use(initReactI18next).init({
       freight: freightEn,
       containers: containersEn,
       demurrage: demurrageEn,
+      detention: detentionEn,
       warehouse: warehouseEn,
       fleet: fleetEn,
       finance: financeEn,
       expenses: expensesEn,
+      exchangeRates: exchangeRatesEn,
       workflows: workflowsEn,
       hr: hrEn,
       accounting: accountingEn,
@@ -158,10 +166,12 @@ void i18n.use(initReactI18next).init({
       freight: freightSw,
       containers: containersSw,
       demurrage: demurrageSw,
+      detention: detentionSw,
       warehouse: warehouseSw,
       fleet: fleetSw,
       finance: financeSw,
       expenses: expensesSw,
+      exchangeRates: exchangeRatesSw,
       workflows: workflowsSw,
       hr: hrSw,
       accounting: accountingSw,

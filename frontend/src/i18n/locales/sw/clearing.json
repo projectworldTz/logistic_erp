@@ -9,7 +9,9 @@
     "referenceNo": "Namba ya Rejea",
     "customer": "Mteja",
     "directionMode": "Mwelekeo / Njia",
-    "blAwb": "Hati ya Usafirishaji / AWB"
+    "blAwb": "Hati ya Usafirishaji / AWB",
+    "sadNumber": "Namba ya SAD",
+    "assessmentStatus": "Tathmini"
   },
   "statuses": {
     "pending": "Inasubiri",
@@ -19,6 +21,12 @@
     "cleared": "Imepitishwa Forodha",
     "delivered": "Imekabidhiwa",
     "cancelled": "Imeghairiwa"
+  },
+  "assessmentStatuses": {
+    "pending": "Inasubiri",
+    "assessed": "Imetathminiwa",
+    "objected": "Imepingwa",
+    "released": "Imeachiliwa"
   },
   "direction": {
     "import": "Uingizaji",
@@ -31,15 +39,32 @@
   },
   "form": {
     "dialogTitle": "Faili Mpya la Forodha",
+    "editDialogTitle": "Hariri Faili la Forodha",
     "customer": "Mteja",
     "direction": "Mwelekeo",
     "mode": "Njia",
     "portOfLoading": "Bandari ya Kupakia (hiari)",
     "portOfDischarge": "Bandari ya Kushusha (hiari)",
-    "blAwbNumber": "Namba ya Hati ya Usafirishaji / AWB (hiari)"
+    "blAwbNumber": "Namba ya Hati ya Usafirishaji / AWB (hiari)",
+    "declarationNumber": "Namba ya Tamko (hiari)",
+    "sadNumber": "Namba ya SAD (hiari)",
+    "hsCode": "Namba ya HS (hiari)",
+    "customsValue": "Thamani ya Forodha (hiari)",
+    "dutyAmount": "Kiasi cha Ushuru (hiari)",
+    "vatAmount": "Kiasi cha VAT (hiari)",
+    "releaseOrderNumber": "Namba ya Amri ya Kuachilia (hiari)"
   },
   "validation": {
     "selectCustomer": "Chagua mteja"
+  },
+  "actions": {
+    "viewReleaseOrderQr": "Angalia QR ya Amri ya Kuachilia"
+  },
+  "releaseOrderQrDialog": {
+    "title": "Msimbo wa QR wa Amri ya Kuachilia",
+    "alt": "Msimbo wa QR unaoelekeza kwenye ukurasa wa uthibitisho wa amri ya kuachilia",
+    "caption": "Changanua ili kuthibitisha amri hii ya kuachilia",
+    "download": "Pakua QR"
   },
   "deleteDialog": {
     "title": "Futa faili la forodha",
@@ -47,7 +72,9 @@
   },
   "toast": {
     "created": "Faili la forodha limeundwa.",
+    "updated": "Faili la forodha limesasishwa.",
     "statusUpdated": "Hali ya faili la forodha imesasishwa.",
+    "assessmentStatusUpdated": "Hali ya tathmini imesasishwa.",
     "deleted": "Faili la forodha limefutwa."
   }
 }

@@ -28,23 +28,48 @@
     "air": "Air",
     "land": "Land"
   },
+  "actions": {
+    "convertToShipment": "Convert to Shipment",
+    "submitForApproval": "Submit for Approval",
+    "approve": "Approve",
+    "reject": "Reject"
+  },
+  "approval": {
+    "stepProgress": "Step {{current}}/{{total}} — {{role}}"
+  },
+  "rejectDialog": {
+    "title": "Reject quotation",
+    "reason": "Reason"
+  },
   "form": {
     "dialogTitle": "New Quotation",
+    "editDialogTitle": "Edit Quotation",
     "customer": "Customer",
     "direction": "Direction",
     "mode": "Mode",
+    "originPort": "Origin Port (optional)",
+    "destinationPort": "Destination Port (optional)",
     "issueDate": "Issue Date",
     "validUntil": "Valid Until",
+    "itemsTitle": "Line Items",
+    "itemDescription": "Description",
+    "itemQuantity": "Qty",
+    "itemUnitPrice": "Unit Price",
+    "addItem": "Add Item",
     "subtotal": "Subtotal",
-    "taxAmount": "Tax Amount"
+    "taxAmount": "Tax Amount",
+    "total": "Total"
   },
   "validation": {
     "selectCustomer": "Select a customer",
     "issueDateRequired": "Issue date is required",
     "validUntilRequired": "Valid-until date is required",
-    "subtotalMin": "Subtotal must be 0 or more",
     "taxMin": "Tax must be 0 or more",
-    "validUntilAfterIssue": "Valid until must be on or after issue date"
+    "validUntilAfterIssue": "Valid until must be on or after issue date",
+    "itemsRequired": "Add at least one line item",
+    "itemDescriptionRequired": "Description is required",
+    "itemQuantityMin": "Quantity must be greater than 0",
+    "itemPriceMin": "Unit price must be 0 or more"
   },
   "deleteDialog": {
     "title": "Delete quotation",
@@ -52,7 +77,14 @@
   },
   "toast": {
     "created": "Quotation created.",
+    "updated": "Quotation updated.",
     "statusUpdated": "Quotation status updated.",
-    "deleted": "Quotation deleted."
+    "statusUpdateFailed": "Could not update the status.",
+    "converted": "Quotation converted to a shipment.",
+    "deleted": "Quotation deleted.",
+    "submittedForApproval": "Quotation submitted for pricing approval.",
+    "approved": "Quotation approved and marked sent.",
+    "approveFailed": "Could not approve the quotation.",
+    "rejected": "Quotation rejected."
   }
 }

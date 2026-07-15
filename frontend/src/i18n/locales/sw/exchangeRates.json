@@ -1,0 +1,45 @@
+{
+  "title": "Viwango vya Ubadilishaji",
+  "subtitle": "Rekodi viwango vya ubadilishaji fedha na badilisha kiasi kati yake.",
+  "newRate": "Kiwango Kipya",
+  "empty": {
+    "title": "Bado hakuna viwango vilivyorekodiwa",
+    "description": "Ongeza kiwango chako cha kwanza ili kuwezesha ubadilishaji wa fedha nyingi."
+  },
+  "table": {
+    "pair": "Jozi ya Fedha",
+    "rate": "Kiwango",
+    "date": "Tarehe",
+    "recordedBy": "Ilirekodiwa na"
+  },
+  "form": {
+    "baseCurrency": "Fedha ya Msingi (mfano USD)",
+    "quoteCurrency": "Fedha Nyingine (mfano TZS)",
+    "rate": "Kiwango",
+    "rateHelp": "Fedha 1 ya msingi = vipande hivi vya fedha nyingine",
+    "rateDate": "Tarehe"
+  },
+  "convert": {
+    "title": "Badilisha Haraka",
+    "amount": "Kiasi",
+    "from": "Kutoka",
+    "to": "Kwenda",
+    "action": "Badilisha",
+    "result": "{{amount}} {{from}} = {{converted}} {{to}} (kiwango {{rate}})",
+    "error": "Hakuna kiwango cha ubadilishaji kwa jozi hiyo ya fedha."
+  },
+  "validation": {
+    "currencyLength": "Tumia msimbo wa fedha wa herufi 3",
+    "rateMin": "Kiwango lazima kiwe zaidi ya 0",
+    "amountMin": "Kiasi lazima kiwe 0 au zaidi",
+    "dateRequired": "Tarehe inahitajika"
+  },
+  "deleteDialog": {
+    "title": "Futa kiwango cha ubadilishaji",
+    "message": "Una uhakika unataka kufuta kiwango cha {{pair}}? Hatua hii haiwezi kutenduliwa."
+  },
+  "toast": {
+    "created": "Kiwango cha ubadilishaji kimehifadhiwa.",
+    "deleted": "Kiwango cha ubadilishaji kimefutwa."
+  }
+}

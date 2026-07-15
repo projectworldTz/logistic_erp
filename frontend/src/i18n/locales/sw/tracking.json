@@ -33,6 +33,19 @@
     "air": "Angani",
     "land": "Nchi Kavu"
   },
+  "verify": {
+    "notFound": "Hati hii haikuweza kuthibitishwa. Huenda si sahihi au imepitwa na wakati.",
+    "genuine": "Imethibitishwa Kuwa Halisi",
+    "releaseOrderTitle": "Uthibitisho wa Amri ya Kuachilia",
+    "releaseOrderNumber": "Namba ya Amri ya Kuachilia",
+    "reference": "Namba ya Rejea",
+    "status": "Hali",
+    "customsOffice": "Ofisi ya Forodha",
+    "clearedDate": "Tarehe ya Kupitishwa",
+    "deliveryNoteTitle": "Uthibitisho wa Ankara ya Uwasilishaji",
+    "destination": "Kwenda",
+    "deliveredAt": "Ilikabidhiwa"
+  },
   "eventTypes": {
     "booked": "Imehifadhiwa",
     "gate_in": "Kuingia Lango",

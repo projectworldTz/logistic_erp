@@ -10,5 +10,28 @@
     "expenses": "Expenses",
     "fleetActive": "Fleet Active",
     "warehouseUtilization": "Warehouse Utilization"
+  },
+  "shipmentIntelligence": {
+    "sectionTitle": "Shipment Intelligence",
+    "active": "Active Shipments",
+    "released": "Released",
+    "delayed": "Delayed",
+    "nearDeadline": "Near Deadline (3 days)",
+    "customersServed": "Customers Served",
+    "avgCustomsClearance": "Avg. Customs Clearance",
+    "daysValue": "{{count}} days"
+  },
+  "charts": {
+    "sectionTitle": "Performance & Trends",
+    "revenueTrend": "Revenue Trend",
+    "revenueTrendSeries": "Revenue",
+    "fleetStatus": "Fleet Status",
+    "fleetActiveLabel": "Active",
+    "fleetMaintenanceLabel": "In Maintenance",
+    "shipmentVolumeTrend": "Shipment Volume Trend",
+    "import": "Import",
+    "export": "Export",
+    "shipmentStatusBreakdown": "Shipment Status Breakdown",
+    "noData": "No data yet."
   }
 }

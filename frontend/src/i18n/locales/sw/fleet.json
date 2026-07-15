@@ -41,5 +41,44 @@
     "created": "Gari limeundwa.",
     "statusUpdated": "Hali ya gari imesasishwa.",
     "deleted": "Gari limefutwa."
+  },
+  "logs": {
+    "title": "Kumbukumbu",
+    "dialogTitle": "Kumbukumbu — {{number}}",
+    "empty": "Bado hakuna kumbukumbu za gari hili.",
+    "types": {
+      "maintenance": "Matengenezo",
+      "fuel": "Mafuta",
+      "insurance": "Bima",
+      "trip": "Safari"
+    },
+    "table": {
+      "type": "Aina",
+      "date": "Tarehe",
+      "description": "Maelezo",
+      "cost": "Gharama"
+    },
+    "form": {
+      "type": "Aina",
+      "logDate": "Tarehe",
+      "description": "Maelezo",
+      "cost": "Gharama (hiari)",
+      "odometerKm": "Odometa (km, hiari)",
+      "liters": "Lita (hiari)",
+      "policyNumber": "Namba ya Bima (hiari)",
+      "expiryDate": "Tarehe ya Kuisha (hiari)",
+      "origin": "Kutoka (hiari)",
+      "destination": "Kwenda (hiari)",
+      "distanceKm": "Umbali (km, hiari)",
+      "addLog": "Ongeza Kumbukumbu"
+    },
+    "validation": {
+      "dateRequired": "Tarehe inahitajika",
+      "descriptionRequired": "Maelezo yanahitajika"
+    },
+    "toast": {
+      "created": "Kumbukumbu imeongezwa.",
+      "deleted": "Kumbukumbu imefutwa."
+    }
   }
 }

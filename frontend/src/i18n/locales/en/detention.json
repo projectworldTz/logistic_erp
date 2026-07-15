@@ -1,0 +1,109 @@
+{
+  "title": "Detention",
+  "tabs": {
+    "dashboard": "Live Dashboard",
+    "rateCards": "Rate Cards"
+  },
+  "stats": {
+    "accruing": "Containers Accruing Charges",
+    "atRisk": "At Risk of Free Time Expiry",
+    "totalAccrued": "Total Accrued"
+  },
+  "exceptionBoard": {
+    "title": "Exception Board",
+    "empty": {
+      "title": "No containers out with customers",
+      "description": "Containers with a gate-out date and no empty-return date will appear here."
+    }
+  },
+  "pendingCharges": {
+    "title": "Pending Charges",
+    "empty": {
+      "title": "No pending charges",
+      "description": "Calculated charges awaiting invoicing or a waiver will appear here."
+    }
+  },
+  "table": {
+    "containerNo": "Container No",
+    "customer": "Customer",
+    "detentionDays": "Detention Days",
+    "freeDaysRemaining": "Free Days Left",
+    "chargeableDays": "Chargeable Days",
+    "accruedAmount": "Accrued Amount",
+    "risk": "Status"
+  },
+  "risk": {
+    "within_free": "Within Free Time",
+    "at_risk": "At Risk",
+    "accruing": "Accruing"
+  },
+  "actions": {
+    "calculate": "Calculate & Record Charge",
+    "waive": "Waive",
+    "generateInvoice": "Generate Invoice"
+  },
+  "waiveDialog": {
+    "title": "Waive Detention Charge",
+    "description": "This charge will no longer be invoiceable. Provide a reason for the audit trail.",
+    "reason": "Reason"
+  },
+  "toast": {
+    "calculated": "Detention charge calculated.",
+    "waived": "Detention charge waived.",
+    "invoiced": "Invoice generated from detention charge.",
+    "rateCardCreated": "Rate card created.",
+    "rateCardDeleted": "Rate card deleted."
+  },
+  "types": {
+    "dry_20": "20' Dry",
+    "dry_40": "40' Dry",
+    "dry_40_hc": "40' High Cube",
+    "reefer_20": "20' Reefer",
+    "reefer_40": "40' Reefer",
+    "open_top": "Open Top",
+    "flat_rack": "Flat Rack",
+    "tank": "Tank"
+  },
+  "rateCards": {
+    "title": "Rate Cards",
+    "newRateCard": "New Rate Card",
+    "defaultChip": "Default",
+    "allTypes": "All Types",
+    "empty": {
+      "title": "No rate cards yet",
+      "description": "Create a rate card to start calculating detention charges."
+    },
+    "table": {
+      "name": "Name",
+      "containerType": "Container Type",
+      "freeDays": "Free Days",
+      "currency": "Currency",
+      "tiers": "Tiers"
+    },
+    "form": {
+      "dialogTitle": "New Rate Card",
+      "name": "Name",
+      "containerType": "Container Type",
+      "freeDays": "Free Days",
+      "currency": "Currency",
+      "isDefault": "Use as tenant default",
+      "tiersTitle": "Rate Tiers (per chargeable day, after free days)",
+      "fromDay": "From Day",
+      "toDay": "To Day",
+      "openEnded": "Open-ended",
+      "dailyRate": "Daily Rate",
+      "addTier": "Add Tier"
+    },
+    "deleteDialog": {
+      "title": "Delete Rate Card",
+      "message": "Are you sure you want to delete rate card {{name}}? This cannot be undone."
+    }
+  },
+  "validation": {
+    "nameRequired": "Name is required",
+    "freeDaysRequired": "Free days is required",
+    "fromDayRequired": "From day is required",
+    "dailyRateRequired": "Daily rate is required",
+    "atLeastOneTier": "At least one tier is required"
+  }
+}

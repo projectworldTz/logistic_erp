@@ -46,6 +46,7 @@ use App\Observers\TrackingEventObserver;
 use App\Observers\UserObserver;
 use App\Observers\VehicleObserver;
 use App\Observers\WarehouseItemObserver;
+use App\Services\Notifications\Channels\BeemSmsChannel;
 use App\Services\Notifications\Channels\LogSmsChannel;
 use App\Services\Notifications\Channels\LogWhatsAppChannel;
 use App\Support\Tenancy\TenantContext;
@@ -61,7 +62,10 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(TenantContext::class);
-        $this->app->bind(SmsChannel::class, LogSmsChannel::class);
+        $this->app->bind(
+            SmsChannel::class,
+            fn () => config('services.beem.api_key') ? new BeemSmsChannel() : new LogSmsChannel(),
+        );
         $this->app->bind(WhatsAppChannel::class, LogWhatsAppChannel::class);
     }
 

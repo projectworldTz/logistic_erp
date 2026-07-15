@@ -28,23 +28,48 @@
     "air": "Angani",
     "land": "Nchi Kavu"
   },
+  "actions": {
+    "convertToShipment": "Badilisha kuwa Shehena",
+    "submitForApproval": "Wasilisha kwa Idhini",
+    "approve": "Idhinisha",
+    "reject": "Kataa"
+  },
+  "approval": {
+    "stepProgress": "Hatua {{current}}/{{total}} — {{role}}"
+  },
+  "rejectDialog": {
+    "title": "Kataa nukuu",
+    "reason": "Sababu"
+  },
   "form": {
     "dialogTitle": "Nukuu Mpya",
+    "editDialogTitle": "Hariri Nukuu",
     "customer": "Mteja",
     "direction": "Mwelekeo",
     "mode": "Njia",
+    "originPort": "Bandari ya Kutoka (hiari)",
+    "destinationPort": "Bandari ya Kufika (hiari)",
     "issueDate": "Tarehe ya Kutolewa",
     "validUntil": "Halali Hadi",
+    "itemsTitle": "Bidhaa za Nukuu",
+    "itemDescription": "Maelezo",
+    "itemQuantity": "Idadi",
+    "itemUnitPrice": "Bei ya Kitengo",
+    "addItem": "Ongeza Bidhaa",
     "subtotal": "Jumla Ndogo",
-    "taxAmount": "Kiasi cha Kodi"
+    "taxAmount": "Kiasi cha Kodi",
+    "total": "Jumla"
   },
   "validation": {
     "selectCustomer": "Chagua mteja",
     "issueDateRequired": "Tarehe ya kutolewa inahitajika",
     "validUntilRequired": "Tarehe ya kuisha muda inahitajika",
-    "subtotalMin": "Jumla ndogo lazima iwe 0 au zaidi",
     "taxMin": "Kodi lazima iwe 0 au zaidi",
-    "validUntilAfterIssue": "Tarehe ya kuisha muda lazima iwe sawa na au baada ya tarehe ya kutolewa"
+    "validUntilAfterIssue": "Tarehe ya kuisha muda lazima iwe sawa na au baada ya tarehe ya kutolewa",
+    "itemsRequired": "Ongeza angalau bidhaa moja",
+    "itemDescriptionRequired": "Maelezo yanahitajika",
+    "itemQuantityMin": "Idadi lazima iwe zaidi ya 0",
+    "itemPriceMin": "Bei ya kitengo lazima iwe 0 au zaidi"
   },
   "deleteDialog": {
     "title": "Futa nukuu ya bei",
@@ -52,7 +77,14 @@
   },
   "toast": {
     "created": "Nukuu ya bei imeundwa.",
+    "updated": "Nukuu ya bei imesasishwa.",
     "statusUpdated": "Hali ya nukuu ya bei imesasishwa.",
-    "deleted": "Nukuu ya bei imefutwa."
+    "statusUpdateFailed": "Imeshindwa kusasisha hali.",
+    "converted": "Nukuu imebadilishwa kuwa shehena.",
+    "deleted": "Nukuu ya bei imefutwa.",
+    "submittedForApproval": "Nukuu imewasilishwa kwa idhini ya bei.",
+    "approved": "Nukuu imeidhinishwa na kuwekwa kama imetumwa.",
+    "approveFailed": "Imeshindwa kuidhinisha nukuu.",
+    "rejected": "Nukuu imekataliwa."
   }
 }

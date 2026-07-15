@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ClearingDirection;
 use App\Enums\ClearingStatus;
+use App\Enums\CustomsAssessmentStatus;
 use App\Enums\TransportMode;
 use App\Models\Concerns\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,7 +26,9 @@ class ClearingFile extends Model
         'bl_awb_number',
         'customs_office',
         'declaration_number',
+        'sad_number',
         'hs_code',
+        'customs_value',
         'cargo_description',
         'status',
         'assigned_to',
@@ -34,6 +37,8 @@ class ClearingFile extends Model
         'other_charges',
         'eta',
         'cleared_date',
+        'release_order_number',
+        'assessment_status',
         'delivered_date',
         'notes',
     ];
@@ -42,9 +47,11 @@ class ClearingFile extends Model
         'direction' => ClearingDirection::class,
         'mode' => TransportMode::class,
         'status' => ClearingStatus::class,
+        'assessment_status' => CustomsAssessmentStatus::class,
         'duty_amount' => 'decimal:2',
         'vat_amount' => 'decimal:2',
         'other_charges' => 'decimal:2',
+        'customs_value' => 'decimal:2',
         'eta' => 'date',
         'cleared_date' => 'date',
         'delivered_date' => 'date',

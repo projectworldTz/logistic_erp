@@ -9,7 +9,9 @@
     "referenceNo": "Reference No",
     "customer": "Customer",
     "directionMode": "Direction / Mode",
-    "blAwb": "BL / AWB"
+    "blAwb": "BL / AWB",
+    "sadNumber": "SAD No",
+    "assessmentStatus": "Assessment"
   },
   "statuses": {
     "pending": "Pending",
@@ -19,6 +21,12 @@
     "cleared": "Cleared",
     "delivered": "Delivered",
     "cancelled": "Cancelled"
+  },
+  "assessmentStatuses": {
+    "pending": "Pending",
+    "assessed": "Assessed",
+    "objected": "Objected",
+    "released": "Released"
   },
   "direction": {
     "import": "Import",
@@ -31,15 +39,32 @@
   },
   "form": {
     "dialogTitle": "New Clearing File",
+    "editDialogTitle": "Edit Clearing File",
     "customer": "Customer",
     "direction": "Direction",
     "mode": "Mode",
     "portOfLoading": "Port of Loading (optional)",
     "portOfDischarge": "Port of Discharge (optional)",
-    "blAwbNumber": "BL / AWB Number (optional)"
+    "blAwbNumber": "BL / AWB Number (optional)",
+    "declarationNumber": "Declaration Number (optional)",
+    "sadNumber": "SAD Number (optional)",
+    "hsCode": "HS Code (optional)",
+    "customsValue": "Customs Value (optional)",
+    "dutyAmount": "Duty Amount (optional)",
+    "vatAmount": "VAT Amount (optional)",
+    "releaseOrderNumber": "Release Order Number (optional)"
   },
   "validation": {
     "selectCustomer": "Select a customer"
+  },
+  "actions": {
+    "viewReleaseOrderQr": "View Release Order QR"
+  },
+  "releaseOrderQrDialog": {
+    "title": "Release Order QR Code",
+    "alt": "QR code linking to the public release order verification page",
+    "caption": "Scan to verify this release order",
+    "download": "Download QR"
   },
   "deleteDialog": {
     "title": "Delete clearing file",
@@ -47,7 +72,9 @@
   },
   "toast": {
     "created": "Clearing file created.",
+    "updated": "Clearing file updated.",
     "statusUpdated": "Clearing file status updated.",
+    "assessmentStatusUpdated": "Assessment status updated.",
     "deleted": "Clearing file deleted."
   }
 }

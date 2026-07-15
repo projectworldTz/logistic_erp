@@ -7,7 +7,9 @@ use App\Http\Controllers\Api\V1\Auth\TwoFactorController;
 use App\Http\Controllers\Api\V1\Clearing;
 use App\Http\Controllers\Api\V1\Containers;
 use App\Http\Controllers\Api\V1\Crm;
+use App\Http\Controllers\Api\V1\Currency;
 use App\Http\Controllers\Api\V1\Demurrage;
+use App\Http\Controllers\Api\V1\Detention;
 use App\Http\Controllers\Api\V1\Documents;
 use App\Http\Controllers\Api\V1\Finance;
 use App\Http\Controllers\Api\V1\Fleet;
@@ -34,6 +36,8 @@ Route::prefix('v1')->group(function () {
     Route::post('contact', [Public\ContactController::class, 'store'])->middleware('throttle:5,1');
     Route::post('demo-requests', [Public\DemoRequestController::class, 'store'])->middleware('throttle:5,1');
     Route::get('public/track/{trackingCode}', [Public\ShipmentTrackingController::class, 'show'])->middleware('throttle:30,1');
+    Route::get('public/verify/release-order/{token}', [Public\ReleaseOrderVerificationController::class, 'show'])->middleware('throttle:30,1');
+    Route::get('public/verify/delivery-note/{trackingCode}', [Public\DeliveryNoteVerificationController::class, 'show'])->middleware('throttle:30,1');
 
     Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
         Route::post('auth/logout', [AuthController::class, 'logout']);
@@ -46,6 +50,9 @@ Route::prefix('v1')->group(function () {
         Route::middleware('tenant')->group(function () {
             Route::get('dashboard/summary', [Tenant\DashboardController::class, 'summary']);
             Route::get('reports/overview', [Tenant\ReportsController::class, 'overview'])->middleware('permission:reports.view');
+            Route::get('reports/profit', [Tenant\ReportsController::class, 'profit'])->middleware('permission:reports.view');
+            Route::get('reports/customs', [Tenant\ReportsController::class, 'customs'])->middleware('permission:reports.view');
+            Route::get('reports/tax', [Tenant\ReportsController::class, 'tax'])->middleware('permission:reports.view');
             Route::get('reports/export/{module}', [Tenant\ReportExportController::class, 'export']);
             Route::get('analytics/overview', [Tenant\AnalyticsController::class, 'overview'])->middleware('permission:analytics.view');
             Route::get('company', [Tenant\CompanyController::class, 'show']);
@@ -102,6 +109,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('files/{clearingFile}', [Clearing\ClearingFileController::class, 'show'])->middleware('permission:clearing.files.view');
                 Route::put('files/{clearingFile}', [Clearing\ClearingFileController::class, 'update'])->middleware('permission:clearing.files.manage');
                 Route::delete('files/{clearingFile}', [Clearing\ClearingFileController::class, 'destroy'])->middleware('permission:clearing.files.manage');
+                Route::get('files/{clearingFile}/release-order-qr', [Clearing\ClearingFileController::class, 'releaseOrderQr'])->middleware('permission:clearing.files.view');
             });
 
             Route::prefix('freight')->group(function () {
@@ -119,6 +127,7 @@ Route::prefix('v1')->group(function () {
                 Route::put('items/{container}', [Containers\ContainerController::class, 'update'])->middleware('permission:containers.items.manage');
                 Route::delete('items/{container}', [Containers\ContainerController::class, 'destroy'])->middleware('permission:containers.items.manage');
                 Route::post('items/{container}/demurrage/calculate', [Demurrage\DemurrageChargeController::class, 'calculate'])->middleware('permission:demurrage.charges.manage');
+                Route::post('items/{container}/detention/calculate', [Detention\DetentionChargeController::class, 'calculate'])->middleware('permission:detention.charges.manage');
             });
 
             Route::prefix('demurrage')->group(function () {
@@ -132,6 +141,19 @@ Route::prefix('v1')->group(function () {
                 Route::get('charges/{charge}', [Demurrage\DemurrageChargeController::class, 'show'])->middleware('permission:demurrage.charges.view');
                 Route::post('charges/{charge}/waive', [Demurrage\DemurrageChargeController::class, 'waive'])->middleware('permission:demurrage.charges.manage');
                 Route::post('charges/{charge}/generate-invoice', [Demurrage\DemurrageChargeController::class, 'generateInvoice'])->middleware('permission:demurrage.charges.manage');
+            });
+
+            Route::prefix('detention')->group(function () {
+                Route::get('dashboard', [Detention\DetentionDashboardController::class, 'index'])->middleware('permission:detention.charges.view');
+                Route::get('rate-cards', [Detention\DetentionRateCardController::class, 'index'])->middleware('permission:detention.rate_cards.view');
+                Route::post('rate-cards', [Detention\DetentionRateCardController::class, 'store'])->middleware('permission:detention.rate_cards.manage');
+                Route::get('rate-cards/{rateCard}', [Detention\DetentionRateCardController::class, 'show'])->middleware('permission:detention.rate_cards.view');
+                Route::put('rate-cards/{rateCard}', [Detention\DetentionRateCardController::class, 'update'])->middleware('permission:detention.rate_cards.manage');
+                Route::delete('rate-cards/{rateCard}', [Detention\DetentionRateCardController::class, 'destroy'])->middleware('permission:detention.rate_cards.manage');
+                Route::get('charges', [Detention\DetentionChargeController::class, 'index'])->middleware('permission:detention.charges.view');
+                Route::get('charges/{charge}', [Detention\DetentionChargeController::class, 'show'])->middleware('permission:detention.charges.view');
+                Route::post('charges/{charge}/waive', [Detention\DetentionChargeController::class, 'waive'])->middleware('permission:detention.charges.manage');
+                Route::post('charges/{charge}/generate-invoice', [Detention\DetentionChargeController::class, 'generateInvoice'])->middleware('permission:detention.charges.manage');
             });
 
             Route::prefix('warehouse')->group(function () {
@@ -148,6 +170,9 @@ Route::prefix('v1')->group(function () {
                 Route::get('vehicles/{vehicle}', [Fleet\VehicleController::class, 'show'])->middleware('permission:fleet.vehicles.view');
                 Route::put('vehicles/{vehicle}', [Fleet\VehicleController::class, 'update'])->middleware('permission:fleet.vehicles.manage');
                 Route::delete('vehicles/{vehicle}', [Fleet\VehicleController::class, 'destroy'])->middleware('permission:fleet.vehicles.manage');
+                Route::get('vehicles/{vehicle}/logs', [Fleet\VehicleLogController::class, 'index'])->middleware('permission:fleet.vehicles.view');
+                Route::post('vehicles/{vehicle}/logs', [Fleet\VehicleLogController::class, 'store'])->middleware('permission:fleet.vehicles.manage');
+                Route::delete('vehicles/{vehicle}/logs/{log}', [Fleet\VehicleLogController::class, 'destroy'])->middleware('permission:fleet.vehicles.manage');
             });
 
             Route::prefix('finance')->group(function () {
@@ -167,6 +192,11 @@ Route::prefix('v1')->group(function () {
                 Route::post('expenses/{expense}/approve', [Finance\ExpenseController::class, 'approve'])->middleware('permission:expenses.items.view');
                 Route::post('expenses/{expense}/reject', [Finance\ExpenseController::class, 'reject'])->middleware('permission:expenses.items.view');
                 Route::post('expenses/{expense}/mark-paid', [Finance\ExpenseController::class, 'markPaid'])->middleware('permission:expenses.items.manage');
+
+                Route::get('exchange-rates', [Currency\ExchangeRateController::class, 'index'])->middleware('permission:finance.exchange_rates.view');
+                Route::post('exchange-rates', [Currency\ExchangeRateController::class, 'store'])->middleware('permission:finance.exchange_rates.manage');
+                Route::delete('exchange-rates/{exchangeRate}', [Currency\ExchangeRateController::class, 'destroy'])->middleware('permission:finance.exchange_rates.manage');
+                Route::post('exchange-rates/convert', [Currency\ExchangeRateController::class, 'convert'])->middleware('permission:finance.exchange_rates.view');
             });
 
             Route::prefix('workflows')->group(function () {
@@ -217,6 +247,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('files', [Documents\DocumentController::class, 'index'])->middleware('permission:documents.files.view');
                 Route::post('files', [Documents\DocumentController::class, 'store'])->middleware('permission:documents.files.manage');
                 Route::get('files/{document}', [Documents\DocumentController::class, 'show'])->middleware('permission:documents.files.view');
+                Route::get('files/{document}/versions', [Documents\DocumentController::class, 'versions'])->middleware('permission:documents.files.view');
                 Route::delete('files/{document}', [Documents\DocumentController::class, 'destroy'])->middleware('permission:documents.files.manage');
             });
 
@@ -226,6 +257,10 @@ Route::prefix('v1')->group(function () {
                 Route::get('items/{quotation}', [Quotations\QuotationController::class, 'show'])->middleware('permission:quotations.items.view');
                 Route::put('items/{quotation}', [Quotations\QuotationController::class, 'update'])->middleware('permission:quotations.items.manage');
                 Route::delete('items/{quotation}', [Quotations\QuotationController::class, 'destroy'])->middleware('permission:quotations.items.manage');
+                Route::post('items/{quotation}/convert-to-shipment', [Quotations\QuotationController::class, 'convertToShipment'])->middleware('permission:quotations.items.manage');
+                Route::post('items/{quotation}/submit', [Quotations\QuotationController::class, 'submit'])->middleware('permission:quotations.items.manage');
+                Route::post('items/{quotation}/approve', [Quotations\QuotationController::class, 'approve'])->middleware('permission:quotations.items.approve');
+                Route::post('items/{quotation}/reject', [Quotations\QuotationController::class, 'reject'])->middleware('permission:quotations.items.approve');
             });
 
             Route::prefix('shipments')->group(function () {
@@ -235,6 +270,9 @@ Route::prefix('v1')->group(function () {
                 Route::put('items/{shipment}', [Shipments\ShipmentController::class, 'update'])->middleware('permission:shipments.items.manage');
                 Route::delete('items/{shipment}', [Shipments\ShipmentController::class, 'destroy'])->middleware('permission:shipments.items.manage');
                 Route::get('items/{shipment}/tracking-qr', [Shipments\ShipmentController::class, 'trackingQr'])->middleware('permission:shipments.items.view');
+                Route::get('items/{shipment}/delivery-note-qr', [Shipments\ShipmentController::class, 'deliveryNoteQr'])->middleware('permission:shipments.items.view');
+                Route::get('items/{shipment}/cost-summary', [Shipments\ShipmentController::class, 'costSummary'])->middleware('permission:shipments.costs.view');
+                Route::post('sla-check', [Shipments\ShipmentController::class, 'checkSla'])->middleware('permission:shipments.items.manage');
                 Route::post('items/{shipment}/milestones', [Shipments\ShipmentMilestoneController::class, 'store'])->middleware('permission:shipments.items.manage');
             });
 

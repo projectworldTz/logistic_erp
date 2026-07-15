@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Enums\ShipmentStatus;
 use App\Models\Shipment;
 use App\Services\Audit\AuditLogger;
 use App\Services\Notifications\NotificationService;
@@ -47,6 +48,31 @@ class ShipmentObserver
             newValues: $shipment->getChanges(),
             tenantId: $shipment->tenant_id,
         );
+
+        if ($shipment->wasChanged('status') && $shipment->status === ShipmentStatus::Delivered && $shipment->customer) {
+            $this->notifications->notifyCustomer(
+                $shipment->customer,
+                'shipment.delivered',
+                'Shipment delivered',
+                $this->deliveredMessage($shipment),
+                $shipment,
+            );
+        }
+    }
+
+    /**
+     * A message unique to this shipment/customer pair — not a generic
+     * canned line — so the customer sees exactly which cargo arrived.
+     */
+    private function deliveredMessage(Shipment $shipment): string
+    {
+        $shipment->loadMissing(['customer', 'clearingFile', 'freightBooking']);
+
+        $cargoDescription = $shipment->clearingFile?->cargo_description ?? $shipment->freightBooking?->cargo_description;
+        $cargoSuffix = $cargoDescription ? " ({$cargoDescription})" : '';
+        $trackingUrl = rtrim(config('app.frontend_url'), '/')."/track/{$shipment->tracking_code}";
+
+        return "Hi {$shipment->customer->company_name}, good news — your shipment {$shipment->shipment_number}{$cargoSuffix} has been delivered. Track it any time at {$trackingUrl}.";
     }
 
     public function deleted(Shipment $shipment): void

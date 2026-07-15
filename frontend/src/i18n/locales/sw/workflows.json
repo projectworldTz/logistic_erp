@@ -13,7 +13,8 @@
     "steps": "Hatua"
   },
   "subjectTypes": {
-    "expense": "Matumizi"
+    "expense": "Matumizi",
+    "quotation": "Nukuu za Bei"
   },
   "form": {
     "dialogTitle": "Mtiririko Mpya wa Idhini",

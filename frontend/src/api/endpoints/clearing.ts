@@ -19,3 +19,8 @@ export async function updateClearingFile(id: number, payload: Partial<ClearingFi
 export async function deleteClearingFile(id: number): Promise<void> {
   await api.delete(`/clearing/files/${id}`);
 }
+
+export async function fetchReleaseOrderQr(id: number): Promise<Blob> {
+  const { data } = await api.get(`/clearing/files/${id}/release-order-qr`, { responseType: 'blob' });
+  return data;
+}

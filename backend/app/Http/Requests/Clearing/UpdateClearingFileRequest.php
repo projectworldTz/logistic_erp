@@ -4,6 +4,7 @@ namespace App\Http\Requests\Clearing;
 
 use App\Enums\ClearingDirection;
 use App\Enums\ClearingStatus;
+use App\Enums\CustomsAssessmentStatus;
 use App\Enums\TransportMode;
 use App\Support\Tenancy\TenantContext;
 use Illuminate\Foundation\Http\FormRequest;
@@ -29,7 +30,9 @@ class UpdateClearingFileRequest extends FormRequest
             'bl_awb_number' => ['nullable', 'string', 'max:255'],
             'customs_office' => ['nullable', 'string', 'max:255'],
             'declaration_number' => ['nullable', 'string', 'max:255'],
+            'sad_number' => ['nullable', 'string', 'max:255'],
             'hs_code' => ['nullable', 'string', 'max:255'],
+            'customs_value' => ['nullable', 'numeric', 'min:0'],
             'cargo_description' => ['nullable', 'string'],
             'status' => ['sometimes', new Enum(ClearingStatus::class)],
             'assigned_to' => ['nullable', Rule::exists('users', 'id')
@@ -39,6 +42,8 @@ class UpdateClearingFileRequest extends FormRequest
             'other_charges' => ['nullable', 'numeric', 'min:0'],
             'eta' => ['nullable', 'date'],
             'cleared_date' => ['nullable', 'date'],
+            'release_order_number' => ['nullable', 'string', 'max:255'],
+            'assessment_status' => ['sometimes', new Enum(CustomsAssessmentStatus::class)],
             'delivered_date' => ['nullable', 'date'],
             'notes' => ['nullable', 'string'],
         ];

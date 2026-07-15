@@ -11,6 +11,7 @@
   "table": {
     "fileName": "Jina la Faili",
     "category": "Aina",
+    "shipment": "Shehena",
     "size": "Ukubwa",
     "uploaded": "Ilipakiwa"
   },
@@ -20,10 +21,26 @@
     "customs_declaration": "Tamko la Forodha",
     "contract": "Mkataba",
     "id_document": "Kitambulisho",
+    "packing_list": "Orodha ya Ufungashaji",
+    "certificate_of_origin": "Cheti cha Asili",
+    "insurance_certificate": "Cheti cha Bima",
+    "delivery_note": "Ankara ya Uwasilishaji",
+    "release_order": "Amri ya Kuachilia",
     "other": "Nyingine"
   },
+  "actions": {
+    "preview": "Onyesho la Awali",
+    "versions": "Historia ya Matoleo",
+    "newVersion": "Pakia Toleo Jipya"
+  },
   "form": {
-    "chooseFile": "Chagua Faili"
+    "chooseFile": "Chagua Faili",
+    "shipment": "Shehena (hiari)",
+    "noShipment": "Hakuna shehena",
+    "newVersionTitle": "Toleo Jipya — {{name}}"
+  },
+  "versionsDialog": {
+    "title": "Historia ya Matoleo"
   },
   "deleteDialog": {
     "title": "Futa hati",

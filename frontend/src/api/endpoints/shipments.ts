@@ -1,5 +1,5 @@
 import { api } from '../axios';
-import type { Paginated, PublicShipmentTracking, Shipment, TrackingEvent } from '../../types';
+import type { Paginated, PublicShipmentTracking, Shipment, ShipmentCostSummary, TrackingEvent } from '../../types';
 
 export async function fetchShipments(page = 1): Promise<Paginated<Shipment>> {
   const { data } = await api.get<Paginated<Shipment>>('/shipments/items', { params: { page } });
@@ -40,5 +40,20 @@ export async function deleteShipment(id: number): Promise<void> {
 
 export async function fetchShipmentTrackingQr(id: number): Promise<Blob> {
   const { data } = await api.get(`/shipments/items/${id}/tracking-qr`, { responseType: 'blob' });
+  return data;
+}
+
+export async function fetchDeliveryNoteQr(id: number): Promise<Blob> {
+  const { data } = await api.get(`/shipments/items/${id}/delivery-note-qr`, { responseType: 'blob' });
+  return data;
+}
+
+export async function fetchShipmentCostSummary(id: number): Promise<ShipmentCostSummary> {
+  const { data } = await api.get<{ data: ShipmentCostSummary }>(`/shipments/items/${id}/cost-summary`);
+  return data.data;
+}
+
+export async function checkShipmentSla(): Promise<{ delayed_alerted: number; near_deadline_alerted: number }> {
+  const { data } = await api.post('/shipments/sla-check');
   return data;
 }

@@ -13,7 +13,8 @@
     "steps": "Steps"
   },
   "subjectTypes": {
-    "expense": "Expenses"
+    "expense": "Expenses",
+    "quotation": "Quotations"
   },
   "form": {
     "dialogTitle": "New Approval Workflow",

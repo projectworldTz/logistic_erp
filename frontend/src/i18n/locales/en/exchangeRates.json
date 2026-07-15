@@ -1,0 +1,45 @@
+{
+  "title": "Exchange Rates",
+  "subtitle": "Record currency exchange rates and convert amounts between them.",
+  "newRate": "New Rate",
+  "empty": {
+    "title": "No exchange rates recorded yet",
+    "description": "Add your first rate to enable multi-currency conversion."
+  },
+  "table": {
+    "pair": "Currency Pair",
+    "rate": "Rate",
+    "date": "Date",
+    "recordedBy": "Recorded By"
+  },
+  "form": {
+    "baseCurrency": "Base Currency (e.g. USD)",
+    "quoteCurrency": "Quote Currency (e.g. TZS)",
+    "rate": "Rate",
+    "rateHelp": "1 base currency = this many quote currency units",
+    "rateDate": "Date"
+  },
+  "convert": {
+    "title": "Quick Convert",
+    "amount": "Amount",
+    "from": "From",
+    "to": "To",
+    "action": "Convert",
+    "result": "{{amount}} {{from}} = {{converted}} {{to}} (rate {{rate}})",
+    "error": "No exchange rate is available for that currency pair."
+  },
+  "validation": {
+    "currencyLength": "Use a 3-letter currency code",
+    "rateMin": "Rate must be greater than 0",
+    "amountMin": "Amount must be 0 or more",
+    "dateRequired": "Date is required"
+  },
+  "deleteDialog": {
+    "title": "Delete exchange rate",
+    "message": "Are you sure you want to delete the {{pair}} rate? This cannot be undone."
+  },
+  "toast": {
+    "created": "Exchange rate saved.",
+    "deleted": "Exchange rate deleted."
+  }
+}

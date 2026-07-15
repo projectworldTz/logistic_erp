@@ -84,6 +84,50 @@ class ContainerTest extends TestCase
         $this->assertDatabaseHas('audit_logs', ['action' => 'container.created']);
     }
 
+    public function test_container_can_be_created_and_updated_with_tracking_fields(): void
+    {
+        $registration = $this->registerTenant();
+        $token = $registration['token'];
+        $customerId = $this->createCustomer($token);
+
+        $create = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson('/api/v1/containers/items', [
+                'customer_id' => $customerId,
+                'container_number' => 'MSCU7654321',
+                'container_type' => 'dry_40',
+                'shipping_line' => 'Maersk',
+                'vessel_name' => 'MV Kilimanjaro',
+                'voyage_number' => 'V-042E',
+                'port_of_loading' => 'Shanghai',
+                'port_of_discharge' => 'Dar es Salaam',
+                'eta' => now()->addDays(14)->toDateString(),
+            ]);
+
+        $create->assertCreated();
+        $create->assertJsonPath('data.shipping_line', 'Maersk');
+        $create->assertJsonPath('data.vessel_name', 'MV Kilimanjaro');
+        $create->assertJsonPath('data.voyage_number', 'V-042E');
+        $create->assertJsonPath('data.port_of_loading', 'Shanghai');
+        $create->assertJsonPath('data.port_of_discharge', 'Dar es Salaam');
+        $this->assertNotNull($create->json('data.eta'));
+        $this->assertNull($create->json('data.ata'));
+
+        $containerId = $create->json('data.id');
+
+        $this->withHeader('Authorization', "Bearer {$token}")
+            ->putJson("/api/v1/containers/items/{$containerId}", [
+                'ata' => now()->toDateString(),
+            ])
+            ->assertOk()
+            ->assertJsonPath('data.vessel_name', 'MV Kilimanjaro')
+            ->assertJsonPath('data.shipping_line', 'Maersk');
+
+        $this->assertNotNull(
+            $this->withHeader('Authorization', "Bearer {$token}")
+                ->getJson("/api/v1/containers/items/{$containerId}")
+        );
+    }
+
     public function test_duplicate_container_number_within_tenant_is_rejected(): void
     {
         $registration = $this->registerTenant();

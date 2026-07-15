@@ -24,10 +24,19 @@ import {
 } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import HistoryIcon from '@mui/icons-material/History';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { deleteDocument, fetchDocuments, uploadDocument } from '../../../../api/endpoints/documents';
+import {
+  deleteDocument,
+  fetchDocumentVersions,
+  fetchDocuments,
+  uploadDocument,
+} from '../../../../api/endpoints/documents';
+import { fetchShipments } from '../../../../api/endpoints/shipments';
 import type { Document } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
@@ -39,6 +48,11 @@ const CATEGORY_COLOR: Record<Document['category'], 'default' | 'info' | 'warning
   customs_declaration: 'warning',
   contract: 'info',
   id_document: 'default',
+  packing_list: 'info',
+  certificate_of_origin: 'success',
+  insurance_certificate: 'success',
+  delivery_note: 'default',
+  release_order: 'warning',
   other: 'default',
 };
 
@@ -48,6 +62,11 @@ const CATEGORY_OPTIONS: Document['category'][] = [
   'customs_declaration',
   'contract',
   'id_document',
+  'packing_list',
+  'certificate_of_origin',
+  'insurance_certificate',
+  'delivery_note',
+  'release_order',
   'other',
 ];
 
@@ -64,9 +83,20 @@ export function DocumentsPage() {
   const { showToast } = useToast();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [pendingDelete, setPendingDelete] = useState<Document | null>(null);
+  const [previewDocument, setPreviewDocument] = useState<Document | null>(null);
+  const [versionsDocument, setVersionsDocument] = useState<Document | null>(null);
+  const [newVersionOf, setNewVersionOf] = useState<Document | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [category, setCategory] = useState<Document['category']>('other');
+  const [shipmentId, setShipmentId] = useState<number | ''>('');
   const { data, isLoading } = useQuery({ queryKey: ['documents', 'files'], queryFn: () => fetchDocuments() });
+  const { data: shipments } = useQuery({ queryKey: ['shipments', 'items'], queryFn: () => fetchShipments() });
+
+  const { data: versionsData, isLoading: versionsLoading } = useQuery({
+    queryKey: ['documents', 'files', versionsDocument?.id, 'versions'],
+    queryFn: () => fetchDocumentVersions(versionsDocument!.id),
+    enabled: !!versionsDocument,
+  });
 
   const invalidateDocuments = () => queryClient.invalidateQueries({ queryKey: ['documents', 'files'] });
 
@@ -77,6 +107,8 @@ export function DocumentsPage() {
       setDialogOpen(false);
       setFile(null);
       setCategory('other');
+      setShipmentId('');
+      setNewVersionOf(null);
       showToast(t('toast.created'));
     },
   });
@@ -92,7 +124,28 @@ export function DocumentsPage() {
 
   const onUpload = () => {
     if (!file) return;
-    uploadMutation.mutate({ file, category });
+    uploadMutation.mutate({
+      file,
+      category,
+      shipment_id: shipmentId === '' ? undefined : shipmentId,
+      parent_document_id: newVersionOf?.id,
+    });
+  };
+
+  const openUploadDialog = () => {
+    setNewVersionOf(null);
+    setFile(null);
+    setCategory('other');
+    setShipmentId('');
+    setDialogOpen(true);
+  };
+
+  const openNewVersionDialog = (document: Document) => {
+    setNewVersionOf(document);
+    setFile(null);
+    setCategory(document.category);
+    setShipmentId(document.shipment_id ?? '');
+    setDialogOpen(true);
   };
 
   return (
@@ -101,7 +154,7 @@ export function DocumentsPage() {
         <Typography variant="h5" fontWeight={700}>
           {t('title')}
         </Typography>
-        <Button variant="contained" startIcon={<UploadFileIcon />} onClick={() => setDialogOpen(true)}>
+        <Button variant="contained" startIcon={<UploadFileIcon />} onClick={openUploadDialog}>
           {t('uploadDocument')}
         </Button>
       </Stack>
@@ -122,6 +175,7 @@ export function DocumentsPage() {
                 <TableRow>
                   <TableCell>{t('table.fileName')}</TableCell>
                   <TableCell>{t('table.category')}</TableCell>
+                  <TableCell>{t('table.shipment')}</TableCell>
                   <TableCell>{t('table.size')}</TableCell>
                   <TableCell>{t('table.uploaded')}</TableCell>
                   <TableCell align="right">{tc('actions.actions')}</TableCell>
@@ -131,16 +185,37 @@ export function DocumentsPage() {
                 {data.data.map((document) => (
                   <TableRow key={document.id}>
                     <TableCell>
-                      <Link href={document.url} target="_blank" rel="noopener noreferrer">
-                        {document.file_name}
-                      </Link>
+                      <Stack direction="row" spacing={0.75} alignItems="center">
+                        <Link href={document.url} target="_blank" rel="noopener noreferrer">
+                          {document.file_name}
+                        </Link>
+                        <Chip label={`v${document.version}`} size="small" variant="outlined" />
+                      </Stack>
                     </TableCell>
                     <TableCell>
                       <Chip label={t(`categories.${document.category}`)} size="small" color={CATEGORY_COLOR[document.category]} />
                     </TableCell>
+                    <TableCell>{document.shipment?.shipment_number ?? '—'}</TableCell>
                     <TableCell>{formatBytes(document.file_size)}</TableCell>
                     <TableCell>{new Date(document.created_at).toLocaleDateString()}</TableCell>
                     <TableCell align="right">
+                      {document.is_previewable && (
+                        <Tooltip title={t('actions.preview')}>
+                          <IconButton size="small" onClick={() => setPreviewDocument(document)}>
+                            <VisibilityIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                      )}
+                      <Tooltip title={t('actions.versions')}>
+                        <IconButton size="small" onClick={() => setVersionsDocument(document)}>
+                          <HistoryIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title={t('actions.newVersion')}>
+                        <IconButton size="small" onClick={() => openNewVersionDialog(document)}>
+                          <NoteAddIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
                       <Tooltip title={tc('actions.delete')}>
                         <IconButton size="small" onClick={() => setPendingDelete(document)}>
                           <DeleteIcon fontSize="small" />
@@ -156,7 +231,7 @@ export function DocumentsPage() {
       )}
 
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} fullWidth maxWidth="xs">
-        <DialogTitle>{t('uploadDocument')}</DialogTitle>
+        <DialogTitle>{newVersionOf ? t('form.newVersionTitle', { name: newVersionOf.file_name }) : t('uploadDocument')}</DialogTitle>
         <DialogContent>
           <Stack spacing={2} sx={{ pt: 1 }}>
             <Button component="label" variant="outlined">
@@ -174,10 +249,26 @@ export function DocumentsPage() {
               fullWidth
               value={category}
               onChange={(e) => setCategory(e.target.value as Document['category'])}
+              disabled={!!newVersionOf}
             >
               {CATEGORY_OPTIONS.map((option) => (
                 <MenuItem key={option} value={option}>
                   {t(`categories.${option}`)}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              label={t('form.shipment')}
+              select
+              fullWidth
+              value={shipmentId}
+              onChange={(e) => setShipmentId(e.target.value === '' ? '' : Number(e.target.value))}
+              disabled={!!newVersionOf}
+            >
+              <MenuItem value="">{t('form.noShipment')}</MenuItem>
+              {shipments?.data.map((shipment) => (
+                <MenuItem key={shipment.id} value={shipment.id}>
+                  {shipment.shipment_number}
                 </MenuItem>
               ))}
             </TextField>
@@ -188,6 +279,46 @@ export function DocumentsPage() {
           <Button variant="contained" onClick={onUpload} disabled={!file || uploadMutation.isPending}>
             {tc('actions.upload')}
           </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={!!previewDocument} onClose={() => setPreviewDocument(null)} fullWidth maxWidth="md">
+        <DialogTitle>{previewDocument?.file_name}</DialogTitle>
+        <DialogContent>
+          {previewDocument?.mime_type === 'application/pdf' ? (
+            <iframe src={previewDocument.url} title={previewDocument.file_name} style={{ width: '100%', height: '70vh', border: 'none' }} />
+          ) : (
+            previewDocument && (
+              <img src={previewDocument.url} alt={previewDocument.file_name} style={{ maxWidth: '100%', display: 'block', margin: '0 auto' }} />
+            )
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setPreviewDocument(null)}>{tc('actions.close')}</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={!!versionsDocument} onClose={() => setVersionsDocument(null)} fullWidth maxWidth="xs">
+        <DialogTitle>{t('versionsDialog.title')}</DialogTitle>
+        <DialogContent>
+          {versionsLoading && <CircularProgress size={24} />}
+          {versionsData && (
+            <Stack spacing={1}>
+              {versionsData.data.map((version) => (
+                <Stack key={version.id} direction="row" justifyContent="space-between" alignItems="center">
+                  <Link href={version.url} target="_blank" rel="noopener noreferrer">
+                    v{version.version} — {version.file_name}
+                  </Link>
+                  <Typography variant="caption" color="text.secondary">
+                    {new Date(version.created_at).toLocaleDateString()}
+                  </Typography>
+                </Stack>
+              ))}
+            </Stack>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setVersionsDocument(null)}>{tc('actions.close')}</Button>
         </DialogActions>
       </Dialog>
 

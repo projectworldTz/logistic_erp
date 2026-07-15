@@ -2,10 +2,12 @@
 
 namespace App\Services\Notifications;
 
+use App\Models\Customer;
 use App\Models\User;
 use App\Models\UserNotification;
 use App\Support\Tenancy\TenantContext;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Spatie\Permission\PermissionRegistrar;
 
 class NotificationService
@@ -39,6 +41,53 @@ class NotificationService
             return;
         }
 
+        $this->insertInAppNotifications($tenantId, $recipients, $type, $title, $message, $notifiable, $actorId);
+
+        foreach ($recipients as $recipient) {
+            $this->externalDispatcher->dispatch($recipient, $title, $message);
+        }
+    }
+
+    /**
+     * Notify a Customer that something about their own shipment/invoice/
+     * quotation happened: an in-app notification for any portal User
+     * accounts linked to that customer (customer_id), plus an email sent
+     * directly to the customer's contact address regardless of whether a
+     * portal account exists.
+     */
+    public function notifyCustomer(
+        Customer $customer,
+        string $type,
+        string $title,
+        string $message,
+        Model $notifiable,
+    ): void {
+        $tenantId = app(TenantContext::class)->id();
+
+        $portalUsers = User::query()
+            ->where('tenant_id', $tenantId)
+            ->where('customer_id', $customer->id)
+            ->get(['id']);
+
+        if ($portalUsers->isNotEmpty()) {
+            $this->insertInAppNotifications($tenantId, $portalUsers, $type, $title, $message, $notifiable);
+        }
+
+        $this->externalDispatcher->dispatchToCustomer($customer, $title, $message);
+    }
+
+    /**
+     * @param  Collection<int, User>  $recipients
+     */
+    private function insertInAppNotifications(
+        int $tenantId,
+        Collection $recipients,
+        string $type,
+        string $title,
+        string $message,
+        Model $notifiable,
+        ?int $actorId = null,
+    ): void {
         $now = now();
 
         UserNotification::query()->insert($recipients->map(fn (User $recipient) => [
@@ -53,9 +102,5 @@ class NotificationService
             'created_at' => $now,
             'updated_at' => $now,
         ])->all());
-
-        foreach ($recipients as $recipient) {
-            $this->externalDispatcher->dispatch($recipient, $title, $message);
-        }
     }
 }

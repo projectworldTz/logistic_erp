@@ -142,6 +142,14 @@ export interface DashboardWidgets {
   outstanding_invoices?: number;
   fleet_status?: { active: number; maintenance: number };
   warehouse_status?: { utilization_percent: number };
+  shipment_intelligence?: {
+    active: number;
+    released: number;
+    delayed: number;
+    near_deadline: number;
+    customers_served: number;
+    avg_customs_clearance_days: number | null;
+  };
 }
 
 export interface DashboardSummary {
@@ -249,7 +257,9 @@ export interface ClearingFile {
   bl_awb_number: string | null;
   customs_office: string | null;
   declaration_number: string | null;
+  sad_number: string | null;
   hs_code: string | null;
+  customs_value: string | null;
   cargo_description: string | null;
   status: 'pending' | 'documents_received' | 'under_clearance' | 'customs_hold' | 'cleared' | 'delivered' | 'cancelled';
   assigned_to: number | null;
@@ -259,6 +269,8 @@ export interface ClearingFile {
   other_charges: string | null;
   eta: string | null;
   cleared_date: string | null;
+  release_order_number: string | null;
+  assessment_status: 'pending' | 'assessed' | 'objected' | 'released';
   delivered_date: string | null;
   notes: string | null;
   created_at: string;
@@ -272,12 +284,20 @@ export interface Container {
   freight_booking_id: number | null;
   container_number: string;
   container_type: 'dry_20' | 'dry_40' | 'dry_40_hc' | 'reefer_20' | 'reefer_40' | 'open_top' | 'flat_rack' | 'tank';
+  shipping_line: string | null;
+  vessel_name: string | null;
+  voyage_number: string | null;
+  port_of_loading: string | null;
+  port_of_discharge: string | null;
   seal_number: string | null;
   status: 'at_port' | 'in_transit' | 'at_warehouse' | 'delivered' | 'returned' | 'empty_return';
   gross_weight_kg: string | null;
   location: string | null;
   gate_in_date: string | null;
+  eta: string | null;
+  ata: string | null;
   gate_out_date: string | null;
+  empty_return_date: string | null;
   notes: string | null;
   created_at: string;
 }
@@ -318,6 +338,29 @@ export interface Vehicle {
   last_service_date: string | null;
   next_service_due: string | null;
   notes: string | null;
+  created_at: string;
+}
+
+export interface VehicleLog {
+  id: number;
+  vehicle_id: number;
+  type: 'maintenance' | 'fuel' | 'insurance' | 'trip';
+  log_date: string;
+  description: string;
+  cost: string | null;
+  currency: string | null;
+  odometer_km: string | null;
+  liters: string | null;
+  policy_number: string | null;
+  expiry_date: string | null;
+  driver_id: number | null;
+  driver?: User | null;
+  origin: string | null;
+  destination: string | null;
+  distance_km: string | null;
+  notes: string | null;
+  created_by: number | null;
+  creator?: User | null;
   created_at: string;
 }
 
@@ -376,7 +419,7 @@ export interface ApprovalWorkflowStep {
 export interface ApprovalWorkflow {
   id: number;
   name: string;
-  subject_type: 'expense';
+  subject_type: 'expense' | 'quotation';
   min_amount: string | null;
   is_active: boolean;
   steps: ApprovalWorkflowStep[];
@@ -512,6 +555,69 @@ export interface DemurrageDashboardRow {
   risk_level: 'within_free' | 'at_risk' | 'accruing';
 }
 
+export interface DetentionRateTier {
+  id: number;
+  position: number;
+  from_day: number;
+  to_day: number | null;
+  daily_rate: number;
+}
+
+export interface DetentionRateCard {
+  id: number;
+  name: string;
+  container_type: Container['container_type'] | null;
+  free_days: number;
+  currency: string;
+  is_default: boolean;
+  tiers: DetentionRateTier[];
+  created_at: string;
+}
+
+export interface DetentionChargeBreakdownItem {
+  tier: number | 'overflow';
+  days: number;
+  daily_rate: number;
+  amount: number;
+}
+
+export interface DetentionCharge {
+  id: number;
+  container_id: number;
+  container?: Container;
+  customer_id: number;
+  customer?: Customer;
+  invoice_id: number | null;
+  calculated_at: string;
+  detention_days: number;
+  free_days: number;
+  chargeable_days: number;
+  amount: string;
+  currency: string;
+  breakdown: DetentionChargeBreakdownItem[];
+  status: 'pending' | 'invoiced' | 'waived';
+  waived_reason: string | null;
+  created_at: string;
+}
+
+export interface DetentionDashboardRow {
+  container_id: number;
+  container_number: string;
+  container_type: Container['container_type'];
+  customer_id: number;
+  customer?: Customer;
+  gate_out_date: string;
+  rate_card_id: number | null;
+  rate_card_name: string | null;
+  currency: string;
+  detention_days: number;
+  free_days: number;
+  free_days_remaining: number;
+  chargeable_days: number;
+  accrued_amount: number;
+  risk_level: 'within_free' | 'at_risk' | 'accruing';
+}
+
 export interface Account {
   id: number;
   parent_id: number | null;
@@ -520,6 +626,17 @@ export interface Account {
   type: 'asset' | 'liability' | 'equity' | 'revenue' | 'expense';
   is_active: boolean;
   description: string | null;
+  created_at: string;
+}
+
+export interface ExchangeRate {
+  id: number;
+  base_currency: string;
+  quote_currency: string;
+  rate: string;
+  rate_date: string;
+  created_by: number | null;
+  creator?: User | null;
   created_at: string;
 }
 
@@ -548,6 +665,15 @@ export interface JournalEntry {
   created_at: string;
 }
 
+export interface QuotationItem {
+  id: number;
+  position: number;
+  description: string;
+  quantity: string;
+  unit_price: string;
+  amount: string;
+}
+
 export interface Quotation {
   id: number;
   customer_id: number;
@@ -565,6 +691,9 @@ export interface Quotation {
   total_amount: string;
   currency: string;
   notes: string | null;
+  items?: QuotationItem[];
+  has_shipment: boolean;
+  approval_request?: ApprovalRequest | null;
   created_at: string;
 }
 
@@ -619,6 +748,17 @@ export interface Shipment {
   created_at: string;
 }
 
+export interface ShipmentCostSummary {
+  currency: string;
+  revenue: { billed: number; collected: number };
+  cost: { confirmed: number; pending: number };
+  profit: number;
+  margin_percent: number | null;
+  cost_breakdown: { category: Expense['category']; amount: number }[];
+  invoices: Invoice[];
+  expenses: Expense[];
+}
+
 export interface PublicShipmentTracking {
   shipment_number: string | null;
   tracking_code: string;
@@ -633,6 +773,7 @@ export interface PublicShipmentTracking {
 }
 
 export interface ReportsOverview {
+  branch_id: number | null;
   crm: {
     leads_total: number;
     leads_by_status: Record<string, number>;
@@ -656,6 +797,36 @@ export interface ReportsOverview {
     journal_entries_by_status: Record<string, number>;
   };
   documents: { total: number };
+}
+
+export interface ProfitReport {
+  rows: {
+    shipment_id: number;
+    shipment_number: string | null;
+    customer: string | null;
+    revenue: number;
+    cost: number;
+    profit: number;
+    margin_percent: number | null;
+  }[];
+  totals: { revenue: number; cost: number; profit: number };
+}
+
+export interface CustomsReport {
+  total_declarations: number;
+  avg_clearance_days: number | null;
+  total_duty: number;
+  total_vat: number;
+  total_customs_value: number;
+  by_customs_office: Record<string, number>;
+  by_assessment_status: Record<string, number>;
+}
+
+export interface TaxReport {
+  range: { from: string; to: string };
+  vat_collected_by_month: Record<string, number>;
+  duty_paid_by_month: Record<string, number>;
+  totals: { vat_collected: number; duty_paid: number };
 }
 
 export interface FreightBooking {
@@ -687,11 +858,28 @@ export interface Document {
   id: number;
   customer_id: number | null;
   customer?: Customer;
-  category: 'invoice' | 'bill_of_lading' | 'customs_declaration' | 'contract' | 'id_document' | 'other';
+  shipment_id: number | null;
+  shipment?: Shipment;
+  category:
+    | 'invoice'
+    | 'bill_of_lading'
+    | 'customs_declaration'
+    | 'contract'
+    | 'id_document'
+    | 'packing_list'
+    | 'certificate_of_origin'
+    | 'insurance_certificate'
+    | 'delivery_note'
+    | 'release_order'
+    | 'other';
   file_name: string;
   file_size: number;
   mime_type: string;
+  is_previewable: boolean;
   url: string;
+  version: number;
+  parent_document_id: number | null;
+  root_document_id: number | null;
   uploaded_by: number | null;
   uploaded_by_user?: User | null;
   description: string | null;

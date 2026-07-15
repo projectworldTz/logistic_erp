@@ -8,6 +8,7 @@ import FactCheckIcon from '@mui/icons-material/FactCheck';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import TimerIcon from '@mui/icons-material/Timer';
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import WarehouseIcon from '@mui/icons-material/Warehouse';
 import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -27,6 +28,7 @@ import RuleIcon from '@mui/icons-material/Rule';
 import HistoryIcon from '@mui/icons-material/History';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import BusinessIcon from '@mui/icons-material/Business';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
 export interface NavItem {
   labelKey: string;
@@ -67,6 +69,7 @@ export const TENANT_NAV_GROUPS: NavGroup[] = [
       { labelKey: 'freight', path: '/app/freight', enabled: true, permission: 'freight.bookings.view', icon: <FlightTakeoffIcon {...iconProps} /> },
       { labelKey: 'containers', path: '/app/containers', enabled: true, permission: 'containers.items.view', icon: <Inventory2Icon {...iconProps} /> },
       { labelKey: 'demurrage', path: '/app/demurrage', enabled: true, permission: 'demurrage.charges.view', icon: <TimerIcon {...iconProps} /> },
+      { labelKey: 'detention', path: '/app/detention', enabled: true, permission: 'detention.charges.view', icon: <HourglassBottomIcon {...iconProps} /> },
       { labelKey: 'warehouse', path: '/app/warehouse', enabled: true, permission: 'warehouse.items.view', icon: <WarehouseIcon {...iconProps} /> },
       { labelKey: 'fleet', path: '/app/fleet', enabled: true, permission: 'fleet.vehicles.view', icon: <DirectionsCarFilledIcon {...iconProps} /> },
       { labelKey: 'documents', path: '/app/documents', enabled: true, permission: 'documents.files.view', icon: <DescriptionIcon {...iconProps} /> },
@@ -79,6 +82,7 @@ export const TENANT_NAV_GROUPS: NavGroup[] = [
       { labelKey: 'finance', path: '/app/finance', enabled: true, permission: 'finance.invoices.view', icon: <ReceiptLongIcon {...iconProps} /> },
       { labelKey: 'expenses', path: '/app/expenses', enabled: true, permission: 'expenses.items.view', icon: <PaymentsIcon {...iconProps} /> },
       { labelKey: 'accounting', path: '/app/accounting', enabled: true, permission: 'accounting.accounts.view', icon: <AccountBalanceIcon {...iconProps} /> },
+      { labelKey: 'exchangeRates', path: '/app/exchange-rates', enabled: true, permission: 'finance.exchange_rates.view', icon: <CurrencyExchangeIcon {...iconProps} /> },
     ],
   },
   {

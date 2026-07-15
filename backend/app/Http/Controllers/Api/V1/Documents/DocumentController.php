@@ -15,8 +15,9 @@ class DocumentController extends Controller
     {
         return DocumentResource::collection(
             Document::query()
-                ->with(['customer', 'uploadedBy'])
+                ->with(['customer', 'shipment', 'uploadedBy'])
                 ->when($request->query('category'), fn ($query, $category) => $query->where('category', $category))
+                ->when($request->query('shipment_id'), fn ($query, $shipmentId) => $query->where('shipment_id', $shipmentId))
                 ->latest()
                 ->paginate(20)
         );
@@ -26,12 +27,26 @@ class DocumentController extends Controller
     {
         $document = $service->store($request->file('file'), $request->validated());
 
-        return new DocumentResource($document->load(['customer', 'uploadedBy']));
+        return new DocumentResource($document->load(['customer', 'shipment', 'uploadedBy']));
     }
 
     public function show(Document $document)
     {
-        return new DocumentResource($document->load(['customer', 'uploadedBy']));
+        return new DocumentResource($document->load(['customer', 'shipment', 'uploadedBy']));
+    }
+
+    public function versions(Document $document)
+    {
+        $rootId = $document->root_document_id ?? $document->id;
+
+        return DocumentResource::collection(
+            Document::query()
+                ->where('root_document_id', $rootId)
+                ->orWhere('id', $rootId)
+                ->with(['uploadedBy'])
+                ->orderByDesc('version')
+                ->get()
+        );
     }
 
     public function destroy(Document $document, DocumentUploadService $service)

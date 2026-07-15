@@ -11,6 +11,10 @@ vi.mock('../../../../api/endpoints/quotations', () => ({
   createQuotation: vi.fn(),
   updateQuotation: vi.fn(),
   deleteQuotation: vi.fn(),
+  convertQuotationToShipment: vi.fn(),
+  submitQuotationForApproval: vi.fn(),
+  approveQuotation: vi.fn(),
+  rejectQuotation: vi.fn(),
 }));
 
 vi.mock('../../../../api/endpoints/crm', () => ({
@@ -34,6 +38,7 @@ const sampleQuotation: Quotation = {
   total_amount: '1000.00',
   currency: 'USD',
   notes: null,
+  has_shipment: false,
   created_at: '2026-07-01T00:00:00.000000Z',
 };
 

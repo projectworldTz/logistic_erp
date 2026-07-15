@@ -1,6 +1,7 @@
 {
   "title": "Shehena",
   "newShipment": "Shehena Mpya",
+  "checkSla": "Kagua SLA Sasa",
   "empty": {
     "title": "Bado hakuna shehena",
     "description": "Unda shehena yako ya kwanza ili kuanza kuifuatilia kikamilifu."
@@ -49,7 +50,8 @@
   "toast": {
     "created": "Shehena imeundwa.",
     "statusUpdated": "Hali ya shehena imesasishwa.",
-    "deleted": "Shehena imefutwa."
+    "deleted": "Shehena imefutwa.",
+    "slaChecked": "Ukaguzi wa SLA umekamilika — {{delayed}} zimechelewa, {{nearDeadline}} karibu na muda wa mwisho."
   },
   "riskBadge": {
     "atRisk": "Katika Hatari"
@@ -71,6 +73,11 @@
       "caption": "Changanua ili kufuatilia shehena hii",
       "download": "Pakua QR"
     },
+    "deliveryNoteQr": {
+      "alt": "Msimbo wa QR unaoelekeza kwenye ukurasa wa uthibitisho wa ankara ya uwasilishaji",
+      "caption": "Changanua ili kuthibitisha ankara hii ya uwasilishaji",
+      "download": "Pakua QR"
+    },
     "empty": {
       "title": "Bado hakuna matukio ya ufuatiliaji",
       "description": "Ongeza tukio la kwanza la ufuatiliaji ili kuanza ratiba ya shehena hii."
@@ -87,6 +94,25 @@
     },
     "toast": {
       "milestoneAdded": "Kiwango kimeongezwa."
+    },
+    "costs": {
+      "title": "Gharama na Faida",
+      "billedRevenue": "Mapato Yaliyotozwa",
+      "confirmedCost": "Gharama Iliyothibitishwa",
+      "profit": "Faida",
+      "margin": "Kiwango cha Faida",
+      "breakdownTitle": "Mgawanyo wa Gharama kwa Aina",
+      "invoicesTitle": "Ankara Zilizounganishwa",
+      "expensesTitle": "Matumizi Yaliyounganishwa",
+      "table": {
+        "invoiceNumber": "Namba ya Ankara",
+        "description": "Maelezo",
+        "amount": "Kiasi"
+      },
+      "empty": {
+        "title": "Bado hakuna gharama zilizorekodiwa",
+        "description": "Matumizi yaliyoidhinishwa yanayohusiana na shehena hii yataonekana hapa."
+      }
     }
   },
   "eventTypes": {
