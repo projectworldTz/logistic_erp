@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Leave the Laravel backend (symlinked to backend/public) alone — it has
+    # its own .htaccess and front controller once a request reaches there.
+    RewriteCond %{REQUEST_URI} ^/backend/
+    RewriteRule ^ - [L]
+
+    # Real files and directories (JS/CSS/images/etc.) are served as-is.
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Everything else is a client-side route — let React Router handle it.
+    RewriteRule ^ index.html [L]
+</IfModule>
