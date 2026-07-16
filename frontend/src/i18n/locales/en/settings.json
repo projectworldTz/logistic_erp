@@ -10,6 +10,12 @@
     "primaryColor": "Primary Color",
     "secondaryColor": "Secondary Color"
   },
+  "emailTemplate": {
+    "title": "Email Template",
+    "help": "These appear on every email your team and customers receive — alongside your logo and brand color set above.",
+    "replyTo": "Reply-To Email",
+    "footerText": "Footer Text"
+  },
   "notifications": {
     "title": "Notification Channels",
     "email": "Email",
@@ -29,5 +35,77 @@
     "website": "Website"
   },
   "saving": "Saving…",
-  "saveChanges": "Save Changes"
+  "saveChanges": "Save Changes",
+  "subscription": {
+    "title": "Subscription & Billing",
+    "changePlan": "Change Plan",
+    "trialEnds": "Trial Ends",
+    "startedAt": "Started",
+    "cycle": { "monthly": "Monthly", "yearly": "Yearly" },
+    "status": {
+      "active": "Active",
+      "trialing": "Trial",
+      "past_due": "Past Due",
+      "canceled": "Canceled",
+      "pending": "Pending",
+      "paid": "Paid",
+      "overdue": "Overdue",
+      "void": "Void"
+    },
+    "billingProfile": {
+      "title": "Billing Profile",
+      "billingName": "Billing Name",
+      "billingEmail": "Billing Email",
+      "billingPhone": "Billing Phone",
+      "billingAddress": "Billing Address",
+      "taxId": "Tax ID"
+    },
+    "invoices": {
+      "title": "Invoice History",
+      "empty": "No invoices yet — one is issued automatically at the start of each billing period.",
+      "period": "Period",
+      "amount": "Amount",
+      "dueDate": "Due Date",
+      "status": "Status"
+    },
+    "changePlanDialog": {
+      "title": "Change Plan",
+      "plan": "Plan",
+      "cycle": "Billing Cycle",
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    },
+    "toast": {
+      "billingSaved": "Billing profile updated.",
+      "planChanged": "Plan updated."
+    }
+  },
+  "backup": {
+    "title": "Backup & Restore",
+    "export": {
+      "title": "Download Backup",
+      "description": "Download a complete snapshot of your company's data as a JSON file. Uploaded files (documents, logos, signatures) are not included — only the records that reference them.",
+      "download": "Download Backup",
+      "downloading": "Downloading…"
+    },
+    "restore": {
+      "title": "Restore from Backup",
+      "warning": "Restoring replaces ALL of your company's current data with the contents of the backup file. This cannot be undone.",
+      "description": "Only restore a backup that was downloaded from this same company. Restoring from a different company's backup is blocked automatically.",
+      "selectFile": "Select Backup File",
+      "error": "Could not restore this backup. Please check the file and try again.",
+      "confirmDialog": {
+        "title": "Confirm Restore",
+        "message": "This will permanently replace all current data for {{company}} with the contents of this backup file. Type RESTORE to confirm.",
+        "typeToConfirm": "Type RESTORE to confirm",
+        "cancel": "Cancel",
+        "confirm": "Restore",
+        "restoring": "Restoring…"
+      }
+    },
+    "toast": {
+      "exported": "Backup downloaded.",
+      "restored": "Restore complete."
+    }
+  }
 }

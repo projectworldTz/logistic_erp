@@ -35,6 +35,8 @@ type FormValues = Pick<
   | 'website'
   | 'primary_color'
   | 'secondary_color'
+  | 'email_footer_text'
+  | 'email_reply_to'
   | 'notify_email_enabled'
   | 'notify_sms_enabled'
   | 'notify_whatsapp_enabled'
@@ -71,6 +73,8 @@ export function CompanySettingsPage() {
         website: company.website ?? '',
         primary_color: company.primary_color ?? DEFAULT_PRIMARY,
         secondary_color: company.secondary_color ?? DEFAULT_SECONDARY,
+        email_footer_text: company.email_footer_text ?? '',
+        email_reply_to: company.email_reply_to ?? '',
         notify_email_enabled: company.notify_email_enabled,
         notify_sms_enabled: company.notify_sms_enabled,
         notify_whatsapp_enabled: company.notify_whatsapp_enabled,
@@ -165,6 +169,30 @@ export function CompanySettingsPage() {
               fullWidth
               {...register('secondary_color')}
               slotProps={{ htmlInput: { style: { height: 40 } } }}
+            />
+          </Grid>
+        </Grid>
+
+        <Typography variant="h6">{t('emailTemplate.title')}</Typography>
+        <Typography variant="caption" color="text.secondary">
+          {t('emailTemplate.help')}
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid size={12}>
+            <TextField
+              label={t('emailTemplate.replyTo')}
+              type="email"
+              fullWidth
+              {...register('email_reply_to')}
+            />
+          </Grid>
+          <Grid size={12}>
+            <TextField
+              label={t('emailTemplate.footerText')}
+              fullWidth
+              multiline
+              minRows={2}
+              {...register('email_footer_text')}
             />
           </Grid>
         </Grid>

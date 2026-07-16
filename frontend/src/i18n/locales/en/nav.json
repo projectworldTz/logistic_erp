@@ -8,6 +8,8 @@
     "administration": "Administration"
   },
   "dashboard": "Dashboard",
+  "aiAssistant": "AI Assistant",
+  "emailParser": "Email Parser",
   "crm": "CRM",
   "quotations": "Quotations",
   "shipments": "Shipments",
@@ -32,6 +34,8 @@
   "auditLog": "Audit Log",
   "loginHistory": "Login History",
   "companySettings": "Company Settings",
+  "backupRestore": "Backup & Restore",
+  "subscriptionBilling": "Subscription & Billing",
   "accountSecurity": "Account Security",
   "comingSoon": "Coming soon",
   "soon": "Soon",

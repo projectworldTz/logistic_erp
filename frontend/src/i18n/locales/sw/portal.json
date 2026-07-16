@@ -6,6 +6,7 @@
     "quotations": "Bei Elekezi",
     "documents": "Nyaraka",
     "messages": "Ujumbe",
+    "apiKeys": "Funguo za API",
     "logOut": "Toka"
   },
   "dashboard": {
@@ -28,6 +29,14 @@
         "alt": "Msimbo wa QR unaoelekeza kwenye ukurasa wa ufuatiliaji wa umma",
         "caption": "Changanua ili kufuatilia shehena hii",
         "download": "Pakua QR"
+      },
+      "pod": {
+        "title": "Uthibitisho wa Uwasilishaji",
+        "receivedBy": "Imepokelewa na",
+        "capturedAt": "Imerekodiwa",
+        "signature": "Sahihi",
+        "photo": "Picha",
+        "location": "Mahali"
       }
     }
   },
@@ -58,5 +67,39 @@
     "empty": "Bado hakuna ujumbe. Tuma mmoja kuwasiliana na mtoa huduma wako wa usafirishaji.",
     "placeholder": "Andika ujumbe…",
     "send": "Tuma"
+  },
+  "apiKeys": {
+    "title": "Funguo za API",
+    "subtitle": "Tengeneza funguo ili kuunganisha mfumo wako wa ERP au uhasibu na data yako ya shehena, ankara na bei elekezi.",
+    "generate": "Tengeneza Ufunguo",
+    "empty": "Bado hakuna funguo za API.",
+    "neverUsed": "Haijawahi kutumika",
+    "active": "Inatumika",
+    "revoked": "Imebatilishwa",
+    "revoke": "Batilisha",
+    "fields": { "name": "Jina", "key": "Ufunguo", "lastUsed": "Ilitumika Mara ya Mwisho", "status": "Hali" },
+    "gettingStarted": {
+      "title": "Anza Hapa",
+      "description": "Tumia ufunguo wako kama Bearer token kusoma shehena, ankara na bei elekezi zako mwenyewe."
+    },
+    "dialog": {
+      "title": "Tengeneza Ufunguo wa API",
+      "namePlaceholder": "mfano: Mfumo wa Uhasibu",
+      "cancel": "Ghairi"
+    },
+    "revealDialog": {
+      "title": "Ufunguo Wako Mpya wa API",
+      "warning": "Nakili ufunguo huu sasa — kwa usalama wako, hautaonyeshwa tena.",
+      "copy": "Nakili",
+      "done": "Nimemaliza"
+    },
+    "revokeDialog": {
+      "title": "Batilisha Ufunguo wa API",
+      "message": "Batilisha \"{{name}}\"? Muunganisho wowote unaotumia ufunguo huu utakoma mara moja."
+    },
+    "toast": {
+      "copied": "Ufunguo wa API umenakiliwa.",
+      "revoked": "Ufunguo wa API umebatilishwa."
+    }
   }
 }

@@ -1,8 +1,8 @@
-import { Button, Chip, CircularProgress, Divider, Grid, Paper, Stack, Typography } from '@mui/material';
+import { Box, Button, Chip, CircularProgress, Divider, Grid, Paper, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchPortalShipment, fetchPortalShipmentTrackingQr } from '../../../api/endpoints/portal';
+import { fetchPortalProofOfDelivery, fetchPortalShipment, fetchPortalShipmentTrackingQr } from '../../../api/endpoints/portal';
 import { EmptyState } from '../../../components/common/EmptyState';
 import { TrackingQrCode } from '../../../components/common/TrackingQrCode';
 
@@ -24,6 +24,11 @@ export function PortalShipmentDetailPage() {
   const { data: shipment, isLoading } = useQuery({
     queryKey: ['portal', 'shipment', shipmentId],
     queryFn: () => fetchPortalShipment(shipmentId),
+  });
+
+  const { data: proofOfDelivery } = useQuery({
+    queryKey: ['portal', 'shipment', shipmentId, 'proof-of-delivery'],
+    queryFn: () => fetchPortalProofOfDelivery(shipmentId),
   });
 
   if (isLoading || !shipment) {
@@ -72,6 +77,50 @@ export function PortalShipmentDetailPage() {
         caption={t('shipments.detail.qr.caption')}
         downloadLabel={t('shipments.detail.qr.download')}
       />
+
+      {proofOfDelivery && (
+        <Stack spacing={2}>
+          <Typography variant="h6" fontWeight={700}>
+            {t('shipments.detail.pod.title')}
+          </Typography>
+          <Paper variant="outlined" sx={{ p: 3 }}>
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography variant="body2" color="text.secondary">{t('shipments.detail.pod.receivedBy')}</Typography>
+                <Typography variant="body1">{proofOfDelivery.received_by_name}</Typography>
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography variant="body2" color="text.secondary">{t('shipments.detail.pod.capturedAt')}</Typography>
+                <Typography variant="body1">{new Date(proofOfDelivery.created_at).toLocaleString()}</Typography>
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography variant="body2" color="text.secondary">{t('shipments.detail.pod.signature')}</Typography>
+                <Box component="img" src={proofOfDelivery.signature_url} alt={t('shipments.detail.pod.signature')} sx={{ maxWidth: 240, border: '1px solid', borderColor: 'divider', borderRadius: 1 }} />
+              </Grid>
+              {proofOfDelivery.photo_url && (
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <Typography variant="body2" color="text.secondary">{t('shipments.detail.pod.photo')}</Typography>
+                  <Box component="img" src={proofOfDelivery.photo_url} alt={t('shipments.detail.pod.photo')} sx={{ maxWidth: 240, borderRadius: 1 }} />
+                </Grid>
+              )}
+              {proofOfDelivery.latitude != null && proofOfDelivery.longitude != null && (
+                <Grid size={{ xs: 12 }}>
+                  <Typography variant="body2" color="text.secondary">{t('shipments.detail.pod.location')}</Typography>
+                  <Typography variant="body1">
+                    <a
+                      href={`https://www.google.com/maps?q=${proofOfDelivery.latitude},${proofOfDelivery.longitude}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {proofOfDelivery.latitude.toFixed(5)}, {proofOfDelivery.longitude.toFixed(5)}
+                    </a>
+                  </Typography>
+                </Grid>
+              )}
+            </Grid>
+          </Paper>
+        </Stack>
+      )}
 
       <Typography variant="h6" fontWeight={700}>
         {t('shipments.detail.timelineTitle')}

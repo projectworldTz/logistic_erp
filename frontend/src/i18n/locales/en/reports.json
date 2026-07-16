@@ -48,6 +48,60 @@
       "profit": "Shipment Profit"
     }
   },
+  "import": {
+    "title": "Data Import",
+    "subtitle": "Bulk-create records from a CSV or Excel file.",
+    "moduleLabel": "Data set",
+    "selectFile": "Select File",
+    "importing": "Importing…",
+    "modules": {
+      "customers": "Customers",
+      "leads": "Leads"
+    },
+    "template": {
+      "label": "Expected columns",
+      "customers": "Company Name, Industry, Email, Phone, City, Country, Status",
+      "leads": "Company Name, Contact Name, Email, Phone, Source, Status"
+    },
+    "result": {
+      "created": "{{count}} record(s) created.",
+      "errorsTitle": "{{count}} row(s) could not be imported:",
+      "row": "Row {{row}}"
+    },
+    "error": "The import failed. Please check the file and try again."
+  },
+  "schedule": {
+    "title": "Scheduled Reports",
+    "subtitle": "Automatically email a report to its recipients on a recurring schedule.",
+    "new": "New Schedule",
+    "empty": "No scheduled reports yet.",
+    "table": {
+      "name": "Name",
+      "module": "Data Set",
+      "frequency": "Frequency",
+      "recipients": "Recipients",
+      "lastSent": "Last Sent",
+      "status": "Status"
+    },
+    "frequencies": { "daily": "Daily", "weekly": "Weekly", "monthly": "Monthly" },
+    "neverSent": "Never sent",
+    "active": "Active",
+    "paused": "Paused",
+    "dialog": {
+      "title": "New Scheduled Report",
+      "name": "Name",
+      "recipients": "Recipients (comma-separated emails)",
+      "isActive": "Active"
+    },
+    "deleteDialog": {
+      "title": "Delete Scheduled Report",
+      "message": "Are you sure you want to delete the schedule {{name}}? This cannot be undone."
+    },
+    "toast": {
+      "created": "Scheduled report created.",
+      "deleted": "Scheduled report deleted."
+    }
+  },
   "advanced": {
     "sectionTitle": "Advanced Reports",
     "customs": {

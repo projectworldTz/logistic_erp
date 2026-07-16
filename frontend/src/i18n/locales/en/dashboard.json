@@ -1,6 +1,14 @@
 {
   "welcomeBack": "Welcome back, {{name}}",
   "subtitle": "Here's what's happening across your operation today.",
+  "customize": {
+    "button": "Customize",
+    "dialogTitle": "Customize Dashboard",
+    "dialogSubtitle": "Choose which widgets to show and drag their order using the arrows. This only affects your own view.",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "done": "Done"
+  },
   "widgets": {
     "dailyShipments": "Daily Shipments",
     "pendingCustoms": "Pending Customs",

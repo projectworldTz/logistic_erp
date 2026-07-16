@@ -18,6 +18,7 @@
   },
   "form": {
     "dialogTitle": "New Approval Workflow",
+    "editDialogTitle": "Edit Approval Workflow",
     "name": "Name",
     "subjectType": "Applies To",
     "minAmount": "Minimum Amount (optional)",
@@ -26,7 +27,9 @@
     "stepsTitle": "Approval Steps (in order)",
     "approverRole": "Role",
     "selectRole": "Select a role…",
-    "addStep": "Add Step"
+    "addStep": "Add Step",
+    "moveUp": "Move up",
+    "moveDown": "Move down"
   },
   "deleteDialog": {
     "title": "Delete Workflow",
@@ -34,6 +37,7 @@
   },
   "toast": {
     "created": "Workflow created.",
+    "updated": "Workflow updated.",
     "deleted": "Workflow deleted."
   },
   "validation": {

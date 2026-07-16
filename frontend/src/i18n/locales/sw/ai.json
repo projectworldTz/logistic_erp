@@ -1,0 +1,42 @@
+{
+  "assistant": {
+    "title": "Msaidizi wa AI",
+    "subtitle": "Uliza maswali kuhusu shehena, wateja, na fedha zako.",
+    "empty": "Uliza kitu kama \"kuna shehena ngapi zinasafirishwa?\" au \"ankara zipi zimechelewa kulipwa?\"",
+    "placeholder": "Uliza swali…",
+    "send": "Tuma",
+    "error": "Hitilafu imetokea wakati wa kuwasiliana na msaidizi. Tafadhali jaribu tena."
+  },
+  "emailParser": {
+    "title": "Kichanganuzi cha Barua Pepe",
+    "subtitle": "Bandika barua pepe ya mteja na AI itaunda fursa kutoka kwake — kagua na hariri kabla ya kuhifadhi.",
+    "pasteLabel": "Bandika maandishi ya barua pepe hapa",
+    "extract": "Chambua Maelezo",
+    "extracting": "Inachambua…",
+    "error": "Imeshindwa kuchambua maelezo kutoka barua pepe hiyo. Tafadhali jaribu tena.",
+    "reviewTitle": "Kagua Maelezo Yaliyochambuliwa",
+    "fields": {
+      "customerName": "Mteja / Jina la Kampuni",
+      "customerEmail": "Barua Pepe ya Mteja",
+      "cargoDescription": "Maelezo ya Mzigo",
+      "originPort": "Bandari ya Kutoka",
+      "destinationPort": "Bandari ya Kwenda",
+      "mode": "Njia",
+      "direction": "Mwelekeo",
+      "notes": "Maelezo"
+    },
+    "modes": {
+      "sea": "Bahari",
+      "air": "Anga",
+      "land": "Nchi Kavu"
+    },
+    "directions": {
+      "import": "Uagizaji",
+      "export": "Usafirishaji"
+    },
+    "createLead": "Unda Fursa",
+    "toast": {
+      "leadCreated": "Fursa imeundwa kutoka barua pepe."
+    }
+  }
+}

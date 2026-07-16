@@ -1,6 +1,14 @@
 {
   "welcomeBack": "Karibu tena, {{name}}",
   "subtitle": "Haya ndiyo yanayoendelea katika shughuli zako leo.",
+  "customize": {
+    "button": "Badilisha",
+    "dialogTitle": "Badilisha Dashibodi",
+    "dialogSubtitle": "Chagua vijenzi vya kuonyesha na panga mpangilio wake kwa kutumia mishale. Hii inaathiri mwonekano wako pekee.",
+    "moveUp": "Panda juu",
+    "moveDown": "Shuka chini",
+    "done": "Nimemaliza"
+  },
   "widgets": {
     "dailyShipments": "Shehena za Kila Siku",
     "pendingCustoms": "Forodha Zinazosubiri",

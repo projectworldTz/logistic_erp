@@ -45,4 +45,14 @@ class Customer extends Model
     {
         return $this->hasMany(CustomerMessage::class);
     }
+
+    public function complianceDocuments(): HasMany
+    {
+        return $this->hasMany(CustomerComplianceDocument::class);
+    }
+
+    public function apiKeys(): HasMany
+    {
+        return $this->hasMany(CustomerApiKey::class);
+    }
 }

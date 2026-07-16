@@ -78,6 +78,29 @@
       "caption": "Scan to verify this delivery note",
       "download": "Download QR"
     },
+    "delayRisk": {
+      "chip": "Delay risk: {{score}}%"
+    },
+    "pod": {
+      "title": "Proof of Delivery",
+      "capture": "Record Proof of Delivery",
+      "recapture": "Re-capture Proof of Delivery",
+      "dialogTitle": "Record Proof of Delivery",
+      "receivedBy": "Received by",
+      "signature": "Signature",
+      "photo": "Photo",
+      "attachPhoto": "Attach a photo",
+      "useLocation": "Use current location",
+      "capturedAt": "Captured at",
+      "location": "Location",
+      "empty": {
+        "title": "No proof of delivery yet",
+        "description": "Record a signature and photo once this shipment is handed over to the customer."
+      },
+      "toast": {
+        "saved": "Proof of delivery saved."
+      }
+    },
     "empty": {
       "title": "No milestones yet",
       "description": "Add the first tracking event to start this shipment's timeline."

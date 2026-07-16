@@ -41,4 +41,9 @@ return [
         'sender_id' => env('BEEM_SENDER_ID', 'INFO'),
     ],
 
+    'anthropic' => [
+        'api_key' => env('ANTHROPIC_API_KEY'),
+        'model' => env('ANTHROPIC_MODEL', 'claude-opus-4-8'),
+    ],
+
 ];

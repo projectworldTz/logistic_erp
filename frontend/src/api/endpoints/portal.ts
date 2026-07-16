@@ -1,10 +1,12 @@
 import { api } from '../axios';
 import type {
+  CustomerApiKey,
   CustomerMessage,
   Document,
   Invoice,
   Paginated,
   PortalDashboardSummary,
+  ProofOfDelivery,
   Quotation,
   Shipment,
 } from '../../types';
@@ -27,6 +29,16 @@ export async function fetchPortalShipment(id: number): Promise<Shipment> {
 export async function fetchPortalShipmentTrackingQr(id: number): Promise<Blob> {
   const { data } = await api.get(`/portal/shipments/${id}/tracking-qr`, { responseType: 'blob' });
   return data;
+}
+
+export async function fetchPortalProofOfDelivery(id: number): Promise<ProofOfDelivery | null> {
+  try {
+    const { data } = await api.get<{ data: ProofOfDelivery }>(`/portal/shipments/${id}/proof-of-delivery`);
+    return data.data;
+  } catch (error) {
+    if ((error as { response?: { status?: number } }).response?.status === 404) return null;
+    throw error;
+  }
 }
 
 export async function fetchPortalInvoices(page = 1): Promise<Paginated<Invoice>> {
@@ -74,4 +86,18 @@ export async function fetchPortalMessages(): Promise<{ data: CustomerMessage[] }
 export async function sendPortalMessage(body: string): Promise<CustomerMessage> {
   const { data } = await api.post<{ data: CustomerMessage }>('/portal/messages', { body });
   return data.data;
+}
+
+export async function fetchPortalApiKeys(): Promise<CustomerApiKey[]> {
+  const { data } = await api.get<{ data: CustomerApiKey[] }>('/portal/api-keys');
+  return data.data;
+}
+
+export async function createPortalApiKey(name: string): Promise<{ apiKey: CustomerApiKey; plaintextKey: string }> {
+  const { data } = await api.post<{ data: CustomerApiKey; api_key: string }>('/portal/api-keys', { name });
+  return { apiKey: data.data, plaintextKey: data.api_key };
+}
+
+export async function revokePortalApiKey(id: number): Promise<void> {
+  await api.delete(`/portal/api-keys/${id}`);
 }

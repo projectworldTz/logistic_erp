@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Accounting;
+use App\Http\Controllers\Api\V1\Ai;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
+use App\Http\Controllers\Api\V1\ClientApi;
 use App\Http\Controllers\Api\V1\Auth\PasswordResetController;
 use App\Http\Controllers\Api\V1\Auth\TwoFactorController;
 use App\Http\Controllers\Api\V1\Clearing;
@@ -54,6 +56,20 @@ Route::prefix('v1')->group(function () {
             Route::get('reports/customs', [Tenant\ReportsController::class, 'customs'])->middleware('permission:reports.view');
             Route::get('reports/tax', [Tenant\ReportsController::class, 'tax'])->middleware('permission:reports.view');
             Route::get('reports/export/{module}', [Tenant\ReportExportController::class, 'export']);
+            Route::post('reports/import/{module}', [Tenant\DataImportController::class, 'import']);
+            Route::get('reports/scheduled', [Tenant\ScheduledReportController::class, 'index'])->middleware('permission:reports.view');
+            Route::post('reports/scheduled', [Tenant\ScheduledReportController::class, 'store'])->middleware('permission:reports.manage');
+            Route::put('reports/scheduled/{scheduledReport}', [Tenant\ScheduledReportController::class, 'update'])->middleware('permission:reports.manage');
+            Route::delete('reports/scheduled/{scheduledReport}', [Tenant\ScheduledReportController::class, 'destroy'])->middleware('permission:reports.manage');
+
+            Route::get('backup/export', [Tenant\BackupController::class, 'export'])->middleware('permission:core.backup.manage');
+            Route::post('backup/restore', [Tenant\BackupController::class, 'restore'])->middleware('permission:core.backup.manage');
+
+            Route::get('subscription', [Tenant\SubscriptionController::class, 'show'])->middleware('permission:core.company.view');
+            Route::get('subscription/invoices', [Tenant\SubscriptionController::class, 'invoices'])->middleware('permission:core.company.view');
+            Route::put('subscription/plan', [Tenant\SubscriptionController::class, 'changePlan'])->middleware('permission:core.company.manage');
+            Route::get('billing-profile', [Tenant\BillingProfileController::class, 'show'])->middleware('permission:core.company.view');
+            Route::put('billing-profile', [Tenant\BillingProfileController::class, 'update'])->middleware('permission:core.company.manage');
             Route::get('analytics/overview', [Tenant\AnalyticsController::class, 'overview'])->middleware('permission:analytics.view');
             Route::get('company', [Tenant\CompanyController::class, 'show']);
             Route::put('company', [Tenant\CompanyController::class, 'update']);
@@ -73,6 +89,11 @@ Route::prefix('v1')->group(function () {
             Route::post('notifications/read-all', [Tenant\NotificationController::class, 'markAllRead']);
             Route::post('notifications/{notification}/read', [Tenant\NotificationController::class, 'markRead']);
             Route::get('search', [Tenant\SearchController::class, 'index']);
+
+            Route::prefix('ai')->group(function () {
+                Route::post('assistant/chat', [Ai\AssistantController::class, 'chat'])->middleware('permission:ai.assistant.use');
+                Route::post('email-parser/parse', [Ai\EmailParserController::class, 'parse'])->middleware('permission:ai.email_parser.use');
+            });
 
             if (app()->environment('testing')) {
                 Route::match(['get', 'post'], '_test/throw', function () {
@@ -101,6 +122,10 @@ Route::prefix('v1')->group(function () {
 
                 Route::get('customers/{customer}/messages', [Crm\CustomerMessageController::class, 'index'])->middleware('permission:crm.customers.manage');
                 Route::post('customers/{customer}/messages', [Crm\CustomerMessageController::class, 'store'])->middleware('permission:crm.customers.manage');
+
+                Route::get('customers/{customer}/compliance-documents', [Crm\ComplianceDocumentController::class, 'index'])->middleware('permission:crm.compliance.view');
+                Route::post('customers/{customer}/compliance-documents', [Crm\ComplianceDocumentController::class, 'store'])->middleware('permission:crm.compliance.manage');
+                Route::delete('customers/{customer}/compliance-documents/{complianceDocument}', [Crm\ComplianceDocumentController::class, 'destroy'])->middleware('permission:crm.compliance.manage');
             });
 
             Route::prefix('clearing')->group(function () {
@@ -274,6 +299,9 @@ Route::prefix('v1')->group(function () {
                 Route::get('items/{shipment}/cost-summary', [Shipments\ShipmentController::class, 'costSummary'])->middleware('permission:shipments.costs.view');
                 Route::post('sla-check', [Shipments\ShipmentController::class, 'checkSla'])->middleware('permission:shipments.items.manage');
                 Route::post('items/{shipment}/milestones', [Shipments\ShipmentMilestoneController::class, 'store'])->middleware('permission:shipments.items.manage');
+                Route::get('items/{shipment}/proof-of-delivery', [Shipments\ProofOfDeliveryController::class, 'show'])->middleware('permission:shipments.items.view');
+                Route::post('items/{shipment}/proof-of-delivery', [Shipments\ProofOfDeliveryController::class, 'store'])->middleware('permission:shipments.items.manage');
+                Route::get('items/{shipment}/delay-risk', [Shipments\ShipmentController::class, 'delayRisk'])->middleware('permission:shipments.items.view');
             });
 
             Route::prefix('portal')->middleware('portal')->group(function () {
@@ -282,6 +310,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('shipments', [Portal\PortalShipmentController::class, 'index'])->middleware('permission:portal.access');
                 Route::get('shipments/{shipment}', [Portal\PortalShipmentController::class, 'show'])->middleware('permission:portal.access');
                 Route::get('shipments/{shipment}/tracking-qr', [Portal\PortalShipmentController::class, 'trackingQr'])->middleware('permission:portal.access');
+                Route::get('shipments/{shipment}/proof-of-delivery', [Portal\PortalShipmentController::class, 'proofOfDelivery'])->middleware('permission:portal.access');
 
                 Route::get('invoices', [Portal\PortalInvoiceController::class, 'index'])->middleware('permission:portal.access');
                 Route::get('invoices/{invoice}', [Portal\PortalInvoiceController::class, 'show'])->middleware('permission:portal.access');
@@ -297,6 +326,10 @@ Route::prefix('v1')->group(function () {
 
                 Route::get('messages', [Portal\PortalMessageController::class, 'index'])->middleware('permission:portal.access');
                 Route::post('messages', [Portal\PortalMessageController::class, 'store'])->middleware('permission:portal.messages.send');
+
+                Route::get('api-keys', [Portal\PortalApiKeyController::class, 'index'])->middleware('permission:portal.api_keys.manage');
+                Route::post('api-keys', [Portal\PortalApiKeyController::class, 'store'])->middleware('permission:portal.api_keys.manage');
+                Route::delete('api-keys/{apiKey}', [Portal\PortalApiKeyController::class, 'destroy'])->middleware('permission:portal.api_keys.manage');
             });
         });
 
@@ -311,10 +344,23 @@ Route::prefix('v1')->group(function () {
             Route::post('landing-content/upload-image', [Platform\LandingContentController::class, 'uploadImage']);
             Route::get('subscriptions', [Platform\SubscriptionController::class, 'index']);
             Route::get('metrics', [Platform\MetricsController::class, 'index']);
+            Route::get('system-health', [Platform\SystemHealthController::class, 'index']);
             Route::get('audit-logs', [Platform\AuditLogController::class, 'index']);
             Route::get('error-logs', [Platform\ErrorLogController::class, 'index']);
             Route::get('error-logs/{errorLog}', [Platform\ErrorLogController::class, 'show']);
             Route::post('error-logs/{errorLog}/resolve', [Platform\ErrorLogController::class, 'resolve']);
         });
+    });
+
+    // Client API: external integration surface for customers, authenticated by a
+    // plaintext API key (not a Sanctum session token) generated from the portal's
+    // "API Keys" page. Deliberately outside the auth:sanctum group above.
+    Route::prefix('client-api')->middleware(['client-api-key', 'throttle:60,1'])->group(function () {
+        Route::get('shipments', [ClientApi\ShipmentController::class, 'index']);
+        Route::get('shipments/{shipment}', [ClientApi\ShipmentController::class, 'show']);
+        Route::get('invoices', [ClientApi\InvoiceController::class, 'index']);
+        Route::get('invoices/{invoice}', [ClientApi\InvoiceController::class, 'show']);
+        Route::get('quotations', [ClientApi\QuotationController::class, 'index']);
+        Route::get('quotations/{quotation}', [ClientApi\QuotationController::class, 'show']);
     });
 });

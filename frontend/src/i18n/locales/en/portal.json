@@ -6,6 +6,7 @@
     "quotations": "Quotations",
     "documents": "Documents",
     "messages": "Messages",
+    "apiKeys": "API Keys",
     "logOut": "Log out"
   },
   "dashboard": {
@@ -28,6 +29,14 @@
         "alt": "QR code linking to the public tracking page",
         "caption": "Scan to track this shipment",
         "download": "Download QR"
+      },
+      "pod": {
+        "title": "Proof of Delivery",
+        "receivedBy": "Received by",
+        "capturedAt": "Captured at",
+        "signature": "Signature",
+        "photo": "Photo",
+        "location": "Location"
       }
     }
   },
@@ -58,5 +67,39 @@
     "empty": "No messages yet. Send one to reach your logistics provider.",
     "placeholder": "Type a message…",
     "send": "Send"
+  },
+  "apiKeys": {
+    "title": "API Keys",
+    "subtitle": "Generate keys to connect your own ERP or accounting system to your shipment, invoice, and quotation data.",
+    "generate": "Generate Key",
+    "empty": "No API keys yet.",
+    "neverUsed": "Never used",
+    "active": "Active",
+    "revoked": "Revoked",
+    "revoke": "Revoke",
+    "fields": { "name": "Name", "key": "Key", "lastUsed": "Last Used", "status": "Status" },
+    "gettingStarted": {
+      "title": "Getting Started",
+      "description": "Pass your key as a Bearer token to read your own shipments, invoices, and quotations."
+    },
+    "dialog": {
+      "title": "Generate API Key",
+      "namePlaceholder": "e.g. Accounting System",
+      "cancel": "Cancel"
+    },
+    "revealDialog": {
+      "title": "Your New API Key",
+      "warning": "Copy this key now — for your security, it will not be shown again.",
+      "copy": "Copy",
+      "done": "Done"
+    },
+    "revokeDialog": {
+      "title": "Revoke API Key",
+      "message": "Revoke \"{{name}}\"? Any integration using this key will stop working immediately."
+    },
+    "toast": {
+      "copied": "API key copied to clipboard.",
+      "revoked": "API key revoked."
+    }
   }
 }

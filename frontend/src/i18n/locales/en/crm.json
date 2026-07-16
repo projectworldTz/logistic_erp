@@ -134,6 +134,49 @@
       "empty": "No messages yet.",
       "placeholder": "Type a reply…",
       "send": "Send"
+    },
+    "compliance": {
+      "title": "Compliance Documents",
+      "addDocument": "Add Document",
+      "viewFile": "View file",
+      "dialogTitle": "Add Compliance Document",
+      "table": {
+        "type": "Document Type",
+        "number": "Document Number",
+        "expiryDate": "Expiry Date"
+      },
+      "form": {
+        "type": "Document Type",
+        "number": "Document Number",
+        "issueDate": "Issue Date",
+        "expiryDate": "Expiry Date",
+        "attachFile": "Attach a file"
+      },
+      "types": {
+        "business_registration": "Business Registration",
+        "tax_certificate": "Tax Certificate (TIN)",
+        "trading_license": "Trading License",
+        "authorized_signatory_id": "Authorized Signatory ID",
+        "other": "Other"
+      },
+      "statuses": {
+        "valid": "Valid",
+        "expiring_soon": "Expiring Soon",
+        "expired": "Expired",
+        "no_expiry": "No Expiry"
+      },
+      "empty": {
+        "title": "No compliance documents yet",
+        "description": "Upload business registration, tax certificates, and other KYC documents to track their expiry."
+      },
+      "deleteDialog": {
+        "title": "Delete Document",
+        "message": "Are you sure you want to delete this compliance document? This cannot be undone."
+      },
+      "toast": {
+        "created": "Compliance document added.",
+        "deleted": "Compliance document deleted."
+      }
     }
   }
 }

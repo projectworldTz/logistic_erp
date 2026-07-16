@@ -18,6 +18,7 @@
   },
   "form": {
     "dialogTitle": "Mtiririko Mpya wa Idhini",
+    "editDialogTitle": "Hariri Mtiririko wa Idhini",
     "name": "Jina",
     "subjectType": "Inatumika Kwa",
     "minAmount": "Kiasi cha Chini (hiari)",
@@ -26,7 +27,9 @@
     "stepsTitle": "Hatua za Idhini (kwa mpangilio)",
     "approverRole": "Wadhifa",
     "selectRole": "Chagua wadhifa…",
-    "addStep": "Ongeza Hatua"
+    "addStep": "Ongeza Hatua",
+    "moveUp": "Panda juu",
+    "moveDown": "Shuka chini"
   },
   "deleteDialog": {
     "title": "Futa Mtiririko",
@@ -34,6 +37,7 @@
   },
   "toast": {
     "created": "Mtiririko umeundwa.",
+    "updated": "Mtiririko umesasishwa.",
     "deleted": "Mtiririko umefutwa."
   },
   "validation": {

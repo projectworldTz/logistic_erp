@@ -1,5 +1,5 @@
 import { api } from '../axios';
-import type { Paginated, PublicShipmentTracking, Shipment, ShipmentCostSummary, TrackingEvent } from '../../types';
+import type { Paginated, ProofOfDelivery, PublicShipmentTracking, Shipment, ShipmentCostSummary, ShipmentDelayRisk, TrackingEvent } from '../../types';
 
 export async function fetchShipments(page = 1): Promise<Paginated<Shipment>> {
   const { data } = await api.get<Paginated<Shipment>>('/shipments/items', { params: { page } });
@@ -56,4 +56,43 @@ export async function fetchShipmentCostSummary(id: number): Promise<ShipmentCost
 export async function checkShipmentSla(): Promise<{ delayed_alerted: number; near_deadline_alerted: number }> {
   const { data } = await api.post('/shipments/sla-check');
   return data;
+}
+
+export async function fetchShipmentDelayRisk(id: number): Promise<ShipmentDelayRisk> {
+  const { data } = await api.get<ShipmentDelayRisk>(`/shipments/items/${id}/delay-risk`);
+  return data;
+}
+
+export async function fetchProofOfDelivery(shipmentId: number): Promise<ProofOfDelivery | null> {
+  try {
+    const { data } = await api.get<{ data: ProofOfDelivery }>(`/shipments/items/${shipmentId}/proof-of-delivery`);
+    return data.data;
+  } catch (error) {
+    if ((error as { response?: { status?: number } }).response?.status === 404) return null;
+    throw error;
+  }
+}
+
+export interface ProofOfDeliveryPayload {
+  received_by_name: string;
+  signature: File;
+  photo?: File | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  notes?: string;
+}
+
+export async function submitProofOfDelivery(shipmentId: number, payload: ProofOfDeliveryPayload): Promise<ProofOfDelivery> {
+  const form = new FormData();
+  form.append('received_by_name', payload.received_by_name);
+  form.append('signature', payload.signature);
+  if (payload.photo) form.append('photo', payload.photo);
+  if (payload.latitude != null) form.append('latitude', String(payload.latitude));
+  if (payload.longitude != null) form.append('longitude', String(payload.longitude));
+  if (payload.notes) form.append('notes', payload.notes);
+
+  const { data } = await api.post<{ data: ProofOfDelivery }>(`/shipments/items/${shipmentId}/proof-of-delivery`, form, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return data.data;
 }

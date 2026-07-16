@@ -14,6 +14,8 @@ import { UsersPage } from './routes/tenant/pages/UsersPage';
 import { BranchesPage } from './routes/tenant/pages/BranchesPage';
 import { AuditLogPage as TenantAuditLogPage } from './routes/tenant/pages/AuditLogPage';
 import { CompanySettingsPage } from './routes/tenant/pages/CompanySettingsPage';
+import { BackupRestorePage } from './routes/tenant/pages/BackupRestorePage';
+import { SubscriptionBillingPage } from './routes/tenant/pages/SubscriptionBillingPage';
 import { AccountSecurityPage } from './routes/tenant/pages/AccountSecurityPage';
 import { LoginHistoryPage } from './routes/tenant/pages/LoginHistoryPage';
 import { LeadsPage } from './routes/tenant/pages/crm/LeadsPage';
@@ -40,6 +42,8 @@ import { JournalEntriesPage } from './routes/tenant/pages/accounting/JournalEntr
 import { DocumentsPage } from './routes/tenant/pages/documents/DocumentsPage';
 import { ReportsPage } from './routes/tenant/pages/ReportsPage';
 import { AnalyticsPage } from './routes/tenant/pages/AnalyticsPage';
+import { AiAssistantPage } from './routes/tenant/pages/ai/AiAssistantPage';
+import { EmailParserPage } from './routes/tenant/pages/ai/EmailParserPage';
 import { QuotationsPage } from './routes/tenant/pages/quotations/QuotationsPage';
 import { ShipmentsPage } from './routes/tenant/pages/shipments/ShipmentsPage';
 import { ShipmentDetailPage } from './routes/tenant/pages/shipments/ShipmentDetailPage';
@@ -48,6 +52,7 @@ import { TenantsListPage } from './routes/super-admin/pages/TenantsListPage';
 import { PlansPage } from './routes/super-admin/pages/PlansPage';
 import { LandingContentPage } from './routes/super-admin/pages/LandingContentPage';
 import { MetricsPage } from './routes/super-admin/pages/MetricsPage';
+import { SystemHealthPage } from './routes/super-admin/pages/SystemHealthPage';
 import { AuditLogPage as PlatformAuditLogPage } from './routes/super-admin/pages/AuditLogPage';
 import { ErrorLogsPage } from './routes/super-admin/pages/ErrorLogsPage';
 import { PortalLayout } from './routes/portal/PortalLayout';
@@ -58,6 +63,7 @@ import { PortalInvoicesPage } from './routes/portal/pages/PortalInvoicesPage';
 import { PortalQuotationsPage } from './routes/portal/pages/PortalQuotationsPage';
 import { PortalDocumentsPage } from './routes/portal/pages/PortalDocumentsPage';
 import { PortalMessagesPage } from './routes/portal/pages/PortalMessagesPage';
+import { PortalApiKeysPage } from './routes/portal/pages/PortalApiKeysPage';
 
 export default function App() {
   return (
@@ -103,10 +109,14 @@ export default function App() {
           <Route path="documents" element={<DocumentsPage />} />
           <Route path="reports" element={<ReportsPage />} />
           <Route path="analytics" element={<AnalyticsPage />} />
+          <Route path="assistant" element={<AiAssistantPage />} />
+          <Route path="email-parser" element={<EmailParserPage />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="branches" element={<BranchesPage />} />
           <Route path="audit-log" element={<TenantAuditLogPage />} />
           <Route path="settings" element={<CompanySettingsPage />} />
+          <Route path="backup" element={<BackupRestorePage />} />
+          <Route path="subscription" element={<SubscriptionBillingPage />} />
           <Route path="security" element={<AccountSecurityPage />} />
           <Route path="login-history" element={<LoginHistoryPage />} />
         </Route>
@@ -122,6 +132,7 @@ export default function App() {
           <Route path="quotations" element={<PortalQuotationsPage />} />
           <Route path="documents" element={<PortalDocumentsPage />} />
           <Route path="messages" element={<PortalMessagesPage />} />
+          <Route path="api-keys" element={<PortalApiKeysPage />} />
         </Route>
       </Route>
 
@@ -132,6 +143,7 @@ export default function App() {
           <Route path="plans" element={<PlansPage />} />
           <Route path="landing-content" element={<LandingContentPage />} />
           <Route path="metrics" element={<MetricsPage />} />
+          <Route path="system-health" element={<SystemHealthPage />} />
           <Route path="audit-log" element={<PlatformAuditLogPage />} />
           <Route path="error-log" element={<ErrorLogsPage />} />
         </Route>

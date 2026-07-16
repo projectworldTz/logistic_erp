@@ -35,3 +35,67 @@ export async function downloadReportExport(module: ExportModule, format: ExportF
   });
   return data;
 }
+
+export type ImportModule = 'customers' | 'leads';
+
+export interface ImportRowError {
+  row: number;
+  messages: string[];
+}
+
+export interface ImportResult {
+  created: number;
+  errors: ImportRowError[];
+}
+
+export async function importReportData(module: ImportModule, file: File): Promise<ImportResult> {
+  const form = new FormData();
+  form.append('file', file);
+
+  const { data } = await api.post<ImportResult>(`/reports/import/${module}`, form, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return data;
+}
+
+export type ScheduledReportFrequency = 'daily' | 'weekly' | 'monthly';
+
+export interface ScheduledReport {
+  id: number;
+  name: string;
+  module: ExportModule;
+  format: ExportFormat;
+  frequency: ScheduledReportFrequency;
+  recipients: string[];
+  is_active: boolean;
+  last_sent_at: string | null;
+  created_at: string;
+}
+
+export interface ScheduledReportPayload {
+  name: string;
+  module: ExportModule;
+  format: ExportFormat;
+  frequency: ScheduledReportFrequency;
+  recipients: string[];
+  is_active?: boolean;
+}
+
+export async function fetchScheduledReports(): Promise<{ data: ScheduledReport[] }> {
+  const { data } = await api.get<{ data: ScheduledReport[] }>('/reports/scheduled');
+  return data;
+}
+
+export async function createScheduledReport(payload: ScheduledReportPayload): Promise<ScheduledReport> {
+  const { data } = await api.post<{ data: ScheduledReport }>('/reports/scheduled', payload);
+  return data.data;
+}
+
+export async function updateScheduledReport(id: number, payload: Partial<ScheduledReportPayload>): Promise<ScheduledReport> {
+  const { data } = await api.put<{ data: ScheduledReport }>(`/reports/scheduled/${id}`, payload);
+  return data.data;
+}
+
+export async function deleteScheduledReport(id: number): Promise<void> {
+  await api.delete(`/reports/scheduled/${id}`);
+}

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Anthropic\Client as AnthropicClient;
 use App\Contracts\Notifications\SmsChannel;
 use App\Contracts\Notifications\WhatsAppChannel;
 use App\Models\Account;
@@ -67,6 +68,10 @@ class AppServiceProvider extends ServiceProvider
             fn () => config('services.beem.api_key') ? new BeemSmsChannel() : new LogSmsChannel(),
         );
         $this->app->bind(WhatsAppChannel::class, LogWhatsAppChannel::class);
+        $this->app->singleton(
+            AnthropicClient::class,
+            fn () => new AnthropicClient(apiKey: config('services.anthropic.api_key') ?: 'not-configured'),
+        );
     }
 
     /**

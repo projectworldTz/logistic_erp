@@ -24,6 +24,8 @@ class CompanyResource extends JsonResource
             'logo_url' => $this->logo_path ? Storage::disk('public')->url($this->logo_path) : null,
             'primary_color' => $this->primary_color,
             'secondary_color' => $this->secondary_color,
+            'email_footer_text' => $this->email_footer_text,
+            'email_reply_to' => $this->email_reply_to,
             'notify_email_enabled' => $this->notify_email_enabled,
             'notify_sms_enabled' => $this->notify_sms_enabled,
             'notify_whatsapp_enabled' => $this->notify_whatsapp_enabled,

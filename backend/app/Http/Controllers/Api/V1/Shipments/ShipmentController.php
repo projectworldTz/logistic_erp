@@ -9,6 +9,7 @@ use App\Http\Requests\Shipments\UpdateShipmentRequest;
 use App\Http\Resources\ShipmentCostSummaryResource;
 use App\Http\Resources\ShipmentResource;
 use App\Models\Shipment;
+use App\Services\Analytics\DelayRiskPredictor;
 use App\Services\Shipments\ShipmentCostService;
 use App\Services\Shipments\SlaAlertService;
 use App\Services\Tracking\QrCodeService;
@@ -89,5 +90,22 @@ class ShipmentController extends Controller
     public function checkSla(SlaAlertService $service)
     {
         return response()->json($service->checkAndNotify());
+    }
+
+    /**
+     * A statistical delay-risk score for this shipment, based on how
+     * often other completed shipments on the same route (or mode +
+     * direction) historically arrived after their ETA. Not meaningful
+     * for a shipment that has already arrived/delivered/cancelled.
+     */
+    public function delayRisk(Shipment $shipment, DelayRiskPredictor $predictor)
+    {
+        abort_if(
+            in_array($shipment->status, [ShipmentStatus::Arrived, ShipmentStatus::Delivered, ShipmentStatus::Cancelled], true),
+            422,
+            'Delay risk is only predicted for shipments still in progress.'
+        );
+
+        return response()->json($predictor->predict($shipment));
     }
 }

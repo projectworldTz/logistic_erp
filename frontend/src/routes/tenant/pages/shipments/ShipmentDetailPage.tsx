@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
+  Box,
   Button,
   Chip,
   CircularProgress,
@@ -34,12 +35,16 @@ import { z } from 'zod';
 import {
   addShipmentMilestone,
   fetchDeliveryNoteQr,
+  fetchProofOfDelivery,
   fetchShipment,
   fetchShipmentCostSummary,
+  fetchShipmentDelayRisk,
   fetchShipmentTrackingQr,
+  submitProofOfDelivery,
 } from '../../../../api/endpoints/shipments';
 import type { TrackingEventType } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
+import { SignaturePad } from '../../../../components/common/SignaturePad';
 import { StatWidgetCard } from '../../../../components/common/StatWidgetCard';
 import { TrackingQrCode } from '../../../../components/common/TrackingQrCode';
 import { useAuthStore } from '../../../../hooks/useAuth';
@@ -56,6 +61,12 @@ const STATUS_COLOR: Record<string, 'default' | 'info' | 'warning' | 'success' | 
   cleared: 'success',
   delivered: 'success',
   cancelled: 'error',
+};
+
+const DELAY_RISK_COLOR: Record<'low' | 'medium' | 'high', 'success' | 'warning' | 'error'> = {
+  low: 'success',
+  medium: 'warning',
+  high: 'error',
 };
 
 const EVENT_TYPES: TrackingEventType[] = [
@@ -103,8 +114,15 @@ export function ShipmentDetailPage() {
   const { showToast } = useToast();
   const schema = buildSchema(t);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [podDialogOpen, setPodDialogOpen] = useState(false);
+  const [receivedByName, setReceivedByName] = useState('');
+  const [signatureFile, setSignatureFile] = useState<File | null>(null);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [locating, setLocating] = useState(false);
   const permissions = useAuthStore((s) => s.user?.permissions) ?? [];
   const canViewCosts = permissions.includes('shipments.costs.view');
+  const canManageShipments = permissions.includes('shipments.items.manage');
 
   const { data: shipment, isLoading } = useQuery({
     queryKey: ['shipments', 'item', shipmentId],
@@ -116,6 +134,49 @@ export function ShipmentDetailPage() {
     queryFn: () => fetchShipmentCostSummary(shipmentId),
     enabled: canViewCosts,
   });
+
+  const { data: proofOfDelivery } = useQuery({
+    queryKey: ['shipments', 'item', shipmentId, 'proof-of-delivery'],
+    queryFn: () => fetchProofOfDelivery(shipmentId),
+  });
+
+  const inProgress = !!shipment && !['arrived', 'delivered', 'cancelled'].includes(shipment.status);
+  const { data: delayRisk } = useQuery({
+    queryKey: ['shipments', 'item', shipmentId, 'delay-risk'],
+    queryFn: () => fetchShipmentDelayRisk(shipmentId),
+    enabled: inProgress,
+  });
+
+  const podMutation = useMutation({
+    mutationFn: () => submitProofOfDelivery(shipmentId, {
+      received_by_name: receivedByName,
+      signature: signatureFile as File,
+      photo: photoFile,
+      latitude: coords?.lat,
+      longitude: coords?.lng,
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['shipments', 'item', shipmentId, 'proof-of-delivery'] });
+      setPodDialogOpen(false);
+      setReceivedByName('');
+      setSignatureFile(null);
+      setPhotoFile(null);
+      setCoords(null);
+      showToast(t('detail.pod.toast.saved'));
+    },
+  });
+
+  const handleUseCurrentLocation = () => {
+    if (!navigator.geolocation) return;
+    setLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setCoords({ lat: position.coords.latitude, lng: position.coords.longitude });
+        setLocating(false);
+      },
+      () => setLocating(false),
+    );
+  };
 
   const addMilestoneMutation = useMutation({
     mutationFn: (values: FormValues) => addShipmentMilestone(shipmentId, values),
@@ -155,6 +216,14 @@ export function ShipmentDetailPage() {
         </Typography>
         <Chip label={t(`statuses.${shipment.status}`)} size="small" color={STATUS_COLOR[shipment.status]} />
         {shipment.is_at_risk && <Chip label={t('riskBadge.atRisk')} size="small" color="error" variant="outlined" />}
+        {delayRisk && delayRisk.risk_level !== 'insufficient_data' && (
+          <Chip
+            label={t('detail.delayRisk.chip', { score: delayRisk.risk_score })}
+            size="small"
+            color={DELAY_RISK_COLOR[delayRisk.risk_level]}
+            variant="outlined"
+          />
+        )}
       </Stack>
 
       <Paper variant="outlined" sx={{ p: 3 }}>
@@ -338,6 +407,72 @@ export function ShipmentDetailPage() {
         />
       )}
 
+      <Stack spacing={2}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Typography variant="h6" fontWeight={700}>
+            {t('detail.pod.title')}
+          </Typography>
+          {canManageShipments && (
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => setPodDialogOpen(true)}
+            >
+              {proofOfDelivery ? t('detail.pod.recapture') : t('detail.pod.capture')}
+            </Button>
+          )}
+        </Stack>
+
+        {!proofOfDelivery && (
+          <EmptyState title={t('detail.pod.empty.title')} description={t('detail.pod.empty.description')} />
+        )}
+
+        {proofOfDelivery && (
+          <Paper variant="outlined" sx={{ p: 3 }}>
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography variant="body2" color="text.secondary">{t('detail.pod.receivedBy')}</Typography>
+                <Typography variant="body1">{proofOfDelivery.received_by_name}</Typography>
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography variant="body2" color="text.secondary">{t('detail.pod.capturedAt')}</Typography>
+                <Typography variant="body1">{new Date(proofOfDelivery.created_at).toLocaleString()}</Typography>
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography variant="body2" color="text.secondary">{t('detail.pod.signature')}</Typography>
+                <Box component="img" src={proofOfDelivery.signature_url} alt={t('detail.pod.signature')} sx={{ maxWidth: 240, border: '1px solid', borderColor: 'divider', borderRadius: 1 }} />
+              </Grid>
+              {proofOfDelivery.photo_url && (
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <Typography variant="body2" color="text.secondary">{t('detail.pod.photo')}</Typography>
+                  <Box component="img" src={proofOfDelivery.photo_url} alt={t('detail.pod.photo')} sx={{ maxWidth: 240, borderRadius: 1 }} />
+                </Grid>
+              )}
+              {proofOfDelivery.latitude != null && proofOfDelivery.longitude != null && (
+                <Grid size={{ xs: 12 }}>
+                  <Typography variant="body2" color="text.secondary">{t('detail.pod.location')}</Typography>
+                  <Typography variant="body1">
+                    <a
+                      href={`https://www.google.com/maps?q=${proofOfDelivery.latitude},${proofOfDelivery.longitude}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {proofOfDelivery.latitude.toFixed(5)}, {proofOfDelivery.longitude.toFixed(5)}
+                    </a>
+                  </Typography>
+                </Grid>
+              )}
+              {proofOfDelivery.notes && (
+                <Grid size={{ xs: 12 }}>
+                  <Typography variant="body2" color="text.secondary">{t('detail.form.notes')}</Typography>
+                  <Typography variant="body1">{proofOfDelivery.notes}</Typography>
+                </Grid>
+              )}
+            </Grid>
+          </Paper>
+        )}
+      </Stack>
+
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography variant="h6" fontWeight={700}>
           {t('detail.timelineTitle')}
@@ -412,6 +547,55 @@ export function ShipmentDetailPage() {
             </Button>
           </DialogActions>
         </Stack>
+      </Dialog>
+
+      <Dialog open={podDialogOpen} onClose={() => setPodDialogOpen(false)} fullWidth maxWidth="xs">
+        <DialogTitle>{t('detail.pod.dialogTitle')}</DialogTitle>
+        <DialogContent>
+          <Stack spacing={2} sx={{ mt: 0.5 }}>
+            <TextField
+              label={t('detail.pod.receivedBy')}
+              fullWidth
+              value={receivedByName}
+              onChange={(e) => setReceivedByName(e.target.value)}
+            />
+            <SignaturePad
+              label={t('detail.pod.signature')}
+              clearLabel={tc('actions.clear')}
+              onChange={setSignatureFile}
+            />
+            <Button component="label" variant="outlined" size="small" sx={{ alignSelf: 'flex-start' }}>
+              {photoFile ? photoFile.name : t('detail.pod.attachPhoto')}
+              <input
+                type="file"
+                accept="image/*"
+                capture="environment"
+                hidden
+                onChange={(e) => setPhotoFile(e.target.files?.[0] ?? null)}
+              />
+            </Button>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Button size="small" variant="outlined" onClick={handleUseCurrentLocation} disabled={locating}>
+                {locating ? tc('labels.loading') : t('detail.pod.useLocation')}
+              </Button>
+              {coords && (
+                <Typography variant="caption" color="text.secondary">
+                  {coords.lat.toFixed(5)}, {coords.lng.toFixed(5)}
+                </Typography>
+              )}
+            </Stack>
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setPodDialogOpen(false)}>{tc('actions.cancel')}</Button>
+          <Button
+            variant="contained"
+            disabled={!receivedByName || !signatureFile || podMutation.isPending}
+            onClick={() => podMutation.mutate()}
+          >
+            {tc('actions.save')}
+          </Button>
+        </DialogActions>
       </Dialog>
     </Stack>
   );

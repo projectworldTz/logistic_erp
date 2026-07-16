@@ -8,6 +8,8 @@
     "administration": "Utawala"
   },
   "dashboard": "Dashibodi",
+  "aiAssistant": "Msaidizi wa AI",
+  "emailParser": "Kichanganuzi cha Barua Pepe",
   "crm": "Uhusiano na Wateja",
   "quotations": "Nukuu za Bei",
   "shipments": "Shehena",
@@ -32,6 +34,8 @@
   "auditLog": "Kumbukumbu za Ukaguzi",
   "loginHistory": "Historia ya Kuingia",
   "companySettings": "Mipangilio ya Kampuni",
+  "backupRestore": "Hifadhi na Urejeshaji",
+  "subscriptionBilling": "Usajili na Malipo",
   "accountSecurity": "Usalama wa Akaunti",
   "comingSoon": "Inakuja hivi karibuni",
   "soon": "Karibuni",

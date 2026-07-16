@@ -29,6 +29,10 @@ import HistoryIcon from '@mui/icons-material/History';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import BusinessIcon from '@mui/icons-material/Business';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import BackupIcon from '@mui/icons-material/Backup';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
 
 export interface NavItem {
   labelKey: string;
@@ -99,6 +103,8 @@ export const TENANT_NAV_GROUPS: NavGroup[] = [
     items: [
       { labelKey: 'reports', path: '/app/reports', enabled: true, permission: 'reports.view', icon: <SummarizeIcon {...iconProps} /> },
       { labelKey: 'analytics', path: '/app/analytics', enabled: true, permission: 'analytics.view', icon: <BarChartIcon {...iconProps} /> },
+      { labelKey: 'aiAssistant', path: '/app/assistant', enabled: true, permission: 'ai.assistant.use', icon: <SmartToyIcon {...iconProps} /> },
+      { labelKey: 'emailParser', path: '/app/email-parser', enabled: true, permission: 'ai.email_parser.use', icon: <AutoAwesomeIcon {...iconProps} /> },
     ],
   },
   {
@@ -110,6 +116,8 @@ export const TENANT_NAV_GROUPS: NavGroup[] = [
       { labelKey: 'auditLog', path: '/app/audit-log', enabled: true, permission: 'core.audit.view', icon: <HistoryIcon {...iconProps} /> },
       { labelKey: 'loginHistory', path: '/app/login-history', enabled: true, permission: 'core.audit.view', icon: <VpnKeyIcon {...iconProps} /> },
       { labelKey: 'companySettings', path: '/app/settings', enabled: true, permission: 'core.company.view', icon: <BusinessIcon {...iconProps} /> },
+      { labelKey: 'subscriptionBilling', path: '/app/subscription', enabled: true, permission: 'core.company.view', icon: <CreditCardIcon {...iconProps} /> },
+      { labelKey: 'backupRestore', path: '/app/backup', enabled: true, permission: 'core.backup.manage', icon: <BackupIcon {...iconProps} /> },
     ],
   },
 ];

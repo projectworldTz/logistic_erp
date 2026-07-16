@@ -24,7 +24,10 @@ import {
   Typography,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
@@ -34,6 +37,7 @@ import {
   createApprovalWorkflow,
   deleteApprovalWorkflow,
   fetchApprovalWorkflows,
+  updateApprovalWorkflow,
 } from '../../../../api/endpoints/workflows';
 import { fetchRoles } from '../../../../api/endpoints/users';
 import type { ApprovalWorkflow } from '../../../../types';
@@ -62,6 +66,7 @@ export function WorkflowDefinitionsPage() {
   const { showToast } = useToast();
   const schema = buildSchema(t);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingWorkflow, setEditingWorkflow] = useState<ApprovalWorkflow | null>(null);
   const [pendingDelete, setPendingDelete] = useState<ApprovalWorkflow | null>(null);
 
   const { data, isLoading } = useQuery({ queryKey: ['workflows', 'definitions'], queryFn: fetchApprovalWorkflows });
@@ -75,6 +80,16 @@ export function WorkflowDefinitionsPage() {
       invalidate();
       setDialogOpen(false);
       showToast(t('toast.created'));
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({ id, payload }: { id: number; payload: FormValues }) => updateApprovalWorkflow(id, payload),
+    onSuccess: () => {
+      invalidate();
+      setDialogOpen(false);
+      setEditingWorkflow(null);
+      showToast(t('toast.updated'));
     },
   });
 
@@ -98,13 +113,37 @@ export function WorkflowDefinitionsPage() {
     defaultValues: { subject_type: 'expense', is_active: true, steps: [{ approver_role: '' }] },
   });
 
-  const { fields, append, remove } = useFieldArray({ control, name: 'steps' });
+  const { fields, append, remove, move } = useFieldArray({ control, name: 'steps' });
 
-  const onCreate = (values: FormValues) =>
-    createMutation.mutate({
-      ...values,
-      min_amount: values.min_amount ?? null,
+  const onSubmit = (values: FormValues) => {
+    const payload = { ...values, min_amount: values.min_amount ?? null };
+    if (editingWorkflow) {
+      updateMutation.mutate({ id: editingWorkflow.id, payload });
+    } else {
+      createMutation.mutate(payload);
+    }
+  };
+
+  const openCreateDialog = () => {
+    setEditingWorkflow(null);
+    reset({ subject_type: 'expense', is_active: true, steps: [{ approver_role: '' }] });
+    setDialogOpen(true);
+  };
+
+  const openEditDialog = (workflow: ApprovalWorkflow) => {
+    setEditingWorkflow(workflow);
+    reset({
+      name: workflow.name,
+      subject_type: workflow.subject_type,
+      min_amount: workflow.min_amount ? Number(workflow.min_amount) : null,
+      is_active: workflow.is_active,
+      steps: workflow.steps
+        .slice()
+        .sort((a, b) => a.position - b.position)
+        .map((step) => ({ approver_role: step.approver_role })),
     });
+    setDialogOpen(true);
+  };
 
   const rows = data?.data ?? [];
 
@@ -114,14 +153,7 @@ export function WorkflowDefinitionsPage() {
         <Typography variant="h5" fontWeight={700}>
           {t('title')}
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => {
-            reset({ subject_type: 'expense', is_active: true, steps: [{ approver_role: '' }] });
-            setDialogOpen(true);
-          }}
-        >
+        <Button variant="contained" startIcon={<AddIcon />} onClick={openCreateDialog}>
           {t('newWorkflow')}
         </Button>
       </Stack>
@@ -167,6 +199,11 @@ export function WorkflowDefinitionsPage() {
                       />
                     </TableCell>
                     <TableCell align="right">
+                      <Tooltip title={tc('actions.edit')}>
+                        <IconButton size="small" onClick={() => openEditDialog(workflow)}>
+                          <EditIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
                       <Tooltip title={tc('actions.delete')}>
                         <IconButton size="small" onClick={() => setPendingDelete(workflow)}>
                           <DeleteIcon fontSize="small" />
@@ -182,8 +219,8 @@ export function WorkflowDefinitionsPage() {
       )}
 
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} fullWidth maxWidth="sm">
-        <DialogTitle>{t('form.dialogTitle')}</DialogTitle>
-        <Stack component="form" onSubmit={handleSubmit(onCreate)}>
+        <DialogTitle>{editingWorkflow ? t('form.editDialogTitle') : t('form.dialogTitle')}</DialogTitle>
+        <Stack component="form" onSubmit={handleSubmit(onSubmit)}>
           <DialogContent>
             <Stack spacing={2}>
               <TextField
@@ -254,6 +291,24 @@ export function WorkflowDefinitionsPage() {
                       </TextField>
                     )}
                   />
+                  <Tooltip title={t('form.moveUp') as string}>
+                    <span>
+                      <IconButton size="small" onClick={() => move(index, index - 1)} disabled={index === 0}>
+                        <ArrowUpwardIcon fontSize="small" />
+                      </IconButton>
+                    </span>
+                  </Tooltip>
+                  <Tooltip title={t('form.moveDown') as string}>
+                    <span>
+                      <IconButton
+                        size="small"
+                        onClick={() => move(index, index + 1)}
+                        disabled={index === fields.length - 1}
+                      >
+                        <ArrowDownwardIcon fontSize="small" />
+                      </IconButton>
+                    </span>
+                  </Tooltip>
                   <IconButton size="small" onClick={() => remove(index)} disabled={fields.length === 1}>
                     <DeleteIcon fontSize="small" />
                   </IconButton>
@@ -271,8 +326,12 @@ export function WorkflowDefinitionsPage() {
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setDialogOpen(false)}>{tc('actions.cancel')}</Button>
-            <Button type="submit" variant="contained" disabled={createMutation.isPending}>
-              {tc('actions.create')}
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={createMutation.isPending || updateMutation.isPending}
+            >
+              {editingWorkflow ? tc('actions.save') : tc('actions.create')}
             </Button>
           </DialogActions>
         </Stack>

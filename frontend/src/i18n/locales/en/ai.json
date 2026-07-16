@@ -1,0 +1,42 @@
+{
+  "assistant": {
+    "title": "AI Assistant",
+    "subtitle": "Ask questions about your shipments, customers, and finances.",
+    "empty": "Ask something like \"how many shipments are in transit?\" or \"which invoices are overdue?\"",
+    "placeholder": "Ask a question…",
+    "send": "Send",
+    "error": "Something went wrong reaching the assistant. Please try again."
+  },
+  "emailParser": {
+    "title": "Email Parser",
+    "subtitle": "Paste a customer email and let AI draft a lead from it — review and edit before saving.",
+    "pasteLabel": "Paste the email text here",
+    "extract": "Extract Details",
+    "extracting": "Extracting…",
+    "error": "Couldn't extract details from that email. Please try again.",
+    "reviewTitle": "Review Extracted Details",
+    "fields": {
+      "customerName": "Customer / Company Name",
+      "customerEmail": "Customer Email",
+      "cargoDescription": "Cargo Description",
+      "originPort": "Origin Port",
+      "destinationPort": "Destination Port",
+      "mode": "Mode",
+      "direction": "Direction",
+      "notes": "Notes"
+    },
+    "modes": {
+      "sea": "Sea",
+      "air": "Air",
+      "land": "Land"
+    },
+    "directions": {
+      "import": "Import",
+      "export": "Export"
+    },
+    "createLead": "Create Lead",
+    "toast": {
+      "leadCreated": "Lead created from email."
+    }
+  }
+}

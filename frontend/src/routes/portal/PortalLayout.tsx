@@ -4,6 +4,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
@@ -26,6 +27,7 @@ export function PortalLayout() {
         { label: t('nav.quotations'), path: '/portal/quotations', enabled: true, icon: <RequestQuoteIcon {...iconProps} /> },
         { label: t('nav.documents'), path: '/portal/documents', enabled: true, icon: <DescriptionIcon {...iconProps} /> },
         { label: t('nav.messages'), path: '/portal/messages', enabled: true, icon: <ChatIcon {...iconProps} /> },
+        { label: t('nav.apiKeys'), path: '/portal/api-keys', enabled: true, icon: <VpnKeyIcon {...iconProps} /> },
       ],
     },
   ];

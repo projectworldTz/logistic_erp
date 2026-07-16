@@ -102,6 +102,30 @@ class ApprovalWorkflowTest extends TestCase
         $this->assertEquals('Finance Manager', $response['data']['steps'][1]['approver_role']);
     }
 
+    public function test_owner_can_edit_a_workflow_and_reorder_its_steps(): void
+    {
+        $registration = $this->registerTenant();
+        $token = $registration['token'];
+
+        $workflow = $this->createWorkflow($token)['data'];
+
+        $response = $this->withHeader('Authorization', "Bearer {$token}")
+            ->putJson("/api/v1/workflows/definitions/{$workflow['id']}", [
+                'name' => 'Expense Approval (Revised)',
+                'steps' => [
+                    ['approver_role' => 'Finance Manager'],
+                    ['approver_role' => 'Operations Manager'],
+                ],
+            ]);
+
+        $response->assertOk();
+        $this->assertEquals('Expense Approval (Revised)', $response->json('data.name'));
+        $this->assertEquals(1, $response->json('data.steps.0.position'));
+        $this->assertEquals('Finance Manager', $response->json('data.steps.0.approver_role'));
+        $this->assertEquals(2, $response->json('data.steps.1.position'));
+        $this->assertEquals('Operations Manager', $response->json('data.steps.1.approver_role'));
+    }
+
     public function test_expense_approval_falls_back_to_legacy_single_approver_when_no_workflow_configured(): void
     {
         $registration = $this->registerTenant();

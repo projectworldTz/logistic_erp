@@ -10,6 +10,12 @@
     "primaryColor": "Rangi Kuu",
     "secondaryColor": "Rangi ya Pili"
   },
+  "emailTemplate": {
+    "title": "Kiolezo cha Barua Pepe",
+    "help": "Haya huonekana kwenye kila barua pepe wanayopokea wafanyakazi na wateja wako — pamoja na nembo na rangi yako ya chapa iliyowekwa hapo juu.",
+    "replyTo": "Barua Pepe ya Kujibu",
+    "footerText": "Maandishi ya Chini"
+  },
   "notifications": {
     "title": "Njia za Arifa",
     "email": "Barua Pepe",
@@ -29,5 +35,77 @@
     "website": "Tovuti"
   },
   "saving": "Inahifadhi…",
-  "saveChanges": "Hifadhi Mabadiliko"
+  "saveChanges": "Hifadhi Mabadiliko",
+  "subscription": {
+    "title": "Usajili na Malipo",
+    "changePlan": "Badilisha Mpango",
+    "trialEnds": "Jaribio Linaisha",
+    "startedAt": "Ilianza",
+    "cycle": { "monthly": "Kila Mwezi", "yearly": "Kila Mwaka" },
+    "status": {
+      "active": "Inatumika",
+      "trialing": "Jaribio",
+      "past_due": "Imechelewa Kulipwa",
+      "canceled": "Imesitishwa",
+      "pending": "Inasubiri",
+      "paid": "Imelipwa",
+      "overdue": "Imechelewa",
+      "void": "Imebatilishwa"
+    },
+    "billingProfile": {
+      "title": "Wasifu wa Malipo",
+      "billingName": "Jina la Malipo",
+      "billingEmail": "Barua Pepe ya Malipo",
+      "billingPhone": "Namba ya Simu ya Malipo",
+      "billingAddress": "Anwani ya Malipo",
+      "taxId": "Namba ya Kodi"
+    },
+    "invoices": {
+      "title": "Historia ya Ankara",
+      "empty": "Bado hakuna ankara — moja hutolewa kiotomatiki mwanzoni mwa kila kipindi cha malipo.",
+      "period": "Kipindi",
+      "amount": "Kiasi",
+      "dueDate": "Tarehe ya Malipo",
+      "status": "Hali"
+    },
+    "changePlanDialog": {
+      "title": "Badilisha Mpango",
+      "plan": "Mpango",
+      "cycle": "Mzunguko wa Malipo",
+      "cancel": "Ghairi",
+      "confirm": "Thibitisha"
+    },
+    "toast": {
+      "billingSaved": "Wasifu wa malipo umesasishwa.",
+      "planChanged": "Mpango umesasishwa."
+    }
+  },
+  "backup": {
+    "title": "Hifadhi na Urejeshaji",
+    "export": {
+      "title": "Pakua Hifadhi",
+      "description": "Pakua nakala kamili ya data ya kampuni yako kama faili la JSON. Faili zilizopakiwa (nyaraka, nembo, sahihi) hazijumuishwi — ni kumbukumbu tu zinazozielekeza.",
+      "download": "Pakua Hifadhi",
+      "downloading": "Inapakua…"
+    },
+    "restore": {
+      "title": "Rejesha kutoka Hifadhi",
+      "warning": "Kurejesha kutabadilisha DATA YOTE ya sasa ya kampuni yako na maudhui ya faili la hifadhi. Hatua hii haiwezi kutenduliwa.",
+      "description": "Rejesha tu hifadhi iliyopakuliwa kutoka kampuni hii hii. Kurejesha kutoka hifadhi ya kampuni nyingine kunazuiwa kiotomatiki.",
+      "selectFile": "Chagua Faili la Hifadhi",
+      "error": "Imeshindwa kurejesha hifadhi hii. Tafadhali kagua faili na ujaribu tena.",
+      "confirmDialog": {
+        "title": "Thibitisha Kurejesha",
+        "message": "Hii itabadilisha kabisa data yote ya sasa ya {{company}} na maudhui ya faili hili la hifadhi. Andika RESTORE kuthibitisha.",
+        "typeToConfirm": "Andika RESTORE kuthibitisha",
+        "cancel": "Ghairi",
+        "confirm": "Rejesha",
+        "restoring": "Inarejesha…"
+      }
+    },
+    "toast": {
+      "exported": "Hifadhi imepakuliwa.",
+      "restored": "Kurejesha kumekamilika."
+    }
+  }
 }

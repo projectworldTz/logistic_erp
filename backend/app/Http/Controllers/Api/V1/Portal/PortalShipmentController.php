@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Portal;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProofOfDeliveryResource;
 use App\Http\Resources\ShipmentResource;
 use App\Models\Shipment;
 use App\Services\Tracking\ShipmentTrackingQrService;
@@ -39,5 +40,17 @@ class PortalShipmentController extends Controller
 
         return response($service->generateSvg($shipment->tracking_code), 200)
             ->header('Content-Type', 'image/svg+xml');
+    }
+
+    public function proofOfDelivery(Request $request, int $shipment)
+    {
+        $shipment = Shipment::query()
+            ->where('customer_id', $request->user()->customer_id)
+            ->with('proofOfDelivery')
+            ->findOrFail($shipment);
+
+        abort_unless($shipment->proofOfDelivery, 404);
+
+        return new ProofOfDeliveryResource($shipment->proofOfDelivery);
     }
 }

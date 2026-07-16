@@ -34,6 +34,7 @@ import superAdminEn from './locales/en/superAdmin.json';
 import trackingEn from './locales/en/tracking.json';
 import analyticsEn from './locales/en/analytics.json';
 import portalEn from './locales/en/portal.json';
+import aiEn from './locales/en/ai.json';
 
 import commonSw from './locales/sw/common.json';
 import navSw from './locales/sw/nav.json';
@@ -68,6 +69,7 @@ import superAdminSw from './locales/sw/superAdmin.json';
 import trackingSw from './locales/sw/tracking.json';
 import analyticsSw from './locales/sw/analytics.json';
 import portalSw from './locales/sw/portal.json';
+import aiSw from './locales/sw/ai.json';
 
 export const STORAGE_KEY = 'app-locale';
 
@@ -115,6 +117,7 @@ void i18n.use(initReactI18next).init({
     'tracking',
     'analytics',
     'portal',
+    'ai',
   ],
   resources: {
     en: {
@@ -151,6 +154,7 @@ void i18n.use(initReactI18next).init({
       tracking: trackingEn,
       analytics: analyticsEn,
       portal: portalEn,
+      ai: aiEn,
     },
     sw: {
       common: commonSw,
@@ -186,6 +190,7 @@ void i18n.use(initReactI18next).init({
       tracking: trackingSw,
       analytics: analyticsSw,
       portal: portalSw,
+      ai: aiSw,
     },
   },
   interpolation: { escapeValue: false },

@@ -25,6 +25,8 @@ class Company extends Model
         'logo_path',
         'primary_color',
         'secondary_color',
+        'email_footer_text',
+        'email_reply_to',
         'notify_email_enabled',
         'notify_sms_enabled',
         'notify_whatsapp_enabled',

@@ -48,6 +48,60 @@
       "profit": "Faida ya Shehena"
     }
   },
+  "import": {
+    "title": "Kupakia Data",
+    "subtitle": "Unda kumbukumbu nyingi kutoka faili la CSV au Excel.",
+    "moduleLabel": "Seti ya data",
+    "selectFile": "Chagua Faili",
+    "importing": "Inapakia…",
+    "modules": {
+      "customers": "Wateja",
+      "leads": "Fursa"
+    },
+    "template": {
+      "label": "Safu zinazotarajiwa",
+      "customers": "Company Name, Industry, Email, Phone, City, Country, Status",
+      "leads": "Company Name, Contact Name, Email, Phone, Source, Status"
+    },
+    "result": {
+      "created": "Kumbukumbu {{count}} zimeundwa.",
+      "errorsTitle": "Safu {{count}} hazikuweza kupakiwa:",
+      "row": "Safu {{row}}"
+    },
+    "error": "Kupakia kumeshindwa. Tafadhali kagua faili na ujaribu tena."
+  },
+  "schedule": {
+    "title": "Ripoti Zilizoratibiwa",
+    "subtitle": "Tuma ripoti kiotomatiki kwa barua pepe kwa wapokeaji wake kwa ratiba inayojirudia.",
+    "new": "Ratiba Mpya",
+    "empty": "Bado hakuna ripoti zilizoratibiwa.",
+    "table": {
+      "name": "Jina",
+      "module": "Seti ya Data",
+      "frequency": "Marudio",
+      "recipients": "Wapokeaji",
+      "lastSent": "Ilitumwa Mara ya Mwisho",
+      "status": "Hali"
+    },
+    "frequencies": { "daily": "Kila Siku", "weekly": "Kila Wiki", "monthly": "Kila Mwezi" },
+    "neverSent": "Haijawahi kutumwa",
+    "active": "Inatumika",
+    "paused": "Imesimamishwa",
+    "dialog": {
+      "title": "Ratiba Mpya ya Ripoti",
+      "name": "Jina",
+      "recipients": "Wapokeaji (barua pepe, tenganisha kwa mkato)",
+      "isActive": "Inatumika"
+    },
+    "deleteDialog": {
+      "title": "Futa Ratiba ya Ripoti",
+      "message": "Una uhakika unataka kufuta ratiba {{name}}? Hatua hii haiwezi kutenduliwa."
+    },
+    "toast": {
+      "created": "Ratiba ya ripoti imeundwa.",
+      "deleted": "Ratiba ya ripoti imefutwa."
+    }
+  },
   "advanced": {
     "sectionTitle": "Ripoti za Kina",
     "customs": {

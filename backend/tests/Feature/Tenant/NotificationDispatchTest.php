@@ -155,6 +155,36 @@ class NotificationDispatchTest extends TestCase
         $this->createContainer($token, $customerId);
     }
 
+    public function test_email_is_branded_with_company_logo_color_and_footer_text(): void
+    {
+        Mail::fake();
+
+        $registration = $this->registerTenant(companyName: 'Acme Logistics');
+        $tenantId = $registration['user']['tenant_id'];
+        $token = $registration['token'];
+        $customerId = $this->createCustomer($token);
+        $this->createRecipient($tenantId);
+
+        $this->withHeader('Authorization', "Bearer {$token}")
+            ->putJson('/api/v1/company', [
+                'primary_color' => '#123456',
+                'email_footer_text' => 'Acme Logistics — Nairobi, Kenya',
+                'email_reply_to' => 'support@acmelogistics.test',
+            ])
+            ->assertOk();
+
+        $this->createContainer($token, $customerId);
+
+        Mail::assertSent(GenericNotificationMail::class, function ($mail) {
+            $html = $mail->render();
+
+            return str_contains($html, 'Acme Logistics')
+                && str_contains($html, '#123456')
+                && str_contains($html, 'Acme Logistics — Nairobi, Kenya')
+                && $mail->envelope()->replyTo[0]->address === 'support@acmelogistics.test';
+        });
+    }
+
     public function test_sms_is_not_attempted_when_recipient_has_no_phone_even_if_enabled(): void
     {
         Mail::fake();

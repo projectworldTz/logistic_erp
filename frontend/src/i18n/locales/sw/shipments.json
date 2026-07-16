@@ -78,6 +78,29 @@
       "caption": "Changanua ili kuthibitisha ankara hii ya uwasilishaji",
       "download": "Pakua QR"
     },
+    "delayRisk": {
+      "chip": "Hatari ya kuchelewa: {{score}}%"
+    },
+    "pod": {
+      "title": "Uthibitisho wa Uwasilishaji",
+      "capture": "Rekodi Uthibitisho wa Uwasilishaji",
+      "recapture": "Rekodi Upya Uthibitisho wa Uwasilishaji",
+      "dialogTitle": "Rekodi Uthibitisho wa Uwasilishaji",
+      "receivedBy": "Imepokelewa na",
+      "signature": "Sahihi",
+      "photo": "Picha",
+      "attachPhoto": "Ambatisha picha",
+      "useLocation": "Tumia mahali pa sasa",
+      "capturedAt": "Imerekodiwa",
+      "location": "Mahali",
+      "empty": {
+        "title": "Bado hakuna uthibitisho wa uwasilishaji",
+        "description": "Rekodi sahihi na picha mara shehena hii inapokabidhiwa kwa mteja."
+      },
+      "toast": {
+        "saved": "Uthibitisho wa uwasilishaji umehifadhiwa."
+      }
+    },
     "empty": {
       "title": "Bado hakuna matukio ya ufuatiliaji",
       "description": "Ongeza tukio la kwanza la ufuatiliaji ili kuanza ratiba ya shehena hii."

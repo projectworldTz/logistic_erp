@@ -28,6 +28,8 @@ class UpdateCompanyRequest extends FormRequest
             'website' => ['nullable', 'url', 'max:255'],
             'primary_color' => ['nullable', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'secondary_color' => ['nullable', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'email_footer_text' => ['nullable', 'string', 'max:1000'],
+            'email_reply_to' => ['nullable', 'email', 'max:255'],
             'notify_email_enabled' => ['sometimes', 'boolean'],
             'notify_sms_enabled' => ['sometimes', 'boolean'],
             'notify_whatsapp_enabled' => ['sometimes', 'boolean'],

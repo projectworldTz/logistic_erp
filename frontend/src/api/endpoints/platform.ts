@@ -9,6 +9,7 @@ import type {
   Plan,
   PlatformMetrics,
   Subscription,
+  SystemHealth,
   Tenant,
 } from '../../types';
 
@@ -58,6 +59,11 @@ export async function fetchSubscriptions(page = 1): Promise<Paginated<Subscripti
 
 export async function fetchPlatformMetrics(): Promise<PlatformMetrics> {
   const { data } = await api.get<PlatformMetrics>('/platform/metrics');
+  return data;
+}
+
+export async function fetchSystemHealth(): Promise<SystemHealth> {
+  const { data } = await api.get<SystemHealth>('/platform/system-health');
   return data;
 }
 

@@ -1,10 +1,19 @@
 import {
+  Alert,
   Box,
   Button,
   Card,
   CardContent,
+  Checkbox,
+  Chip,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControlLabel,
   Grid,
+  IconButton,
   MenuItem,
   Paper,
   Stack,
@@ -17,26 +26,40 @@ import {
   TextField,
   ToggleButton,
   ToggleButtonGroup,
+  Tooltip,
   Typography,
 } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import PrintIcon from '@mui/icons-material/Print';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
+  createScheduledReport,
+  deleteScheduledReport,
   downloadReportExport,
   fetchCustomsReport,
   fetchProfitReport,
   fetchReportsOverview,
+  fetchScheduledReports,
   fetchTaxReport,
+  importReportData,
   type ExportFormat,
   type ExportModule,
+  type ImportModule,
+  type ImportResult,
+  type ScheduledReportFrequency,
+  type ScheduledReportPayload,
 } from '../../../api/endpoints/reports';
 import { fetchBranches, fetchCompany } from '../../../api/endpoints/dashboard';
+import { ConfirmDialog } from '../../../components/common/ConfirmDialog';
 import { StatWidgetCard } from '../../../components/common/StatWidgetCard';
 import { StatusBreakdownBar } from '../../../components/common/StatusBreakdownBar';
+import { useToast } from '../../../hooks/useToast';
 import { useAuthStore } from '../../../hooks/useAuth';
 import { formatCurrency } from '../../../utils/currency';
 
@@ -48,6 +71,11 @@ const EXPORT_MODULES: { value: ExportModule; labelKey: string; permission: strin
   { value: 'invoices', labelKey: 'export.modules.invoices', permission: 'finance.invoices.view' },
   { value: 'expenses', labelKey: 'export.modules.expenses', permission: 'expenses.items.view' },
   { value: 'profit', labelKey: 'export.modules.profit', permission: 'reports.view' },
+];
+
+const IMPORT_MODULES: { value: ImportModule; labelKey: string; permission: string }[] = [
+  { value: 'customers', labelKey: 'import.modules.customers', permission: 'crm.customers.manage' },
+  { value: 'leads', labelKey: 'import.modules.leads', permission: 'crm.leads.manage' },
 ];
 
 const STATUS_COLORS: Record<string, string> = {
@@ -216,6 +244,328 @@ function DataExportCard() {
   );
 }
 
+function DataImportCard() {
+  const { t } = useTranslation('reports');
+  const queryClient = useQueryClient();
+  const permissions = useAuthStore((s) => s.user?.permissions) ?? [];
+  const allowedModules = IMPORT_MODULES.filter((m) => permissions.includes(m.permission));
+  const [module, setModule] = useState<ImportModule | ''>(allowedModules[0]?.value ?? '');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [result, setResult] = useState<ImportResult | null>(null);
+
+  const importMutation = useMutation({
+    mutationFn: (file: File) => importReportData(module as ImportModule, file),
+    onSuccess: (data) => {
+      setResult(data);
+      if (module === 'customers') queryClient.invalidateQueries({ queryKey: ['customers'] });
+      if (module === 'leads') queryClient.invalidateQueries({ queryKey: ['leads'] });
+    },
+  });
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setResult(null);
+      importMutation.mutate(file);
+    }
+    event.target.value = '';
+  };
+
+  if (allowedModules.length === 0) return null;
+
+  return (
+    <Card variant="outlined" className="no-print">
+      <CardContent>
+        <Stack spacing={2}>
+          <Stack>
+            <Typography variant="subtitle1" fontWeight={700}>
+              {t('import.title')}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {t('import.subtitle')}
+            </Typography>
+          </Stack>
+
+          {importMutation.isError && <Typography variant="body2" color="error.main">{t('import.error')}</Typography>}
+
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems={{ sm: 'center' }}>
+            <TextField
+              select
+              label={t('import.moduleLabel')}
+              value={module}
+              onChange={(e) => setModule(e.target.value as ImportModule)}
+              sx={{ minWidth: 220 }}
+            >
+              {allowedModules.map((m) => (
+                <MenuItem key={m.value} value={m.value}>
+                  {t(m.labelKey)}
+                </MenuItem>
+              ))}
+            </TextField>
+
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              disabled={!module || importMutation.isPending}
+              onClick={() => fileInputRef.current?.click()}
+            >
+              {importMutation.isPending ? t('import.importing') : t('import.selectFile')}
+            </Button>
+            <input ref={fileInputRef} type="file" accept=".csv,.xlsx,.xls" hidden onChange={handleFileChange} />
+          </Stack>
+
+          {module && (
+            <Typography variant="caption" color="text.secondary">
+              {t('import.template.label')}: {t(`import.template.${module}`)}
+            </Typography>
+          )}
+
+          {result && (
+            <Stack spacing={1}>
+              <Alert severity={result.errors.length > 0 ? 'warning' : 'success'}>
+                {t('import.result.created', { count: result.created })}
+              </Alert>
+              {result.errors.length > 0 && (
+                <Alert severity="error">
+                  <Typography variant="body2" fontWeight={700}>
+                    {t('import.result.errorsTitle', { count: result.errors.length })}
+                  </Typography>
+                  <Stack component="ul" sx={{ pl: 2, m: 0 }}>
+                    {result.errors.map((err) => (
+                      <li key={err.row}>
+                        <Typography variant="body2">
+                          {t('import.result.row', { row: err.row })}: {err.messages.join(' ')}
+                        </Typography>
+                      </li>
+                    ))}
+                  </Stack>
+                </Alert>
+              )}
+            </Stack>
+          )}
+        </Stack>
+      </CardContent>
+    </Card>
+  );
+}
+
+interface ScheduleFormValues {
+  name: string;
+  module: ExportModule;
+  format: ExportFormat;
+  frequency: ScheduledReportFrequency;
+  recipients: string;
+  is_active: boolean;
+}
+
+function ScheduledReportsCard() {
+  const { t } = useTranslation('reports');
+  const { showToast } = useToast();
+  const queryClient = useQueryClient();
+  const permissions = useAuthStore((s) => s.user?.permissions) ?? [];
+  const allowedModules = EXPORT_MODULES.filter((m) => permissions.includes(m.permission));
+  const canManage = permissions.includes('reports.manage');
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState<{ id: number; name: string } | null>(null);
+
+  const { data } = useQuery({ queryKey: ['reports', 'scheduled'], queryFn: fetchScheduledReports });
+
+  const { register, control, handleSubmit, reset } = useForm<ScheduleFormValues>({
+    defaultValues: {
+      module: allowedModules[0]?.value ?? 'customers',
+      format: 'csv',
+      frequency: 'weekly',
+      recipients: '',
+      is_active: true,
+    },
+  });
+
+  const createMutation = useMutation({
+    mutationFn: (payload: ScheduledReportPayload) => createScheduledReport(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['reports', 'scheduled'] });
+      setDialogOpen(false);
+      showToast(t('schedule.toast.created'));
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteScheduledReport,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['reports', 'scheduled'] });
+      setPendingDelete(null);
+      showToast(t('schedule.toast.deleted'));
+    },
+  });
+
+  const onSubmit = (values: ScheduleFormValues) => {
+    createMutation.mutate({
+      ...values,
+      recipients: values.recipients
+        .split(',')
+        .map((email) => email.trim())
+        .filter(Boolean),
+    });
+  };
+
+  if (allowedModules.length === 0) return null;
+
+  const rows = data?.data ?? [];
+
+  return (
+    <Card variant="outlined" className="no-print">
+      <CardContent>
+        <Stack spacing={2}>
+          <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+            <Stack>
+              <Typography variant="subtitle1" fontWeight={700}>
+                {t('schedule.title')}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {t('schedule.subtitle')}
+              </Typography>
+            </Stack>
+            {canManage && (
+              <Button
+                size="small"
+                variant="outlined"
+                startIcon={<AddIcon />}
+                onClick={() => {
+                  reset({
+                    module: allowedModules[0]?.value ?? 'customers',
+                    format: 'csv',
+                    frequency: 'weekly',
+                    recipients: '',
+                    is_active: true,
+                  });
+                  setDialogOpen(true);
+                }}
+              >
+                {t('schedule.new')}
+              </Button>
+            )}
+          </Stack>
+
+          {rows.length === 0 && (
+            <Typography variant="body2" color="text.secondary">
+              {t('schedule.empty')}
+            </Typography>
+          )}
+
+          {rows.length > 0 && (
+            <TableContainer component={Paper} variant="outlined">
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>{t('schedule.table.name')}</TableCell>
+                    <TableCell>{t('schedule.table.module')}</TableCell>
+                    <TableCell>{t('schedule.table.frequency')}</TableCell>
+                    <TableCell>{t('schedule.table.recipients')}</TableCell>
+                    <TableCell>{t('schedule.table.lastSent')}</TableCell>
+                    <TableCell>{t('schedule.table.status')}</TableCell>
+                    {canManage && <TableCell align="right" />}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row) => (
+                    <TableRow key={row.id}>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell>{t(`export.modules.${row.module}`)}</TableCell>
+                      <TableCell>{t(`schedule.frequencies.${row.frequency}`)}</TableCell>
+                      <TableCell>{row.recipients.join(', ')}</TableCell>
+                      <TableCell>
+                        {row.last_sent_at ? new Date(row.last_sent_at).toLocaleString() : t('schedule.neverSent')}
+                      </TableCell>
+                      <TableCell>
+                        <Chip
+                          size="small"
+                          label={row.is_active ? t('schedule.active') : t('schedule.paused')}
+                          color={row.is_active ? 'success' : 'default'}
+                        />
+                      </TableCell>
+                      {canManage && (
+                        <TableCell align="right">
+                          <Tooltip title={t('schedule.deleteDialog.title') as string}>
+                            <IconButton size="small" onClick={() => setPendingDelete({ id: row.id, name: row.name })}>
+                              <DeleteIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </Stack>
+      </CardContent>
+
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} fullWidth maxWidth="xs">
+        <DialogTitle>{t('schedule.dialog.title')}</DialogTitle>
+        <Stack component="form" onSubmit={handleSubmit(onSubmit)}>
+          <DialogContent>
+            <Stack spacing={2}>
+              <TextField label={t('schedule.dialog.name')} fullWidth {...register('name', { required: true })} />
+              <TextField label={t('export.moduleLabel')} select fullWidth {...register('module')}>
+                {allowedModules.map((m) => (
+                  <MenuItem key={m.value} value={m.value}>
+                    {t(m.labelKey)}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <TextField label={t('schedule.table.frequency')} select fullWidth {...register('frequency')}>
+                <MenuItem value="daily">{t('schedule.frequencies.daily')}</MenuItem>
+                <MenuItem value="weekly">{t('schedule.frequencies.weekly')}</MenuItem>
+                <MenuItem value="monthly">{t('schedule.frequencies.monthly')}</MenuItem>
+              </TextField>
+              <TextField label="Format" select fullWidth {...register('format')}>
+                <MenuItem value="csv">CSV</MenuItem>
+                <MenuItem value="xlsx">Excel</MenuItem>
+              </TextField>
+              <TextField
+                label={t('schedule.dialog.recipients')}
+                fullWidth
+                multiline
+                minRows={2}
+                {...register('recipients', { required: true })}
+              />
+              <FormControlLabel
+                control={
+                  <Controller
+                    name="is_active"
+                    control={control}
+                    render={({ field }) => (
+                      <Checkbox checked={!!field.value} onChange={(e) => field.onChange(e.target.checked)} />
+                    )}
+                  />
+                }
+                label={t('schedule.dialog.isActive')}
+              />
+            </Stack>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
+            <Button type="submit" variant="contained" disabled={createMutation.isPending}>
+              {t('schedule.new')}
+            </Button>
+          </DialogActions>
+        </Stack>
+      </Dialog>
+
+      <ConfirmDialog
+        open={!!pendingDelete}
+        title={t('schedule.deleteDialog.title')}
+        message={t('schedule.deleteDialog.message', { name: pendingDelete?.name ?? '' })}
+        confirmLabel="Delete"
+        loading={deleteMutation.isPending}
+        onConfirm={() => pendingDelete && deleteMutation.mutate(pendingDelete.id)}
+        onCancel={() => setPendingDelete(null)}
+      />
+    </Card>
+  );
+}
+
 export function ReportsPage() {
   const { t } = useTranslation('reports');
   const permissions = useAuthStore((s) => s.user?.permissions) ?? [];
@@ -280,6 +630,8 @@ export function ReportsPage() {
       </Stack>
 
       <DataExportCard />
+      <DataImportCard />
+      <ScheduledReportsCard />
 
       {isLoading && <CircularProgress />}
 

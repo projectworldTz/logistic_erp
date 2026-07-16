@@ -67,6 +67,7 @@ return [
             'core.users.view' => 'View company users',
             'core.users.manage' => 'Invite / edit / deactivate company users',
             'core.audit.view' => 'View company audit log',
+            'core.backup.manage' => 'Export and restore a full backup of the company\'s data',
         ],
         'crm' => [
             'crm.leads.view' => 'View leads',
@@ -75,6 +76,8 @@ return [
             'crm.customers.manage' => 'Create / edit / delete customers',
             'crm.contacts.view' => 'View customer contacts',
             'crm.contacts.manage' => 'Create / edit / delete customer contacts',
+            'crm.compliance.view' => 'View customer compliance/KYC documents',
+            'crm.compliance.manage' => 'Upload / edit / delete customer compliance/KYC documents',
         ],
         'clearing' => [
             'clearing.files.view' => 'View clearing files',
@@ -115,6 +118,7 @@ return [
         ],
         'reports' => [
             'reports.view' => 'View cross-module reports',
+            'reports.manage' => 'Create / edit / delete scheduled report emails',
         ],
         'analytics' => [
             'analytics.view' => 'View operational & financial analytics',
@@ -134,6 +138,7 @@ return [
             'portal.documents.upload' => 'Upload documents via the client portal',
             'portal.quotations.approve' => 'Approve / reject quotations via the client portal',
             'portal.messages.send' => 'Send messages via the client portal',
+            'portal.api_keys.manage' => 'Generate / revoke Client API keys via the client portal',
         ],
         'demurrage' => [
             'demurrage.rate_cards.view' => 'View demurrage rate cards',
@@ -164,6 +169,10 @@ return [
             'hr.attendance.view' => 'View attendance records',
             'hr.attendance.manage' => 'Create / edit / delete attendance records',
         ],
+        'ai' => [
+            'ai.assistant.use' => 'Use the AI assistant',
+            'ai.email_parser.use' => 'Use the AI email parser',
+        ],
     ],
 
     /*
@@ -180,8 +189,8 @@ return [
             'platform.metrics.view',
         ],
 
-        'Company Owner' => ['core.*', 'crm.*', 'clearing.*', 'freight.*', 'containers.*', 'warehouse.*', 'fleet.*', 'finance.*', 'accounting.*', 'documents.*', 'reports.*', 'quotations.*', 'shipments.*', 'analytics.*', 'demurrage.*', 'detention.*', 'expenses.*', 'workflows.*', 'hr.*'],
-        'Company Admin' => ['core.*', 'crm.*', 'clearing.*', 'freight.*', 'containers.*', 'warehouse.*', 'fleet.*', 'finance.*', 'accounting.*', 'documents.*', 'reports.*', 'quotations.*', 'shipments.*', 'analytics.*', 'demurrage.*', 'detention.*', 'expenses.*', 'workflows.*', 'hr.*'],
+        'Company Owner' => ['core.*', 'crm.*', 'clearing.*', 'freight.*', 'containers.*', 'warehouse.*', 'fleet.*', 'finance.*', 'accounting.*', 'documents.*', 'reports.*', 'quotations.*', 'shipments.*', 'analytics.*', 'demurrage.*', 'detention.*', 'expenses.*', 'workflows.*', 'hr.*', 'ai.*'],
+        'Company Admin' => ['core.*', 'crm.*', 'clearing.*', 'freight.*', 'containers.*', 'warehouse.*', 'fleet.*', 'finance.*', 'accounting.*', 'documents.*', 'reports.*', 'quotations.*', 'shipments.*', 'analytics.*', 'demurrage.*', 'detention.*', 'expenses.*', 'workflows.*', 'hr.*', 'ai.*'],
         'Branch Manager' => ['core.dashboard.view', 'core.branches.view', 'core.users.view', 'hr.*'],
         'Operations Manager' => ['core.dashboard.view', 'core.branches.view', 'clearing.files.view', 'freight.bookings.view', 'containers.items.view', 'warehouse.items.view', 'fleet.vehicles.view', 'finance.invoices.view', 'accounting.accounts.view', 'accounting.journal.view', 'documents.files.view', 'reports.view', 'quotations.items.view', 'shipments.*', 'analytics.view', 'demurrage.charges.view', 'demurrage.charges.manage', 'detention.charges.view', 'detention.charges.manage', 'expenses.items.view', 'expenses.items.manage'],
         'Clearing Officer' => ['core.dashboard.view', 'clearing.files.view', 'clearing.files.manage', 'containers.items.view', 'containers.items.manage', 'shipments.items.view', 'demurrage.charges.view', 'demurrage.charges.manage', 'detention.charges.view', 'detention.charges.manage', 'expenses.items.view', 'expenses.items.manage'],
@@ -195,19 +204,22 @@ return [
         'Finance Manager' => ['core.dashboard.view', 'finance.invoices.view', 'finance.invoices.manage', 'finance.exchange_rates.view', 'finance.exchange_rates.manage', 'accounting.*', 'reports.view', 'analytics.view', 'demurrage.*', 'detention.*', 'expenses.*', 'workflows.*', 'shipments.items.view', 'shipments.costs.view'],
         'Accountant' => ['core.dashboard.view', 'finance.invoices.view', 'finance.invoices.manage', 'finance.exchange_rates.view', 'finance.exchange_rates.manage', 'accounting.accounts.view', 'accounting.accounts.manage', 'accounting.journal.view', 'accounting.journal.manage', 'expenses.items.view', 'expenses.items.manage', 'shipments.items.view', 'shipments.costs.view'],
         'Cashier' => ['core.dashboard.view', 'finance.invoices.view', 'finance.invoices.manage', 'finance.exchange_rates.view', 'expenses.items.view', 'expenses.items.manage', 'reports.view'],
-        'Sales Manager' => ['core.dashboard.view', 'crm.*', 'quotations.*'],
+        'Sales Manager' => ['core.dashboard.view', 'crm.*', 'quotations.*', 'ai.email_parser.use'],
         'Sales Executive' => [
             'core.dashboard.view',
             'crm.leads.view', 'crm.leads.manage',
             'crm.customers.view', 'crm.customers.manage',
             'crm.contacts.view', 'crm.contacts.manage',
+            'crm.compliance.view', 'crm.compliance.manage',
             'quotations.items.view', 'quotations.items.manage',
+            'ai.email_parser.use',
         ],
         'Customer Service' => [
             'core.dashboard.view',
             'crm.leads.view',
             'crm.customers.view',
             'crm.contacts.view', 'crm.contacts.manage',
+            'crm.compliance.view',
             'quotations.items.view',
         ],
         'Document Controller' => ['core.dashboard.view', 'documents.files.view', 'documents.files.manage'],
@@ -220,6 +232,7 @@ return [
             'crm.leads.view',
             'crm.customers.view',
             'crm.contacts.view',
+            'crm.compliance.view',
             'clearing.files.view',
             'freight.bookings.view',
             'containers.items.view',
@@ -244,6 +257,6 @@ return [
             'hr.employees.view',
             'hr.attendance.view',
         ],
-        'Customer Portal User' => ['portal.access', 'portal.documents.upload', 'portal.quotations.approve', 'portal.messages.send'],
+        'Customer Portal User' => ['portal.access', 'portal.documents.upload', 'portal.quotations.approve', 'portal.messages.send', 'portal.api_keys.manage'],
     ],
 ];

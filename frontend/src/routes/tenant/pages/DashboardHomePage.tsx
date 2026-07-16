@@ -1,8 +1,31 @@
-import { Card, CardContent, CircularProgress, Grid, Stack, Typography } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardContent,
+  Checkbox,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Stack,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import TuneIcon from '@mui/icons-material/Tune';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { useQuery } from '@tanstack/react-query';
+import { useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchAnalyticsOverview } from '../../../api/endpoints/analytics';
 import { fetchCompany, fetchDashboardSummary } from '../../../api/endpoints/dashboard';
@@ -11,6 +34,7 @@ import { StatWidgetCard } from '../../../components/common/StatWidgetCard';
 import { useAuthStore } from '../../../hooks/useAuth';
 import { useThemeMode } from '../../../app/theme/ThemeProvider';
 import { formatCurrency } from '../../../utils/currency';
+import { DASHBOARD_WIDGET_KEYS, useDashboardWidgetLayout, type DashboardWidgetKey } from '../../../hooks/useDashboardWidgetLayout';
 
 // Validated categorical slots from the design system's reference palette
 // (dataviz skill) — fixed per entity, reused verbatim from AnalyticsPage.
@@ -20,6 +44,17 @@ const YELLOW = { light: '#eda100', dark: '#c98500' }; // slot 4
 const AQUA = { light: '#1baf7a', dark: '#199e70' }; // slot 5
 const VIOLET = { light: '#4a3aa7', dark: '#9085e9' }; // slot 7
 const RED = { light: '#e34948', dark: '#e66767' }; // slot 8
+
+const WIDGET_LABEL_KEYS: Record<DashboardWidgetKey, string> = {
+  daily_shipments: 'dailyShipments',
+  pending_customs: 'pendingCustoms',
+  active_containers: 'activeContainers',
+  outstanding_invoices: 'outstandingInvoices',
+  revenue: 'revenue',
+  expenses: 'expenses',
+  fleet_status: 'fleetActive',
+  warehouse_status: 'warehouseUtilization',
+};
 
 export function DashboardHomePage() {
   const { t } = useTranslation('dashboard');
@@ -47,6 +82,25 @@ export function DashboardHomePage() {
   });
 
   const widgets = data?.widgets;
+  const [customizeOpen, setCustomizeOpen] = useState(false);
+  const { layout, moveWidget, toggleWidget, visibleOrder } = useDashboardWidgetLayout(user?.id);
+
+  const availableWidgetKeys = DASHBOARD_WIDGET_KEYS.filter((key) => widgets?.[key] !== undefined);
+
+  const widgetCards: Partial<Record<DashboardWidgetKey, ReactNode>> = widgets
+    ? {
+        daily_shipments: <StatWidgetCard label={t('widgets.dailyShipments')} value={widgets.daily_shipments} />,
+        pending_customs: <StatWidgetCard label={t('widgets.pendingCustoms')} value={widgets.pending_customs} />,
+        active_containers: <StatWidgetCard label={t('widgets.activeContainers')} value={widgets.active_containers} />,
+        outstanding_invoices: <StatWidgetCard label={t('widgets.outstandingInvoices')} value={widgets.outstanding_invoices} />,
+        revenue: <StatWidgetCard label={t('widgets.revenue')} value={formatCurrency(widgets.revenue ?? 0, company?.currency)} />,
+        expenses: <StatWidgetCard label={t('widgets.expenses')} value={formatCurrency(widgets.expenses ?? 0, company?.currency)} />,
+        fleet_status: <StatWidgetCard label={t('widgets.fleetActive')} value={widgets.fleet_status?.active} />,
+        warehouse_status: (
+          <StatWidgetCard label={t('widgets.warehouseUtilization')} value={`${widgets.warehouse_status?.utilization_percent}%`} />
+        ),
+      }
+    : {};
 
   const pick = (palette: { light: string; dark: string }) => palette[mode];
 
@@ -68,61 +122,88 @@ export function DashboardHomePage() {
 
   return (
     <Stack spacing={3}>
-      <Stack>
-        <Typography variant="h5" fontWeight={700}>
-          {t('welcomeBack', { name: user?.name?.split(' ')[0] ?? '' })}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {t('subtitle')}
-        </Typography>
+      <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+        <Stack>
+          <Typography variant="h5" fontWeight={700}>
+            {t('welcomeBack', { name: user?.name?.split(' ')[0] ?? '' })}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {t('subtitle')}
+          </Typography>
+        </Stack>
+        {availableWidgetKeys.length > 0 && (
+          <Button size="small" variant="outlined" startIcon={<TuneIcon />} onClick={() => setCustomizeOpen(true)}>
+            {t('customize.button')}
+          </Button>
+        )}
       </Stack>
 
       {isLoading && <CircularProgress />}
 
       {widgets && (
         <Grid container spacing={2}>
-          {widgets.daily_shipments !== undefined && (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <StatWidgetCard label={t('widgets.dailyShipments')} value={widgets.daily_shipments} />
+          {visibleOrder(availableWidgetKeys).map((key) => (
+            <Grid key={key} size={{ xs: 12, sm: 6, md: 3 }}>
+              {widgetCards[key]}
             </Grid>
-          )}
-          {widgets.pending_customs !== undefined && (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <StatWidgetCard label={t('widgets.pendingCustoms')} value={widgets.pending_customs} />
-            </Grid>
-          )}
-          {widgets.active_containers !== undefined && (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <StatWidgetCard label={t('widgets.activeContainers')} value={widgets.active_containers} />
-            </Grid>
-          )}
-          {widgets.outstanding_invoices !== undefined && (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <StatWidgetCard label={t('widgets.outstandingInvoices')} value={widgets.outstanding_invoices} />
-            </Grid>
-          )}
-          {widgets.revenue !== undefined && (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <StatWidgetCard label={t('widgets.revenue')} value={formatCurrency(widgets.revenue, company?.currency)} />
-            </Grid>
-          )}
-          {widgets.expenses !== undefined && (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <StatWidgetCard label={t('widgets.expenses')} value={formatCurrency(widgets.expenses, company?.currency)} />
-            </Grid>
-          )}
-          {widgets.fleet_status !== undefined && (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <StatWidgetCard label={t('widgets.fleetActive')} value={widgets.fleet_status.active} />
-            </Grid>
-          )}
-          {widgets.warehouse_status !== undefined && (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <StatWidgetCard label={t('widgets.warehouseUtilization')} value={`${widgets.warehouse_status.utilization_percent}%`} />
-            </Grid>
-          )}
+          ))}
         </Grid>
       )}
+
+      <Dialog open={customizeOpen} onClose={() => setCustomizeOpen(false)} fullWidth maxWidth="xs">
+        <DialogTitle>{t('customize.dialogTitle')}</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            {t('customize.dialogSubtitle')}
+          </Typography>
+          <List dense>
+            {layout.order
+              .filter((key) => availableWidgetKeys.includes(key))
+              .map((key, index, arr) => (
+                <ListItem
+                  key={key}
+                  secondaryAction={
+                    <Stack direction="row">
+                      <Tooltip title={t('customize.moveUp') as string}>
+                        <span>
+                          <IconButton edge="end" size="small" disabled={index === 0} onClick={() => moveWidget(key, -1)}>
+                            <ArrowUpwardIcon fontSize="small" />
+                          </IconButton>
+                        </span>
+                      </Tooltip>
+                      <Tooltip title={t('customize.moveDown') as string}>
+                        <span>
+                          <IconButton
+                            edge="end"
+                            size="small"
+                            disabled={index === arr.length - 1}
+                            onClick={() => moveWidget(key, 1)}
+                          >
+                            <ArrowDownwardIcon fontSize="small" />
+                          </IconButton>
+                        </span>
+                      </Tooltip>
+                    </Stack>
+                  }
+                >
+                  <ListItemIcon sx={{ minWidth: 36 }}>
+                    <Checkbox
+                      edge="start"
+                      checked={!layout.hidden.includes(key)}
+                      onChange={() => toggleWidget(key)}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary={t(`widgets.${WIDGET_LABEL_KEYS[key]}`)} />
+                </ListItem>
+              ))}
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={() => setCustomizeOpen(false)}>
+            {t('customize.done')}
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       {widgets?.shipment_intelligence && (
         <Stack spacing={2}>

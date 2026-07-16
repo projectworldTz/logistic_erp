@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'tenant' => \App\Http\Middleware\ResolveTenant::class,
             'platform.admin' => \App\Http\Middleware\EnsurePlatformAdmin::class,
             'portal' => \App\Http\Middleware\EnsurePortalUser::class,
+            'client-api-key' => \App\Http\Middleware\AuthenticateClientApiKey::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
         ]);
 

@@ -1,5 +1,5 @@
 import { api } from '../axios';
-import type { Contact, Customer, CustomerMessage, Lead, Paginated } from '../../types';
+import type { ComplianceDocument, ComplianceDocumentType, Contact, Customer, CustomerMessage, Lead, Paginated } from '../../types';
 
 export async function fetchLeads(page = 1): Promise<Paginated<Lead>> {
   const { data } = await api.get<Paginated<Lead>>('/crm/leads', { params: { page } });
@@ -71,4 +71,37 @@ export async function fetchCustomerMessages(customerId: number): Promise<{ data:
 export async function sendCustomerMessage(customerId: number, body: string): Promise<CustomerMessage> {
   const { data } = await api.post<{ data: CustomerMessage }>(`/crm/customers/${customerId}/messages`, { body });
   return data.data;
+}
+
+export async function fetchComplianceDocuments(customerId: number): Promise<ComplianceDocument[]> {
+  const { data } = await api.get<{ data: ComplianceDocument[] }>(`/crm/customers/${customerId}/compliance-documents`);
+  return data.data;
+}
+
+export interface ComplianceDocumentPayload {
+  document_type: ComplianceDocumentType;
+  document_number?: string;
+  issue_date?: string;
+  expiry_date?: string;
+  file?: File | null;
+  notes?: string;
+}
+
+export async function createComplianceDocument(customerId: number, payload: ComplianceDocumentPayload): Promise<ComplianceDocument> {
+  const form = new FormData();
+  form.append('document_type', payload.document_type);
+  if (payload.document_number) form.append('document_number', payload.document_number);
+  if (payload.issue_date) form.append('issue_date', payload.issue_date);
+  if (payload.expiry_date) form.append('expiry_date', payload.expiry_date);
+  if (payload.file) form.append('file', payload.file);
+  if (payload.notes) form.append('notes', payload.notes);
+
+  const { data } = await api.post<{ data: ComplianceDocument }>(`/crm/customers/${customerId}/compliance-documents`, form, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return data.data;
+}
+
+export async function deleteComplianceDocument(customerId: number, documentId: number): Promise<void> {
+  await api.delete(`/crm/customers/${customerId}/compliance-documents/${documentId}`);
 }

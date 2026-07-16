@@ -27,6 +27,8 @@ export interface Company {
   logo_url: string | null;
   primary_color: string | null;
   secondary_color: string | null;
+  email_footer_text: string | null;
+  email_reply_to: string | null;
   notify_email_enabled: boolean;
   notify_sms_enabled: boolean;
   notify_whatsapp_enabled: boolean;
@@ -85,6 +87,29 @@ export interface Subscription {
   ends_at: string | null;
   plan?: Plan;
   tenant?: { id: number; name: string };
+}
+
+export interface BillingProfile {
+  id: number;
+  billing_name: string;
+  billing_email: string | null;
+  billing_phone: string | null;
+  billing_address: string | null;
+  tax_id: string | null;
+  payment_method_type: string | null;
+  payment_reference: string | null;
+}
+
+export interface SubscriptionInvoice {
+  id: number;
+  plan_name: string;
+  amount: string;
+  currency: string;
+  period_start: string;
+  period_end: string;
+  due_date: string;
+  status: 'pending' | 'paid' | 'overdue' | 'void';
+  paid_at: string | null;
 }
 
 export interface Tenant {
@@ -166,6 +191,21 @@ export interface PlatformMetrics {
   storage_used_mb: number;
 }
 
+export interface SystemHealth {
+  database: { status: 'ok' | 'down'; response_ms?: number; message?: string };
+  cache: { status: 'ok' | 'down'; driver?: string; message?: string };
+  queue: { status: 'ok' | 'unknown'; pending_jobs?: number; failed_jobs?: number; message?: string };
+  storage: { status: 'ok' | 'warning' | 'unknown'; total_gb?: number; free_gb?: number; used_percent?: number };
+  app: {
+    environment: string;
+    php_version: string;
+    laravel_version: string;
+    debug_mode: boolean;
+    mailer: string;
+    queue_connection: string;
+  };
+}
+
 export interface Paginated<T> {
   data: T[];
   meta: {
@@ -243,6 +283,28 @@ export interface Contact {
   phone: string | null;
   job_title: string | null;
   is_primary: boolean;
+}
+
+export type ComplianceDocumentType =
+  | 'business_registration'
+  | 'tax_certificate'
+  | 'trading_license'
+  | 'authorized_signatory_id'
+  | 'other';
+
+export interface ComplianceDocument {
+  id: number;
+  customer_id: number;
+  document_type: ComplianceDocumentType;
+  document_number: string | null;
+  issue_date: string | null;
+  expiry_date: string | null;
+  status: 'valid' | 'expiring_soon' | 'expired' | 'no_expiry';
+  file_url: string | null;
+  notes: string | null;
+  uploaded_by: number | null;
+  uploaded_by_user?: User;
+  created_at: string;
 }
 
 export interface ClearingFile {
@@ -748,6 +810,13 @@ export interface Shipment {
   created_at: string;
 }
 
+export interface ShipmentDelayRisk {
+  risk_score: number | null;
+  risk_level: 'low' | 'medium' | 'high' | 'insufficient_data';
+  sample_size: number;
+  basis: 'route' | 'mode_direction' | 'insufficient_data';
+}
+
 export interface ShipmentCostSummary {
   currency: string;
   revenue: { billed: number; collected: number };
@@ -757,6 +826,20 @@ export interface ShipmentCostSummary {
   cost_breakdown: { category: Expense['category']; amount: number }[];
   invoices: Invoice[];
   expenses: Expense[];
+}
+
+export interface ProofOfDelivery {
+  id: number;
+  shipment_id: number;
+  received_by_name: string;
+  signature_url: string;
+  photo_url: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  notes: string | null;
+  captured_by: number | null;
+  captured_by_user?: User;
+  created_at: string;
 }
 
 export interface PublicShipmentTracking {
@@ -999,6 +1082,15 @@ export interface PortalDashboardSummary {
   outstanding_balance: number;
   unread_messages: number;
   unread_notifications: number;
+}
+
+export interface CustomerApiKey {
+  id: number;
+  name: string;
+  key_prefix: string;
+  last_used_at: string | null;
+  revoked_at: string | null;
+  created_at: string;
 }
 
 export interface AnalyticsMarginRow {

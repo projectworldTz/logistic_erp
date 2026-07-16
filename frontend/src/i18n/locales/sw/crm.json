@@ -134,6 +134,49 @@
       "empty": "Bado hakuna ujumbe.",
       "placeholder": "Andika jibu…",
       "send": "Tuma"
+    },
+    "compliance": {
+      "title": "Nyaraka za Uzingatiaji",
+      "addDocument": "Ongeza Hati",
+      "viewFile": "Angalia faili",
+      "dialogTitle": "Ongeza Hati ya Uzingatiaji",
+      "table": {
+        "type": "Aina ya Hati",
+        "number": "Namba ya Hati",
+        "expiryDate": "Tarehe ya Kuisha"
+      },
+      "form": {
+        "type": "Aina ya Hati",
+        "number": "Namba ya Hati",
+        "issueDate": "Tarehe ya Kutolewa",
+        "expiryDate": "Tarehe ya Kuisha",
+        "attachFile": "Ambatisha faili"
+      },
+      "types": {
+        "business_registration": "Usajili wa Biashara",
+        "tax_certificate": "Cheti cha Kodi (TIN)",
+        "trading_license": "Leseni ya Biashara",
+        "authorized_signatory_id": "Kitambulisho cha Mtia Sahihi",
+        "other": "Nyingine"
+      },
+      "statuses": {
+        "valid": "Halali",
+        "expiring_soon": "Inakaribia Kuisha",
+        "expired": "Imeisha",
+        "no_expiry": "Haina Muda wa Kuisha"
+      },
+      "empty": {
+        "title": "Bado hakuna nyaraka za uzingatiaji",
+        "description": "Pakia usajili wa biashara, vyeti vya kodi, na nyaraka nyingine za KYC ili kufuatilia muda wake wa kuisha."
+      },
+      "deleteDialog": {
+        "title": "Futa Hati",
+        "message": "Una uhakika unataka kufuta hati hii ya uzingatiaji? Hatua hii haiwezi kutenduliwa."
+      },
+      "toast": {
+        "created": "Hati ya uzingatiaji imeongezwa.",
+        "deleted": "Hati ya uzingatiaji imefutwa."
+      }
     }
   }
 }
