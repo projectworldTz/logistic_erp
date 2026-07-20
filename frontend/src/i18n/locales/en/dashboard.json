@@ -41,5 +41,13 @@
     "export": "Export",
     "shipmentStatusBreakdown": "Shipment Status Breakdown",
     "noData": "No data yet."
+  },
+  "quickAccess": {
+    "sectionTitle": "Quick Access"
+  },
+  "recentActivity": {
+    "sectionTitle": "Recent Activity",
+    "empty": "No recent activity yet.",
+    "viewAll": "View all"
   }
 }

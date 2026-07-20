@@ -43,5 +43,39 @@
   "language": "Language",
   "english": "English",
   "kiswahili": "Kiswahili",
-  "openMenu": "Open menu"
+  "openMenu": "Open menu",
+  "closeMenu": "Close menu",
+  "breadcrumbs": {
+    "details": "Details"
+  },
+  "descriptions": {
+    "crm": "Manage leads and customer relationships.",
+    "quotations": "Prepare and send price quotations.",
+    "shipments": "Track and manage shipment records.",
+    "clearing": "Handle customs clearing files.",
+    "freight": "Manage freight forwarding bookings.",
+    "containers": "Track container movements and status.",
+    "demurrage": "Monitor charges and rate cards for demurrage.",
+    "detention": "Monitor charges and rate cards for detention.",
+    "warehouse": "Manage warehouse inventory items.",
+    "fleet": "Manage vehicles and transport assets.",
+    "finance": "Manage invoices and billing.",
+    "expenses": "Track and approve company expenses.",
+    "exchangeRates": "Maintain currency exchange rates.",
+    "workflows": "Configure multi-step approval chains.",
+    "hr": "Manage employees, departments and attendance.",
+    "accounting": "Manage accounts and journal entries.",
+    "documents": "Store and organize company documents.",
+    "reports": "View operational and financial reports.",
+    "analytics": "Explore trends and performance metrics.",
+    "aiAssistant": "Ask questions about your operational data.",
+    "emailParser": "Extract structured data from emails.",
+    "users": "Manage staff accounts and access.",
+    "branches": "Manage company branches and performance.",
+    "auditLog": "Review a history of account changes.",
+    "loginHistory": "Review recent sign-in activity.",
+    "companySettings": "Configure company profile and branding.",
+    "subscriptionBilling": "Manage your subscription and billing.",
+    "backupRestore": "Back up or restore company data."
+  }
 }

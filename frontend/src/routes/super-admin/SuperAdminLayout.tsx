@@ -7,11 +7,11 @@ import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import WebIcon from '@mui/icons-material/Web';
 import { Outlet } from 'react-router-dom';
-import { DashboardShell, type ShellNavGroup } from '../../components/layout/DashboardShell';
+import { AppShell, type AppShellNavGroup } from '../../components/layout/AppShell';
 
 const iconProps = { fontSize: 'small' } as const;
 
-const PLATFORM_NAV_GROUPS: ShellNavGroup[] = [
+const PLATFORM_NAV_GROUPS: AppShellNavGroup[] = [
   {
     label: 'Platform',
     icon: <DomainIcon {...iconProps} />,
@@ -35,8 +35,15 @@ const PLATFORM_NAV_GROUPS: ShellNavGroup[] = [
 
 export function SuperAdminLayout() {
   return (
-    <DashboardShell title="Platform Admin" navItems={PLATFORM_NAV_GROUPS}>
+    <AppShell
+      title="Platform Admin"
+      navGroups={PLATFORM_NAV_GROUPS}
+      homePath="/platform/tenants"
+      showCommandPalette={false}
+      showNotifications={false}
+      showCompanyBranding={false}
+    >
       <Outlet />
-    </DashboardShell>
+    </AppShell>
   );
 }

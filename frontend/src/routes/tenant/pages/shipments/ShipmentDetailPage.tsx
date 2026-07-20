@@ -46,6 +46,7 @@ import type { TrackingEventType } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { SignaturePad } from '../../../../components/common/SignaturePad';
 import { StatWidgetCard } from '../../../../components/common/StatWidgetCard';
+import { StatusChip } from '../../../../components/common/StatusChip';
 import { TrackingQrCode } from '../../../../components/common/TrackingQrCode';
 import { useAuthStore } from '../../../../hooks/useAuth';
 import { useToast } from '../../../../hooks/useToast';
@@ -53,15 +54,6 @@ import { formatCurrency } from '../../../../utils/currency';
 
 // Validated categorical slots from the design system's reference palette (dataviz skill).
 const CATEGORY_COLORS = ['#2a78d6', '#008300', '#e87ba4', '#eda100', '#1baf7a', '#eb6834', '#4a3aa7', '#e34948'];
-
-const STATUS_COLOR: Record<string, 'default' | 'info' | 'warning' | 'success' | 'error'> = {
-  booked: 'default',
-  in_transit: 'warning',
-  arrived: 'info',
-  cleared: 'success',
-  delivered: 'success',
-  cancelled: 'error',
-};
 
 const DELAY_RISK_COLOR: Record<'low' | 'medium' | 'high', 'success' | 'warning' | 'error'> = {
   low: 'success',
@@ -107,6 +99,8 @@ function toLocalDateTimeInputValue(date: Date): string {
 export function ShipmentDetailPage() {
   const { t } = useTranslation('shipments');
   const { t: tc } = useTranslation('common');
+  const { t: tf } = useTranslation('finance');
+  const { t: tex } = useTranslation('expenses');
   const { id } = useParams<{ id: string }>();
   const shipmentId = Number(id);
   const navigate = useNavigate();
@@ -214,7 +208,7 @@ export function ShipmentDetailPage() {
         <Typography variant="h5" fontWeight={700}>
           {shipment.shipment_number}
         </Typography>
-        <Chip label={t(`statuses.${shipment.status}`)} size="small" color={STATUS_COLOR[shipment.status]} />
+        <StatusChip status={shipment.status} label={t(`statuses.${shipment.status}`)} />
         {shipment.is_at_risk && <Chip label={t('riskBadge.atRisk')} size="small" color="error" variant="outlined" />}
         {delayRisk && delayRisk.risk_level !== 'insufficient_data' && (
           <Chip
@@ -341,7 +335,7 @@ export function ShipmentDetailPage() {
                           <TableRow key={invoice.id}>
                             <TableCell>{invoice.invoice_number ?? '—'}</TableCell>
                             <TableCell>
-                              <Chip label={invoice.status} size="small" />
+                              <StatusChip status={invoice.status} label={tf(`statuses.${invoice.status}`)} />
                             </TableCell>
                             <TableCell align="right">{formatCurrency(invoice.total_amount, invoice.currency)}</TableCell>
                           </TableRow>
@@ -371,7 +365,7 @@ export function ShipmentDetailPage() {
                           <TableRow key={expense.id}>
                             <TableCell>{expense.description}</TableCell>
                             <TableCell>
-                              <Chip label={expense.status} size="small" />
+                              <StatusChip status={expense.status} label={tex(`statuses.${expense.status}`)} />
                             </TableCell>
                             <TableCell align="right">{formatCurrency(expense.amount, expense.currency)}</TableCell>
                           </TableRow>

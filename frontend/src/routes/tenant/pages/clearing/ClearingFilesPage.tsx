@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Button,
-  Chip,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -42,18 +41,9 @@ import { fetchCustomers } from '../../../../api/endpoints/crm';
 import type { ClearingFile } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
+import { StatusChip } from '../../../../components/common/StatusChip';
 import { TrackingQrCode } from '../../../../components/common/TrackingQrCode';
 import { useToast } from '../../../../hooks/useToast';
-
-const STATUS_COLOR: Record<ClearingFile['status'], 'default' | 'info' | 'warning' | 'success' | 'error'> = {
-  pending: 'default',
-  documents_received: 'info',
-  under_clearance: 'warning',
-  customs_hold: 'error',
-  cleared: 'success',
-  delivered: 'success',
-  cancelled: 'error',
-};
 
 const STATUS_OPTIONS: ClearingFile['status'][] = [
   'pending',
@@ -64,13 +54,6 @@ const STATUS_OPTIONS: ClearingFile['status'][] = [
   'delivered',
   'cancelled',
 ];
-
-const ASSESSMENT_STATUS_COLOR: Record<ClearingFile['assessment_status'], 'default' | 'info' | 'warning' | 'success'> = {
-  pending: 'default',
-  assessed: 'info',
-  objected: 'warning',
-  released: 'success',
-};
 
 const ASSESSMENT_STATUS_OPTIONS: ClearingFile['assessment_status'][] = ['pending', 'assessed', 'objected', 'released'];
 
@@ -249,7 +232,7 @@ export function ClearingFilesPage() {
                         onChange={(e) =>
                           statusMutation.mutate({ id: file.id, status: e.target.value as ClearingFile['status'] })
                         }
-                        renderValue={(value) => <Chip label={t(`statuses.${value}`)} size="small" color={STATUS_COLOR[value as ClearingFile['status']]} />}
+                        renderValue={(value) => <StatusChip status={value as string} label={t(`statuses.${value}`)} />}
                       >
                         {STATUS_OPTIONS.map((status) => (
                           <MenuItem key={status} value={status}>
@@ -268,13 +251,7 @@ export function ClearingFilesPage() {
                             assessment_status: e.target.value as ClearingFile['assessment_status'],
                           })
                         }
-                        renderValue={(value) => (
-                          <Chip
-                            label={t(`assessmentStatuses.${value}`)}
-                            size="small"
-                            color={ASSESSMENT_STATUS_COLOR[value as ClearingFile['assessment_status']]}
-                          />
-                        )}
+                        renderValue={(value) => <StatusChip status={value as string} label={t(`assessmentStatuses.${value}`)} />}
                       >
                         {ASSESSMENT_STATUS_OPTIONS.map((status) => (
                           <MenuItem key={status} value={status}>

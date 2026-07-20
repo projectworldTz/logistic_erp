@@ -41,5 +41,13 @@
     "export": "Usafirishaji",
     "shipmentStatusBreakdown": "Mgawanyo wa Hali za Shehena",
     "noData": "Bado hakuna data."
+  },
+  "quickAccess": {
+    "sectionTitle": "Ufikiaji wa Haraka"
+  },
+  "recentActivity": {
+    "sectionTitle": "Shughuli za Hivi Karibuni",
+    "empty": "Bado hakuna shughuli za hivi karibuni.",
+    "viewAll": "Angalia zote"
   }
 }

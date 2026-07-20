@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Button,
-  Chip,
   CircularProgress,
   Checkbox,
   Dialog,
@@ -47,6 +46,7 @@ import { fetchShipments } from '../../../../api/endpoints/shipments';
 import type { Expense } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
+import { StatusChip } from '../../../../components/common/StatusChip';
 import { useToast } from '../../../../hooks/useToast';
 import { usePermission } from '../../../../hooks/usePermission';
 import { useAuthStore } from '../../../../hooks/useAuth';
@@ -55,14 +55,6 @@ import { useAuthStore } from '../../../../hooks/useAuth';
 // a new array every call, which useSyncExternalStore treats as "changed" and
 // loops forever re-rendering.
 const EMPTY_ROLES: string[] = [];
-
-const STATUS_COLOR: Record<Expense['status'], 'default' | 'info' | 'warning' | 'success' | 'error'> = {
-  draft: 'default',
-  submitted: 'info',
-  approved: 'warning',
-  rejected: 'error',
-  paid: 'success',
-};
 
 const CATEGORY_OPTIONS: Expense['category'][] = [
   'customs_duty',
@@ -293,7 +285,7 @@ export function ExpensesPage() {
                     <TableCell>
                       <Stack spacing={0.5}>
                         <Tooltip title={expense.status === 'rejected' ? expense.rejection_reason ?? '' : ''}>
-                          <Chip label={t(`statuses.${expense.status}`)} size="small" color={STATUS_COLOR[expense.status]} />
+                          <span><StatusChip status={expense.status} label={t(`statuses.${expense.status}`)} /></span>
                         </Tooltip>
                         {expense.status === 'submitted' && expense.approval_request?.status === 'pending' && expense.approval_request.total_steps && expense.approval_request.total_steps > 1 && (
                           <Typography variant="caption" color="text.secondary">

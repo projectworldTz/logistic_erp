@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Button,
-  Chip,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -34,16 +33,8 @@ import { fetchCustomers } from '../../../../api/endpoints/crm';
 import type { FreightBooking } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
+import { StatusChip } from '../../../../components/common/StatusChip';
 import { useToast } from '../../../../hooks/useToast';
-
-const STATUS_COLOR: Record<FreightBooking['status'], 'default' | 'info' | 'warning' | 'success' | 'error'> = {
-  booked: 'default',
-  cargo_received: 'info',
-  in_transit: 'warning',
-  arrived: 'info',
-  delivered: 'success',
-  cancelled: 'error',
-};
 
 const STATUS_OPTIONS: FreightBooking['status'][] = [
   'booked',
@@ -175,9 +166,7 @@ export function FreightBookingsPage() {
                         onChange={(e) =>
                           statusMutation.mutate({ id: booking.id, status: e.target.value as FreightBooking['status'] })
                         }
-                        renderValue={(value) => (
-                          <Chip label={t(`statuses.${value}`)} size="small" color={STATUS_COLOR[value as FreightBooking['status']]} />
-                        )}
+                        renderValue={(value) => <StatusChip status={value as string} label={t(`statuses.${value}`)} />}
                       >
                         {STATUS_OPTIONS.map((status) => (
                           <MenuItem key={status} value={status}>

@@ -43,5 +43,39 @@
   "language": "Lugha",
   "english": "Kiingereza",
   "kiswahili": "Kiswahili",
-  "openMenu": "Fungua menyu"
+  "openMenu": "Fungua menyu",
+  "closeMenu": "Funga menyu",
+  "breadcrumbs": {
+    "details": "Maelezo"
+  },
+  "descriptions": {
+    "crm": "Simamia fursa na uhusiano na wateja.",
+    "quotations": "Andaa na tuma nukuu za bei.",
+    "shipments": "Fuatilia na simamia rekodi za shehena.",
+    "clearing": "Simamia mafaili ya uwakala wa forodha.",
+    "freight": "Simamia uwekaji wa usafirishaji wa mizigo.",
+    "containers": "Fuatilia mienendo na hali ya makontena.",
+    "demurrage": "Fuatilia ada na kadi za viwango vya ucheleweshaji.",
+    "detention": "Fuatilia ada na kadi za viwango vya kushikilia kontena.",
+    "warehouse": "Simamia bidhaa za ghala.",
+    "fleet": "Simamia magari na mali za usafirishaji.",
+    "finance": "Simamia ankara na malipo.",
+    "expenses": "Fuatilia na idhinisha matumizi ya kampuni.",
+    "exchangeRates": "Dumisha viwango vya ubadilishaji fedha.",
+    "workflows": "Sanidi mtiririko wa idhini wa hatua nyingi.",
+    "hr": "Simamia wafanyakazi, idara na mahudhurio.",
+    "accounting": "Simamia akaunti na kumbukumbu za jarida.",
+    "documents": "Hifadhi na panga nyaraka za kampuni.",
+    "reports": "Angalia ripoti za uendeshaji na fedha.",
+    "analytics": "Chunguza mienendo na vipimo vya utendaji.",
+    "aiAssistant": "Uliza maswali kuhusu data yako ya uendeshaji.",
+    "emailParser": "Toa data iliyopangwa kutoka kwa barua pepe.",
+    "users": "Simamia akaunti za wafanyakazi na ufikiaji.",
+    "branches": "Simamia matawi ya kampuni na utendaji wake.",
+    "auditLog": "Kagua historia ya mabadiliko ya akaunti.",
+    "loginHistory": "Kagua shughuli za hivi karibuni za kuingia.",
+    "companySettings": "Sanidi wasifu na chapa ya kampuni.",
+    "subscriptionBilling": "Simamia usajili na malipo yako.",
+    "backupRestore": "Hifadhi au rejesha data ya kampuni."
+  }
 }

@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Button,
-  Chip,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -39,16 +38,9 @@ import {
 import type { AttendanceRecord } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
+import { StatusChip } from '../../../../components/common/StatusChip';
 import { useToast } from '../../../../hooks/useToast';
 import { HrTabs } from './HrTabs';
-
-const STATUS_COLOR: Record<AttendanceRecord['status'], 'success' | 'error' | 'warning' | 'info' | 'default'> = {
-  present: 'success',
-  absent: 'error',
-  late: 'warning',
-  on_leave: 'info',
-  half_day: 'default',
-};
 
 const STATUS_OPTIONS: AttendanceRecord['status'][] = ['present', 'absent', 'late', 'on_leave', 'half_day'];
 
@@ -169,13 +161,7 @@ export function AttendancePage() {
                         onChange={(e) =>
                           statusMutation.mutate({ id: record.id, status: e.target.value as AttendanceRecord['status'] })
                         }
-                        renderValue={(value) => (
-                          <Chip
-                            label={t(`attendanceStatuses.${value}`)}
-                            size="small"
-                            color={STATUS_COLOR[value as AttendanceRecord['status']]}
-                          />
-                        )}
+                        renderValue={(value) => <StatusChip status={value as string} label={t(`attendanceStatuses.${value}`)} />}
                       >
                         {STATUS_OPTIONS.map((status) => (
                           <MenuItem key={status} value={status}>

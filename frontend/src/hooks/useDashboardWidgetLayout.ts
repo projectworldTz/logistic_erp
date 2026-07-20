@@ -18,19 +18,45 @@ interface WidgetLayout {
   hidden: DashboardWidgetKey[];
 }
 
-const DEFAULT_LAYOUT: WidgetLayout = {
-  order: [...DASHBOARD_WIDGET_KEYS],
-  hidden: [],
+/**
+ * A first-time (no saved preference yet) widget order per role, so each
+ * role's dashboard opens with the most relevant numbers up top instead of a
+ * one-size-fits-all order. Purely a starting point — moveWidget/toggleWidget
+ * below still let the user rearrange it, and that choice always wins once
+ * saved. Roles are the same Spatie role names already on `user.roles`.
+ */
+const ROLE_WIDGET_PRIORITY: Partial<Record<string, DashboardWidgetKey[]>> = {
+  'Clearing Officer': ['pending_customs', 'daily_shipments', 'active_containers'],
+  'Forwarding Officer': ['pending_customs', 'daily_shipments', 'active_containers'],
+  'Document Controller': ['pending_customs', 'daily_shipments', 'active_containers'],
+  'Warehouse Manager': ['warehouse_status', 'active_containers', 'daily_shipments'],
+  'Warehouse Staff': ['warehouse_status', 'active_containers', 'daily_shipments'],
+  Dispatcher: ['fleet_status', 'daily_shipments', 'active_containers'],
+  'Fleet Manager': ['fleet_status', 'daily_shipments'],
+  Driver: ['fleet_status', 'daily_shipments'],
+  'Finance Manager': ['revenue', 'outstanding_invoices', 'expenses'],
+  Accountant: ['revenue', 'outstanding_invoices', 'expenses'],
+  Auditor: ['outstanding_invoices', 'expenses', 'revenue'],
+  'Sales Manager': ['outstanding_invoices', 'daily_shipments', 'revenue'],
+  'Customer Service': ['daily_shipments', 'outstanding_invoices'],
 };
+
+function defaultOrderForRoles(roles: string[]): DashboardWidgetKey[] {
+  const priority = roles.map((role) => ROLE_WIDGET_PRIORITY[role]).find((order) => order !== undefined);
+  if (!priority) return [...DASHBOARD_WIDGET_KEYS];
+
+  const rest = DASHBOARD_WIDGET_KEYS.filter((key) => !priority.includes(key));
+  return [...priority, ...rest];
+}
 
 function storageKey(userId: number | undefined): string {
   return `dashboard-widget-layout:${userId ?? 'anon'}`;
 }
 
-function loadLayout(userId: number | undefined): WidgetLayout {
+function loadLayout(userId: number | undefined, roles: string[]): WidgetLayout {
   try {
     const raw = localStorage.getItem(storageKey(userId));
-    if (!raw) return DEFAULT_LAYOUT;
+    if (!raw) return { order: defaultOrderForRoles(roles), hidden: [] };
     const parsed = JSON.parse(raw) as WidgetLayout;
 
     // fold in any widget key introduced after the layout was first saved
@@ -40,7 +66,7 @@ function loadLayout(userId: number | undefined): WidgetLayout {
 
     return { order: [...parsed.order, ...missing], hidden: parsed.hidden ?? [] };
   } catch {
-    return DEFAULT_LAYOUT;
+    return { order: defaultOrderForRoles(roles), hidden: [] };
   }
 }
 
@@ -49,11 +75,12 @@ function loadLayout(userId: number | undefined): WidgetLayout {
  * a personal display preference, not tenant-wide configuration, so every
  * user customizes their own view without affecting anyone else's.
  */
-export function useDashboardWidgetLayout(userId: number | undefined) {
-  const [layout, setLayout] = useState<WidgetLayout>(() => loadLayout(userId));
+export function useDashboardWidgetLayout(userId: number | undefined, roles: string[] = []) {
+  const [layout, setLayout] = useState<WidgetLayout>(() => loadLayout(userId, roles));
 
   useEffect(() => {
-    setLayout(loadLayout(userId));
+    setLayout(loadLayout(userId, roles));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   const save = (next: WidgetLayout) => {

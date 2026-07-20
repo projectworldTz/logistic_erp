@@ -35,16 +35,8 @@ import { fetchCustomers } from '../../../../api/endpoints/crm';
 import type { Container } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
+import { StatusChip } from '../../../../components/common/StatusChip';
 import { useToast } from '../../../../hooks/useToast';
-
-const STATUS_COLOR: Record<Container['status'], 'default' | 'info' | 'warning' | 'success' | 'error'> = {
-  at_port: 'default',
-  in_transit: 'warning',
-  at_warehouse: 'info',
-  delivered: 'success',
-  returned: 'success',
-  empty_return: 'error',
-};
 
 const STATUS_OPTIONS: Container['status'][] = [
   'at_port',
@@ -243,13 +235,7 @@ export function ContainersPage() {
                         onChange={(e) =>
                           statusMutation.mutate({ id: container.id, status: e.target.value as Container['status'] })
                         }
-                        renderValue={(value) => (
-                          <Chip
-                            label={t(`statuses.${value}`)}
-                            size="small"
-                            color={STATUS_COLOR[value as Container['status']]}
-                          />
-                        )}
+                        renderValue={(value) => <StatusChip status={value as string} label={t(`statuses.${value}`)} />}
                       >
                         {STATUS_OPTIONS.map((status) => (
                           <MenuItem key={status} value={status}>

@@ -48,7 +48,41 @@ export function AppThemeProvider({ children }: { children: ReactNode }) {
             },
           }),
         },
-        shape: { borderRadius: 8 },
+        shape: { borderRadius: 12 },
+        typography: {
+          fontFamily:
+            '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        },
+        components: {
+          MuiButton: {
+            styleOverrides: {
+              root: { textTransform: 'none', fontWeight: 600, borderRadius: 10 },
+            },
+          },
+          MuiCard: {
+            defaultProps: { elevation: 0 },
+            styleOverrides: {
+              root: ({ theme: t }) => ({
+                borderRadius: 16,
+                border: `1px solid ${t.palette.divider}`,
+                boxShadow:
+                  t.palette.mode === 'dark'
+                    ? '0 1px 2px rgba(0,0,0,0.24), 0 8px 24px rgba(0,0,0,0.28)'
+                    : '0 1px 2px rgba(15,23,42,0.04), 0 8px 24px rgba(15,23,42,0.06)',
+              }),
+            },
+          },
+          MuiPaper: {
+            styleOverrides: {
+              rounded: { borderRadius: 16 },
+            },
+          },
+          MuiChip: {
+            styleOverrides: {
+              root: { borderRadius: 8, fontWeight: 600 },
+            },
+          },
+        },
       }),
     [mode],
   );

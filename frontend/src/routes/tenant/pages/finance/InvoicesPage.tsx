@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Button,
-  Chip,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -43,15 +42,8 @@ import { fetchBranches } from '../../../../api/endpoints/dashboard';
 import type { Invoice } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
+import { StatusChip } from '../../../../components/common/StatusChip';
 import { useToast } from '../../../../hooks/useToast';
-
-const STATUS_COLOR: Record<Invoice['status'], 'default' | 'info' | 'warning' | 'success' | 'error'> = {
-  draft: 'default',
-  sent: 'info',
-  paid: 'success',
-  overdue: 'error',
-  cancelled: 'error',
-};
 
 const STATUS_OPTIONS: Invoice['status'][] = ['draft', 'sent', 'paid', 'overdue', 'cancelled'];
 
@@ -203,9 +195,7 @@ export function InvoicesPage() {
                         onChange={(e) =>
                           statusMutation.mutate({ id: invoice.id, status: e.target.value as Invoice['status'] })
                         }
-                        renderValue={(value) => (
-                          <Chip label={t(`statuses.${value}`)} size="small" color={STATUS_COLOR[value as Invoice['status']]} />
-                        )}
+                        renderValue={(value) => <StatusChip status={value as string} label={t(`statuses.${value}`)} />}
                       >
                         {STATUS_OPTIONS.map((status) => (
                           <MenuItem key={status} value={status}>

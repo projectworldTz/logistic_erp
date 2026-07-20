@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Button,
-  Chip,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -50,6 +49,7 @@ import { fetchCustomers } from '../../../../api/endpoints/crm';
 import type { Quotation } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
+import { StatusChip } from '../../../../components/common/StatusChip';
 import { useAuthStore } from '../../../../hooks/useAuth';
 import { useToast } from '../../../../hooks/useToast';
 
@@ -57,14 +57,6 @@ import { useToast } from '../../../../hooks/useToast';
 // a new array every call, which useSyncExternalStore treats as "changed" and
 // loops forever re-rendering.
 const EMPTY_ROLES: string[] = [];
-
-const STATUS_COLOR: Record<Quotation['status'], 'default' | 'info' | 'warning' | 'success' | 'error'> = {
-  draft: 'default',
-  sent: 'info',
-  accepted: 'success',
-  rejected: 'error',
-  expired: 'warning',
-};
 
 const STATUS_OPTIONS: Quotation['status'][] = ['draft', 'sent', 'accepted', 'rejected', 'expired'];
 
@@ -321,13 +313,7 @@ export function QuotationsPage() {
                           onChange={(e) =>
                             statusMutation.mutate({ id: quotation.id, status: e.target.value as Quotation['status'] })
                           }
-                          renderValue={(value) => (
-                            <Chip
-                              label={t(`statuses.${value}`)}
-                              size="small"
-                              color={STATUS_COLOR[value as Quotation['status']]}
-                            />
-                          )}
+                          renderValue={(value) => <StatusChip status={value as string} label={t(`statuses.${value}`)} />}
                         >
                           {STATUS_OPTIONS.map((status) => (
                             <MenuItem key={status} value={status}>
