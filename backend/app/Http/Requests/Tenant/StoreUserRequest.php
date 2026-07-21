@@ -23,7 +23,8 @@ class StoreUserRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:50'],
             'branch_id' => ['nullable', Rule::exists('branches', 'id')->where('tenant_id', $tenantId)],
             'customer_id' => ['nullable', Rule::exists('customers', 'id')->where('tenant_id', $tenantId)],
-            'role' => ['required', Rule::exists('roles', 'name')->where('tenant_id', $tenantId)],
+            'roles' => ['required', 'array', 'min:1'],
+            'roles.*' => [Rule::exists('roles', 'name')->where('tenant_id', $tenantId)],
             'password' => ['required', 'string', 'min:8'],
         ];
     }

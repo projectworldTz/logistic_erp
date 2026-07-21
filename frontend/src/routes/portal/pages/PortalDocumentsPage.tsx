@@ -36,6 +36,7 @@ interface FormValues {
 
 export function PortalDocumentsPage() {
   const { t } = useTranslation('portal');
+  const { t: tc } = useTranslation('common');
   const { showToast } = useToast();
   const queryClient = useQueryClient();
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -43,6 +44,7 @@ export function PortalDocumentsPage() {
 
   const uploadMutation = useMutation({
     mutationFn: uploadPortalDocument,
+    onMutate: () => showToast(tc('toast.uploading'), 'info'),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['portal', 'documents'] });
       setDialogOpen(false);

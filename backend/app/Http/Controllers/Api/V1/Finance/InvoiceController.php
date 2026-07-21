@@ -10,6 +10,7 @@ use App\Http\Resources\InvoiceResource;
 use App\Models\Company;
 use App\Models\Invoice;
 use App\Services\Tracking\ShipmentTrackingQrService;
+use App\Support\Pdf\BrandColors;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -75,6 +76,7 @@ class InvoiceController extends Controller
             'logoBase64' => $logoBase64,
             'isReceipt' => $invoice->status === InvoiceStatus::Paid,
             'trackingQrDataUri' => $trackingQrDataUri,
+            'brand' => BrandColors::forCompany($company->primary_color),
         ]);
 
         $prefix = $invoice->status === InvoiceStatus::Paid ? 'receipt' : 'invoice';

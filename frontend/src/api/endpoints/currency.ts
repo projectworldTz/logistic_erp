@@ -31,6 +31,7 @@ export async function deleteExchangeRate(id: number): Promise<void> {
 }
 
 export async function convertCurrency(payload: { amount: number; from: string; to: string; date?: string }): Promise<ConvertCurrencyResult> {
-  const { data } = await api.post<ConvertCurrencyResult>('/finance/exchange-rates/convert', payload);
+  // Failures are shown inline next to the converter, not as a toast.
+  const { data } = await api.post<ConvertCurrencyResult>('/finance/exchange-rates/convert', payload, { skipErrorToast: true });
   return data;
 }

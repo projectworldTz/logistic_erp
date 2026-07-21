@@ -44,7 +44,12 @@
     "clearedDate": "Cleared Date",
     "deliveryNoteTitle": "Delivery Note Verification",
     "destination": "Destination",
-    "deliveredAt": "Delivered At"
+    "deliveredAt": "Delivered At",
+    "payslipTitle": "Payslip Verification",
+    "payslipNumber": "Payslip Number",
+    "employee": "Employee",
+    "period": "Pay Period",
+    "netPay": "Net Pay"
   },
   "eventTypes": {
     "booked": "Booked",

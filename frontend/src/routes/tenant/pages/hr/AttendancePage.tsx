@@ -23,8 +23,9 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
@@ -33,6 +34,7 @@ import {
   deleteAttendanceRecord,
   fetchAttendanceRecords,
   fetchEmployees,
+  importAttendanceCsv,
   updateAttendanceRecord,
 } from '../../../../api/endpoints/hr';
 import type { AttendanceRecord } from '../../../../types';
@@ -62,6 +64,7 @@ export function AttendancePage() {
   const schema = buildSchema(t);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [pendingDelete, setPendingDelete] = useState<AttendanceRecord | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data, isLoading } = useQuery({ queryKey: ['hr', 'attendance'], queryFn: () => fetchAttendanceRecords() });
   const { data: employees } = useQuery({ queryKey: ['hr', 'employees'], queryFn: () => fetchEmployees() });
@@ -94,6 +97,14 @@ export function AttendancePage() {
     },
   });
 
+  const importMutation = useMutation({
+    mutationFn: importAttendanceCsv,
+    onSuccess: (result) => {
+      invalidate();
+      showToast(t('toast.attendanceImported', { count: result.created }));
+    },
+  });
+
   const {
     register,
     control,
@@ -119,16 +130,32 @@ export function AttendancePage() {
 
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography variant="h6">{t('attendance.title')}</Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => {
-            reset({ status: 'present', date: new Date().toISOString().slice(0, 10) });
-            setDialogOpen(true);
-          }}
-        >
-          {t('attendance.newRecord')}
-        </Button>
+        <Stack direction="row" spacing={1}>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".csv"
+            hidden
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) importMutation.mutate(file);
+              e.target.value = '';
+            }}
+          />
+          <Button variant="outlined" startIcon={<UploadFileIcon />} onClick={() => fileInputRef.current?.click()}>
+            {t('attendance.importCsv')}
+          </Button>
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={() => {
+              reset({ status: 'present', date: new Date().toISOString().slice(0, 10) });
+              setDialogOpen(true);
+            }}
+          >
+            {t('attendance.newRecord')}
+          </Button>
+        </Stack>
       </Stack>
 
       {isLoading && <CircularProgress />}

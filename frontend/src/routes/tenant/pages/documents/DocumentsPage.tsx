@@ -102,6 +102,7 @@ export function DocumentsPage() {
 
   const uploadMutation = useMutation({
     mutationFn: uploadDocument,
+    onMutate: () => showToast(tc('toast.uploading'), 'info'),
     onSuccess: () => {
       invalidateDocuments();
       setDialogOpen(false);

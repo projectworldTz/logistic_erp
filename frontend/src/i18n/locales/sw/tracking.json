@@ -44,7 +44,12 @@
     "clearedDate": "Tarehe ya Kupitishwa",
     "deliveryNoteTitle": "Uthibitisho wa Ankara ya Uwasilishaji",
     "destination": "Kwenda",
-    "deliveredAt": "Ilikabidhiwa"
+    "deliveredAt": "Ilikabidhiwa",
+    "payslipTitle": "Uthibitisho wa Slipu ya Mshahara",
+    "payslipNumber": "Namba ya Slipu ya Mshahara",
+    "employee": "Mfanyakazi",
+    "period": "Kipindi cha Malipo",
+    "netPay": "Malipo Halisi"
   },
   "eventTypes": {
     "booked": "Imehifadhiwa",

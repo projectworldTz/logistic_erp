@@ -45,9 +45,14 @@ export async function fetchDemurrageCharges(page = 1): Promise<Paginated<Demurra
   return data;
 }
 
-export async function calculateDemurrageCharge(containerId: number): Promise<DemurrageCharge> {
-  const { data } = await api.post<{ data: DemurrageCharge }>(`/containers/items/${containerId}/demurrage/calculate`);
-  return data.data;
+export interface DemurrageCalculateResult {
+  data: DemurrageCharge | null;
+  reason?: 'within_free_days' | 'no_new_charge';
+}
+
+export async function calculateDemurrageCharge(containerId: number): Promise<DemurrageCalculateResult> {
+  const { data } = await api.post<DemurrageCalculateResult>(`/containers/items/${containerId}/demurrage/calculate`);
+  return data;
 }
 
 export async function waiveDemurrageCharge(chargeId: number, reason: string): Promise<DemurrageCharge> {

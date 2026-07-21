@@ -36,7 +36,27 @@ class DetentionChargeController extends Controller
 
     public function calculate(Container $container)
     {
-        $result = $this->calculator->calculate($container);
+        // Every prior charge (pending, invoiced, or waived) permanently
+        // claims its chargeable days — once a day has been captured in a
+        // charge, it is never billed again. Passing this sum in as the
+        // "already charged" baseline is what makes a repeat calculation
+        // price only the newly-accrued days instead of duplicating the
+        // whole detention period into a brand new charge every time.
+        $alreadyChargedDays = (int) DetentionCharge::query()->where('container_id', $container->id)->sum('chargeable_days');
+
+        $result = $this->calculator->calculate($container, alreadyChargedDays: $alreadyChargedDays);
+
+        if ($result['chargeable_days'] <= 0) {
+            $reason = $result['total_chargeable_days'] <= 0 ? 'within_free_days' : 'no_new_charge';
+
+            return response()->json([
+                'data' => null,
+                'reason' => $reason,
+                'message' => $reason === 'within_free_days'
+                    ? 'This container is still within its free days — no detention charge applies yet.'
+                    : 'No new detention charge — every chargeable day up to today has already been calculated.',
+            ]);
+        }
 
         $charge = DetentionCharge::query()->create([
             'container_id' => $container->id,

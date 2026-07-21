@@ -39,12 +39,12 @@ class UserController extends Controller
         ]);
 
         app(PermissionRegistrar::class)->setPermissionsTeamId(app(TenantContext::class)->id());
-        $user->assignRole($data['role']);
+        $user->assignRole($data['roles']);
 
         $this->auditLogger->log(
             action: 'user.invited',
             auditable: $user,
-            newValues: ['email' => $user->email, 'role' => $data['role']],
+            newValues: ['email' => $user->email, 'roles' => $data['roles']],
         );
 
         return new UserResource($user->load('branch'));
@@ -54,15 +54,15 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        if (isset($data['role']) && $user->id === $request->user()->id) {
-            abort(422, 'You cannot change your own role.');
+        if (isset($data['roles']) && $user->id === $request->user()->id) {
+            abort(422, 'You cannot change your own roles.');
         }
 
-        $user->update(collect($data)->except('role')->toArray());
+        $user->update(collect($data)->except('roles')->toArray());
 
-        if (isset($data['role'])) {
+        if (isset($data['roles'])) {
             app(PermissionRegistrar::class)->setPermissionsTeamId(app(TenantContext::class)->id());
-            $user->syncRoles([$data['role']]);
+            $user->syncRoles($data['roles']);
         }
 
         $this->auditLogger->log(

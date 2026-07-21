@@ -1,3 +1,4 @@
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ChatIcon from '@mui/icons-material/Chat';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -25,6 +26,7 @@ export function PortalLayout() {
         { label: t('nav.documents'), path: '/portal/documents', enabled: true, icon: <DescriptionIcon {...iconProps} /> },
         { label: t('nav.messages'), path: '/portal/messages', enabled: true, icon: <ChatIcon {...iconProps} /> },
         { label: t('nav.apiKeys'), path: '/portal/api-keys', enabled: true, icon: <VpnKeyIcon {...iconProps} /> },
+        { label: t('nav.account'), path: '/portal/account', enabled: true, icon: <AccountCircleIcon {...iconProps} /> },
       ],
     },
   ];

@@ -26,3 +26,16 @@ export async function fetchDeliveryNoteVerification(trackingCode: string): Promi
   const { data } = await api.get<{ data: DeliveryNoteVerification }>(`/public/verify/delivery-note/${trackingCode}`);
   return data.data;
 }
+
+export interface PayslipVerification {
+  payslip_number: string | null;
+  employee_name: string | null;
+  period_name: string | null;
+  net_pay: string;
+  generated_at: string;
+}
+
+export async function fetchPayslipVerification(code: string): Promise<PayslipVerification> {
+  const { data } = await api.get<{ data: PayslipVerification }>(`/public/verify/payslip/${code}`);
+  return data.data;
+}

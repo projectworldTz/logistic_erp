@@ -138,12 +138,71 @@ class DemurrageTest extends TestCase
         $response = $this->withHeader('Authorization', "Bearer {$token}")
             ->postJson("/api/v1/containers/items/{$containerId}/demurrage/calculate");
 
-        $response->assertCreated();
-        $data = $response->json('data');
+        // Still within free days — no charge row should be created at all,
+        // just a clear "nothing to charge yet" response.
+        $response->assertOk();
+        $this->assertNull($response->json('data'));
+        $this->assertEquals('within_free_days', $response->json('reason'));
+        $this->assertDatabaseCount('demurrage_charges', 0);
+    }
 
-        $this->assertEquals(2, $data['dwell_days']);
-        $this->assertEquals(0, $data['chargeable_days']);
-        $this->assertEquals(0, $data['amount']);
+    public function test_recalculating_with_no_new_dwell_time_does_not_duplicate_the_charge(): void
+    {
+        $registration = $this->registerTenant();
+        $token = $registration['token'];
+        $customerId = $this->createCustomer($token);
+        $this->createRateCard($token);
+
+        $containerId = $this->createContainer($token, $customerId, [
+            'gate_in_date' => now()->subDays(12)->toDateString(),
+        ]);
+
+        $first = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson("/api/v1/containers/items/{$containerId}/demurrage/calculate");
+        $first->assertCreated();
+        $this->assertEquals(320, $first->json('data.amount'));
+
+        // Same container, same day, no new dwell time — calculating again
+        // must NOT create a second charge for the same days.
+        $second = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson("/api/v1/containers/items/{$containerId}/demurrage/calculate");
+
+        $second->assertOk();
+        $this->assertNull($second->json('data'));
+        $this->assertEquals('no_new_charge', $second->json('reason'));
+        $this->assertDatabaseCount('demurrage_charges', 1);
+    }
+
+    public function test_recalculating_after_more_dwell_time_charges_only_the_incremental_days(): void
+    {
+        $registration = $this->registerTenant();
+        $token = $registration['token'];
+        $customerId = $this->createCustomer($token);
+        $this->createRateCard($token);
+
+        // 7 chargeable days so far (12 dwell - 5 free): 5 x $40 + 2 x $60 = 320.
+        $containerId = $this->createContainer($token, $customerId, [
+            'gate_in_date' => now()->subDays(12)->toDateString(),
+        ]);
+
+        $first = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson("/api/v1/containers/items/{$containerId}/demurrage/calculate");
+        $first->assertCreated();
+        $this->assertEquals(7, $first->json('data.chargeable_days'));
+        $this->assertEquals(320, $first->json('data.amount'));
+
+        // 3 more days pass (now 15 days dwell = 10 chargeable days total).
+        $this->travel(3)->days();
+
+        $second = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson("/api/v1/containers/items/{$containerId}/demurrage/calculate");
+        $second->assertCreated();
+        // Only the 3 new days are billed, at tier 2's $60/day rate — not the
+        // full 10-day total recalculated from scratch.
+        $this->assertEquals(3, $second->json('data.chargeable_days'));
+        $this->assertEquals(180, $second->json('data.amount'));
+
+        $this->assertDatabaseCount('demurrage_charges', 2);
     }
 
     public function test_dashboard_lists_only_containers_still_at_port_sorted_by_accrued_amount(): void

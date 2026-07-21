@@ -45,9 +45,14 @@ export async function fetchDetentionCharges(page = 1): Promise<Paginated<Detenti
   return data;
 }
 
-export async function calculateDetentionCharge(containerId: number): Promise<DetentionCharge> {
-  const { data } = await api.post<{ data: DetentionCharge }>(`/containers/items/${containerId}/detention/calculate`);
-  return data.data;
+export interface DetentionCalculateResult {
+  data: DetentionCharge | null;
+  reason?: 'within_free_days' | 'no_new_charge';
+}
+
+export async function calculateDetentionCharge(containerId: number): Promise<DetentionCalculateResult> {
+  const { data } = await api.post<DetentionCalculateResult>(`/containers/items/${containerId}/detention/calculate`);
+  return data;
 }
 
 export async function waiveDetentionCharge(chargeId: number, reason: string): Promise<DetentionCharge> {

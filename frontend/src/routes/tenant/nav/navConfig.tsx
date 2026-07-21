@@ -94,6 +94,7 @@ export const TENANT_NAV_GROUPS: NavGroup[] = [
     icon: <GroupsIcon {...iconProps} />,
     items: [
       { labelKey: 'hr', path: '/app/hr', enabled: true, permission: 'hr.employees.view', icon: <BadgeIcon {...iconProps} /> },
+      { labelKey: 'myHr', path: '/app/my-hr', enabled: true, icon: <BadgeIcon {...iconProps} /> },
       { labelKey: 'users', path: '/app/users', enabled: true, permission: 'core.users.view', icon: <ManageAccountsIcon {...iconProps} /> },
     ],
   },

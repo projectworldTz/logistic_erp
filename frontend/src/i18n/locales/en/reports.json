@@ -45,7 +45,10 @@
       "shipments": "Shipments",
       "invoices": "Invoices",
       "expenses": "Expenses",
-      "profit": "Shipment Profit"
+      "profit": "Shipment Profit",
+      "employees": "Employees",
+      "payslips": "Payslips",
+      "leaveRequests": "Leave Requests"
     }
   },
   "import": {

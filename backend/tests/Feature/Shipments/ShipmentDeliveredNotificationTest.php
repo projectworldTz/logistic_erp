@@ -97,7 +97,7 @@ class ShipmentDeliveredNotificationTest extends TestCase
                 'name' => 'Portal User',
                 'email' => 'portal@shipperco.test',
                 'customer_id' => $customerId,
-                'role' => 'Customer Portal User',
+                'roles' => ['Customer Portal User'],
                 'password' => 'PortalPass123',
             ])->json('data');
 

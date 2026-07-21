@@ -27,13 +27,19 @@ export interface ResetPasswordPayload {
   password_confirmation: string;
 }
 
+export interface ChangePasswordPayload {
+  current_password: string;
+  password: string;
+  password_confirmation: string;
+}
+
 export async function login(payload: LoginPayload): Promise<LoginResult> {
-  const { data } = await api.post<LoginResult>('/auth/login', payload);
+  const { data } = await api.post<LoginResult>('/auth/login', payload, { skipErrorToast: true });
   return data;
 }
 
 export async function verifyTwoFactor(payload: TwoFactorVerifyPayload): Promise<AuthResponse> {
-  const { data } = await api.post<AuthResponse>('/auth/2fa/verify', payload);
+  const { data } = await api.post<AuthResponse>('/auth/2fa/verify', payload, { skipErrorToast: true });
   return data;
 }
 
@@ -58,7 +64,14 @@ export async function forgotPassword(payload: ForgotPasswordPayload): Promise<{ 
 }
 
 export async function resetPassword(payload: ResetPasswordPayload): Promise<{ message: string }> {
-  const { data } = await api.post<{ message: string }>('/auth/reset-password', payload);
+  const { data } = await api.post<{ message: string }>('/auth/reset-password', payload, { skipErrorToast: true });
+  return data;
+}
+
+export async function changePassword(payload: ChangePasswordPayload): Promise<{ message: string }> {
+  // Incorrect-current-password / confirmation-mismatch errors are shown
+  // inline on the form, not as a toast.
+  const { data } = await api.put<{ message: string }>('/auth/password', payload, { skipErrorToast: true });
   return data;
 }
 

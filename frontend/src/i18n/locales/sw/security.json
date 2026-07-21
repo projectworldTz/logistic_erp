@@ -1,5 +1,18 @@
 {
   "title": "Usalama wa Akaunti",
+  "changePassword": {
+    "title": "Badilisha nenosiri",
+    "description": "Chagua nenosiri imara ambalo hulitumii mahali pengine.",
+    "currentPassword": "Nenosiri la sasa",
+    "newPassword": "Nenosiri jipya",
+    "confirmPassword": "Thibitisha nenosiri jipya",
+    "submit": "Badilisha nenosiri",
+    "submitting": "Inabadilisha…",
+    "success": "Nenosiri limebadilishwa.",
+    "incorrectCurrentPassword": "Nenosiri la sasa si sahihi.",
+    "passwordsDontMatch": "Manenosiri hayafanani.",
+    "minLength": "Lazima liwe na herufi angalau 8."
+  },
   "twoFactor": {
     "title": "Uthibitishaji wa hatua mbili",
     "enabled": "Imewashwa",

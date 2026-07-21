@@ -39,7 +39,9 @@
     "yes": "Yes",
     "no": "No",
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "none": "None",
+    "default": "Default"
   },
   "validation": {
     "required": "This field is required.",
@@ -55,7 +57,11 @@
   "toast": {
     "created": "{{item}} created.",
     "updated": "{{item}} updated.",
-    "deleted": "{{item}} deleted."
+    "deleted": "{{item}} deleted.",
+    "downloading": "Downloading…",
+    "downloaded": "Download complete.",
+    "uploading": "Uploading…",
+    "uploaded": "Upload complete."
   },
   "notifications": {
     "title": "Notifications",
@@ -83,7 +89,10 @@
     }
   },
   "errors": {
-    "serverError": "Something went wrong on our end. Reference: {{reference}} — please contact support with this code."
+    "serverError": "Something went wrong on our end. Reference: {{reference}} — please contact support with this code.",
+    "genericFailure": "Something went wrong. Please try again.",
+    "sessionExpired": "Your session has expired — please log in again.",
+    "networkError": "Couldn't reach the server. Check your connection and try again."
   },
   "commandPalette": {
     "tooltip": "Search or jump to… (Ctrl+K)",
@@ -135,6 +144,12 @@
     "returned": "Returned",
     "emptyReturn": "Empty Return",
     "present": "Present",
-    "absent": "Absent"
+    "absent": "Absent",
+    "pendingVerification": "Pending Verification",
+    "pendingApproval": "Pending Approval",
+    "probation": "Probation",
+    "terminated": "Terminated",
+    "suspended": "Suspended",
+    "renewed": "Renewed"
   }
 }

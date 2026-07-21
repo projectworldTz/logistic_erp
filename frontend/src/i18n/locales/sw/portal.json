@@ -7,7 +7,24 @@
     "documents": "Nyaraka",
     "messages": "Ujumbe",
     "apiKeys": "Funguo za API",
+    "account": "Akaunti",
     "logOut": "Toka"
+  },
+  "account": {
+    "title": "Akaunti"
+  },
+  "changePassword": {
+    "title": "Badilisha nenosiri",
+    "description": "Chagua nenosiri imara ambalo hulitumii mahali pengine.",
+    "currentPassword": "Nenosiri la sasa",
+    "newPassword": "Nenosiri jipya",
+    "confirmPassword": "Thibitisha nenosiri jipya",
+    "submit": "Badilisha nenosiri",
+    "submitting": "Inabadilisha…",
+    "success": "Nenosiri limebadilishwa.",
+    "incorrectCurrentPassword": "Nenosiri la sasa si sahihi.",
+    "passwordsDontMatch": "Manenosiri hayafanani.",
+    "minLength": "Lazima liwe na herufi angalau 8."
   },
   "dashboard": {
     "title": "Karibu tena",

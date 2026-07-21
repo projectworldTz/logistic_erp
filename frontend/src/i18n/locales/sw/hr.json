@@ -1,20 +1,51 @@
 {
   "title": "Rasilimali Watu",
   "tabs": {
+    "dashboard": "Dashibodi",
     "employees": "Wafanyakazi",
     "departments": "Idara",
-    "attendance": "Mahudhurio"
+    "designations": "Vyeo",
+    "contracts": "Mikataba",
+    "attendance": "Mahudhurio",
+    "shifts": "Zamu",
+    "leave": "Likizo",
+    "timesheets": "Muda wa Kazi",
+    "holidays": "Sikukuu",
+    "payrollComponents": "Vipengele vya Malipo",
+    "statutoryRules": "Kanuni za Kisheria",
+    "payrollSettings": "Mipangilio ya Malipo",
+    "payrollPeriods": "Vipindi vya Malipo",
+    "loansAdvances": "Mikopo na Malipo ya Awali",
+    "overtimeRequests": "Muda wa Ziada",
+    "payslips": "Slipu za Mshahara",
+    "performanceReviews": "Utendaji",
+    "disciplinary": "Nidhamu",
+    "assets": "Mali",
+    "exits": "Kuondoka",
+    "vacancies": "Nafasi za Kazi",
+    "candidates": "Waombaji",
+    "applications": "Maombi",
+    "onboarding": "Uanzishaji"
   },
   "statuses": {
     "active": "Hai",
     "on_leave": "Likizo",
-    "terminated": "Ameachishwa"
+    "terminated": "Ameachishwa",
+    "probation": "Majaribioni",
+    "suspended": "Amesimamishwa"
   },
   "employmentTypes": {
     "full_time": "Muda Kamili",
     "part_time": "Muda Sehemu",
     "contract": "Mkataba",
-    "intern": "Mwanafunzi wa Mafunzo"
+    "intern": "Mwanafunzi wa Mafunzo",
+    "permanent": "Ajira ya Kudumu",
+    "temporary": "Ajira ya Muda",
+    "casual": "Ibrari",
+    "consultant": "Mshauri",
+    "driver": "Dereva",
+    "commission_based": "Kwa Kamisheni",
+    "daily_paid": "Kulipwa Kila Siku"
   },
   "attendanceStatuses": {
     "present": "Yupo",
@@ -23,12 +54,229 @@
     "on_leave": "Likizo",
     "half_day": "Nusu Siku"
   },
+  "designationCategories": {
+    "management": "Uongozi",
+    "clearing_and_customs": "Uwakala wa Forodha",
+    "forwarding_and_logistics": "Usafirishaji wa Mizigo",
+    "transport_and_fleet": "Usafiri na Magari",
+    "warehouse_and_cargo": "Ghala na Mizigo",
+    "finance_and_accounts": "Fedha na Uhasibu",
+    "sales_and_crm": "Mauzo na Uhusiano na Wateja",
+    "administration_and_support": "Utawala na Msaada",
+    "other": "Nyingine"
+  },
+  "contractStatuses": {
+    "draft": "Rasimu",
+    "pending_approval": "Inasubiri Idhini",
+    "active": "Hai",
+    "expired": "Imeisha Muda",
+    "terminated": "Imesitishwa",
+    "renewed": "Imehuishwa"
+  },
+  "payFrequencies": {
+    "monthly": "Kila Mwezi",
+    "biweekly": "Kila Wiki Mbili",
+    "weekly": "Kila Wiki",
+    "daily": "Kila Siku",
+    "hourly": "Kwa Saa"
+  },
+  "paymentMethods": {
+    "bank_transfer": "Uhamisho wa Benki",
+    "mobile_money": "Pesa za Simu",
+    "cash": "Fedha Taslimu",
+    "cheque": "Hundi"
+  },
+  "documentTypes": {
+    "employment_contract": "Mkataba wa Ajira",
+    "national_id": "Kitambulisho cha Taifa",
+    "passport": "Pasipoti",
+    "academic_certificate": "Cheti cha Elimu",
+    "professional_certificate": "Cheti cha Kitaaluma",
+    "driving_license": "Leseni ya Udereva",
+    "work_permit": "Kibali cha Kazi",
+    "medical_certificate": "Cheti cha Afya",
+    "tax_document": "Hati ya Kodi",
+    "pension_registration": "Usajili wa Pensheni",
+    "bank_information": "Taarifa za Benki",
+    "warning_letter": "Barua ya Onyo",
+    "promotion_letter": "Barua ya Kupandishwa Cheo",
+    "training_certificate": "Cheti cha Mafunzo",
+    "other": "Nyingine"
+  },
+  "documentStatuses": {
+    "pending_verification": "Inasubiri Uthibitisho",
+    "verified": "Imethibitishwa",
+    "rejected": "Imekataliwa",
+    "valid": "Halali",
+    "expiring_soon": "Inakaribia Kuisha",
+    "expired": "Imeisha Muda"
+  },
+  "leaveRequestStatuses": {
+    "pending": "Inasubiri",
+    "approved": "Imeidhinishwa",
+    "rejected": "Imekataliwa",
+    "cancelled": "Imeghairiwa"
+  },
+  "timesheetStatuses": {
+    "pending": "Inasubiri",
+    "approved": "Imeidhinishwa",
+    "rejected": "Imekataliwa"
+  },
+  "payrollComponentTypes": {
+    "earning": "Mapato",
+    "deduction": "Makato",
+    "employer_contribution": "Mchango wa Mwajiri"
+  },
+  "payrollCalculationMethods": {
+    "fixed": "Kiasi Maalum",
+    "percentage": "Asilimia",
+    "formula": "Fomula (jaza mwenyewe)"
+  },
+  "payrollPercentageBases": {
+    "basic_salary": "Mshahara wa Msingi",
+    "gross_pay": "Malipo Jumla"
+  },
+  "payrollRunStatuses": {
+    "draft": "Rasimu",
+    "calculated": "Imekokotolewa",
+    "pending_approval": "Inasubiri Idhini",
+    "approved": "Imeidhinishwa",
+    "rejected": "Imekataliwa",
+    "finalized": "Imekamilishwa"
+  },
+  "payrollRunEmployeeStatuses": {
+    "included": "Imejumuishwa",
+    "excluded": "Imetolewa",
+    "exception": "Tatizo"
+  },
+  "loanStatuses": {
+    "draft": "Rasimu",
+    "pending_approval": "Inasubiri Idhini",
+    "active": "Hai",
+    "completed": "Imekamilika",
+    "rejected": "Imekataliwa",
+    "cancelled": "Imeghairiwa"
+  },
+  "overtimeRequestStatuses": {
+    "pending": "Inasubiri",
+    "approved": "Imeidhinishwa",
+    "rejected": "Imekataliwa"
+  },
+  "salaryPaymentStatuses": {
+    "pending": "Inasubiri",
+    "paid": "Imelipwa",
+    "failed": "Imeshindwa"
+  },
+  "performanceReviewStatuses": {
+    "draft": "Rasimu",
+    "submitted": "Imewasilishwa",
+    "acknowledged": "Imethibitishwa"
+  },
+  "disciplinaryCategories": {
+    "attendance": "Mahudhurio",
+    "conduct": "Mwenendo",
+    "performance": "Utendaji",
+    "safety": "Usalama",
+    "policy_violation": "Ukiukaji wa Sera",
+    "other": "Nyingine"
+  },
+  "disciplinarySeverities": {
+    "verbal_warning": "Onyo la Maneno",
+    "written_warning": "Onyo la Maandishi",
+    "suspension": "Kusimamishwa",
+    "termination": "Kufukuzwa"
+  },
+  "disciplinaryStatuses": {
+    "draft": "Rasimu",
+    "issued": "Imetolewa",
+    "acknowledged": "Imethibitishwa",
+    "appealed": "Imekatiwa Rufaa",
+    "resolved": "Imetatuliwa"
+  },
+  "assetTypes": {
+    "laptop": "Kompyuta Mpakato",
+    "phone": "Simu",
+    "vehicle": "Gari",
+    "uniform": "Sare",
+    "tool": "Chombo",
+    "other": "Nyingine"
+  },
+  "assetStatuses": {
+    "assigned": "Imegawiwa",
+    "returned": "Imerejeshwa",
+    "lost": "Imepotea",
+    "damaged": "Imeharibika"
+  },
+  "exitTypes": {
+    "resignation": "Kujiuzulu",
+    "termination": "Kufukuzwa",
+    "retirement": "Kustaafu",
+    "end_of_contract": "Mwisho wa Mkataba",
+    "redundancy": "Kupunguzwa Kazi"
+  },
+  "exitStatuses": {
+    "initiated": "Imeanzishwa",
+    "in_progress": "Inaendelea",
+    "cleared": "Imesafishwa",
+    "completed": "Imekamilika"
+  },
+  "vacancyStatuses": {
+    "open": "Wazi",
+    "on_hold": "Imesitishwa Muda",
+    "filled": "Imejazwa",
+    "closed": "Imefungwa"
+  },
+  "applicationStatuses": {
+    "applied": "Ameomba",
+    "screening": "Uchunguzi",
+    "interview": "Mahojiano",
+    "offer": "Ofa",
+    "hired": "Ameajiriwa",
+    "rejected": "Amekataliwa",
+    "withdrawn": "Amejitoa"
+  },
+  "interviewModes": {
+    "in_person": "Ana kwa Ana",
+    "phone": "Simu",
+    "video": "Video"
+  },
+  "interviewStatuses": {
+    "scheduled": "Imepangwa",
+    "completed": "Imekamilika",
+    "cancelled": "Imeghairiwa",
+    "no_show": "Hakuhudhuria"
+  },
+  "onboardingStatuses": {
+    "in_progress": "Inaendelea",
+    "completed": "Imekamilika"
+  },
   "validation": {
     "nameRequired": "Jina linahitajika",
     "invalidEmail": "Weka barua pepe sahihi",
     "hireDateRequired": "Tarehe ya kuajiriwa inahitajika",
     "dateRequired": "Tarehe inahitajika",
-    "employeeRequired": "Chagua mfanyakazi"
+    "employeeRequired": "Chagua mfanyakazi",
+    "descriptionRequired": "Maelezo yanahitajika"
+  },
+  "dashboard": {
+    "title": "Muhtasari",
+    "stats": {
+      "headcount": "Idadi ya Wafanyakazi Hai",
+      "pendingLeave": "Maombi ya Likizo Yanayosubiri",
+      "pendingPayrollApprovals": "Uendeshaji wa Malipo Unaosubiri Idhini",
+      "openVacancies": "Nafasi za Kazi Wazi",
+      "expiringContracts": "Mikataba na Nyaraka Zinazokaribia Kuisha",
+      "outstandingLoans": "Salio la Mkopo Uliobaki",
+      "inProgressExits": "Kuondoka Kunakoendelea",
+      "candidatesInPipeline": "Waombaji Wanaoendelea"
+    },
+    "charts": {
+      "payrollTrend": "Mwenendo wa Gharama za Mishahara (miezi 6 iliyopita)",
+      "netPay": "Malipo Halisi",
+      "employerCost": "Gharama Jumla ya Mwajiri",
+      "headcountByDepartment": "Idadi ya Wafanyakazi kwa Idara",
+      "attendanceToday": "Mahudhurio Leo"
+    }
   },
   "departments": {
     "title": "Idara",
@@ -76,6 +324,7 @@
       "phone": "Simu (hiari)",
       "department": "Idara (hiari)",
       "branch": "Tawi (hiari)",
+      "designation": "Cheo (hiari)",
       "employmentType": "Aina ya Ajira",
       "hireDate": "Tarehe ya Kuajiriwa"
     },
@@ -84,16 +333,134 @@
       "message": "Una uhakika unataka kufuta {{name}}? Hatua hii haiwezi kutenduliwa."
     }
   },
+  "designations": {
+    "title": "Vyeo vya Kazi",
+    "newDesignation": "Cheo Kipya",
+    "empty": {
+      "title": "Bado hakuna vyeo",
+      "description": "Ongeza vyeo vya kazi ili wafanyakazi na mikataba viwe na majina thabiti."
+    },
+    "table": {
+      "name": "Jina",
+      "category": "Kundi",
+      "employees": "Wafanyakazi"
+    },
+    "form": {
+      "dialogTitle": "Cheo Kipya",
+      "name": "Jina",
+      "category": "Kundi",
+      "description": "Maelezo (hiari)"
+    },
+    "deleteDialog": {
+      "title": "Futa Cheo",
+      "message": "Una uhakika unataka kufuta {{name}}?"
+    }
+  },
+  "contracts": {
+    "title": "Mikataba ya Wafanyakazi",
+    "newContract": "Mkataba Mpya",
+    "submit": "Wasilisha kwa idhini",
+    "approve": "Idhinisha",
+    "reject": "Kataa",
+    "rejectReason": "Sababu ya kukataa",
+    "empty": {
+      "title": "Bado hakuna mikataba",
+      "description": "Unda mkataba ili kuweka masharti ya malipo na haki za mfanyakazi."
+    },
+    "table": {
+      "number": "Namba ya Mkataba",
+      "employee": "Mfanyakazi",
+      "employmentType": "Aina ya Ajira",
+      "basicSalary": "Mshahara wa Msingi",
+      "effectiveDate": "Tarehe ya Kuanza"
+    },
+    "form": {
+      "dialogTitle": "Mkataba Mpya",
+      "employee": "Mfanyakazi",
+      "employmentType": "Aina ya Ajira",
+      "effectiveDate": "Tarehe ya Kuanza",
+      "expiryDate": "Tarehe ya Kuisha (hiari)",
+      "basicSalary": "Mshahara wa Msingi",
+      "payFrequency": "Marudio ya Malipo"
+    },
+    "deleteDialog": {
+      "title": "Futa Mkataba",
+      "message": "Una uhakika unataka kufuta mkataba {{number}}?"
+    }
+  },
+  "employeeDetail": {
+    "backToList": "Rudi kwa Wafanyakazi",
+    "viewContracts": "Angalia Mikataba",
+    "tabs": {
+      "overview": "Muhtasari",
+      "documents": "Nyaraka",
+      "salary": "Mshahara"
+    },
+    "overview": {
+      "personalTitle": "Taarifa Binafsi",
+      "employmentTitle": "Taarifa za Ajira",
+      "statutoryTitle": "Taarifa za Kisheria",
+      "altPhone": "Simu Mbadala",
+      "gender": "Jinsia",
+      "dateOfBirth": "Tarehe ya Kuzaliwa",
+      "nationality": "Uraia",
+      "maritalStatus": "Hali ya Ndoa",
+      "address": "Anwani ya Makazi",
+      "emergencyContact": "Mawasiliano ya Dharura",
+      "designation": "Cheo",
+      "reportingManager": "Msimamizi",
+      "workLocation": "Mahali pa Kazi",
+      "hireDate": "Tarehe ya Kuajiriwa",
+      "confirmationDate": "Tarehe ya Uthibitisho",
+      "probationEnd": "Mwisho wa Majaribio",
+      "noticePeriod": "Kipindi cha Taarifa"
+    },
+    "documents": {
+      "upload": "Pakia Hati",
+      "type": "Aina ya Hati",
+      "expiryDate": "Tarehe ya Kuisha (hiari)",
+      "chooseFile": "Chagua faili",
+      "expires": "inaisha",
+      "verify": "Thibitisha",
+      "reject": "Kataa",
+      "rejectReason": "Sababu ya kukataa",
+      "empty": {
+        "title": "Bado hakuna nyaraka",
+        "description": "Pakia kitambulisho, mikataba na vyeti vya mfanyakazi huyu."
+      },
+      "deleteDialog": {
+        "title": "Futa Hati",
+        "message": "Una uhakika unataka kufuta hati hii?"
+      }
+    },
+    "salary": {
+      "noPermission": "Huna ruhusa ya kuona mshahara na taarifa za benki za mfanyakazi huyu.",
+      "loadError": "Imeshindwa kupakia taarifa za mshahara.",
+      "salary": "Mshahara",
+      "paymentMethod": "Njia ya Malipo",
+      "bankName": "Jina la Benki",
+      "bankAccountName": "Jina la Akaunti ya Benki",
+      "bankAccountNumber": "Namba ya Akaunti ya Benki",
+      "bankBranch": "Tawi la Benki",
+      "mobileMoneyProvider": "Mtoa Huduma wa Pesa za Simu",
+      "mobileMoneyNumber": "Namba ya Pesa za Simu",
+      "nationalId": "Namba ya Kitambulisho cha Taifa"
+    }
+  },
   "attendance": {
     "title": "Mahudhurio",
     "newRecord": "Rekodi Mpya",
+    "importCsv": "Pakia CSV",
     "empty": {
       "title": "Bado hakuna rekodi za mahudhurio",
       "description": "Rekodi mahudhurio ya mfanyakazi ili kuanza kujenga daftari."
     },
     "table": {
       "employee": "Mfanyakazi",
-      "date": "Tarehe"
+      "date": "Tarehe",
+      "checkIn": "Kuingia",
+      "checkOut": "Kutoka",
+      "lateMinutes": "Kuchelewa (dakika)"
     },
     "form": {
       "dialogTitle": "Rekodi Mpya ya Mahudhurio",
@@ -106,6 +473,604 @@
       "message": "Una uhakika unataka kufuta rekodi ya mahudhurio ya {{name}} tarehe {{date}}?"
     }
   },
+  "shifts": {
+    "title": "Zamu",
+    "newShift": "Zamu Mpya",
+    "assignmentsTitle": "Mgawanyo wa Zamu",
+    "assignShift": "Gawa Zamu",
+    "empty": {
+      "title": "Bado hakuna zamu",
+      "description": "Unda zamu ya kazi ili kuanza kupanga ratiba za wafanyakazi."
+    },
+    "assignmentsEmpty": {
+      "title": "Bado hakuna mgawanyo wa zamu",
+      "description": "Gawa mfanyakazi kwenye zamu ili kuanza kufuatilia saa zilizopangwa."
+    },
+    "table": {
+      "name": "Jina",
+      "startTime": "Muda wa Kuanza",
+      "endTime": "Muda wa Kumaliza",
+      "graceMinutes": "Dakika za Ziada",
+      "employee": "Mfanyakazi",
+      "shift": "Zamu",
+      "effectiveDate": "Tarehe ya Kuanza"
+    },
+    "form": {
+      "dialogTitle": "Zamu Mpya",
+      "name": "Jina",
+      "startTime": "Muda wa Kuanza",
+      "endTime": "Muda wa Kumaliza",
+      "breakMinutes": "Dakika za Mapumziko",
+      "graceMinutes": "Dakika za Ziada",
+      "employee": "Mfanyakazi",
+      "shift": "Zamu",
+      "effectiveDate": "Tarehe ya Kuanza"
+    },
+    "validation": {
+      "shiftRequired": "Chagua zamu"
+    },
+    "deleteDialog": {
+      "title": "Futa Zamu",
+      "message": "Una uhakika unataka kufuta zamu {{name}}?"
+    },
+    "removeAssignmentDialog": {
+      "title": "Ondoa Mgawanyo wa Zamu",
+      "message": "Ondoa mgawanyo huu wa zamu kwa {{name}}?"
+    }
+  },
+  "leaveManagement": {
+    "requestsTitle": "Maombi ya Likizo",
+    "newRequest": "Ombi Jipya la Likizo",
+    "typesTitle": "Aina za Likizo",
+    "newLeaveType": "Aina Mpya ya Likizo",
+    "balancesTitle": "Salio la Likizo ({{year}})",
+    "approve": "Idhinisha",
+    "reject": "Kataa",
+    "cancel": "Ghairi",
+    "rejectReason": "Sababu ya kukataa",
+    "requestsEmpty": {
+      "title": "Bado hakuna maombi ya likizo",
+      "description": "Wasilisha ombi la likizo ili kuanza kufuatilia muda wa mapumziko."
+    },
+    "balancesEmpty": {
+      "title": "Bado hakuna salio la likizo",
+      "description": "Salio linaonekana pale maombi ya likizo yanapoidhinishwa kwa mwaka uliochaguliwa."
+    },
+    "table": {
+      "employee": "Mfanyakazi",
+      "leaveType": "Aina ya Likizo",
+      "dates": "Tarehe",
+      "days": "Siku",
+      "name": "Jina",
+      "paid": "Inalipwa",
+      "defaultAnnualDays": "Siku za Kawaida kwa Mwaka",
+      "entitled": "Haki",
+      "used": "Zilizotumika",
+      "available": "Zilizobaki"
+    },
+    "form": {
+      "startDate": "Tarehe ya Kuanza",
+      "endDate": "Tarehe ya Kumaliza",
+      "reason": "Sababu (hiari)"
+    },
+    "validation": {
+      "leaveTypeRequired": "Chagua aina ya likizo"
+    },
+    "deleteTypeDialog": {
+      "title": "Futa Aina ya Likizo",
+      "message": "Una uhakika unataka kufuta aina ya likizo {{name}}?"
+    }
+  },
+  "timesheets": {
+    "title": "Muda wa Kazi",
+    "newTimesheet": "Rekodi Mpya ya Muda",
+    "approve": "Idhinisha",
+    "reject": "Kataa",
+    "rejectReason": "Sababu ya kukataa",
+    "empty": {
+      "title": "Bado hakuna rekodi za muda",
+      "description": "Rekodi muda dhidi ya kazi au shehena ili kuanza kufuatilia saa za malipo."
+    },
+    "table": {
+      "employee": "Mfanyakazi",
+      "date": "Tarehe",
+      "hours": "Saa",
+      "activity": "Shughuli"
+    },
+    "form": {
+      "dialogTitle": "Rekodi Mpya ya Muda",
+      "employee": "Mfanyakazi",
+      "date": "Tarehe",
+      "hours": "Jumla ya Saa",
+      "activity": "Shughuli (hiari)"
+    }
+  },
+  "publicHolidays": {
+    "title": "Sikukuu za Kitaifa",
+    "newHoliday": "Sikukuu Mpya",
+    "empty": {
+      "title": "Bado hakuna sikukuu",
+      "description": "Ongeza sikukuu za kitaifa ili mahudhurio na malipo yaweze kuzizingatia."
+    },
+    "table": {
+      "name": "Jina",
+      "date": "Tarehe"
+    },
+    "deleteDialog": {
+      "title": "Futa Sikukuu",
+      "message": "Una uhakika unataka kufuta {{name}}?"
+    }
+  },
+  "payrollComponents": {
+    "title": "Vipengele vya Malipo",
+    "newComponent": "Kipengele Kipya",
+    "assignmentsTitle": "Mgawanyo kwa Wafanyakazi",
+    "assignComponent": "Gawa Kipengele",
+    "empty": {
+      "title": "Bado hakuna vipengele vya malipo",
+      "description": "Fafanua mapato, makato na michango ya mwajiri ili kujenga muundo wako wa malipo."
+    },
+    "assignmentsEmpty": {
+      "title": "Bado hakuna mgawanyo wa vipengele",
+      "description": "Gawa kipengele cha malipo kwa mfanyakazi ili kikitumike kwenye malipo yajayo."
+    },
+    "table": {
+      "code": "Nambari",
+      "name": "Jina",
+      "type": "Aina",
+      "method": "Njia",
+      "value": "Thamani",
+      "employee": "Mfanyakazi",
+      "component": "Kipengele"
+    },
+    "form": {
+      "dialogTitle": "Kipengele Kipya cha Malipo",
+      "code": "Nambari",
+      "name": "Jina",
+      "type": "Aina",
+      "method": "Njia ya Kukokotoa",
+      "amount": "Kiasi",
+      "amountOverride": "Badilisha Kiasi (hiari)",
+      "percentage": "Asilimia",
+      "percentageBase": "Msingi wa Asilimia",
+      "effectiveDate": "Tarehe ya Kuanza"
+    },
+    "validation": {
+      "componentRequired": "Chagua kipengele cha malipo"
+    },
+    "deleteDialog": {
+      "title": "Futa Kipengele cha Malipo",
+      "message": "Una uhakika unataka kufuta {{name}}?"
+    },
+    "removeAssignmentDialog": {
+      "title": "Ondoa Mgawanyo",
+      "message": "Ondoa mgawanyo huu wa kipengele kwa {{name}}?"
+    }
+  },
+  "statutoryRules": {
+    "title": "Kanuni za Kisheria",
+    "newRuleSet": "Seti Mpya ya Kanuni",
+    "disclaimer": "Seti za kanuni za kisheria ni sehemu ya kuanzia inayoweza kubadilishwa — hakikisha viwango na madaraja dhidi ya sheria za sasa za mahali husika kabla ya kutegemea kwa malipo halisi.",
+    "taxBands": "Madaraja ya Kodi",
+    "addTaxBand": "Ongeza Daraja",
+    "contributionRules": "Kanuni za Michango",
+    "addContributionRule": "Ongeza Kanuni",
+    "empty": {
+      "title": "Bado hakuna seti za kanuni za kisheria",
+      "description": "Unda seti ya kanuni ili kufafanua madaraja ya kodi inayopanda na viwango vya michango ya kisheria."
+    },
+    "table": {
+      "name": "Jina",
+      "code": "Nambari",
+      "lowerBound": "Kiwango cha Chini",
+      "upperBound": "Kiwango cha Juu",
+      "rate": "Kiwango",
+      "employeeRate": "Kiwango cha Mfanyakazi",
+      "employerRate": "Kiwango cha Mwajiri"
+    },
+    "form": {
+      "countryCode": "Nambari ya Nchi (herufi 2 za ISO)",
+      "description": "Maelezo (hiari)",
+      "bandOrder": "Mpangilio wa Daraja"
+    },
+    "validation": {
+      "countryCode": "Weka nambari ya nchi ya herufi 2"
+    },
+    "deleteDialog": {
+      "title": "Futa Seti ya Kanuni",
+      "message": "Una uhakika unataka kufuta {{name}}?"
+    }
+  },
+  "payrollSettings": {
+    "title": "Mipangilio ya Malipo",
+    "description": "Sanidi marudio chaguo-msingi ya malipo, kizidishi cha muda wa ziada, na uhusiano wa akaunti za uhasibu zinazotumika wakati wa kutuma malipo kwenye kitabu kikuu.",
+    "accountsHint": "Acha uhusiano wowote bila kuwekwa ili kuruka kutuma kundi hilo kwenye kitabu kikuu.",
+    "sections": {
+      "general": "Jumla",
+      "accounts": "Uhusiano wa Akaunti za Uhasibu"
+    },
+    "fields": {
+      "statutory_rule_set_id": "Seti ya Kanuni za Kisheria",
+      "overtime_multiplier": "Kizidishi cha Muda wa Ziada",
+      "standard_working_days_per_month": "Siku za Kazi kwa Mwezi",
+      "standard_hours_per_day": "Saa za Kazi kwa Siku",
+      "salary_expense_account_id": "Akaunti ya Gharama za Mshahara",
+      "allowance_expense_account_id": "Akaunti ya Gharama za Posho",
+      "overtime_expense_account_id": "Akaunti ya Gharama za Muda wa Ziada",
+      "bonus_expense_account_id": "Akaunti ya Gharama za Bonasi",
+      "employer_contribution_expense_account_id": "Akaunti ya Gharama za Mchango wa Mwajiri",
+      "payroll_payable_account_id": "Akaunti ya Malipo Yanayodaiwa",
+      "tax_payable_account_id": "Akaunti ya Kodi Inayodaiwa",
+      "statutory_contributions_payable_account_id": "Akaunti ya Michango ya Kisheria Inayodaiwa",
+      "loan_receivable_account_id": "Akaunti ya Mikopo Inayodaiwa",
+      "advance_receivable_account_id": "Akaunti ya Malipo ya Awali Yanayodaiwa",
+      "other_deductions_payable_account_id": "Akaunti Nyingine za Makato Yanayodaiwa",
+      "bank_cash_account_id": "Akaunti ya Benki / Fedha Taslimu"
+    }
+  },
+  "payrollPeriods": {
+    "title": "Vipindi vya Malipo",
+    "newPeriod": "Kipindi Kipya",
+    "createRun": "Unda Uendeshaji wa Malipo",
+    "locked": "Imefungwa",
+    "empty": {
+      "title": "Bado hakuna vipindi vya malipo",
+      "description": "Unda kipindi cha malipo ili kuanza kuchakata uendeshaji wa malipo."
+    },
+    "table": {
+      "name": "Jina",
+      "dates": "Kipindi",
+      "paymentDate": "Tarehe ya Malipo",
+      "latestRun": "Uendeshaji wa Karibuni"
+    },
+    "form": {
+      "periodStart": "Mwanzo wa Kipindi",
+      "periodEnd": "Mwisho wa Kipindi",
+      "paymentDate": "Tarehe ya Malipo"
+    },
+    "deleteDialog": {
+      "title": "Futa Kipindi cha Malipo",
+      "message": "Una uhakika unataka kufuta kipindi {{name}}?"
+    }
+  },
+  "payrollRuns": {
+    "title": "Uendeshaji wa Malipo",
+    "employeesTitle": "Wafanyakazi",
+    "calculate": "Kokotoa",
+    "recalculate": "Kokotoa Tena",
+    "submitForApproval": "Wasilisha kwa Idhini",
+    "approve": "Idhinisha",
+    "reject": "Kataa",
+    "rejectReason": "Sababu ya kukataa",
+    "finalize": "Kamilisha",
+    "include": "Jumuisha kwenye uendeshaji",
+    "exclude": "Ondoa kwenye uendeshaji",
+    "earnings": "Mapato",
+    "deductions": "Makato",
+    "employerContributions": "Michango ya Mwajiri",
+    "postToAccounting": "Peleka kwenye Uhasibu",
+    "postedNotice": "Uendeshaji huu umepelekwa kwenye daftari kuu kama ingizo la uhasibu lililosawazishwa.",
+    "generatePayments": "Tengeneza Malipo ya Mishahara",
+    "viewPayslips": "Angalia Slipu za Mshahara ({{count}})",
+    "paymentsTitle": "Malipo ya Mishahara",
+    "exportCsv": "Hamisha CSV",
+    "markPaid": "Weka Alama Imelipwa",
+    "markFailed": "Weka Alama Imeshindwa",
+    "exceptionsWarning": "Wafanyakazi {{count}} wana matatizo yanayohitaji kutatuliwa kabla ya uendeshaji huu kuwasilishwa kwa idhini.",
+    "summary": {
+      "gross": "Jumla ya Mapato",
+      "deductions": "Jumla ya Makato",
+      "net": "Jumla ya Malipo Halisi",
+      "employerContributions": "Michango ya Mwajiri",
+      "employerCost": "Gharama Jumla ya Mwajiri",
+      "employeeCount": "Wafanyakazi"
+    },
+    "table": {
+      "employee": "Mfanyakazi",
+      "basicSalary": "Mshahara wa Msingi",
+      "gross": "Jumla",
+      "deductions": "Makato",
+      "net": "Malipo Halisi",
+      "amount": "Kiasi",
+      "method": "Njia"
+    },
+    "toast": {
+      "calculated": "Uendeshaji wa malipo umekokotolewa.",
+      "submitted": "Uendeshaji wa malipo umewasilishwa kwa idhini.",
+      "approved": "Uendeshaji wa malipo umeidhinishwa.",
+      "rejected": "Uendeshaji wa malipo umekataliwa.",
+      "finalized": "Uendeshaji wa malipo umekamilishwa.",
+      "employeeUpdated": "Hali ya ujumuishaji wa mfanyakazi imesasishwa.",
+      "posted": "Uendeshaji wa malipo umepelekwa kwenye uhasibu.",
+      "paymentsGenerated": "Kundi la malipo ya mishahara limetengenezwa.",
+      "paymentUpdated": "Hali ya malipo imesasishwa."
+    }
+  },
+  "payslips": {
+    "title": "Slipu za Mshahara",
+    "download": "Pakua PDF",
+    "empty": {
+      "title": "Bado hakuna slipu za mshahara",
+      "description": "Slipu za mshahara hutengenezwa kiotomatiki uendeshaji wa malipo unapokamilishwa."
+    },
+    "table": {
+      "number": "Namba ya Slipu",
+      "employee": "Mfanyakazi",
+      "period": "Kipindi",
+      "gross": "Jumla",
+      "net": "Malipo Halisi",
+      "ytdNet": "Halisi ya Mwaka Hadi Sasa"
+    }
+  },
+  "performanceReviews": {
+    "title": "Tathmini za Utendaji",
+    "newReview": "Tathmini Mpya",
+    "submit": "Wasilisha",
+    "acknowledge": "Thibitisha",
+    "empty": {
+      "title": "Bado hakuna tathmini za utendaji",
+      "description": "Unda tathmini ya utendaji ili kufuatilia malengo na viashiria vya mfanyakazi."
+    },
+    "table": {
+      "employee": "Mfanyakazi",
+      "period": "Kipindi cha Tathmini",
+      "rating": "Kiwango"
+    },
+    "form": {
+      "periodStart": "Mwanzo wa Kipindi",
+      "periodEnd": "Mwisho wa Kipindi",
+      "reviewDate": "Tarehe ya Tathmini",
+      "overallRating": "Kiwango cha Jumla (0-5)",
+      "strengths": "Uwezo",
+      "areasForImprovement": "Maeneo ya Kuboresha",
+      "goals": "Malengo",
+      "comments": "Maoni ya Mkaguzi",
+      "employeeComments": "Maoni Yako (hiari)"
+    },
+    "deleteDialog": {
+      "title": "Futa Tathmini ya Utendaji",
+      "message": "Una uhakika unataka kufuta tathmini hii ya {{name}}?"
+    }
+  },
+  "disciplinary": {
+    "title": "Rekodi za Nidhamu",
+    "newRecord": "Rekodi Mpya",
+    "acknowledge": "Thibitisha",
+    "resolve": "Tatua",
+    "empty": {
+      "title": "Bado hakuna rekodi za nidhamu",
+      "description": "Toa rekodi ya nidhamu kuandika tukio na hatua iliyochukuliwa."
+    },
+    "table": {
+      "employee": "Mfanyakazi",
+      "date": "Tarehe ya Tukio",
+      "category": "Kundi",
+      "severity": "Uzito"
+    },
+    "form": {
+      "description": "Maelezo",
+      "actionTaken": "Hatua Iliyochukuliwa (hiari)"
+    },
+    "deleteDialog": {
+      "title": "Futa Rekodi ya Nidhamu",
+      "message": "Una uhakika unataka kufuta rekodi hii ya {{name}}?"
+    }
+  },
+  "assets": {
+    "title": "Mali za Wafanyakazi",
+    "newAsset": "Gawa Mali",
+    "return": "Rejesha Mali",
+    "empty": {
+      "title": "Bado hakuna mali zilizogawiwa",
+      "description": "Gawa mali za kampuni kama kompyuta, simu au magari kwa wafanyakazi."
+    },
+    "table": {
+      "employee": "Mfanyakazi",
+      "type": "Aina",
+      "name": "Jina la Mali",
+      "serial": "Namba ya Serial",
+      "assignedDate": "Tarehe ya Kugawiwa"
+    },
+    "form": {
+      "serialNumber": "Namba ya Kifaa (hiari)",
+      "conditionAtAssignment": "Hali Wakati wa Kugawiwa (hiari)",
+      "conditionAtReturn": "Hali Wakati wa Kurejeshwa (hiari)",
+      "notes": "Maelezo (hiari)"
+    },
+    "deleteDialog": {
+      "title": "Futa Rekodi ya Mali",
+      "message": "Una uhakika unataka kufuta mali {{name}}?"
+    }
+  },
+  "exits": {
+    "title": "Usimamizi wa Kuondoka",
+    "newExit": "Anzisha Kuondoka",
+    "complete": "Kamilisha Kuondoka",
+    "assetsCleared": "Mali Zimesafishwa",
+    "handoverCompleted": "Makabidhiano Yamekamilika",
+    "empty": {
+      "title": "Bado hakuna rekodi za kuondoka",
+      "description": "Anzisha mchakato wa kuondoka mfanyakazi anapojiuzulu, kustaafu au kufukuzwa."
+    },
+    "table": {
+      "employee": "Mfanyakazi",
+      "type": "Aina ya Kuondoka",
+      "lastWorkingDate": "Siku ya Mwisho ya Kazi",
+      "settlement": "Malipo ya Mwisho"
+    },
+    "form": {
+      "noticeDate": "Tarehe ya Taarifa",
+      "reason": "Sababu (hiari)"
+    },
+    "summary": {
+      "unusedLeaveDays": "Siku za Likizo Zisizotumika",
+      "leavePayout": "Malipo ya Likizo",
+      "outstandingLoan": "Mkopo Uliobaki",
+      "outstandingAdvance": "Malipo ya Awali Yaliyobaki",
+      "finalSettlement": "Malipo ya Mwisho"
+    }
+  },
+  "vacancies": {
+    "title": "Nafasi za Kazi",
+    "newVacancy": "Nafasi Mpya",
+    "close": "Funga Nafasi",
+    "empty": {
+      "title": "Bado hakuna nafasi za kazi",
+      "description": "Chapisha nafasi ya kazi ili kuanza kupokea maombi."
+    },
+    "table": {
+      "title": "Kichwa",
+      "openings": "Nafasi",
+      "applications": "Maombi"
+    },
+    "form": {
+      "employmentType": "Aina ya Ajira (hiari)",
+      "description": "Maelezo (hiari)",
+      "requirements": "Mahitaji (hiari)"
+    },
+    "deleteDialog": {
+      "title": "Futa Nafasi",
+      "message": "Una uhakika unataka kufuta nafasi {{title}}?"
+    }
+  },
+  "candidates": {
+    "title": "Waombaji",
+    "newCandidate": "Mwombaji Mpya",
+    "empty": {
+      "title": "Bado hakuna waombaji",
+      "description": "Ongeza mwombaji ili kuanza kufuatilia maombi yao."
+    },
+    "table": {
+      "name": "Jina",
+      "email": "Barua Pepe",
+      "phone": "Simu",
+      "source": "Chanzo"
+    },
+    "form": {
+      "firstName": "Jina la Kwanza",
+      "lastName": "Jina la Mwisho",
+      "notes": "Maelezo (hiari)"
+    },
+    "deleteDialog": {
+      "title": "Futa Mwombaji",
+      "message": "Una uhakika unataka kufuta {{name}}?"
+    }
+  },
+  "applications": {
+    "title": "Maombi ya Kazi",
+    "newApplication": "Ombi Jipya",
+    "scheduleInterview": "Panga Mahojiano",
+    "hire": "Ajiri Mwombaji",
+    "hireConfirm": "Hii itaunda rekodi ya mfanyakazi kwa {{name}} na kuanzisha orodha yao ya uanzishaji.",
+    "moveToStage": "Hamisha Hatua",
+    "interviewsTitle": "Mahojiano",
+    "noInterviews": "Bado hakuna mahojiano yaliyopangwa.",
+    "empty": {
+      "title": "Bado hakuna maombi",
+      "description": "Unganisha mwombaji na nafasi ya kazi ili kuunda ombi."
+    },
+    "table": {
+      "candidate": "Mwombaji",
+      "vacancy": "Nafasi",
+      "appliedDate": "Tarehe ya Kuomba"
+    },
+    "form": {
+      "scheduledAt": "Imepangwa",
+      "mode": "Njia",
+      "location": "Mahali (hiari)"
+    }
+  },
+  "onboarding": {
+    "title": "Uanzishaji wa Mfanyakazi",
+    "empty": {
+      "title": "Bado hakuna orodha za uanzishaji",
+      "description": "Orodha za uanzishaji huundwa kiotomatiki mwombaji anapoajiriwa."
+    },
+    "table": {
+      "employee": "Mfanyakazi",
+      "progress": "Maendeleo"
+    }
+  },
+  "loans": {
+    "title": "Mikopo ya Wafanyakazi",
+    "newLoan": "Mkopo Mpya",
+    "submit": "Wasilisha kwa idhini",
+    "approve": "Idhinisha",
+    "reject": "Kataa",
+    "rejectReason": "Sababu ya kukataa",
+    "empty": {
+      "title": "Bado hakuna mikopo",
+      "description": "Unda mkopo ili kuanza ratiba ya urejeshaji kwa mfanyakazi."
+    },
+    "table": {
+      "number": "Namba ya Mkopo",
+      "employee": "Mfanyakazi",
+      "principal": "Kiasi Kikuu",
+      "installment": "Kiwango cha Malipo"
+    },
+    "form": {
+      "principal": "Kiasi Kikuu",
+      "interestRate": "Kiwango cha Riba % (hiari)",
+      "installments": "Idadi ya Malipo",
+      "startDate": "Tarehe ya Kuanza",
+      "reason": "Sababu (hiari)"
+    },
+    "deleteDialog": {
+      "title": "Futa Mkopo",
+      "message": "Una uhakika unataka kufuta mkopo {{number}}?"
+    }
+  },
+  "advances": {
+    "title": "Malipo ya Awali ya Mshahara",
+    "newAdvance": "Malipo Mapya ya Awali",
+    "submit": "Wasilisha kwa idhini",
+    "approve": "Idhinisha",
+    "reject": "Kataa",
+    "rejectReason": "Sababu ya kukataa",
+    "empty": {
+      "title": "Bado hakuna malipo ya awali",
+      "description": "Unda malipo ya awali ili kuanza ratiba ya urejeshaji kwa mfanyakazi."
+    },
+    "table": {
+      "number": "Namba ya Malipo",
+      "employee": "Mfanyakazi",
+      "amount": "Kiasi",
+      "installment": "Kiwango cha Malipo"
+    },
+    "form": {
+      "amount": "Kiasi",
+      "installments": "Idadi ya Malipo",
+      "requestDate": "Tarehe ya Ombi",
+      "reason": "Sababu (hiari)"
+    },
+    "deleteDialog": {
+      "title": "Futa Malipo ya Awali",
+      "message": "Una uhakika unataka kufuta malipo {{number}}?"
+    }
+  },
+  "overtimeRequests": {
+    "title": "Maombi ya Muda wa Ziada",
+    "newRequest": "Ombi Jipya",
+    "approve": "Idhinisha",
+    "reject": "Kataa",
+    "rejectReason": "Sababu ya kukataa",
+    "empty": {
+      "title": "Bado hakuna maombi ya muda wa ziada",
+      "description": "Wasilisha ombi la muda wa ziada ili saa zilizoidhinishwa zilipwe kwa kizidishi kilichowekwa."
+    },
+    "table": {
+      "employee": "Mfanyakazi",
+      "date": "Tarehe",
+      "hours": "Saa"
+    },
+    "form": {
+      "reason": "Sababu (hiari)"
+    },
+    "deleteDialog": {
+      "title": "Futa Ombi la Muda wa Ziada",
+      "message": "Una uhakika unataka kufuta ombi la muda wa ziada la {{name}} tarehe {{date}}?"
+    }
+  },
   "toast": {
     "departmentCreated": "Idara imeundwa.",
     "departmentDeleted": "Idara imefutwa.",
@@ -114,6 +1079,124 @@
     "employeeDeleted": "Mfanyakazi amefutwa.",
     "attendanceCreated": "Rekodi ya mahudhurio imeundwa.",
     "attendanceUpdated": "Rekodi ya mahudhurio imesasishwa.",
-    "attendanceDeleted": "Rekodi ya mahudhurio imefutwa."
+    "attendanceDeleted": "Rekodi ya mahudhurio imefutwa.",
+    "designationCreated": "Cheo kimeundwa.",
+    "designationDeleted": "Cheo kimefutwa.",
+    "documentUploaded": "Hati imepakiwa.",
+    "documentVerified": "Hati imethibitishwa.",
+    "documentRejected": "Hati imekataliwa.",
+    "documentDeleted": "Hati imefutwa.",
+    "contractCreated": "Mkataba umeundwa.",
+    "contractSubmitted": "Mkataba umewasilishwa kwa idhini.",
+    "contractApproved": "Mkataba umeidhinishwa.",
+    "contractRejected": "Mkataba umekataliwa.",
+    "contractDeleted": "Mkataba umefutwa.",
+    "attendanceImported": "Upakiaji wa mahudhurio umekamilika: rekodi {{count}} zimeundwa.",
+    "shiftCreated": "Zamu imeundwa.",
+    "shiftDeleted": "Zamu imefutwa.",
+    "shiftAssigned": "Zamu imegawiwa.",
+    "shiftAssignmentRemoved": "Mgawanyo wa zamu umeondolewa.",
+    "leaveTypeCreated": "Aina ya likizo imeundwa.",
+    "leaveTypeDeleted": "Aina ya likizo imefutwa.",
+    "leaveRequestCreated": "Ombi la likizo limewasilishwa.",
+    "leaveRequestApproved": "Ombi la likizo limeidhinishwa.",
+    "leaveRequestRejected": "Ombi la likizo limekataliwa.",
+    "leaveRequestCancelled": "Ombi la likizo limeghairiwa.",
+    "timesheetCreated": "Rekodi ya muda imeundwa.",
+    "timesheetApproved": "Rekodi ya muda imeidhinishwa.",
+    "timesheetRejected": "Rekodi ya muda imekataliwa.",
+    "publicHolidayCreated": "Sikukuu imeundwa.",
+    "publicHolidayDeleted": "Sikukuu imefutwa.",
+    "payrollComponentCreated": "Kipengele cha malipo kimeundwa.",
+    "payrollComponentDeleted": "Kipengele cha malipo kimefutwa.",
+    "payrollComponentAssigned": "Kipengele cha malipo kimegawiwa.",
+    "payrollComponentUnassigned": "Mgawanyo wa kipengele cha malipo umeondolewa.",
+    "statutoryRuleSetCreated": "Seti ya kanuni za kisheria imeundwa.",
+    "statutoryRuleSetDeleted": "Seti ya kanuni za kisheria imefutwa.",
+    "taxBandCreated": "Daraja la kodi limeongezwa.",
+    "taxBandDeleted": "Daraja la kodi limeondolewa.",
+    "contributionRuleCreated": "Kanuni ya mchango imeongezwa.",
+    "contributionRuleDeleted": "Kanuni ya mchango imeondolewa.",
+    "payrollSettingsUpdated": "Mipangilio ya malipo imesasishwa.",
+    "payrollPeriodCreated": "Kipindi cha malipo kimeundwa.",
+    "payrollPeriodDeleted": "Kipindi cha malipo kimefutwa.",
+    "loanCreated": "Mkopo umeundwa.",
+    "loanDeleted": "Mkopo umefutwa.",
+    "loanSubmitted": "Mkopo umewasilishwa kwa idhini.",
+    "loanApproved": "Mkopo umeidhinishwa na kutolewa.",
+    "loanRejected": "Mkopo umekataliwa.",
+    "advanceCreated": "Malipo ya awali yameundwa.",
+    "advanceDeleted": "Malipo ya awali yamefutwa.",
+    "advanceSubmitted": "Malipo ya awali yamewasilishwa kwa idhini.",
+    "advanceApproved": "Malipo ya awali yameidhinishwa na kutolewa.",
+    "advanceRejected": "Malipo ya awali yamekataliwa.",
+    "overtimeRequestCreated": "Ombi la muda wa ziada limeundwa.",
+    "overtimeRequestDeleted": "Ombi la muda wa ziada limefutwa.",
+    "overtimeRequestApproved": "Ombi la muda wa ziada limeidhinishwa.",
+    "overtimeRequestRejected": "Ombi la muda wa ziada limekataliwa.",
+    "reviewCreated": "Tathmini ya utendaji imeundwa.",
+    "reviewSubmitted": "Tathmini ya utendaji imewasilishwa.",
+    "reviewAcknowledged": "Tathmini ya utendaji imethibitishwa.",
+    "reviewDeleted": "Tathmini ya utendaji imefutwa.",
+    "disciplinaryCreated": "Rekodi ya nidhamu imeundwa.",
+    "disciplinaryAcknowledged": "Rekodi ya nidhamu imethibitishwa.",
+    "disciplinaryResolved": "Rekodi ya nidhamu imetatuliwa.",
+    "disciplinaryDeleted": "Rekodi ya nidhamu imefutwa.",
+    "assetAssigned": "Mali imegawiwa.",
+    "assetReturned": "Mali imerejeshwa.",
+    "assetDeleted": "Rekodi ya mali imefutwa.",
+    "exitInitiated": "Mchakato wa kuondoka umeanzishwa.",
+    "exitUpdated": "Rekodi ya kuondoka imesasishwa.",
+    "exitCompleted": "Mchakato wa kuondoka umekamilika.",
+    "vacancyCreated": "Nafasi ya kazi imeundwa.",
+    "vacancyClosed": "Nafasi ya kazi imefungwa.",
+    "vacancyDeleted": "Nafasi ya kazi imefutwa.",
+    "candidateCreated": "Mwombaji ameongezwa.",
+    "candidateDeleted": "Mwombaji amefutwa.",
+    "applicationCreated": "Ombi limeundwa.",
+    "applicationStatusUpdated": "Hali ya ombi imesasishwa.",
+    "interviewScheduled": "Mahojiano yamepangwa.",
+    "candidateHired": "Mwombaji ameajiriwa na uanzishaji umeanza.",
+    "taskUpdated": "Kazi ya uanzishaji imesasishwa."
+  },
+  "myHr": {
+    "title": "Nafasi Yangu",
+    "tabs": {
+      "profile": "Wasifu",
+      "attendance": "Mahudhurio",
+      "leave": "Likizo",
+      "payslips": "Malipo",
+      "assets": "Mali"
+    },
+    "profile": {
+      "employeeNumber": "Namba ya Mfanyakazi",
+      "department": "Idara",
+      "designation": "Wadhifa",
+      "employmentType": "Aina ya Ajira",
+      "status": "Hali",
+      "hireDate": "Tarehe ya Kuajiriwa",
+      "email": "Barua Pepe",
+      "phone": "Simu",
+      "empty": {
+        "title": "Hakuna wasifu uliopatikana",
+        "description": "Akaunti yako bado haijaunganishwa na rekodi ya mfanyakazi. Wasiliana na HR ili kuandaliwa."
+      }
+    },
+    "attendance": {
+      "empty": {
+        "title": "Bado hakuna rekodi za mahudhurio",
+        "description": "Historia yako ya mahudhurio itaonekana hapa mara rekodi zitakaporekodiwa."
+      }
+    },
+    "leave": {
+      "requestsTitle": "Maombi Yangu ya Likizo",
+      "newRequest": "Omba Likizo",
+      "daysAvailable": "siku zinazopatikana",
+      "cancelled": "Ombi la likizo limeghairiwa.",
+      "empty": {
+        "title": "Bado hakuna maombi ya likizo",
+        "description": "Wasilisha ombi la likizo ili kuanza kufuatilia muda wako wa mapumziko."
+      }
+    }
   }
 }

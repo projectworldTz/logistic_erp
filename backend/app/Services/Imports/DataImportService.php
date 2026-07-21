@@ -2,13 +2,19 @@
 
 namespace App\Services\Imports;
 
+use App\Enums\AttendanceSource;
+use App\Enums\AttendanceStatus;
 use App\Enums\CustomerStatus;
 use App\Enums\LeadSource;
 use App\Enums\LeadStatus;
 use App\Imports\GenericHeadingRowImport;
+use App\Models\AttendanceRecord;
 use App\Models\Customer;
+use App\Models\Employee;
 use App\Models\Lead;
+use App\Support\Tenancy\TenantContext;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 use InvalidArgumentException;
 use Maatwebsite\Excel\Facades\Excel;
@@ -21,7 +27,7 @@ use Maatwebsite\Excel\Facades\Excel;
  */
 class DataImportService
 {
-    public const IMPORTABLE_MODULES = ['customers', 'leads'];
+    public const IMPORTABLE_MODULES = ['customers', 'leads', 'attendance'];
 
     public function import(string $module, string $path): array
     {
@@ -62,7 +68,15 @@ class DataImportService
                 continue;
             }
 
-            $this->createRecord($module, $validator->validated());
+            if (! $this->createRecord($module, $validator->validated())) {
+                $errors[] = [
+                    'row' => $index + 2,
+                    'messages' => ['No matching employee, or an attendance record already exists for that employee and date.'],
+                ];
+
+                continue;
+            }
+
             $created++;
         }
 
@@ -71,6 +85,8 @@ class DataImportService
 
     private function rulesFor(string $module): array
     {
+        $tenantId = app(TenantContext::class)->id();
+
         return match ($module) {
             'customers' => [
                 'company_name' => ['required', 'string', 'max:255'],
@@ -89,21 +105,57 @@ class DataImportService
                 'source' => ['nullable', new Enum(LeadSource::class)],
                 'status' => ['nullable', new Enum(LeadStatus::class)],
             ],
+            'attendance' => [
+                'employee_number' => ['required', 'string', Rule::exists('employees', 'employee_number')->where('tenant_id', $tenantId)],
+                'date' => ['required', 'date'],
+                'status' => ['nullable', new Enum(AttendanceStatus::class)],
+                'check_in' => ['nullable', 'date'],
+                'check_out' => ['nullable', 'date'],
+            ],
         };
     }
 
-    private function createRecord(string $module, array $data): void
+    private function createRecord(string $module, array $data): bool
     {
-        match ($module) {
-            'customers' => Customer::create([
+        return match ($module) {
+            'customers' => (bool) Customer::create([
                 ...$data,
                 'status' => $data['status'] ?? CustomerStatus::Active->value,
             ]),
-            'leads' => Lead::create([
+            'leads' => (bool) Lead::create([
                 ...$data,
                 'status' => $data['status'] ?? LeadStatus::New->value,
                 'source' => $data['source'] ?? LeadSource::Other->value,
             ]),
+            'attendance' => $this->createAttendanceRecord($data),
         };
+    }
+
+    private function createAttendanceRecord(array $data): bool
+    {
+        $tenantId = app(TenantContext::class)->id();
+        $employee = Employee::query()
+            ->where('tenant_id', $tenantId)
+            ->where('employee_number', $data['employee_number'])
+            ->first();
+
+        if (! $employee) {
+            return false;
+        }
+
+        if (AttendanceRecord::query()->where('employee_id', $employee->id)->whereDate('date', $data['date'])->exists()) {
+            return false;
+        }
+
+        AttendanceRecord::create([
+            'employee_id' => $employee->id,
+            'date' => $data['date'],
+            'status' => $data['status'] ?? AttendanceStatus::Present->value,
+            'check_in' => $data['check_in'] ?? null,
+            'check_out' => $data['check_out'] ?? null,
+            'source' => AttendanceSource::Import->value,
+        ]);
+
+        return true;
     }
 }

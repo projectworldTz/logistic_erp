@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { downloadPortalInvoicePdf, fetchPortalInvoices } from '../../../api/endpoints/portal';
 import type { Invoice } from '../../../types';
 import { EmptyState } from '../../../components/common/EmptyState';
+import { downloadBlobAsFile } from '../../../utils/downloadFile';
 
 const STATUS_COLOR: Record<Invoice['status'], 'default' | 'info' | 'warning' | 'success' | 'error'> = {
   draft: 'default',
@@ -32,15 +33,8 @@ export function PortalInvoicesPage() {
   const { t } = useTranslation('portal');
   const { data, isLoading } = useQuery({ queryKey: ['portal', 'invoices'], queryFn: () => fetchPortalInvoices() });
 
-  const handleDownload = async (invoice: Invoice) => {
-    const blob = await downloadPortalInvoicePdf(invoice.id);
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `invoice-${invoice.invoice_number ?? invoice.id}.pdf`;
-    link.click();
-    window.URL.revokeObjectURL(url);
-  };
+  const handleDownload = (invoice: Invoice) =>
+    downloadBlobAsFile(() => downloadPortalInvoicePdf(invoice.id), `invoice-${invoice.invoice_number ?? invoice.id}.pdf`);
 
   return (
     <Stack spacing={3}>

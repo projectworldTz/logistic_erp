@@ -11,3 +11,5 @@ Artisan::command('inspire', function () {
 Schedule::command('sla:check-shipments')->hourly();
 Schedule::command('reports:send-scheduled')->hourly();
 Schedule::command('subscriptions:generate-invoices')->daily();
+Schedule::command('hr:daily-checks')->dailyAt('07:00');
+Schedule::command('hr:accrue-leave')->monthlyOn(1, '00:30');

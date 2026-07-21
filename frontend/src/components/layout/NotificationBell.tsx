@@ -17,15 +17,21 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import {
   fetchNotifications,
   fetchUnreadCount,
   markAllNotificationsRead,
   markNotificationRead,
 } from '../../api/endpoints/notifications';
+import { useAuthStore } from '../../hooks/useAuth';
+import type { UserNotification } from '../../types';
+import { resolveNotificationLink } from '../../utils/notificationLinks';
 
 export function NotificationBell() {
   const { t } = useTranslation('common');
+  const navigate = useNavigate();
+  const isPortalUser = !!useAuthStore((s) => s.user?.customer_id);
   const queryClient = useQueryClient();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -49,6 +55,18 @@ export function NotificationBell() {
 
   const readMutation = useMutation({ mutationFn: markNotificationRead, onSuccess: invalidate });
   const readAllMutation = useMutation({ mutationFn: markAllNotificationsRead, onSuccess: invalidate });
+
+  const handleNotificationClick = (notification: UserNotification) => {
+    if (!notification.read_at) {
+      readMutation.mutate(notification.id);
+    }
+
+    const link = resolveNotificationLink(notification, isPortalUser ? '/portal' : '/app');
+    if (link) {
+      setAnchorEl(null);
+      navigate(link);
+    }
+  };
 
   return (
     <>
@@ -95,7 +113,7 @@ export function NotificationBell() {
               {notifications.data.map((notification) => (
                 <ListItemButton
                   key={notification.id}
-                  onClick={() => !notification.read_at && readMutation.mutate(notification.id)}
+                  onClick={() => handleNotificationClick(notification)}
                   sx={{ alignItems: 'flex-start', bgcolor: notification.read_at ? 'transparent' : 'action.hover' }}
                 >
                   <ListItemText

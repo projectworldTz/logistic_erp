@@ -7,7 +7,9 @@ export async function fetchNotifications(page = 1): Promise<Paginated<UserNotifi
 }
 
 export async function fetchUnreadCount(): Promise<number> {
-  const { data } = await api.get<{ count: number }>('/notifications/unread-count');
+  // Polled every 30s in the background — a transient failure shouldn't
+  // interrupt the user with a toast.
+  const { data } = await api.get<{ count: number }>('/notifications/unread-count', { skipErrorToast: true });
   return data.count;
 }
 

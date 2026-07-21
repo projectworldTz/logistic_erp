@@ -32,6 +32,7 @@ import {
 import type { DetentionCharge, DetentionDashboardRow } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { StatWidgetCard } from '../../../../components/common/StatWidgetCard';
+import { StatusChip } from '../../../../components/common/StatusChip';
 import { useToast } from '../../../../hooks/useToast';
 import { DetentionTabs } from './DetentionTabs';
 
@@ -62,8 +63,12 @@ export function DetentionDashboardPage() {
 
   const calculateMutation = useMutation({
     mutationFn: calculateDetentionCharge,
-    onSuccess: () => {
+    onSuccess: (result) => {
       invalidate();
+      if (!result.data) {
+        showToast(t(result.reason === 'within_free_days' ? 'toast.withinFreeDays' : 'toast.noNewCharge'), 'info');
+        return;
+      }
       showToast(t('toast.calculated'));
     },
   });
@@ -87,7 +92,7 @@ export function DetentionDashboardPage() {
   });
 
   const rows = data?.data ?? [];
-  const pending = (pendingCharges?.data ?? []).filter((charge) => charge.status === 'pending');
+  const charges = pendingCharges?.data ?? [];
 
   const accruingCount = rows.filter((row) => row.risk_level === 'accruing').length;
   const atRiskCount = rows.filter((row) => row.risk_level === 'at_risk').length;
@@ -172,11 +177,11 @@ export function DetentionDashboardPage() {
 
       <Typography variant="h6">{t('pendingCharges.title')}</Typography>
 
-      {!chargesLoading && pending.length === 0 && (
+      {!chargesLoading && charges.length === 0 && (
         <EmptyState title={t('pendingCharges.empty.title')} description={t('pendingCharges.empty.description')} />
       )}
 
-      {pending.length > 0 && (
+      {charges.length > 0 && (
         <Paper variant="outlined">
           <TableContainer>
             <Table>
@@ -186,11 +191,13 @@ export function DetentionDashboardPage() {
                   <TableCell>{t('table.customer')}</TableCell>
                   <TableCell align="right">{t('table.chargeableDays')}</TableCell>
                   <TableCell align="right">{t('table.accruedAmount')}</TableCell>
+                  <TableCell>{t('table.status')}</TableCell>
+                  <TableCell>{t('table.invoice')}</TableCell>
                   <TableCell align="right">{tc('actions.actions')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {pending.map((charge) => (
+                {charges.map((charge) => (
                   <TableRow key={charge.id}>
                     <TableCell>{charge.container?.container_number ?? '—'}</TableCell>
                     <TableCell>{charge.customer?.company_name ?? '—'}</TableCell>
@@ -198,20 +205,26 @@ export function DetentionDashboardPage() {
                     <TableCell align="right">
                       {charge.currency} {Number(charge.amount).toLocaleString()}
                     </TableCell>
+                    <TableCell>
+                      <StatusChip status={charge.status} label={t(`statuses.${charge.status}`)} />
+                    </TableCell>
+                    <TableCell>{charge.invoice_id ? `#${charge.invoice_id}` : '—'}</TableCell>
                     <TableCell align="right">
-                      <Stack direction="row" spacing={1} justifyContent="flex-end">
-                        <Button size="small" onClick={() => setPendingWaive(charge)}>
-                          {t('actions.waive')}
-                        </Button>
-                        <Button
-                          size="small"
-                          variant="contained"
-                          disabled={invoiceMutation.isPending}
-                          onClick={() => invoiceMutation.mutate(charge.id)}
-                        >
-                          {t('actions.generateInvoice')}
-                        </Button>
-                      </Stack>
+                      {charge.status === 'pending' && (
+                        <Stack direction="row" spacing={1} justifyContent="flex-end">
+                          <Button size="small" onClick={() => setPendingWaive(charge)}>
+                            {t('actions.waive')}
+                          </Button>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            disabled={invoiceMutation.isPending}
+                            onClick={() => invoiceMutation.mutate(charge.id)}
+                          >
+                            {t('actions.generateInvoice')}
+                          </Button>
+                        </Stack>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}

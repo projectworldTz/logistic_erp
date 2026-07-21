@@ -44,6 +44,7 @@ import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
 import { StatusChip } from '../../../../components/common/StatusChip';
 import { useToast } from '../../../../hooks/useToast';
+import { downloadBlobAsFile } from '../../../../utils/downloadFile';
 
 const STATUS_OPTIONS: Invoice['status'][] = ['draft', 'sent', 'paid', 'overdue', 'cancelled'];
 
@@ -130,15 +131,9 @@ export function InvoicesPage() {
     createMutation.mutate({ ...values, total_amount: total });
   };
 
-  const handleDownloadPdf = async (invoice: Invoice) => {
-    const blob = await downloadInvoicePdf(invoice.id);
+  const handleDownloadPdf = (invoice: Invoice) => {
     const prefix = invoice.status === 'paid' ? 'receipt' : 'invoice';
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${prefix}-${invoice.invoice_number ?? invoice.id}.pdf`;
-    link.click();
-    window.URL.revokeObjectURL(url);
+    return downloadBlobAsFile(() => downloadInvoicePdf(invoice.id), `${prefix}-${invoice.invoice_number ?? invoice.id}.pdf`);
   };
 
   return (

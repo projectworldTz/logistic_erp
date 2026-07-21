@@ -39,7 +39,9 @@
     "yes": "Ndiyo",
     "no": "Hapana",
     "active": "Hai",
-    "inactive": "Haifanyi Kazi"
+    "inactive": "Haifanyi Kazi",
+    "none": "Hakuna",
+    "default": "Chaguo-msingi"
   },
   "validation": {
     "required": "Sehemu hii inahitajika.",
@@ -55,7 +57,11 @@
   "toast": {
     "created": "{{item}} imeundwa.",
     "updated": "{{item}} imesasishwa.",
-    "deleted": "{{item}} imefutwa."
+    "deleted": "{{item}} imefutwa.",
+    "downloading": "Inapakua…",
+    "downloaded": "Upakuaji umekamilika.",
+    "uploading": "Inapakia…",
+    "uploaded": "Upakiaji umekamilika."
   },
   "notifications": {
     "title": "Arifa",
@@ -83,7 +89,10 @@
     }
   },
   "errors": {
-    "serverError": "Hitilafu imetokea kwa upande wetu. Nambari ya Rejea: {{reference}} — tafadhali wasiliana na huduma kwa wateja ukitumia nambari hii."
+    "serverError": "Hitilafu imetokea kwa upande wetu. Nambari ya Rejea: {{reference}} — tafadhali wasiliana na huduma kwa wateja ukitumia nambari hii.",
+    "genericFailure": "Hitilafu imetokea. Tafadhali jaribu tena.",
+    "sessionExpired": "Muda wako wa kuingia umeisha — tafadhali ingia tena.",
+    "networkError": "Imeshindwa kufikia seva. Kagua muunganisho wako kisha ujaribu tena."
   },
   "commandPalette": {
     "tooltip": "Tafuta au nenda… (Ctrl+K)",
@@ -135,6 +144,12 @@
     "returned": "Imerejeshwa",
     "emptyReturn": "Kontena Tupu Limerejeshwa",
     "present": "Yupo",
-    "absent": "Hayupo"
+    "absent": "Hayupo",
+    "pendingVerification": "Inasubiri Uthibitisho",
+    "pendingApproval": "Inasubiri Idhini",
+    "probation": "Majaribioni",
+    "terminated": "Imesitishwa",
+    "suspended": "Imesimamishwa",
+    "renewed": "Imehuishwa"
   }
 }

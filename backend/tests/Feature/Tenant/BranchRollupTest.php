@@ -143,7 +143,7 @@ class BranchRollupTest extends TestCase
             ->postJson('/api/v1/users', [
                 'name' => 'No Access',
                 'email' => 'noaccess@acme.test',
-                'role' => 'Driver',
+                'roles' => ['Driver'],
                 'password' => 'SecurePass123',
             ])->assertCreated();
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\TwoFactorChallengeRequest;
 use App\Http\Resources\UserResource;
@@ -12,6 +13,7 @@ use App\Services\Security\LoginLockoutService;
 use App\Services\Security\TwoFactorService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -168,5 +170,27 @@ class AuthController extends Controller
     public function me()
     {
         return new UserResource(request()->user());
+    }
+
+    /**
+     * Self-service password change — available to every authenticated
+     * account (staff and customer portal users alike, since both are the
+     * same User model behind Sanctum), unlike the forgot-password flow
+     * which only works from a logged-out state via an emailed token.
+     */
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        /** @var User $user */
+        $user = $request->user();
+
+        if (! Hash::check($request->validated('current_password'), $user->password)) {
+            throw ValidationException::withMessages([
+                'current_password' => ['The provided password is incorrect.'],
+            ]);
+        }
+
+        $user->forceFill(['password' => Hash::make($request->validated('password'))])->save();
+
+        return response()->json(['message' => 'Password changed.']);
     }
 }

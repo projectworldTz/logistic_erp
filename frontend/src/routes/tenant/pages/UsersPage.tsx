@@ -2,16 +2,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Alert,
   Button,
+  Checkbox,
   Chip,
   CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControlLabel,
+  FormGroup,
   IconButton,
   MenuItem,
   Paper,
-  Select,
   Stack,
   Table,
   TableBody,
@@ -26,6 +28,7 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import EditIcon from '@mui/icons-material/Edit';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -52,7 +55,7 @@ function buildSchema(t: (key: string) => string, tc: (key: string, opts?: Record
     email: z.string().email(tc('validation.invalidEmail')),
     phone: z.string().optional(),
     branch_id: z.number().nullable(),
-    role: z.string().min(1, t('validation.roleRequired')),
+    roles: z.array(z.string()).min(1, t('validation.roleRequired')),
     password: z.string().min(8, tc('validation.minLength', { count: 8 })),
   });
 }
@@ -69,7 +72,8 @@ export function UsersPage() {
   const canManage = usePermission('core.users.manage');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [pendingSuspend, setPendingSuspend] = useState<User | null>(null);
-  const [pendingRoleChange, setPendingRoleChange] = useState<{ user: User; role: string } | null>(null);
+  const [rolesDialogUser, setRolesDialogUser] = useState<User | null>(null);
+  const [draftRoles, setDraftRoles] = useState<string[]>([]);
 
   const {
     data: users,
@@ -91,10 +95,10 @@ export function UsersPage() {
   });
 
   const roleMutation = useMutation({
-    mutationFn: ({ id, role }: { id: number; role: string }) => updateUser(id, { role }),
+    mutationFn: ({ id, roles }: { id: number; roles: string[] }) => updateUser(id, { roles }),
     onSuccess: () => {
       invalidateUsers();
-      setPendingRoleChange(null);
+      setRolesDialogUser(null);
       showToast(t('toast.roleUpdated'));
     },
   });
@@ -123,7 +127,7 @@ export function UsersPage() {
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { branch_id: null },
+    defaultValues: { branch_id: null, roles: [] },
   });
 
   const onInvite = (values: FormValues) => inviteMutation.mutate(values);
@@ -139,7 +143,7 @@ export function UsersPage() {
             variant="contained"
             startIcon={<AddIcon />}
             onClick={() => {
-              reset({ branch_id: null });
+              reset({ branch_id: null, roles: [] });
               setDialogOpen(true);
             }}
           >
@@ -177,23 +181,27 @@ export function UsersPage() {
                     <TableCell>{u.name}</TableCell>
                     <TableCell>{u.email}</TableCell>
                     <TableCell>
-                      {canManage && roles && u.id !== currentUserId ? (
-                        <Select
-                          size="small"
-                          value={u.roles[0] ?? ''}
-                          onChange={(e) => setPendingRoleChange({ user: u, role: e.target.value })}
-                        >
-                          {roles.map((role) => (
-                            <MenuItem key={role} value={role}>
-                              {role}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      ) : (
-                        <Tooltip title={u.id === currentUserId ? t('tooltips.cantChangeOwnRole') : ''}>
-                          <span>{u.roles.join(', ')}</span>
-                        </Tooltip>
-                      )}
+                      <Stack direction="row" spacing={0.5} flexWrap="wrap" alignItems="center" useFlexGap>
+                        {u.roles.map((role) => (
+                          <Chip key={role} label={role} size="small" variant="outlined" />
+                        ))}
+                        {canManage && (
+                          <Tooltip title={u.id === currentUserId ? t('tooltips.cantChangeOwnRole') : t('actions.editRoles')}>
+                            <span>
+                              <IconButton
+                                size="small"
+                                disabled={u.id === currentUserId}
+                                onClick={() => {
+                                  setDraftRoles(u.roles);
+                                  setRolesDialogUser(u);
+                                }}
+                              >
+                                <EditIcon fontSize="small" />
+                              </IconButton>
+                            </span>
+                          </Tooltip>
+                        )}
+                      </Stack>
                     </TableCell>
                     <TableCell>
                       <Chip label={t(`statuses.${u.status}`)} size="small" color={u.status === 'active' ? 'success' : 'default'} />
@@ -271,27 +279,44 @@ export function UsersPage() {
                 )}
               />
               <Controller
-                name="role"
+                name="roles"
                 control={control}
                 render={({ field }) => (
-                  <TextField
-                    label={t('form.role')}
-                    select
-                    fullWidth
-                    value={field.value ?? ''}
-                    onChange={field.onChange}
-                    error={!!errors.role}
-                    helperText={errors.role?.message}
-                  >
-                    <MenuItem value="" disabled>
-                      —
-                    </MenuItem>
-                    {roles?.map((role) => (
-                      <MenuItem key={role} value={role}>
-                        {role}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+                  <Stack spacing={0.5}>
+                    <Typography variant="body2" color="text.secondary">
+                      {t('form.role')}
+                    </Typography>
+                    <Paper
+                      variant="outlined"
+                      sx={{ maxHeight: 220, overflowY: 'auto', p: 1, borderColor: errors.roles ? 'error.main' : undefined }}
+                    >
+                      <FormGroup>
+                        {roles?.map((role) => (
+                          <FormControlLabel
+                            key={role}
+                            control={
+                              <Checkbox
+                                size="small"
+                                checked={field.value?.includes(role) ?? false}
+                                onChange={(e) => {
+                                  const next = e.target.checked
+                                    ? [...(field.value ?? []), role]
+                                    : (field.value ?? []).filter((r) => r !== role);
+                                  field.onChange(next);
+                                }}
+                              />
+                            }
+                            label={role}
+                          />
+                        ))}
+                      </FormGroup>
+                    </Paper>
+                    {errors.roles && (
+                      <Typography variant="caption" color="error.main">
+                        {errors.roles.message}
+                      </Typography>
+                    )}
+                  </Stack>
                 )}
               />
               <TextField
@@ -323,18 +348,43 @@ export function UsersPage() {
         onCancel={() => setPendingSuspend(null)}
       />
 
-      <ConfirmDialog
-        open={!!pendingRoleChange}
-        title={t('roleDialog.title')}
-        message={t('roleDialog.message', { name: pendingRoleChange?.user.name ?? '', role: pendingRoleChange?.role ?? '' })}
-        confirmLabel={t('roleDialog.confirm')}
-        danger={false}
-        loading={roleMutation.isPending}
-        onConfirm={() =>
-          pendingRoleChange && roleMutation.mutate({ id: pendingRoleChange.user.id, role: pendingRoleChange.role })
-        }
-        onCancel={() => setPendingRoleChange(null)}
-      />
+      <Dialog open={!!rolesDialogUser} onClose={() => setRolesDialogUser(null)} fullWidth maxWidth="xs">
+        <DialogTitle>{t('roleDialog.title')}</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+            {t('roleDialog.message', { name: rolesDialogUser?.name ?? '' })}
+          </Typography>
+          <Paper variant="outlined" sx={{ maxHeight: 260, overflowY: 'auto', p: 1 }}>
+            <FormGroup>
+              {roles?.map((role) => (
+                <FormControlLabel
+                  key={role}
+                  control={
+                    <Checkbox
+                      size="small"
+                      checked={draftRoles.includes(role)}
+                      onChange={(e) =>
+                        setDraftRoles((prev) => (e.target.checked ? [...prev, role] : prev.filter((r) => r !== role)))
+                      }
+                    />
+                  }
+                  label={role}
+                />
+              ))}
+            </FormGroup>
+          </Paper>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setRolesDialogUser(null)}>{tc('actions.cancel')}</Button>
+          <Button
+            variant="contained"
+            disabled={draftRoles.length === 0 || roleMutation.isPending}
+            onClick={() => rolesDialogUser && roleMutation.mutate({ id: rolesDialogUser.id, roles: draftRoles })}
+          >
+            {t('roleDialog.confirm')}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Stack>
   );
 }

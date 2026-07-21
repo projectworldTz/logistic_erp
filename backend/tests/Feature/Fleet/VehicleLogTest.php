@@ -159,7 +159,7 @@ class VehicleLogTest extends TestCase
             ->postJson('/api/v1/users', [
                 'name' => 'Driver Dan',
                 'email' => 'driver@acme.test',
-                'role' => 'Driver',
+                'roles' => ['Driver'],
                 'password' => 'DriverPass123',
             ])->assertCreated();
 

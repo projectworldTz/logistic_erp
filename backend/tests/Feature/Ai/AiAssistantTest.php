@@ -89,7 +89,7 @@ class AiAssistantTest extends TestCase
             ->postJson('/api/v1/users', [
                 'name' => 'Warehouse Staffer',
                 'email' => 'warehouse@acme.test',
-                'role' => 'Warehouse Staff',
+                'roles' => ['Warehouse Staff'],
                 'password' => 'RolePass123',
             ])->assertCreated();
 

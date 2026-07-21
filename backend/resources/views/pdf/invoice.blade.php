@@ -3,28 +3,36 @@
 <head>
     <meta charset="utf-8">
     <style>
-        body { font-family: DejaVu Sans, sans-serif; font-size: 12px; color: #1a1a1a; }
+        @page { margin: 0; }
+        body { font-family: DejaVu Sans, sans-serif; font-size: 12px; color: #1a1a1a; margin: 0; }
+        .page { padding: 28px 36px 20px 36px; }
+        .band { background-color: {{ $brand['primary'] }}; height: 10px; width: 100%; }
         .header { width: 100%; margin-bottom: 24px; }
         .header td { vertical-align: top; }
         .logo { max-width: 120px; max-height: 80px; }
-        .company-name { font-size: 16px; font-weight: bold; }
+        .company-name { font-size: 16px; font-weight: bold; color: {{ $brand['primary'] }}; }
         .muted { color: #666; }
-        .doc-title { font-size: 26px; font-weight: bold; text-transform: uppercase; text-align: right; }
+        .doc-title { font-size: 26px; font-weight: bold; text-transform: uppercase; text-align: right; color: {{ $brand['primary'] }}; }
         .doc-status { text-align: right; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #666; }
         .meta-table { width: 100%; margin: 20px 0; border-collapse: collapse; }
         .meta-table td { padding: 4px 0; }
-        .bill-to { margin-top: 10px; }
+        .bill-to { background-color: {{ $brand['primaryLighter'] }}; border-radius: 4px; padding: 12px 14px; }
         .bill-to-label { font-size: 10px; text-transform: uppercase; color: #666; margin-bottom: 4px; }
         .amounts { width: 100%; margin-top: 24px; border-collapse: collapse; }
         .amounts td { padding: 6px 0; }
         .amounts .label { text-align: right; padding-right: 16px; color: #444; }
         .amounts .value { text-align: right; width: 120px; }
-        .amounts .total-row .label, .amounts .total-row .value { font-weight: bold; font-size: 14px; border-top: 2px solid #1a1a1a; padding-top: 10px; }
+        .amounts .total-row td { background-color: {{ $brand['primaryLight'] }}; }
+        .amounts .total-row .label, .amounts .total-row .value { font-weight: bold; font-size: 14px; padding: 10px 0; }
+        .amounts .total-row .label { padding-left: 12px; border-radius: 4px 0 0 4px; }
+        .amounts .total-row .value { padding-right: 12px; border-radius: 0 4px 4px 0; }
         .notes { margin-top: 32px; padding-top: 12px; border-top: 1px solid #ddd; color: #444; }
-        .footer { margin-top: 48px; text-align: center; color: #999; font-size: 10px; }
+        .footer { margin-top: 40px; padding-top: 14px; border-top: 2px solid {{ $brand['primary'] }}; text-align: center; color: #999; font-size: 10px; }
     </style>
 </head>
 <body>
+    <div class="band"></div>
+    <div class="page">
     <table class="header">
         <tr>
             <td width="60%">
@@ -49,14 +57,16 @@
     <table class="meta-table">
         <tr>
             <td width="50%">
-                <div class="bill-to-label">Bill To</div>
-                <strong>{{ $invoice->customer->company_name }}</strong><br>
-                @if($invoice->customer->address)
-                    {{ $invoice->customer->address }}<br>
-                    {{ $invoice->customer->city }}, {{ $invoice->customer->country }}<br>
-                @endif
-                @if($invoice->customer->email) {{ $invoice->customer->email }}<br> @endif
-                @if($invoice->customer->phone) {{ $invoice->customer->phone }} @endif
+                <div class="bill-to">
+                    <div class="bill-to-label">Bill To</div>
+                    <strong>{{ $invoice->customer->company_name }}</strong><br>
+                    @if($invoice->customer->address)
+                        {{ $invoice->customer->address }}<br>
+                        {{ $invoice->customer->city }}, {{ $invoice->customer->country }}<br>
+                    @endif
+                    @if($invoice->customer->email) {{ $invoice->customer->email }}<br> @endif
+                    @if($invoice->customer->phone) {{ $invoice->customer->phone }} @endif
+                </div>
             </td>
             <td width="50%">
                 <table style="width:100%">
@@ -96,6 +106,7 @@
         {{ $company->name }}
         @if($company->registration_number) &middot; Reg. No. {{ $company->registration_number }} @endif
         @if($company->tax_number) &middot; Tax No. {{ $company->tax_number }} @endif
+    </div>
     </div>
 </body>
 </html>

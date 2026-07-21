@@ -63,7 +63,9 @@ export async function fetchPlatformMetrics(): Promise<PlatformMetrics> {
 }
 
 export async function fetchSystemHealth(): Promise<SystemHealth> {
-  const { data } = await api.get<SystemHealth>('/platform/system-health');
+  // Polled every 30s in the background — a transient failure shouldn't
+  // interrupt the user with a toast.
+  const { data } = await api.get<SystemHealth>('/platform/system-health', { skipErrorToast: true });
   return data;
 }
 

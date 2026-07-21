@@ -7,7 +7,7 @@ export interface InviteUserPayload {
   phone?: string;
   branch_id?: number | null;
   customer_id?: number | null;
-  role: string;
+  roles: string[];
   password: string;
 }
 
@@ -15,7 +15,7 @@ export interface UpdateUserPayload {
   name?: string;
   phone?: string;
   branch_id?: number | null;
-  role?: string;
+  roles?: string[];
 }
 
 export async function inviteUser(payload: InviteUserPayload): Promise<User> {

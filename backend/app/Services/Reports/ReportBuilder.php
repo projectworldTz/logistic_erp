@@ -5,11 +5,15 @@ namespace App\Services\Reports;
 use App\Enums\ExpenseStatus;
 use App\Enums\InvoiceStatus;
 use App\Models\Customer;
+use App\Models\Employee;
 use App\Models\Expense;
 use App\Models\Invoice;
+use App\Models\LeaveRequest;
 use App\Models\Lead;
+use App\Models\Payslip;
 use App\Models\Quotation;
 use App\Models\Shipment;
+use Illuminate\Support\Str;
 
 /**
  * Builds [headings, rows] pairs for each exportable report module. Shared by
@@ -31,11 +35,14 @@ class ReportBuilder
         'invoices' => 'finance.invoices.view',
         'expenses' => 'expenses.items.view',
         'profit' => 'reports.view',
+        'employees' => 'hr.employees.view',
+        'payslips' => 'hr.payslips.view.all',
+        'leave_requests' => 'hr.leave.view',
     ];
 
     public function build(string $module): array
     {
-        return $this->{'build'.ucfirst($module)}();
+        return $this->{'build'.Str::studly($module)}();
     }
 
     private function buildCustomers(): array
@@ -195,6 +202,65 @@ class ReportBuilder
 
         return [
             ['ID', 'Shipment #', 'Customer', 'Revenue', 'Cost', 'Profit'],
+            $rows,
+        ];
+    }
+
+    private function buildEmployees(): array
+    {
+        $rows = Employee::query()->with(['department', 'designation'])->get()->map(fn (Employee $e) => [
+            $e->id,
+            $e->employee_number,
+            $e->name,
+            $e->email,
+            $e->phone,
+            $e->department?->name,
+            $e->designation?->name,
+            $e->employment_type?->value,
+            $e->status?->value,
+            $e->hire_date?->toDateString(),
+        ])->all();
+
+        return [
+            ['ID', 'Employee #', 'Name', 'Email', 'Phone', 'Department', 'Designation', 'Employment Type', 'Status', 'Hire Date'],
+            $rows,
+        ];
+    }
+
+    private function buildPayslips(): array
+    {
+        $rows = Payslip::query()->with(['employee', 'payrollRun.period'])->get()->map(fn (Payslip $p) => [
+            $p->id,
+            $p->payslip_number,
+            $p->employee?->name,
+            $p->payrollRun->period?->name,
+            (float) $p->gross_pay,
+            (float) $p->total_deductions,
+            (float) $p->net_pay,
+            (float) $p->ytd_net,
+            $p->created_at?->toDateString(),
+        ])->all();
+
+        return [
+            ['ID', 'Payslip #', 'Employee', 'Period', 'Gross Pay', 'Total Deductions', 'Net Pay', 'YTD Net', 'Generated At'],
+            $rows,
+        ];
+    }
+
+    private function buildLeaveRequests(): array
+    {
+        $rows = LeaveRequest::query()->with(['employee', 'leaveType'])->get()->map(fn (LeaveRequest $l) => [
+            $l->id,
+            $l->employee?->name,
+            $l->leaveType?->name,
+            $l->start_date?->toDateString(),
+            $l->end_date?->toDateString(),
+            (float) $l->days,
+            $l->status->value,
+        ])->all();
+
+        return [
+            ['ID', 'Employee', 'Leave Type', 'Start Date', 'End Date', 'Days', 'Status'],
             $rows,
         ];
     }

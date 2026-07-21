@@ -25,13 +25,16 @@ export async function fetchTaxReport(): Promise<TaxReport> {
   return data;
 }
 
-export type ExportModule = 'customers' | 'leads' | 'quotations' | 'shipments' | 'invoices' | 'expenses' | 'profit';
+export type ExportModule = 'customers' | 'leads' | 'quotations' | 'shipments' | 'invoices' | 'expenses' | 'profit' | 'employees' | 'payslips' | 'leave_requests';
 export type ExportFormat = 'csv' | 'xlsx';
 
 export async function downloadReportExport(module: ExportModule, format: ExportFormat): Promise<Blob> {
+  // This page shows export failures inline (exportMutation.isError), so the
+  // global error toast is skipped here to avoid double-messaging.
   const { data } = await api.get(`/reports/export/${module}`, {
     params: { format },
     responseType: 'blob',
+    skipErrorToast: true,
   });
   return data;
 }

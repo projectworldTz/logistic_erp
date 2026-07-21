@@ -23,6 +23,7 @@ class StoreAttendanceRecordRequest extends FormRequest
 
         return [
             'employee_id' => ['required', Rule::exists('employees', 'id')->where('tenant_id', $tenantId)],
+            'shift_id' => ['nullable', Rule::exists('shifts', 'id')->where('tenant_id', $tenantId)],
             'date' => ['required', 'date'],
             'status' => ['sometimes', new Enum(AttendanceStatus::class)],
             'check_in' => ['nullable', 'date'],

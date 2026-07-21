@@ -2,7 +2,7 @@
   "title": "Watumiaji wa Kampuni",
   "inviteUser": "Alika Mtumiaji",
   "table": {
-    "role": "Wadhifa"
+    "role": "Majukumu"
   },
   "statuses": {
     "active": "Hai",
@@ -13,15 +13,16 @@
     "suspend": "Simamisha",
     "activate": "Wezesha",
     "invite": "Alika",
-    "changeRole": "Badilisha wadhifa"
+    "changeRole": "Badilisha wadhifa",
+    "editRoles": "Hariri majukumu"
   },
   "tooltips": {
-    "cantChangeOwnRole": "Huwezi kubadilisha wadhifa wako mwenyewe",
+    "cantChangeOwnRole": "Huwezi kubadilisha majukumu yako mwenyewe",
     "cantSuspendSelf": "Huwezi kusimamisha akaunti yako mwenyewe"
   },
   "errors": {
     "invite": "Imeshindwa kumwalika mtumiaji huyu. Kagua taarifa na ujaribu tena.",
-    "roleUpdate": "Imeshindwa kubadilisha wadhifa wa mtumiaji huyu.",
+    "roleUpdate": "Imeshindwa kubadilisha majukumu ya mtumiaji huyu.",
     "statusUpdate": "Imeshindwa kubadilisha hali ya mtumiaji huyu.",
     "noPermission": "Huna ruhusa ya kuona watumiaji wa kampuni."
   },
@@ -31,26 +32,26 @@
   "form": {
     "branch": "Tawi",
     "noBranch": "Hakuna",
-    "role": "Wadhifa",
+    "role": "Majukumu",
     "password": "Nenosiri",
     "passwordHelper": "Mpe mtumiaji mpya nenosiri hili"
   },
   "validation": {
     "nameRequired": "Jina linahitajika",
-    "roleRequired": "Chagua wadhifa"
+    "roleRequired": "Chagua angalau jukumu moja"
   },
   "suspendDialog": {
     "title": "Simamisha mtumiaji",
     "message": "Una uhakika unataka kumsimamisha {{name}}? Atapoteza uwezo wa kuingia mara moja."
   },
   "roleDialog": {
-    "title": "Badilisha wadhifa",
-    "message": "Una uhakika unataka kubadilisha wadhifa wa {{name}} kuwa \"{{role}}\"? Hii itabadilisha mara moja anachoweza kufikia.",
-    "confirm": "Badilisha wadhifa"
+    "title": "Hariri Majukumu",
+    "message": "Chagua kila jukumu ambalo {{name}} anapaswa kuwa nalo. Mtumiaji anaweza kuwa na zaidi ya jukumu moja kwa wakati mmoja — ufikiaji ni muungano wa majukumu yote yaliyochaguliwa.",
+    "confirm": "Hifadhi majukumu"
   },
   "toast": {
     "invited": "Mtumiaji amealikwa.",
-    "roleUpdated": "Wadhifa wa mtumiaji umesasishwa.",
+    "roleUpdated": "Majukumu ya mtumiaji yamesasishwa.",
     "suspended": "Mtumiaji amesimamishwa.",
     "activated": "Mtumiaji amewezeshwa."
   }

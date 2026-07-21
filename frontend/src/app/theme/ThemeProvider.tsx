@@ -39,14 +39,15 @@ export function AppThemeProvider({ children }: { children: ReactNode }) {
           mode,
           primary: { main: '#1a56db' },
           secondary: { main: '#0f766e' },
-          // A near-black neutral reads as flat/dull — a subtle blue-slate tint
-          // keeps dark mode feeling intentional and ties it to the brand blue.
-          ...(mode === 'dark' && {
-            background: {
-              default: '#0f172a',
-              paper: '#182338',
-            },
-          }),
+          // A flat near-black (dark) or stark-white (light) neutral reads as
+          // dull/unfinished — a subtle blue-slate tint in both modes keeps
+          // the canvas feeling intentional and ties it to the brand blue.
+          // In light mode the canvas is a touch darker than card surfaces so
+          // cards read as elevated, mirroring dark mode's own relationship.
+          background:
+            mode === 'dark'
+              ? { default: '#0f172a', paper: '#182338' }
+              : { default: '#eef1f7', paper: '#ffffff' },
         },
         shape: { borderRadius: 12 },
         typography: {

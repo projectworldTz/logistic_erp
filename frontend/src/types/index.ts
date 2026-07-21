@@ -520,6 +520,42 @@ export interface Department {
   created_at: string;
 }
 
+export type EmploymentType =
+  | 'full_time'
+  | 'part_time'
+  | 'contract'
+  | 'intern'
+  | 'permanent'
+  | 'temporary'
+  | 'casual'
+  | 'consultant'
+  | 'driver'
+  | 'commission_based'
+  | 'daily_paid';
+
+export type EmployeeStatusValue = 'active' | 'on_leave' | 'terminated' | 'probation' | 'suspended';
+
+export type DesignationCategory =
+  | 'management'
+  | 'clearing_and_customs'
+  | 'forwarding_and_logistics'
+  | 'transport_and_fleet'
+  | 'warehouse_and_cargo'
+  | 'finance_and_accounts'
+  | 'sales_and_crm'
+  | 'administration_and_support'
+  | 'other';
+
+export interface Designation {
+  id: number;
+  name: string;
+  category: DesignationCategory;
+  description: string | null;
+  is_active: boolean;
+  employees_count?: number;
+  created_at: string;
+}
+
 export interface Employee {
   id: number;
   employee_number: string | null;
@@ -529,16 +565,124 @@ export interface Employee {
   branch?: Branch;
   user_id: number | null;
   user?: User;
+  designation_id: number | null;
+  designation?: Designation;
+  reporting_manager_id: number | null;
+  reporting_manager?: Employee;
   name: string;
+  first_name: string | null;
+  middle_name: string | null;
+  last_name: string | null;
+  gender: string | null;
+  date_of_birth: string | null;
+  nationality: string | null;
+  marital_status: string | null;
+  photo_path: string | null;
   email: string | null;
   phone: string | null;
+  alternative_phone: string | null;
+  residential_address: string | null;
+  emergency_contact_name: string | null;
+  emergency_contact_phone: string | null;
   job_title: string | null;
-  employment_type: 'full_time' | 'part_time' | 'contract' | 'intern';
-  status: 'active' | 'on_leave' | 'terminated';
+  employee_category: string | null;
+  employment_type: EmploymentType;
+  status: EmployeeStatusValue;
   hire_date: string;
+  confirmation_date: string | null;
+  probation_end_date: string | null;
   termination_date: string | null;
-  salary: string | null;
+  work_location: string | null;
+  payroll_eligible: boolean;
+  notice_period_days: number | null;
+  pay_currency: string | null;
+  preferred_payment_method: 'bank_transfer' | 'mobile_money' | 'cash' | 'cheque';
+  statutory_details: Record<string, string> | null;
   notes: string | null;
+  created_at: string;
+}
+
+export interface EmployeeSalary {
+  id: number;
+  employee_id: number;
+  salary: string | null;
+  pay_currency: string | null;
+  preferred_payment_method: string;
+  bank_name: string | null;
+  bank_account_name: string | null;
+  bank_account_number: string | null;
+  bank_branch_name: string | null;
+  mobile_money_provider: string | null;
+  mobile_money_number: string | null;
+  national_id_number: string | null;
+}
+
+export type EmployeeDocumentType =
+  | 'employment_contract'
+  | 'national_id'
+  | 'passport'
+  | 'academic_certificate'
+  | 'professional_certificate'
+  | 'driving_license'
+  | 'work_permit'
+  | 'medical_certificate'
+  | 'tax_document'
+  | 'pension_registration'
+  | 'bank_information'
+  | 'warning_letter'
+  | 'promotion_letter'
+  | 'training_certificate'
+  | 'other';
+
+export type EmployeeDocumentStatus = 'pending_verification' | 'verified' | 'rejected' | 'valid' | 'expiring_soon' | 'expired';
+
+export interface EmployeeDocument {
+  id: number;
+  employee_id: number;
+  document_type: EmployeeDocumentType;
+  file_name: string;
+  file_size: number | null;
+  mime_type: string | null;
+  issue_date: string | null;
+  expiry_date: string | null;
+  status: EmployeeDocumentStatus;
+  notes: string | null;
+  uploaded_by?: User;
+  verified_by?: User;
+  verified_at: string | null;
+  version: number;
+  parent_document_id: number | null;
+  download_url: string;
+  created_at: string;
+}
+
+export type ContractStatus = 'draft' | 'pending_approval' | 'active' | 'expired' | 'terminated' | 'renewed';
+export type PayFrequency = 'monthly' | 'biweekly' | 'weekly' | 'daily' | 'hourly';
+
+export interface EmployeeContract {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  contract_number: string | null;
+  employment_type: EmploymentType;
+  effective_date: string;
+  expiry_date: string | null;
+  basic_salary: string;
+  pay_frequency: PayFrequency;
+  working_hours_per_week: number | null;
+  workdays: string[] | null;
+  probation_period_days: number | null;
+  notice_period_days: number | null;
+  benefits: string | null;
+  overtime_eligible: boolean;
+  commission_eligible: boolean;
+  leave_entitlement_days: number | null;
+  status: ContractStatus;
+  created_by?: User;
+  approved_by?: User;
+  renewed_from_contract_id: number | null;
+  notes: string | null;
+  approval_request?: ApprovalRequest;
   created_at: string;
 }
 
@@ -546,11 +690,587 @@ export interface AttendanceRecord {
   id: number;
   employee_id: number;
   employee?: Employee;
+  shift_id: number | null;
+  shift?: Shift;
   date: string;
   status: 'present' | 'absent' | 'late' | 'on_leave' | 'half_day';
+  source: 'manual' | 'import' | 'mobile' | 'biometric' | 'gps';
   check_in: string | null;
   check_out: string | null;
+  late_minutes: number | null;
+  early_departure_minutes: number | null;
+  is_weekend: boolean;
+  is_holiday: boolean;
+  approved_by?: User;
+  approved_at: string | null;
   notes: string | null;
+  created_at: string;
+}
+
+export interface Shift {
+  id: number;
+  name: string;
+  start_time: string;
+  end_time: string;
+  break_minutes: number;
+  grace_minutes: number;
+  overtime_threshold_hours: string | null;
+  night_allowance_amount: string | null;
+  weekend_rules: Record<string, unknown> | null;
+  branch_id: number | null;
+  branch?: Branch;
+  department_id: number | null;
+  department?: Department;
+  is_active: boolean;
+  created_at: string;
+}
+
+export interface EmployeeShift {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  shift_id: number;
+  shift?: Shift;
+  effective_date: string;
+  end_date: string | null;
+  created_at: string;
+}
+
+export interface Timesheet {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  date: string;
+  start_time: string | null;
+  end_time: string | null;
+  total_hours: string;
+  overtime_hours: string;
+  customer_id: number | null;
+  customer?: Customer;
+  shipment_id: number | null;
+  clearing_file_id: number | null;
+  freight_booking_id: number | null;
+  department_id: number | null;
+  department?: Department;
+  activity: string | null;
+  notes: string | null;
+  status: 'pending' | 'approved' | 'rejected';
+  approved_by?: User;
+  created_at: string;
+}
+
+export interface LeaveType {
+  id: number;
+  name: string;
+  is_paid: boolean;
+  accrual_rule: 'none' | 'monthly' | 'annual';
+  default_annual_days: number | null;
+  carry_forward_max_days: number | null;
+  is_active: boolean;
+  created_at: string;
+}
+
+export interface LeaveBalance {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  leave_type_id: number;
+  leave_type?: LeaveType;
+  year: number;
+  entitled_days: string;
+  used_days: string;
+  carried_forward_days: string;
+  available_days: number;
+}
+
+export interface LeaveRequest {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  leave_type_id: number;
+  leave_type?: LeaveType;
+  start_date: string;
+  end_date: string;
+  days: string;
+  half_day: boolean;
+  reason: string | null;
+  status: 'pending' | 'approved' | 'rejected' | 'cancelled';
+  attachment_path: string | null;
+  created_by?: User;
+  approved_by?: User;
+  rejection_reason: string | null;
+  approval_request?: ApprovalRequest;
+  created_at: string;
+}
+
+export interface PublicHoliday {
+  id: number;
+  date: string;
+  name: string;
+  branch_id: number | null;
+  branch?: Branch;
+  created_at: string;
+}
+
+export interface PayrollComponent {
+  id: number;
+  code: string;
+  name: string;
+  type: 'earning' | 'deduction' | 'employer_contribution';
+  calculation_method: 'fixed' | 'percentage' | 'formula';
+  amount: string | null;
+  percentage: string | null;
+  percentage_base: 'basic_salary' | 'gross_pay' | null;
+  formula_notes: string | null;
+  is_taxable: boolean;
+  is_pensionable: boolean;
+  is_recurring: boolean;
+  branch_id: number | null;
+  branch?: Branch;
+  department_id: number | null;
+  department?: Department;
+  designation_category: string | null;
+  effective_date: string;
+  end_date: string | null;
+  is_active: boolean;
+  sort_order: number;
+  created_at: string;
+}
+
+export interface EmployeePayrollComponent {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  payroll_component_id: number;
+  payroll_component?: PayrollComponent;
+  amount: string | null;
+  percentage: string | null;
+  effective_date: string;
+  end_date: string | null;
+  is_active: boolean;
+  notes: string | null;
+  created_at: string;
+}
+
+export interface StatutoryTaxBand {
+  id: number;
+  statutory_rule_set_id: number;
+  lower_bound: string;
+  upper_bound: string | null;
+  rate: string;
+  band_order: number;
+}
+
+export interface StatutoryContributionRule {
+  id: number;
+  statutory_rule_set_id: number;
+  code: string;
+  name: string;
+  employee_rate: string | null;
+  employer_rate: string | null;
+  min_base: string | null;
+  max_base: string | null;
+  is_active: boolean;
+  sort_order: number;
+}
+
+export interface StatutoryRuleSet {
+  id: number;
+  name: string;
+  country_code: string;
+  description: string | null;
+  is_default: boolean;
+  is_active: boolean;
+  tax_bands?: StatutoryTaxBand[];
+  contribution_rules?: StatutoryContributionRule[];
+  created_at: string;
+}
+
+export interface PayrollSettings {
+  id: number;
+  statutory_rule_set_id: number | null;
+  statutory_rule_set?: StatutoryRuleSet;
+  default_pay_frequency: string;
+  overtime_multiplier: string;
+  standard_working_days_per_month: number;
+  standard_hours_per_day: number;
+  salary_expense_account_id: number | null;
+  allowance_expense_account_id: number | null;
+  overtime_expense_account_id: number | null;
+  bonus_expense_account_id: number | null;
+  employer_contribution_expense_account_id: number | null;
+  payroll_payable_account_id: number | null;
+  tax_payable_account_id: number | null;
+  statutory_contributions_payable_account_id: number | null;
+  loan_receivable_account_id: number | null;
+  advance_receivable_account_id: number | null;
+  other_deductions_payable_account_id: number | null;
+  bank_cash_account_id: number | null;
+}
+
+export interface LoanSchedule {
+  id: number;
+  installment_number: number;
+  due_date: string;
+  amount: string;
+  status: 'pending' | 'paid' | 'skipped';
+  paid_in_payroll_run_id: number | null;
+}
+
+export interface EmployeeLoan {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  loan_number: string | null;
+  principal_amount: string;
+  interest_rate: string;
+  number_of_installments: number;
+  installment_amount: string;
+  start_date: string;
+  status: 'draft' | 'pending_approval' | 'active' | 'completed' | 'rejected' | 'cancelled';
+  reason: string | null;
+  disbursed_at: string | null;
+  schedules?: LoanSchedule[];
+  approval_request?: ApprovalRequest;
+  created_at: string;
+}
+
+export interface SalaryAdvance {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  advance_number: string | null;
+  amount: string;
+  number_of_installments: number;
+  installment_amount: string;
+  request_date: string;
+  status: 'draft' | 'pending_approval' | 'active' | 'completed' | 'rejected' | 'cancelled';
+  reason: string | null;
+  disbursed_at: string | null;
+  schedules?: LoanSchedule[];
+  approval_request?: ApprovalRequest;
+  created_at: string;
+}
+
+export interface OvertimeRequest {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  date: string;
+  hours: string;
+  reason: string | null;
+  status: 'pending' | 'approved' | 'rejected';
+  created_at: string;
+}
+
+export interface PayrollLineItem {
+  id: number;
+  label: string;
+  amount: string;
+  source?: string;
+  type?: string;
+  is_taxable?: boolean;
+  is_pensionable?: boolean;
+  payroll_component_id: number | null;
+}
+
+export interface PayrollRunEmployee {
+  id: number;
+  payroll_run_id: number;
+  employee_id: number;
+  employee?: Employee;
+  basic_salary: string;
+  gross_pay: string;
+  total_deductions: string;
+  total_employer_contributions: string;
+  net_pay: string;
+  status: 'included' | 'excluded' | 'exception';
+  exception_notes: string | null;
+  earnings?: PayrollLineItem[];
+  deductions?: PayrollLineItem[];
+  employer_contributions?: PayrollLineItem[];
+}
+
+export interface PayrollRun {
+  id: number;
+  payroll_period_id: number;
+  period?: PayrollPeriod;
+  run_number: number;
+  status: 'draft' | 'calculated' | 'pending_approval' | 'approved' | 'rejected' | 'finalized';
+  statutory_rule_set_id: number | null;
+  total_gross: string;
+  total_deductions: string;
+  total_net: string;
+  total_employer_contributions: string;
+  total_employer_cost: string;
+  calculated_at: string | null;
+  approved_at: string | null;
+  finalized_at: string | null;
+  journal_entry_id: number | null;
+  posted_at: string | null;
+  payslip_count?: number;
+  salary_payment_batch?: SalaryPaymentBatch | null;
+  employee_count?: number;
+  exception_count?: number;
+  run_employees?: PayrollRunEmployee[];
+  latest_approval_request?: ApprovalRequest;
+  notes: string | null;
+  created_at: string;
+}
+
+export interface Payslip {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  payroll_run_id: number;
+  payslip_number: string | null;
+  gross_pay: string;
+  total_deductions: string;
+  net_pay: string;
+  total_employer_contributions: string;
+  ytd_gross: string;
+  ytd_deductions: string;
+  ytd_net: string;
+  period?: { name: string; period_start: string; period_end: string; payment_date: string };
+  created_at: string;
+}
+
+export interface SalaryPayment {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  amount: string;
+  payment_method: string;
+  bank_name: string | null;
+  bank_account_number: string | null;
+  mobile_money_provider: string | null;
+  mobile_money_number: string | null;
+  status: 'pending' | 'paid' | 'failed';
+  reference: string | null;
+  paid_at: string | null;
+}
+
+export interface SalaryPaymentBatch {
+  id: number;
+  payroll_run_id: number;
+  batch_number: string | null;
+  payment_date: string;
+  status: 'draft' | 'exported' | 'completed';
+  total_amount: string;
+  payments?: SalaryPayment[];
+  created_at: string;
+}
+
+export interface HrDashboardSummary {
+  headcount: {
+    total: number;
+    by_department: Record<string, number>;
+    by_status: Record<string, number>;
+  };
+  attendance: {
+    today: Record<string, number>;
+  };
+  leave: {
+    pending_requests: number;
+  };
+  expiring: {
+    contracts: number;
+    documents: number;
+  };
+  payroll: {
+    last_run: {
+      period_name: string | null;
+      total_gross: string;
+      total_deductions: string;
+      total_net: string;
+      total_employer_cost: string;
+    } | null;
+    pending_approval_runs: number;
+    trend: { period_name: string; total_net: string; total_employer_cost: string }[];
+  };
+  loans: {
+    pending_loans: number;
+    pending_advances: number;
+    outstanding_loan_balance: string;
+  };
+  recruitment: {
+    open_vacancies: number;
+    candidates_in_pipeline: number;
+    total_candidates: number;
+  };
+  exits: {
+    in_progress: number;
+    open_disciplinary: number;
+  };
+}
+
+export interface JobVacancy {
+  id: number;
+  title: string;
+  department_id: number | null;
+  department?: Department;
+  designation_id: number | null;
+  designation?: Designation;
+  branch_id: number | null;
+  description: string | null;
+  requirements: string | null;
+  employment_type: string | null;
+  number_of_openings: number;
+  status: 'open' | 'on_hold' | 'filled' | 'closed';
+  posted_date: string | null;
+  closing_date: string | null;
+  applications_count?: number;
+  created_at: string;
+}
+
+export interface Candidate {
+  id: number;
+  first_name: string;
+  last_name: string;
+  name: string;
+  email: string | null;
+  phone: string | null;
+  source: string | null;
+  has_resume: boolean;
+  notes: string | null;
+  created_at: string;
+}
+
+export interface Interview {
+  id: number;
+  job_application_id: number;
+  interviewer_id: number | null;
+  interviewer?: { id: number; name: string };
+  scheduled_at: string;
+  mode: 'in_person' | 'phone' | 'video';
+  location: string | null;
+  status: 'scheduled' | 'completed' | 'cancelled' | 'no_show';
+  feedback: string | null;
+  rating: string | null;
+  created_at: string;
+}
+
+export interface JobApplication {
+  id: number;
+  job_vacancy_id: number;
+  vacancy?: JobVacancy;
+  candidate_id: number;
+  candidate?: Candidate;
+  applied_date: string;
+  status: 'applied' | 'screening' | 'interview' | 'offer' | 'hired' | 'rejected' | 'withdrawn';
+  notes: string | null;
+  converted_employee_id: number | null;
+  interviews?: Interview[];
+  created_at: string;
+}
+
+export interface OnboardingTask {
+  id: number;
+  title: string;
+  description: string | null;
+  is_completed: boolean;
+  completed_at: string | null;
+  due_date: string | null;
+  assigned_to: number | null;
+  sort_order: number;
+}
+
+export interface OnboardingChecklist {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  status: 'in_progress' | 'completed';
+  started_at: string | null;
+  completed_at: string | null;
+  tasks?: OnboardingTask[];
+  progress?: number;
+  created_at: string;
+}
+
+export interface PerformanceReview {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  reviewer_id: number | null;
+  reviewer?: { id: number; name: string };
+  review_period_start: string;
+  review_period_end: string;
+  review_date: string;
+  overall_rating: string | null;
+  kpi_scores: Record<string, number> | null;
+  strengths: string | null;
+  areas_for_improvement: string | null;
+  goals: string | null;
+  comments: string | null;
+  employee_comments: string | null;
+  status: 'draft' | 'submitted' | 'acknowledged';
+  acknowledged_at: string | null;
+  created_at: string;
+}
+
+export interface DisciplinaryRecord {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  incident_date: string;
+  category: string;
+  severity: string;
+  description: string;
+  action_taken: string | null;
+  issued_by: number | null;
+  issuedBy?: { id: number; name: string };
+  status: 'draft' | 'issued' | 'acknowledged' | 'appealed' | 'resolved';
+  employee_response: string | null;
+  resolved_at: string | null;
+  created_at: string;
+}
+
+export interface EmployeeAsset {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  asset_type: string;
+  asset_name: string;
+  serial_number: string | null;
+  assigned_date: string;
+  return_date: string | null;
+  condition_at_assignment: string | null;
+  condition_at_return: string | null;
+  status: 'assigned' | 'returned' | 'lost' | 'damaged';
+  notes: string | null;
+  created_at: string;
+}
+
+export interface ExitRecord {
+  id: number;
+  employee_id: number;
+  employee?: Employee;
+  exit_type: string;
+  notice_date: string;
+  last_working_date: string;
+  reason: string | null;
+  exit_interview_notes: string | null;
+  status: 'initiated' | 'in_progress' | 'cleared' | 'completed';
+  assets_cleared: boolean;
+  handover_completed: boolean;
+  unused_leave_days: string | null;
+  leave_payout_amount: string | null;
+  outstanding_loan_balance: string | null;
+  outstanding_advance_balance: string | null;
+  final_settlement_amount: string | null;
+  completed_at: string | null;
+  created_at: string;
+}
+
+export interface PayrollPeriod {
+  id: number;
+  name: string;
+  period_start: string;
+  period_end: string;
+  payment_date: string;
+  pay_frequency: string;
+  is_locked: boolean;
+  latest_run?: PayrollRun | null;
   created_at: string;
 }
 

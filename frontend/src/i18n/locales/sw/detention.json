@@ -17,10 +17,10 @@
     }
   },
   "pendingCharges": {
-    "title": "Ada Zinazosubiri",
+    "title": "Ada",
     "empty": {
-      "title": "Hakuna ada zinazosubiri",
-      "description": "Ada zilizohesabiwa zinazosubiri ankara au msamaha zitaonekana hapa."
+      "title": "Hakuna ada bado",
+      "description": "Ada zilizohesabiwa — zinazosubiri, zilizotolewa ankara, au zilizosamehewa — zitaonekana hapa."
     }
   },
   "table": {
@@ -30,12 +30,19 @@
     "freeDaysRemaining": "Siku Huru Zilizobaki",
     "chargeableDays": "Siku za Kutozwa",
     "accruedAmount": "Kiasi Kilicholimbikizwa",
-    "risk": "Hali"
+    "risk": "Hali",
+    "status": "Hali",
+    "invoice": "Ankara"
   },
   "risk": {
     "within_free": "Ndani ya Muda Huru",
     "at_risk": "Hatarini",
     "accruing": "Inalimbikiza"
+  },
+  "statuses": {
+    "pending": "Inasubiri",
+    "invoiced": "Imetolewa Ankara",
+    "waived": "Imesamehewa"
   },
   "actions": {
     "calculate": "Hesabu na Rekodi Ada",
@@ -49,6 +56,8 @@
   },
   "toast": {
     "calculated": "Ada ya kushikilia kontena imehesabiwa.",
+    "withinFreeDays": "Kontena hii bado ipo ndani ya siku za bure — hakuna ada ya kushikilia bado.",
+    "noNewCharge": "Hakuna ada mpya — siku zote zinazotozwa hadi leo tayari zimehesabiwa.",
     "waived": "Ada ya kushikilia kontena imesamehewa.",
     "invoiced": "Ankara imetengenezwa kutoka kwa ada ya kushikilia kontena.",
     "rateCardCreated": "Kadi ya viwango imeundwa.",

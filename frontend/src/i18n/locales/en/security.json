@@ -1,5 +1,18 @@
 {
   "title": "Account Security",
+  "changePassword": {
+    "title": "Change password",
+    "description": "Choose a strong password you don't use anywhere else.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "submit": "Change password",
+    "submitting": "Changing…",
+    "success": "Password changed.",
+    "incorrectCurrentPassword": "That current password is incorrect.",
+    "passwordsDontMatch": "Passwords don't match.",
+    "minLength": "Must be at least 8 characters."
+  },
   "twoFactor": {
     "title": "Two-factor authentication",
     "enabled": "Enabled",

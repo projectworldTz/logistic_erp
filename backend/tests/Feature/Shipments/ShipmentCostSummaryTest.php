@@ -152,7 +152,7 @@ class ShipmentCostSummaryTest extends TestCase
             ->postJson('/api/v1/users', [
                 'name' => 'Warehouse Staffer',
                 'email' => 'staff@acme.test',
-                'role' => 'Warehouse Staff',
+                'roles' => ['Warehouse Staff'],
                 'password' => 'StaffPass123',
             ])->assertCreated();
 

@@ -1,13 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Button,
-  Chip,
   CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   IconButton,
+  Link,
   MenuItem,
   Paper,
   Select,
@@ -29,11 +29,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
 import { z } from 'zod';
 import {
   createEmployee,
   deleteEmployee,
   fetchDepartments,
+  fetchDesignations,
   fetchEmployees,
   updateEmployee,
 } from '../../../../api/endpoints/hr';
@@ -41,27 +43,25 @@ import { fetchBranches } from '../../../../api/endpoints/dashboard';
 import type { Employee } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
+import { StatusChip } from '../../../../components/common/StatusChip';
 import { useToast } from '../../../../hooks/useToast';
 import { HrTabs } from './HrTabs';
 
-const STATUS_COLOR: Record<Employee['status'], 'success' | 'warning' | 'error'> = {
-  active: 'success',
-  on_leave: 'warning',
-  terminated: 'error',
-};
-
-const STATUS_OPTIONS: Employee['status'][] = ['active', 'on_leave', 'terminated'];
-const EMPLOYMENT_TYPE_OPTIONS: Employee['employment_type'][] = ['full_time', 'part_time', 'contract', 'intern'];
+const STATUS_OPTIONS: Employee['status'][] = ['active', 'on_leave', 'probation', 'suspended', 'terminated'];
+const EMPLOYMENT_TYPE_OPTIONS: Employee['employment_type'][] = [
+  'permanent', 'full_time', 'part_time', 'contract', 'temporary', 'casual', 'intern', 'consultant', 'driver', 'commission_based', 'daily_paid',
+];
 
 function buildSchema(t: (key: string) => string) {
   return z.object({
     department_id: z.number().optional(),
     branch_id: z.number().optional(),
+    designation_id: z.number().optional(),
     name: z.string().min(1, t('validation.nameRequired')).max(255),
     email: z.string().email(t('validation.invalidEmail')).optional().or(z.literal('')),
     phone: z.string().optional(),
     job_title: z.string().optional(),
-    employment_type: z.enum(['full_time', 'part_time', 'contract', 'intern']),
+    employment_type: z.enum(EMPLOYMENT_TYPE_OPTIONS as [Employee['employment_type'], ...Employee['employment_type'][]]),
     hire_date: z.string().min(1, t('validation.hireDateRequired')),
   });
 }
@@ -80,6 +80,7 @@ export function EmployeesPage() {
 
   const { data, isLoading } = useQuery({ queryKey: ['hr', 'employees'], queryFn: () => fetchEmployees() });
   const { data: departments } = useQuery({ queryKey: ['hr', 'departments'], queryFn: fetchDepartments });
+  const { data: designations } = useQuery({ queryKey: ['hr', 'designations'], queryFn: () => fetchDesignations() });
   const { data: branches } = useQuery({ queryKey: ['branches'], queryFn: fetchBranches });
 
   const invalidate = () => queryClient.invalidateQueries({ queryKey: ['hr', 'employees'] });
@@ -142,6 +143,7 @@ export function EmployeesPage() {
     reset({
       department_id: employee.department_id ?? undefined,
       branch_id: employee.branch_id ?? undefined,
+      designation_id: employee.designation_id ?? undefined,
       name: employee.name,
       email: employee.email ?? '',
       phone: employee.phone ?? '',
@@ -202,8 +204,12 @@ export function EmployeesPage() {
                 {rows.map((employee) => (
                   <TableRow key={employee.id}>
                     <TableCell>{employee.employee_number ?? '—'}</TableCell>
-                    <TableCell>{employee.name}</TableCell>
-                    <TableCell>{employee.job_title ?? '—'}</TableCell>
+                    <TableCell>
+                      <Link component={RouterLink} to={`/app/hr/employees/${employee.id}`} underline="hover">
+                        {employee.name}
+                      </Link>
+                    </TableCell>
+                    <TableCell>{employee.designation?.name ?? employee.job_title ?? '—'}</TableCell>
                     <TableCell>{employee.department?.name ?? '—'}</TableCell>
                     <TableCell>{t(`employmentTypes.${employee.employment_type}`)}</TableCell>
                     <TableCell>
@@ -213,9 +219,7 @@ export function EmployeesPage() {
                         onChange={(e) =>
                           statusMutation.mutate({ id: employee.id, status: e.target.value as Employee['status'] })
                         }
-                        renderValue={(value) => (
-                          <Chip label={t(`statuses.${value}`)} size="small" color={STATUS_COLOR[value as Employee['status']]} />
-                        )}
+                        renderValue={(value) => <StatusChip status={value as string} label={t(`statuses.${value}`)} />}
                       >
                         {STATUS_OPTIONS.map((status) => (
                           <MenuItem key={status} value={status}>
@@ -300,6 +304,26 @@ export function EmployeesPage() {
                     {branches?.map((branch) => (
                       <MenuItem key={branch.id} value={branch.id}>
                         {branch.name}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                )}
+              />
+              <Controller
+                name="designation_id"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label={t('employees.form.designation')}
+                    select
+                    fullWidth
+                    value={field.value ?? ''}
+                    onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
+                  >
+                    <MenuItem value="">—</MenuItem>
+                    {designations?.data.map((designation) => (
+                      <MenuItem key={designation.id} value={designation.id}>
+                        {designation.name}
                       </MenuItem>
                     ))}
                   </TextField>

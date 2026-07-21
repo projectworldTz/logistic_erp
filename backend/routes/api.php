@@ -40,10 +40,21 @@ Route::prefix('v1')->group(function () {
     Route::get('public/track/{trackingCode}', [Public\ShipmentTrackingController::class, 'show'])->middleware('throttle:30,1');
     Route::get('public/verify/release-order/{token}', [Public\ReleaseOrderVerificationController::class, 'show'])->middleware('throttle:30,1');
     Route::get('public/verify/delivery-note/{trackingCode}', [Public\DeliveryNoteVerificationController::class, 'show'])->middleware('throttle:30,1');
+    Route::get('public/verify/payslip/{code}', [Public\PayslipVerificationController::class, 'show'])->middleware('throttle:30,1');
+
+    // Signed, expiring download link for a private employee document — the
+    // signature itself is the authorization (same model as an S3 presigned
+    // URL), so it deliberately sits outside the auth:sanctum/tenant group;
+    // only ever minted by EmployeeDocumentResource for a document the
+    // requesting user was already tenant-scope-authorized to see.
+    Route::get('employee-documents/{employeeDocument}/download', [Hr\EmployeeDocumentController::class, 'download'])
+        ->name('employee-documents.download')
+        ->middleware(['signed', 'throttle:30,1']);
 
     Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
         Route::post('auth/logout', [AuthController::class, 'logout']);
         Route::get('auth/me', [AuthController::class, 'me']);
+        Route::put('auth/password', [AuthController::class, 'changePassword']);
 
         Route::post('auth/2fa/setup', [TwoFactorController::class, 'setup']);
         Route::post('auth/2fa/enable', [TwoFactorController::class, 'enable']);
@@ -233,6 +244,7 @@ Route::prefix('v1')->group(function () {
             });
 
             Route::prefix('hr')->group(function () {
+                Route::get('dashboard', [Hr\HrDashboardController::class, 'index'])->middleware('permission:hr.employees.view');
                 Route::get('departments', [Hr\DepartmentController::class, 'index'])->middleware('permission:hr.departments.view');
                 Route::post('departments', [Hr\DepartmentController::class, 'store'])->middleware('permission:hr.departments.manage');
                 Route::get('departments/{department}', [Hr\DepartmentController::class, 'show'])->middleware('permission:hr.departments.view');
@@ -245,11 +257,223 @@ Route::prefix('v1')->group(function () {
                 Route::put('employees/{employee}', [Hr\EmployeeController::class, 'update'])->middleware('permission:hr.employees.manage');
                 Route::delete('employees/{employee}', [Hr\EmployeeController::class, 'destroy'])->middleware('permission:hr.employees.manage');
 
+                // Separate from hr.employees.view — a manager can see the employee
+                // record without seeing salary/bank/national-ID.
+                Route::get('employees/{employee}/salary', [Hr\EmployeeSalaryController::class, 'show'])->middleware('permission:hr.employees.salary.view');
+
+                Route::get('employees/{employee}/documents', [Hr\EmployeeDocumentController::class, 'index'])->middleware('permission:hr.employees.documents.view');
+                Route::post('employees/{employee}/documents', [Hr\EmployeeDocumentController::class, 'store'])->middleware('permission:hr.employees.documents.manage');
+                Route::get('employee-documents/{employeeDocument}', [Hr\EmployeeDocumentController::class, 'show'])->middleware('permission:hr.employees.documents.view');
+                Route::post('employee-documents/{employeeDocument}/verify', [Hr\EmployeeDocumentController::class, 'verify'])->middleware('permission:hr.employees.documents.manage');
+                Route::post('employee-documents/{employeeDocument}/reject', [Hr\EmployeeDocumentController::class, 'reject'])->middleware('permission:hr.employees.documents.manage');
+                Route::delete('employee-documents/{employeeDocument}', [Hr\EmployeeDocumentController::class, 'destroy'])->middleware('permission:hr.employees.documents.manage');
+
+                Route::get('designations', [Hr\DesignationController::class, 'index'])->middleware('permission:hr.designations.view');
+                Route::post('designations', [Hr\DesignationController::class, 'store'])->middleware('permission:hr.designations.manage');
+                Route::get('designations/{designation}', [Hr\DesignationController::class, 'show'])->middleware('permission:hr.designations.view');
+                Route::put('designations/{designation}', [Hr\DesignationController::class, 'update'])->middleware('permission:hr.designations.manage');
+                Route::delete('designations/{designation}', [Hr\DesignationController::class, 'destroy'])->middleware('permission:hr.designations.manage');
+
+                Route::get('contracts', [Hr\EmployeeContractController::class, 'index'])->middleware('permission:hr.contracts.view');
+                Route::post('contracts', [Hr\EmployeeContractController::class, 'store'])->middleware('permission:hr.contracts.manage');
+                Route::get('contracts/{employeeContract}', [Hr\EmployeeContractController::class, 'show'])->middleware('permission:hr.contracts.view');
+                Route::put('contracts/{employeeContract}', [Hr\EmployeeContractController::class, 'update'])->middleware('permission:hr.contracts.manage');
+                Route::delete('contracts/{employeeContract}', [Hr\EmployeeContractController::class, 'destroy'])->middleware('permission:hr.contracts.manage');
+                Route::post('contracts/{employeeContract}/submit', [Hr\EmployeeContractController::class, 'submit'])->middleware('permission:hr.contracts.manage');
+                Route::post('contracts/{employeeContract}/approve', [Hr\EmployeeContractController::class, 'approve'])->middleware('permission:hr.contracts.view');
+                Route::post('contracts/{employeeContract}/reject', [Hr\EmployeeContractController::class, 'reject'])->middleware('permission:hr.contracts.view');
+
                 Route::get('attendance', [Hr\AttendanceRecordController::class, 'index'])->middleware('permission:hr.attendance.view');
                 Route::post('attendance', [Hr\AttendanceRecordController::class, 'store'])->middleware('permission:hr.attendance.manage');
                 Route::get('attendance/{attendanceRecord}', [Hr\AttendanceRecordController::class, 'show'])->middleware('permission:hr.attendance.view');
                 Route::put('attendance/{attendanceRecord}', [Hr\AttendanceRecordController::class, 'update'])->middleware('permission:hr.attendance.manage');
                 Route::delete('attendance/{attendanceRecord}', [Hr\AttendanceRecordController::class, 'destroy'])->middleware('permission:hr.attendance.manage');
+
+                Route::get('shifts', [Hr\ShiftController::class, 'index'])->middleware('permission:hr.shifts.view');
+                Route::post('shifts', [Hr\ShiftController::class, 'store'])->middleware('permission:hr.shifts.manage');
+                Route::get('shifts/{shift}', [Hr\ShiftController::class, 'show'])->middleware('permission:hr.shifts.view');
+                Route::put('shifts/{shift}', [Hr\ShiftController::class, 'update'])->middleware('permission:hr.shifts.manage');
+                Route::delete('shifts/{shift}', [Hr\ShiftController::class, 'destroy'])->middleware('permission:hr.shifts.manage');
+
+                Route::get('employee-shifts', [Hr\EmployeeShiftController::class, 'index'])->middleware('permission:hr.shifts.view');
+                Route::post('employee-shifts', [Hr\EmployeeShiftController::class, 'store'])->middleware('permission:hr.shifts.manage');
+                Route::delete('employee-shifts/{employeeShift}', [Hr\EmployeeShiftController::class, 'destroy'])->middleware('permission:hr.shifts.manage');
+
+                Route::get('timesheets', [Hr\TimesheetController::class, 'index'])->middleware('permission:hr.timesheets.view');
+                Route::post('timesheets', [Hr\TimesheetController::class, 'store'])->middleware('permission:hr.timesheets.manage');
+                Route::get('timesheets/{timesheet}', [Hr\TimesheetController::class, 'show'])->middleware('permission:hr.timesheets.view');
+                Route::put('timesheets/{timesheet}', [Hr\TimesheetController::class, 'update'])->middleware('permission:hr.timesheets.manage');
+                Route::delete('timesheets/{timesheet}', [Hr\TimesheetController::class, 'destroy'])->middleware('permission:hr.timesheets.manage');
+                Route::post('timesheets/{timesheet}/approve', [Hr\TimesheetController::class, 'approve'])->middleware('permission:hr.timesheets.approve');
+                Route::post('timesheets/{timesheet}/reject', [Hr\TimesheetController::class, 'reject'])->middleware('permission:hr.timesheets.approve');
+
+                Route::get('leave-types', [Hr\LeaveTypeController::class, 'index'])->middleware('permission:hr.leave.view');
+                Route::post('leave-types', [Hr\LeaveTypeController::class, 'store'])->middleware('permission:hr.leave.manage');
+                Route::put('leave-types/{leaveType}', [Hr\LeaveTypeController::class, 'update'])->middleware('permission:hr.leave.manage');
+                Route::delete('leave-types/{leaveType}', [Hr\LeaveTypeController::class, 'destroy'])->middleware('permission:hr.leave.manage');
+
+                Route::get('leave-balances', [Hr\LeaveBalanceController::class, 'index'])->middleware('permission:hr.leave.view');
+
+                Route::get('leave-requests', [Hr\LeaveRequestController::class, 'index'])->middleware('permission:hr.leave.view');
+                Route::post('leave-requests', [Hr\LeaveRequestController::class, 'store'])->middleware('permission:hr.leave.manage');
+                Route::get('leave-requests/{leaveRequest}', [Hr\LeaveRequestController::class, 'show'])->middleware('permission:hr.leave.view');
+                Route::post('leave-requests/{leaveRequest}/approve', [Hr\LeaveRequestController::class, 'approve'])->middleware('permission:hr.leave.view');
+                Route::post('leave-requests/{leaveRequest}/reject', [Hr\LeaveRequestController::class, 'reject'])->middleware('permission:hr.leave.view');
+                Route::post('leave-requests/{leaveRequest}/cancel', [Hr\LeaveRequestController::class, 'cancel'])->middleware('permission:hr.leave.manage');
+
+                // Employee self-service: no permission middleware, same model as
+                // payslips/performance-reviews — every method hard-scopes to the
+                // caller's own Employee record inside the controller.
+                Route::get('my/profile', [Hr\MyHrController::class, 'profile']);
+                Route::get('my/attendance', [Hr\MyHrController::class, 'attendance']);
+                Route::get('my/leave-types', [Hr\MyHrController::class, 'leaveTypes']);
+                Route::get('my/leave-balances', [Hr\MyHrController::class, 'leaveBalances']);
+                Route::get('my/leave-requests', [Hr\MyHrController::class, 'leaveRequests']);
+                Route::post('my/leave-requests', [Hr\MyHrController::class, 'storeLeaveRequest']);
+                Route::post('my/leave-requests/{leaveRequest}/cancel', [Hr\MyHrController::class, 'cancelLeaveRequest']);
+                Route::get('my/assets', [Hr\MyHrController::class, 'assets']);
+
+                Route::get('public-holidays', [Hr\PublicHolidayController::class, 'index'])->middleware('permission:hr.attendance.view');
+                Route::post('public-holidays', [Hr\PublicHolidayController::class, 'store'])->middleware('permission:hr.attendance.manage');
+                Route::delete('public-holidays/{publicHoliday}', [Hr\PublicHolidayController::class, 'destroy'])->middleware('permission:hr.attendance.manage');
+
+                Route::get('payroll-components', [Hr\PayrollComponentController::class, 'index'])->middleware('permission:hr.payroll_components.view');
+                Route::post('payroll-components', [Hr\PayrollComponentController::class, 'store'])->middleware('permission:hr.payroll_components.manage');
+                Route::get('payroll-components/{payrollComponent}', [Hr\PayrollComponentController::class, 'show'])->middleware('permission:hr.payroll_components.view');
+                Route::put('payroll-components/{payrollComponent}', [Hr\PayrollComponentController::class, 'update'])->middleware('permission:hr.payroll_components.manage');
+                Route::delete('payroll-components/{payrollComponent}', [Hr\PayrollComponentController::class, 'destroy'])->middleware('permission:hr.payroll_components.manage');
+
+                Route::get('employee-payroll-components', [Hr\EmployeePayrollComponentController::class, 'index'])->middleware('permission:hr.payroll_components.view');
+                Route::post('employee-payroll-components', [Hr\EmployeePayrollComponentController::class, 'store'])->middleware('permission:hr.payroll_components.manage');
+                Route::delete('employee-payroll-components/{employeePayrollComponent}', [Hr\EmployeePayrollComponentController::class, 'destroy'])->middleware('permission:hr.payroll_components.manage');
+
+                Route::get('statutory-rule-sets', [Hr\StatutoryRuleSetController::class, 'index'])->middleware('permission:hr.statutory_rules.view');
+                Route::post('statutory-rule-sets', [Hr\StatutoryRuleSetController::class, 'store'])->middleware('permission:hr.statutory_rules.manage');
+                Route::get('statutory-rule-sets/{statutoryRuleSet}', [Hr\StatutoryRuleSetController::class, 'show'])->middleware('permission:hr.statutory_rules.view');
+                Route::put('statutory-rule-sets/{statutoryRuleSet}', [Hr\StatutoryRuleSetController::class, 'update'])->middleware('permission:hr.statutory_rules.manage');
+                Route::delete('statutory-rule-sets/{statutoryRuleSet}', [Hr\StatutoryRuleSetController::class, 'destroy'])->middleware('permission:hr.statutory_rules.manage');
+
+                Route::post('statutory-rule-sets/{statutoryRuleSet}/tax-bands', [Hr\StatutoryTaxBandController::class, 'store'])->middleware('permission:hr.statutory_rules.manage');
+                Route::put('statutory-rule-sets/{statutoryRuleSet}/tax-bands/{taxBand}', [Hr\StatutoryTaxBandController::class, 'update'])->middleware('permission:hr.statutory_rules.manage');
+                Route::delete('statutory-rule-sets/{statutoryRuleSet}/tax-bands/{taxBand}', [Hr\StatutoryTaxBandController::class, 'destroy'])->middleware('permission:hr.statutory_rules.manage');
+
+                Route::post('statutory-rule-sets/{statutoryRuleSet}/contribution-rules', [Hr\StatutoryContributionRuleController::class, 'store'])->middleware('permission:hr.statutory_rules.manage');
+                Route::put('statutory-rule-sets/{statutoryRuleSet}/contribution-rules/{contributionRule}', [Hr\StatutoryContributionRuleController::class, 'update'])->middleware('permission:hr.statutory_rules.manage');
+                Route::delete('statutory-rule-sets/{statutoryRuleSet}/contribution-rules/{contributionRule}', [Hr\StatutoryContributionRuleController::class, 'destroy'])->middleware('permission:hr.statutory_rules.manage');
+
+                Route::get('payroll-settings', [Hr\PayrollSettingsController::class, 'show'])->middleware('permission:hr.payroll_settings.view');
+                Route::put('payroll-settings', [Hr\PayrollSettingsController::class, 'update'])->middleware('permission:hr.payroll_settings.manage');
+
+                Route::get('payroll-periods', [Hr\PayrollPeriodController::class, 'index'])->middleware('permission:hr.payroll_periods.view');
+                Route::post('payroll-periods', [Hr\PayrollPeriodController::class, 'store'])->middleware('permission:hr.payroll_periods.manage');
+                Route::get('payroll-periods/{payrollPeriod}', [Hr\PayrollPeriodController::class, 'show'])->middleware('permission:hr.payroll_periods.view');
+                Route::delete('payroll-periods/{payrollPeriod}', [Hr\PayrollPeriodController::class, 'destroy'])->middleware('permission:hr.payroll_periods.manage');
+                Route::post('payroll-periods/{payrollPeriod}/runs', [Hr\PayrollRunController::class, 'store'])->middleware('permission:hr.payroll_runs.manage');
+
+                Route::get('payroll-runs', [Hr\PayrollRunController::class, 'index'])->middleware('permission:hr.payroll_runs.view');
+                Route::get('payroll-runs/{payrollRun}', [Hr\PayrollRunController::class, 'show'])->middleware('permission:hr.payroll_runs.view');
+                Route::post('payroll-runs/{payrollRun}/calculate', [Hr\PayrollRunController::class, 'calculate'])->middleware('permission:hr.payroll_runs.manage');
+                Route::post('payroll-runs/{payrollRun}/submit', [Hr\PayrollRunController::class, 'submit'])->middleware('permission:hr.payroll_runs.manage');
+                Route::post('payroll-runs/{payrollRun}/approve', [Hr\PayrollRunController::class, 'approve'])->middleware('permission:hr.payroll_runs.view');
+                Route::post('payroll-runs/{payrollRun}/reject', [Hr\PayrollRunController::class, 'reject'])->middleware('permission:hr.payroll_runs.view');
+                Route::post('payroll-runs/{payrollRun}/finalize', [Hr\PayrollRunController::class, 'finalize'])->middleware('permission:hr.payroll_runs.approve');
+
+                Route::put('payroll-run-employees/{payrollRunEmployee}', [Hr\PayrollRunEmployeeController::class, 'update'])->middleware('permission:hr.payroll_runs.manage');
+
+                Route::get('loans', [Hr\EmployeeLoanController::class, 'index'])->middleware('permission:hr.loans.view');
+                Route::post('loans', [Hr\EmployeeLoanController::class, 'store'])->middleware('permission:hr.loans.manage');
+                Route::get('loans/{employeeLoan}', [Hr\EmployeeLoanController::class, 'show'])->middleware('permission:hr.loans.view');
+                Route::delete('loans/{employeeLoan}', [Hr\EmployeeLoanController::class, 'destroy'])->middleware('permission:hr.loans.manage');
+                Route::post('loans/{employeeLoan}/submit', [Hr\EmployeeLoanController::class, 'submit'])->middleware('permission:hr.loans.manage');
+                Route::post('loans/{employeeLoan}/approve', [Hr\EmployeeLoanController::class, 'approve'])->middleware('permission:hr.loans.view');
+                Route::post('loans/{employeeLoan}/reject', [Hr\EmployeeLoanController::class, 'reject'])->middleware('permission:hr.loans.view');
+
+                Route::get('salary-advances', [Hr\SalaryAdvanceController::class, 'index'])->middleware('permission:hr.advances.view');
+                Route::post('salary-advances', [Hr\SalaryAdvanceController::class, 'store'])->middleware('permission:hr.advances.manage');
+                Route::get('salary-advances/{salaryAdvance}', [Hr\SalaryAdvanceController::class, 'show'])->middleware('permission:hr.advances.view');
+                Route::delete('salary-advances/{salaryAdvance}', [Hr\SalaryAdvanceController::class, 'destroy'])->middleware('permission:hr.advances.manage');
+                Route::post('salary-advances/{salaryAdvance}/submit', [Hr\SalaryAdvanceController::class, 'submit'])->middleware('permission:hr.advances.manage');
+                Route::post('salary-advances/{salaryAdvance}/approve', [Hr\SalaryAdvanceController::class, 'approve'])->middleware('permission:hr.advances.view');
+                Route::post('salary-advances/{salaryAdvance}/reject', [Hr\SalaryAdvanceController::class, 'reject'])->middleware('permission:hr.advances.view');
+
+                Route::get('overtime-requests', [Hr\OvertimeRequestController::class, 'index'])->middleware('permission:hr.overtime.view');
+                Route::post('overtime-requests', [Hr\OvertimeRequestController::class, 'store'])->middleware('permission:hr.overtime.manage');
+                Route::delete('overtime-requests/{overtimeRequest}', [Hr\OvertimeRequestController::class, 'destroy'])->middleware('permission:hr.overtime.manage');
+                Route::post('overtime-requests/{overtimeRequest}/approve', [Hr\OvertimeRequestController::class, 'approve'])->middleware('permission:hr.overtime.approve');
+                Route::post('overtime-requests/{overtimeRequest}/reject', [Hr\OvertimeRequestController::class, 'reject'])->middleware('permission:hr.overtime.approve');
+
+                Route::post('payroll-runs/{payrollRun}/post-to-accounting', [Hr\PayrollRunController::class, 'postToAccounting'])->middleware('permission:hr.payroll_runs.approve');
+
+                // No permission middleware: authorization is per-record inside the
+                // controller (own payslip, or hr.payslips.view.all for staff) so
+                // employee self-service access isn't blocked by an HR permission.
+                Route::get('payslips', [Hr\PayslipController::class, 'index']);
+                Route::get('payslips/{payslip}', [Hr\PayslipController::class, 'show']);
+                Route::get('payslips/{payslip}/pdf', [Hr\PayslipController::class, 'pdf']);
+
+                Route::post('payroll-runs/{payrollRun}/salary-payments', [Hr\SalaryPaymentBatchController::class, 'store'])->middleware('permission:hr.payroll_runs.manage');
+                Route::get('salary-payment-batches/{salaryPaymentBatch}', [Hr\SalaryPaymentBatchController::class, 'show'])->middleware('permission:hr.payroll_runs.view');
+                Route::get('salary-payment-batches/{salaryPaymentBatch}/export', [Hr\SalaryPaymentBatchController::class, 'exportCsv'])->middleware('permission:hr.payroll_runs.view');
+                Route::put('salary-payments/{salaryPayment}', [Hr\SalaryPaymentBatchController::class, 'updatePayment'])->middleware('permission:hr.payroll_runs.manage');
+
+                // No permission middleware on index/show: PerformanceReviewController enforces
+                // per-record access internally (own reviews, or hr.performance.view.all for staff).
+                Route::get('performance-reviews', [Hr\PerformanceReviewController::class, 'index']);
+                Route::post('performance-reviews', [Hr\PerformanceReviewController::class, 'store'])->middleware('permission:hr.performance.manage');
+                Route::get('performance-reviews/{performanceReview}', [Hr\PerformanceReviewController::class, 'show']);
+                Route::delete('performance-reviews/{performanceReview}', [Hr\PerformanceReviewController::class, 'destroy'])->middleware('permission:hr.performance.manage');
+                Route::post('performance-reviews/{performanceReview}/submit', [Hr\PerformanceReviewController::class, 'submit'])->middleware('permission:hr.performance.manage');
+                Route::post('performance-reviews/{performanceReview}/acknowledge', [Hr\PerformanceReviewController::class, 'acknowledge']);
+
+                Route::get('disciplinary-records', [Hr\DisciplinaryRecordController::class, 'index'])->middleware('permission:hr.disciplinary.view');
+                Route::post('disciplinary-records', [Hr\DisciplinaryRecordController::class, 'store'])->middleware('permission:hr.disciplinary.manage');
+                Route::get('disciplinary-records/{disciplinaryRecord}', [Hr\DisciplinaryRecordController::class, 'show'])->middleware('permission:hr.disciplinary.view');
+                Route::delete('disciplinary-records/{disciplinaryRecord}', [Hr\DisciplinaryRecordController::class, 'destroy'])->middleware('permission:hr.disciplinary.manage');
+                Route::post('disciplinary-records/{disciplinaryRecord}/acknowledge', [Hr\DisciplinaryRecordController::class, 'acknowledge'])->middleware('permission:hr.disciplinary.manage');
+                Route::post('disciplinary-records/{disciplinaryRecord}/resolve', [Hr\DisciplinaryRecordController::class, 'resolve'])->middleware('permission:hr.disciplinary.manage');
+
+                Route::get('employee-assets', [Hr\EmployeeAssetController::class, 'index'])->middleware('permission:hr.assets.view');
+                Route::post('employee-assets', [Hr\EmployeeAssetController::class, 'store'])->middleware('permission:hr.assets.manage');
+                Route::get('employee-assets/{employeeAsset}', [Hr\EmployeeAssetController::class, 'show'])->middleware('permission:hr.assets.view');
+                Route::delete('employee-assets/{employeeAsset}', [Hr\EmployeeAssetController::class, 'destroy'])->middleware('permission:hr.assets.manage');
+                Route::post('employee-assets/{employeeAsset}/return', [Hr\EmployeeAssetController::class, 'returnAsset'])->middleware('permission:hr.assets.manage');
+
+                Route::get('exit-records', [Hr\ExitRecordController::class, 'index'])->middleware('permission:hr.exits.view');
+                Route::post('exit-records', [Hr\ExitRecordController::class, 'store'])->middleware('permission:hr.exits.manage');
+                Route::get('exit-records/{exitRecord}', [Hr\ExitRecordController::class, 'show'])->middleware('permission:hr.exits.view');
+                Route::put('exit-records/{exitRecord}', [Hr\ExitRecordController::class, 'update'])->middleware('permission:hr.exits.manage');
+                Route::post('exit-records/{exitRecord}/complete', [Hr\ExitRecordController::class, 'complete'])->middleware('permission:hr.exits.manage');
+
+                Route::get('job-vacancies', [Hr\JobVacancyController::class, 'index'])->middleware('permission:hr.recruitment.view');
+                Route::post('job-vacancies', [Hr\JobVacancyController::class, 'store'])->middleware('permission:hr.recruitment.manage');
+                Route::get('job-vacancies/{jobVacancy}', [Hr\JobVacancyController::class, 'show'])->middleware('permission:hr.recruitment.view');
+                Route::put('job-vacancies/{jobVacancy}', [Hr\JobVacancyController::class, 'update'])->middleware('permission:hr.recruitment.manage');
+                Route::delete('job-vacancies/{jobVacancy}', [Hr\JobVacancyController::class, 'destroy'])->middleware('permission:hr.recruitment.manage');
+                Route::post('job-vacancies/{jobVacancy}/close', [Hr\JobVacancyController::class, 'close'])->middleware('permission:hr.recruitment.manage');
+
+                Route::get('candidates', [Hr\CandidateController::class, 'index'])->middleware('permission:hr.recruitment.view');
+                Route::post('candidates', [Hr\CandidateController::class, 'store'])->middleware('permission:hr.recruitment.manage');
+                Route::get('candidates/{candidate}', [Hr\CandidateController::class, 'show'])->middleware('permission:hr.recruitment.view');
+                Route::put('candidates/{candidate}', [Hr\CandidateController::class, 'update'])->middleware('permission:hr.recruitment.manage');
+                Route::delete('candidates/{candidate}', [Hr\CandidateController::class, 'destroy'])->middleware('permission:hr.recruitment.manage');
+
+                Route::get('job-applications', [Hr\JobApplicationController::class, 'index'])->middleware('permission:hr.recruitment.view');
+                Route::post('job-applications', [Hr\JobApplicationController::class, 'store'])->middleware('permission:hr.recruitment.manage');
+                Route::get('job-applications/{jobApplication}', [Hr\JobApplicationController::class, 'show'])->middleware('permission:hr.recruitment.view');
+                Route::put('job-applications/{jobApplication}/status', [Hr\JobApplicationController::class, 'updateStatus'])->middleware('permission:hr.recruitment.manage');
+                Route::post('job-applications/{jobApplication}/hire', [Hr\JobApplicationController::class, 'hire'])->middleware('permission:hr.recruitment.manage');
+                Route::delete('job-applications/{jobApplication}', [Hr\JobApplicationController::class, 'destroy'])->middleware('permission:hr.recruitment.manage');
+
+                Route::post('interviews', [Hr\InterviewController::class, 'store'])->middleware('permission:hr.recruitment.manage');
+                Route::get('interviews/{interview}', [Hr\InterviewController::class, 'show'])->middleware('permission:hr.recruitment.view');
+                Route::post('interviews/{interview}/complete', [Hr\InterviewController::class, 'complete'])->middleware('permission:hr.recruitment.manage');
+                Route::delete('interviews/{interview}', [Hr\InterviewController::class, 'destroy'])->middleware('permission:hr.recruitment.manage');
+
+                Route::get('onboarding-checklists', [Hr\OnboardingChecklistController::class, 'index'])->middleware('permission:hr.onboarding.view');
+                Route::get('onboarding-checklists/{onboardingChecklist}', [Hr\OnboardingChecklistController::class, 'show'])->middleware('permission:hr.onboarding.view');
+                Route::post('onboarding-checklists/{onboardingChecklist}/tasks', [Hr\OnboardingChecklistController::class, 'storeTask'])->middleware('permission:hr.onboarding.manage');
+                Route::post('onboarding-tasks/{onboardingTask}/toggle', [Hr\OnboardingChecklistController::class, 'toggleTask'])->middleware('permission:hr.onboarding.manage');
+                Route::delete('onboarding-tasks/{onboardingTask}', [Hr\OnboardingChecklistController::class, 'destroyTask'])->middleware('permission:hr.onboarding.manage');
             });
 
             Route::prefix('accounting')->group(function () {

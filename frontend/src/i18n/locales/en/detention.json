@@ -17,10 +17,10 @@
     }
   },
   "pendingCharges": {
-    "title": "Pending Charges",
+    "title": "Charges",
     "empty": {
-      "title": "No pending charges",
-      "description": "Calculated charges awaiting invoicing or a waiver will appear here."
+      "title": "No charges yet",
+      "description": "Calculated charges — pending, invoiced or waived — will appear here."
     }
   },
   "table": {
@@ -30,12 +30,19 @@
     "freeDaysRemaining": "Free Days Left",
     "chargeableDays": "Chargeable Days",
     "accruedAmount": "Accrued Amount",
-    "risk": "Status"
+    "risk": "Status",
+    "status": "Status",
+    "invoice": "Invoice"
   },
   "risk": {
     "within_free": "Within Free Time",
     "at_risk": "At Risk",
     "accruing": "Accruing"
+  },
+  "statuses": {
+    "pending": "Pending",
+    "invoiced": "Invoiced",
+    "waived": "Waived"
   },
   "actions": {
     "calculate": "Calculate & Record Charge",
@@ -49,6 +56,8 @@
   },
   "toast": {
     "calculated": "Detention charge calculated.",
+    "withinFreeDays": "This container is still within its free days — no detention charge applies yet.",
+    "noNewCharge": "No new detention charge — every chargeable day up to today has already been calculated.",
     "waived": "Detention charge waived.",
     "invoiced": "Invoice generated from detention charge.",
     "rateCardCreated": "Rate card created.",

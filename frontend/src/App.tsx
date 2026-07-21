@@ -8,6 +8,7 @@ import { RegistrationWizard } from './routes/registration-wizard/RegistrationWiz
 import { TrackShipmentPage } from './routes/public/TrackShipmentPage';
 import { VerifyReleaseOrderPage } from './routes/public/VerifyReleaseOrderPage';
 import { VerifyDeliveryNotePage } from './routes/public/VerifyDeliveryNotePage';
+import { VerifyPayslipPage } from './routes/public/VerifyPayslipPage';
 import { TenantLayout } from './routes/tenant/TenantLayout';
 import { DashboardHomePage } from './routes/tenant/pages/DashboardHomePage';
 import { UsersPage } from './routes/tenant/pages/UsersPage';
@@ -35,8 +36,33 @@ import { ExpensesPage } from './routes/tenant/pages/finance/ExpensesPage';
 import { ExchangeRatesPage } from './routes/tenant/pages/finance/ExchangeRatesPage';
 import { WorkflowDefinitionsPage } from './routes/tenant/pages/workflow/WorkflowDefinitionsPage';
 import { EmployeesPage } from './routes/tenant/pages/hr/EmployeesPage';
+import { EmployeeDetailPage as HrEmployeeDetailPage } from './routes/tenant/pages/hr/EmployeeDetailPage';
+import { DesignationsPage } from './routes/tenant/pages/hr/DesignationsPage';
+import { EmployeeContractsPage } from './routes/tenant/pages/hr/EmployeeContractsPage';
 import { DepartmentsPage } from './routes/tenant/pages/hr/DepartmentsPage';
 import { AttendancePage } from './routes/tenant/pages/hr/AttendancePage';
+import { ShiftsPage } from './routes/tenant/pages/hr/ShiftsPage';
+import { LeaveManagementPage } from './routes/tenant/pages/hr/LeaveManagementPage';
+import { TimesheetsPage } from './routes/tenant/pages/hr/TimesheetsPage';
+import { PublicHolidaysPage } from './routes/tenant/pages/hr/PublicHolidaysPage';
+import { PayrollComponentsPage } from './routes/tenant/pages/hr/PayrollComponentsPage';
+import { StatutoryRulesPage } from './routes/tenant/pages/hr/StatutoryRulesPage';
+import { PayrollSettingsPage } from './routes/tenant/pages/hr/PayrollSettingsPage';
+import { PayrollPeriodsPage } from './routes/tenant/pages/hr/PayrollPeriodsPage';
+import { PayrollRunDetailPage } from './routes/tenant/pages/hr/PayrollRunDetailPage';
+import { LoansAdvancesPage } from './routes/tenant/pages/hr/LoansAdvancesPage';
+import { OvertimeRequestsPage } from './routes/tenant/pages/hr/OvertimeRequestsPage';
+import { PayslipsPage } from './routes/tenant/pages/hr/PayslipsPage';
+import { PerformanceReviewsPage } from './routes/tenant/pages/hr/PerformanceReviewsPage';
+import { DisciplinaryRecordsPage } from './routes/tenant/pages/hr/DisciplinaryRecordsPage';
+import { EmployeeAssetsPage } from './routes/tenant/pages/hr/EmployeeAssetsPage';
+import { ExitRecordsPage } from './routes/tenant/pages/hr/ExitRecordsPage';
+import { JobVacanciesPage } from './routes/tenant/pages/hr/JobVacanciesPage';
+import { CandidatesPage } from './routes/tenant/pages/hr/CandidatesPage';
+import { JobApplicationsPage } from './routes/tenant/pages/hr/JobApplicationsPage';
+import { OnboardingChecklistsPage } from './routes/tenant/pages/hr/OnboardingChecklistsPage';
+import { HrDashboardPage } from './routes/tenant/pages/hr/HrDashboardPage';
+import { MyHrPage } from './routes/tenant/pages/MyHrPage';
 import { AccountsPage } from './routes/tenant/pages/accounting/AccountsPage';
 import { JournalEntriesPage } from './routes/tenant/pages/accounting/JournalEntriesPage';
 import { DocumentsPage } from './routes/tenant/pages/documents/DocumentsPage';
@@ -64,6 +90,7 @@ import { PortalQuotationsPage } from './routes/portal/pages/PortalQuotationsPage
 import { PortalDocumentsPage } from './routes/portal/pages/PortalDocumentsPage';
 import { PortalMessagesPage } from './routes/portal/pages/PortalMessagesPage';
 import { PortalApiKeysPage } from './routes/portal/pages/PortalApiKeysPage';
+import { PortalAccountPage } from './routes/portal/pages/PortalAccountPage';
 
 export default function App() {
   return (
@@ -77,6 +104,7 @@ export default function App() {
       <Route path="/track/:code" element={<TrackShipmentPage />} />
       <Route path="/verify/release-order/:token" element={<VerifyReleaseOrderPage />} />
       <Route path="/verify/delivery-note/:code" element={<VerifyDeliveryNotePage />} />
+      <Route path="/verify/payslip/:code" element={<VerifyPayslipPage />} />
 
       <Route element={<ProtectedRoute />}>
         <Route path="/app" element={<TenantLayout />}>
@@ -101,9 +129,34 @@ export default function App() {
           <Route path="expenses" element={<ExpensesPage />} />
           <Route path="exchange-rates" element={<ExchangeRatesPage />} />
           <Route path="workflows" element={<WorkflowDefinitionsPage />} />
-          <Route path="hr" element={<EmployeesPage />} />
+          <Route path="my-hr" element={<MyHrPage />} />
+          <Route path="hr" element={<HrDashboardPage />} />
+          <Route path="hr/employees" element={<EmployeesPage />} />
+          <Route path="hr/employees/:id" element={<HrEmployeeDetailPage />} />
           <Route path="hr/departments" element={<DepartmentsPage />} />
+          <Route path="hr/designations" element={<DesignationsPage />} />
+          <Route path="hr/contracts" element={<EmployeeContractsPage />} />
           <Route path="hr/attendance" element={<AttendancePage />} />
+          <Route path="hr/shifts" element={<ShiftsPage />} />
+          <Route path="hr/leave" element={<LeaveManagementPage />} />
+          <Route path="hr/timesheets" element={<TimesheetsPage />} />
+          <Route path="hr/holidays" element={<PublicHolidaysPage />} />
+          <Route path="hr/payroll-components" element={<PayrollComponentsPage />} />
+          <Route path="hr/statutory-rules" element={<StatutoryRulesPage />} />
+          <Route path="hr/payroll-settings" element={<PayrollSettingsPage />} />
+          <Route path="hr/payroll-periods" element={<PayrollPeriodsPage />} />
+          <Route path="hr/payroll-runs/:id" element={<PayrollRunDetailPage />} />
+          <Route path="hr/loans-advances" element={<LoansAdvancesPage />} />
+          <Route path="hr/overtime-requests" element={<OvertimeRequestsPage />} />
+          <Route path="hr/payslips" element={<PayslipsPage />} />
+          <Route path="hr/performance-reviews" element={<PerformanceReviewsPage />} />
+          <Route path="hr/disciplinary-records" element={<DisciplinaryRecordsPage />} />
+          <Route path="hr/employee-assets" element={<EmployeeAssetsPage />} />
+          <Route path="hr/exit-records" element={<ExitRecordsPage />} />
+          <Route path="hr/job-vacancies" element={<JobVacanciesPage />} />
+          <Route path="hr/candidates" element={<CandidatesPage />} />
+          <Route path="hr/job-applications" element={<JobApplicationsPage />} />
+          <Route path="hr/onboarding" element={<OnboardingChecklistsPage />} />
           <Route path="accounting" element={<AccountsPage />} />
           <Route path="accounting/journal-entries" element={<JournalEntriesPage />} />
           <Route path="documents" element={<DocumentsPage />} />
@@ -133,6 +186,7 @@ export default function App() {
           <Route path="documents" element={<PortalDocumentsPage />} />
           <Route path="messages" element={<PortalMessagesPage />} />
           <Route path="api-keys" element={<PortalApiKeysPage />} />
+          <Route path="account" element={<PortalAccountPage />} />
         </Route>
       </Route>
 

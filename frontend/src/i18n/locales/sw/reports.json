@@ -45,7 +45,10 @@
       "shipments": "Shehena",
       "invoices": "Ankara",
       "expenses": "Matumizi",
-      "profit": "Faida ya Shehena"
+      "profit": "Faida ya Shehena",
+      "employees": "Wafanyakazi",
+      "payslips": "Slipu za Mshahara",
+      "leaveRequests": "Maombi ya Likizo"
     }
   },
   "import": {

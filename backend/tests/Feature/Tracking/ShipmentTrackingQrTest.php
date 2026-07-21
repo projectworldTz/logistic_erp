@@ -57,7 +57,7 @@ class ShipmentTrackingQrTest extends TestCase
                 'name' => 'Portal User',
                 'email' => $email,
                 'customer_id' => $customerId,
-                'role' => 'Customer Portal User',
+                'roles' => ['Customer Portal User'],
                 'password' => 'PortalPass123',
             ])->assertCreated();
     }

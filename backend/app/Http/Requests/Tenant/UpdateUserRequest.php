@@ -21,7 +21,8 @@ class UpdateUserRequest extends FormRequest
             'name' => ['sometimes', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:50'],
             'branch_id' => ['nullable', Rule::exists('branches', 'id')->where('tenant_id', $tenantId)],
-            'role' => ['sometimes', Rule::exists('roles', 'name')->where('tenant_id', $tenantId)],
+            'roles' => ['sometimes', 'array', 'min:1'],
+            'roles.*' => [Rule::exists('roles', 'name')->where('tenant_id', $tenantId)],
         ];
     }
 }

@@ -88,6 +88,50 @@ class NotificationTest extends TestCase
         $this->assertDatabaseMissing('user_notifications', ['user_id' => $driver->id]);
     }
 
+    public function test_owner_is_notified_when_someone_else_creates_a_record_since_the_owner_holds_every_permission(): void
+    {
+        $registration = $this->registerTenant();
+        $ownerId = $registration['user']['id'];
+        $tenantId = $registration['user']['tenant_id'];
+
+        $customer = Customer::create(['tenant_id' => $tenantId, 'company_name' => 'Test Customer']);
+
+        // A restricted user creates the quotation this time — the Owner
+        // (a bystander who isn't the actor) should still be notified
+        // because the "Company Owner" role holds every permission via the
+        // catalog's wildcards, including quotations.items.view. A real
+        // token is minted directly (not via the /auth/login endpoint or
+        // Sanctum::actingAs) to avoid the persistent-guard gotcha where
+        // either would hijack a later bearer-token request in the same test.
+        app(PermissionRegistrar::class)->setPermissionsTeamId($tenantId);
+        $salesUser = User::factory()->create(['tenant_id' => $tenantId]);
+        $salesUser->assignRole('Sales Executive');
+        $salesToken = $salesUser->createToken('api')->plainTextToken;
+
+        $this->withHeader('Authorization', "Bearer {$salesToken}")
+            ->postJson('/api/v1/quotations/items', [
+                'customer_id' => $customer->id,
+                'direction' => 'export',
+                'mode' => 'sea',
+                'issue_date' => now()->toDateString(),
+                'valid_until' => now()->addDays(14)->toDateString(),
+                'subtotal' => 100,
+                'tax_amount' => 16,
+                'total_amount' => 116,
+            ])
+            ->assertCreated();
+
+        // The owner (a bystander, not the actor) received it — proving
+        // "owner sees everything they hold a permission for" at the data
+        // layer. NotificationController::index()'s own user_id-scoped fetch
+        // is already covered by a separate test in this file.
+        $this->assertDatabaseHas('user_notifications', [
+            'tenant_id' => $tenantId,
+            'user_id' => $ownerId,
+            'type' => 'quotation.created',
+        ]);
+    }
+
     public function test_unread_count_and_mark_read_and_mark_all_read(): void
     {
         $registration = $this->registerTenant();

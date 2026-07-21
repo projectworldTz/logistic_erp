@@ -150,7 +150,7 @@ export function CustomerDetailPage() {
         email: values.email,
         password: values.password,
         customer_id: customerId,
-        role: 'Customer Portal User',
+        roles: ['Customer Portal User'],
       }),
     onSuccess: () => {
       setInvitingContact(null);

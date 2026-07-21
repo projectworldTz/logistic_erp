@@ -110,6 +110,27 @@ class ReportExportTest extends TestCase
         $this->assertStringNotContainsString('Other Customer', $content);
     }
 
+    public function test_owner_can_export_hr_report_modules(): void
+    {
+        $registration = $this->registerTenant('owner@acme.test', 'Acme Logistics');
+        $token = $registration['token'];
+
+        $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson('/api/v1/hr/employees', [
+                'first_name' => 'John', 'last_name' => 'Kamau', 'hire_date' => now()->subYear()->toDateString(),
+            ])->assertCreated();
+
+        foreach (['employees', 'payslips', 'leave_requests'] as $module) {
+            $response = $this->withHeader('Authorization', "Bearer {$token}")
+                ->get("/api/v1/reports/export/{$module}?format=csv");
+            $response->assertOk();
+        }
+
+        $employeesCsv = $this->withHeader('Authorization', "Bearer {$token}")
+            ->get('/api/v1/reports/export/employees?format=csv')->streamedContent();
+        $this->assertStringContainsString('John Kamau', $employeesCsv);
+    }
+
     public function test_unknown_module_returns_404(): void
     {
         $registration = $this->registerTenant('owner@acme.test', 'Acme Logistics');
@@ -128,7 +149,7 @@ class ReportExportTest extends TestCase
             ->postJson('/api/v1/users', [
                 'name' => 'No Access',
                 'email' => 'noaccess@acme.test',
-                'role' => 'Driver',
+                'roles' => ['Driver'],
                 'password' => 'SecurePass123',
             ])->assertCreated();
 

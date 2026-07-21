@@ -1,20 +1,51 @@
 {
   "title": "Human Resources",
   "tabs": {
+    "dashboard": "Dashboard",
     "employees": "Employees",
     "departments": "Departments",
-    "attendance": "Attendance"
+    "designations": "Designations",
+    "contracts": "Contracts",
+    "attendance": "Attendance",
+    "shifts": "Shifts",
+    "leave": "Leave",
+    "timesheets": "Timesheets",
+    "holidays": "Holidays",
+    "payrollComponents": "Payroll Components",
+    "statutoryRules": "Statutory Rules",
+    "payrollSettings": "Payroll Settings",
+    "payrollPeriods": "Payroll Periods",
+    "loansAdvances": "Loans & Advances",
+    "overtimeRequests": "Overtime",
+    "payslips": "Payslips",
+    "performanceReviews": "Performance",
+    "disciplinary": "Disciplinary",
+    "assets": "Assets",
+    "exits": "Exits",
+    "vacancies": "Vacancies",
+    "candidates": "Candidates",
+    "applications": "Applications",
+    "onboarding": "Onboarding"
   },
   "statuses": {
     "active": "Active",
     "on_leave": "On Leave",
-    "terminated": "Terminated"
+    "terminated": "Terminated",
+    "probation": "Probation",
+    "suspended": "Suspended"
   },
   "employmentTypes": {
     "full_time": "Full Time",
     "part_time": "Part Time",
     "contract": "Contract",
-    "intern": "Intern"
+    "intern": "Intern",
+    "permanent": "Permanent",
+    "temporary": "Temporary",
+    "casual": "Casual",
+    "consultant": "Consultant",
+    "driver": "Driver",
+    "commission_based": "Commission-Based",
+    "daily_paid": "Daily-Paid"
   },
   "attendanceStatuses": {
     "present": "Present",
@@ -23,12 +54,229 @@
     "on_leave": "On Leave",
     "half_day": "Half Day"
   },
+  "designationCategories": {
+    "management": "Management",
+    "clearing_and_customs": "Clearing & Customs",
+    "forwarding_and_logistics": "Forwarding & Logistics",
+    "transport_and_fleet": "Transport & Fleet",
+    "warehouse_and_cargo": "Warehouse & Cargo",
+    "finance_and_accounts": "Finance & Accounts",
+    "sales_and_crm": "Sales & CRM",
+    "administration_and_support": "Administration & Support",
+    "other": "Other"
+  },
+  "contractStatuses": {
+    "draft": "Draft",
+    "pending_approval": "Pending Approval",
+    "active": "Active",
+    "expired": "Expired",
+    "terminated": "Terminated",
+    "renewed": "Renewed"
+  },
+  "payFrequencies": {
+    "monthly": "Monthly",
+    "biweekly": "Biweekly",
+    "weekly": "Weekly",
+    "daily": "Daily",
+    "hourly": "Hourly"
+  },
+  "paymentMethods": {
+    "bank_transfer": "Bank Transfer",
+    "mobile_money": "Mobile Money",
+    "cash": "Cash",
+    "cheque": "Cheque"
+  },
+  "documentTypes": {
+    "employment_contract": "Employment Contract",
+    "national_id": "National ID",
+    "passport": "Passport",
+    "academic_certificate": "Academic Certificate",
+    "professional_certificate": "Professional Certificate",
+    "driving_license": "Driving License",
+    "work_permit": "Work Permit",
+    "medical_certificate": "Medical Certificate",
+    "tax_document": "Tax Document",
+    "pension_registration": "Pension Registration",
+    "bank_information": "Bank Information",
+    "warning_letter": "Warning Letter",
+    "promotion_letter": "Promotion Letter",
+    "training_certificate": "Training Certificate",
+    "other": "Other"
+  },
+  "documentStatuses": {
+    "pending_verification": "Pending Verification",
+    "verified": "Verified",
+    "rejected": "Rejected",
+    "valid": "Valid",
+    "expiring_soon": "Expiring Soon",
+    "expired": "Expired"
+  },
+  "leaveRequestStatuses": {
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "cancelled": "Cancelled"
+  },
+  "timesheetStatuses": {
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected"
+  },
+  "payrollComponentTypes": {
+    "earning": "Earning",
+    "deduction": "Deduction",
+    "employer_contribution": "Employer Contribution"
+  },
+  "payrollCalculationMethods": {
+    "fixed": "Fixed Amount",
+    "percentage": "Percentage",
+    "formula": "Formula (manual entry)"
+  },
+  "payrollPercentageBases": {
+    "basic_salary": "Basic Salary",
+    "gross_pay": "Gross Pay"
+  },
+  "payrollRunStatuses": {
+    "draft": "Draft",
+    "calculated": "Calculated",
+    "pending_approval": "Pending Approval",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "finalized": "Finalized"
+  },
+  "payrollRunEmployeeStatuses": {
+    "included": "Included",
+    "excluded": "Excluded",
+    "exception": "Exception"
+  },
+  "loanStatuses": {
+    "draft": "Draft",
+    "pending_approval": "Pending Approval",
+    "active": "Active",
+    "completed": "Completed",
+    "rejected": "Rejected",
+    "cancelled": "Cancelled"
+  },
+  "overtimeRequestStatuses": {
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected"
+  },
+  "salaryPaymentStatuses": {
+    "pending": "Pending",
+    "paid": "Paid",
+    "failed": "Failed"
+  },
+  "performanceReviewStatuses": {
+    "draft": "Draft",
+    "submitted": "Submitted",
+    "acknowledged": "Acknowledged"
+  },
+  "disciplinaryCategories": {
+    "attendance": "Attendance",
+    "conduct": "Conduct",
+    "performance": "Performance",
+    "safety": "Safety",
+    "policy_violation": "Policy Violation",
+    "other": "Other"
+  },
+  "disciplinarySeverities": {
+    "verbal_warning": "Verbal Warning",
+    "written_warning": "Written Warning",
+    "suspension": "Suspension",
+    "termination": "Termination"
+  },
+  "disciplinaryStatuses": {
+    "draft": "Draft",
+    "issued": "Issued",
+    "acknowledged": "Acknowledged",
+    "appealed": "Appealed",
+    "resolved": "Resolved"
+  },
+  "assetTypes": {
+    "laptop": "Laptop",
+    "phone": "Phone",
+    "vehicle": "Vehicle",
+    "uniform": "Uniform",
+    "tool": "Tool",
+    "other": "Other"
+  },
+  "assetStatuses": {
+    "assigned": "Assigned",
+    "returned": "Returned",
+    "lost": "Lost",
+    "damaged": "Damaged"
+  },
+  "exitTypes": {
+    "resignation": "Resignation",
+    "termination": "Termination",
+    "retirement": "Retirement",
+    "end_of_contract": "End of Contract",
+    "redundancy": "Redundancy"
+  },
+  "exitStatuses": {
+    "initiated": "Initiated",
+    "in_progress": "In Progress",
+    "cleared": "Cleared",
+    "completed": "Completed"
+  },
+  "vacancyStatuses": {
+    "open": "Open",
+    "on_hold": "On Hold",
+    "filled": "Filled",
+    "closed": "Closed"
+  },
+  "applicationStatuses": {
+    "applied": "Applied",
+    "screening": "Screening",
+    "interview": "Interview",
+    "offer": "Offer",
+    "hired": "Hired",
+    "rejected": "Rejected",
+    "withdrawn": "Withdrawn"
+  },
+  "interviewModes": {
+    "in_person": "In Person",
+    "phone": "Phone",
+    "video": "Video"
+  },
+  "interviewStatuses": {
+    "scheduled": "Scheduled",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "no_show": "No Show"
+  },
+  "onboardingStatuses": {
+    "in_progress": "In Progress",
+    "completed": "Completed"
+  },
   "validation": {
     "nameRequired": "Name is required",
     "invalidEmail": "Enter a valid email address",
     "hireDateRequired": "Hire date is required",
     "dateRequired": "Date is required",
-    "employeeRequired": "Select an employee"
+    "employeeRequired": "Select an employee",
+    "descriptionRequired": "Description is required"
+  },
+  "dashboard": {
+    "title": "Overview",
+    "stats": {
+      "headcount": "Active Headcount",
+      "pendingLeave": "Pending Leave Requests",
+      "pendingPayrollApprovals": "Payroll Runs Awaiting Approval",
+      "openVacancies": "Open Vacancies",
+      "expiringContracts": "Contracts & Documents Expiring Soon",
+      "outstandingLoans": "Outstanding Loan Balance",
+      "inProgressExits": "Exits In Progress",
+      "candidatesInPipeline": "Candidates In Pipeline"
+    },
+    "charts": {
+      "payrollTrend": "Payroll Cost Trend (last 6 months)",
+      "netPay": "Net Pay",
+      "employerCost": "Total Employer Cost",
+      "headcountByDepartment": "Headcount by Department",
+      "attendanceToday": "Attendance Today"
+    }
   },
   "departments": {
     "title": "Departments",
@@ -76,6 +324,7 @@
       "phone": "Phone (optional)",
       "department": "Department (optional)",
       "branch": "Branch (optional)",
+      "designation": "Designation (optional)",
       "employmentType": "Employment Type",
       "hireDate": "Hire Date"
     },
@@ -84,16 +333,134 @@
       "message": "Are you sure you want to delete {{name}}? This cannot be undone."
     }
   },
+  "designations": {
+    "title": "Job Designations",
+    "newDesignation": "New Designation",
+    "empty": {
+      "title": "No designations yet",
+      "description": "Add job designations so employees and contracts can reference a consistent title."
+    },
+    "table": {
+      "name": "Name",
+      "category": "Category",
+      "employees": "Employees"
+    },
+    "form": {
+      "dialogTitle": "New Designation",
+      "name": "Name",
+      "category": "Category",
+      "description": "Description (optional)"
+    },
+    "deleteDialog": {
+      "title": "Delete Designation",
+      "message": "Are you sure you want to delete {{name}}?"
+    }
+  },
+  "contracts": {
+    "title": "Employee Contracts",
+    "newContract": "New Contract",
+    "submit": "Submit for approval",
+    "approve": "Approve",
+    "reject": "Reject",
+    "rejectReason": "Reason for rejection",
+    "empty": {
+      "title": "No contracts yet",
+      "description": "Create a contract to set an employee's pay terms and entitlements."
+    },
+    "table": {
+      "number": "Contract No",
+      "employee": "Employee",
+      "employmentType": "Employment Type",
+      "basicSalary": "Basic Salary",
+      "effectiveDate": "Effective Date"
+    },
+    "form": {
+      "dialogTitle": "New Contract",
+      "employee": "Employee",
+      "employmentType": "Employment Type",
+      "effectiveDate": "Effective Date",
+      "expiryDate": "Expiry Date (optional)",
+      "basicSalary": "Basic Salary",
+      "payFrequency": "Pay Frequency"
+    },
+    "deleteDialog": {
+      "title": "Delete Contract",
+      "message": "Are you sure you want to delete contract {{number}}?"
+    }
+  },
+  "employeeDetail": {
+    "backToList": "Back to Employees",
+    "viewContracts": "View Contracts",
+    "tabs": {
+      "overview": "Overview",
+      "documents": "Documents",
+      "salary": "Salary"
+    },
+    "overview": {
+      "personalTitle": "Personal Information",
+      "employmentTitle": "Employment Information",
+      "statutoryTitle": "Statutory Information",
+      "altPhone": "Alternative Phone",
+      "gender": "Gender",
+      "dateOfBirth": "Date of Birth",
+      "nationality": "Nationality",
+      "maritalStatus": "Marital Status",
+      "address": "Residential Address",
+      "emergencyContact": "Emergency Contact",
+      "designation": "Designation",
+      "reportingManager": "Reporting Manager",
+      "workLocation": "Work Location",
+      "hireDate": "Hire Date",
+      "confirmationDate": "Confirmation Date",
+      "probationEnd": "Probation End",
+      "noticePeriod": "Notice Period"
+    },
+    "documents": {
+      "upload": "Upload Document",
+      "type": "Document Type",
+      "expiryDate": "Expiry Date (optional)",
+      "chooseFile": "Choose file",
+      "expires": "expires",
+      "verify": "Verify",
+      "reject": "Reject",
+      "rejectReason": "Reason for rejection",
+      "empty": {
+        "title": "No documents yet",
+        "description": "Upload identification, contracts and certificates for this employee."
+      },
+      "deleteDialog": {
+        "title": "Delete Document",
+        "message": "Are you sure you want to delete this document?"
+      }
+    },
+    "salary": {
+      "noPermission": "You don't have permission to view salary and bank details for this employee.",
+      "loadError": "Could not load salary details.",
+      "salary": "Salary",
+      "paymentMethod": "Payment Method",
+      "bankName": "Bank Name",
+      "bankAccountName": "Bank Account Name",
+      "bankAccountNumber": "Bank Account Number",
+      "bankBranch": "Bank Branch",
+      "mobileMoneyProvider": "Mobile Money Provider",
+      "mobileMoneyNumber": "Mobile Money Number",
+      "nationalId": "National ID Number"
+    }
+  },
   "attendance": {
     "title": "Attendance",
     "newRecord": "New Record",
+    "importCsv": "Import CSV",
     "empty": {
       "title": "No attendance records yet",
       "description": "Record attendance for an employee to start building the register."
     },
     "table": {
       "employee": "Employee",
-      "date": "Date"
+      "date": "Date",
+      "checkIn": "Check In",
+      "checkOut": "Check Out",
+      "lateMinutes": "Late (min)"
     },
     "form": {
       "dialogTitle": "New Attendance Record",
@@ -106,6 +473,604 @@
       "message": "Are you sure you want to delete the attendance record for {{name}} on {{date}}?"
     }
   },
+  "shifts": {
+    "title": "Shifts",
+    "newShift": "New Shift",
+    "assignmentsTitle": "Shift Assignments",
+    "assignShift": "Assign Shift",
+    "empty": {
+      "title": "No shifts yet",
+      "description": "Define a work shift to start scheduling employees."
+    },
+    "assignmentsEmpty": {
+      "title": "No shift assignments yet",
+      "description": "Assign an employee to a shift to start tracking scheduled hours."
+    },
+    "table": {
+      "name": "Name",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "graceMinutes": "Grace (min)",
+      "employee": "Employee",
+      "shift": "Shift",
+      "effectiveDate": "Effective Date"
+    },
+    "form": {
+      "dialogTitle": "New Shift",
+      "name": "Name",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "breakMinutes": "Break Minutes",
+      "graceMinutes": "Grace Minutes",
+      "employee": "Employee",
+      "shift": "Shift",
+      "effectiveDate": "Effective Date"
+    },
+    "validation": {
+      "shiftRequired": "Select a shift"
+    },
+    "deleteDialog": {
+      "title": "Delete Shift",
+      "message": "Are you sure you want to delete shift {{name}}?"
+    },
+    "removeAssignmentDialog": {
+      "title": "Remove Shift Assignment",
+      "message": "Remove this shift assignment for {{name}}?"
+    }
+  },
+  "leaveManagement": {
+    "requestsTitle": "Leave Requests",
+    "newRequest": "New Leave Request",
+    "typesTitle": "Leave Types",
+    "newLeaveType": "New Leave Type",
+    "balancesTitle": "Leave Balances ({{year}})",
+    "approve": "Approve",
+    "reject": "Reject",
+    "cancel": "Cancel",
+    "rejectReason": "Reason for rejection",
+    "requestsEmpty": {
+      "title": "No leave requests yet",
+      "description": "Submit a leave request to start tracking time off."
+    },
+    "balancesEmpty": {
+      "title": "No leave balances yet",
+      "description": "Balances appear once leave requests are approved for the selected year."
+    },
+    "table": {
+      "employee": "Employee",
+      "leaveType": "Leave Type",
+      "dates": "Dates",
+      "days": "Days",
+      "name": "Name",
+      "paid": "Paid",
+      "defaultAnnualDays": "Default Annual Days",
+      "entitled": "Entitled",
+      "used": "Used",
+      "available": "Available"
+    },
+    "form": {
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "reason": "Reason (optional)"
+    },
+    "validation": {
+      "leaveTypeRequired": "Select a leave type"
+    },
+    "deleteTypeDialog": {
+      "title": "Delete Leave Type",
+      "message": "Are you sure you want to delete leave type {{name}}?"
+    }
+  },
+  "timesheets": {
+    "title": "Timesheets",
+    "newTimesheet": "New Timesheet",
+    "approve": "Approve",
+    "reject": "Reject",
+    "rejectReason": "Reason for rejection",
+    "empty": {
+      "title": "No timesheets yet",
+      "description": "Log time against jobs or shipments to start tracking billable and payroll hours."
+    },
+    "table": {
+      "employee": "Employee",
+      "date": "Date",
+      "hours": "Hours",
+      "activity": "Activity"
+    },
+    "form": {
+      "dialogTitle": "New Timesheet",
+      "employee": "Employee",
+      "date": "Date",
+      "hours": "Total Hours",
+      "activity": "Activity (optional)"
+    }
+  },
+  "publicHolidays": {
+    "title": "Public Holidays",
+    "newHoliday": "New Holiday",
+    "empty": {
+      "title": "No public holidays yet",
+      "description": "Add public holidays so attendance and payroll can account for them."
+    },
+    "table": {
+      "name": "Name",
+      "date": "Date"
+    },
+    "deleteDialog": {
+      "title": "Delete Public Holiday",
+      "message": "Are you sure you want to delete {{name}}?"
+    }
+  },
+  "payrollComponents": {
+    "title": "Payroll Components",
+    "newComponent": "New Component",
+    "assignmentsTitle": "Employee Assignments",
+    "assignComponent": "Assign Component",
+    "empty": {
+      "title": "No payroll components yet",
+      "description": "Define earnings, deductions and employer contributions to build your pay structure."
+    },
+    "assignmentsEmpty": {
+      "title": "No component assignments yet",
+      "description": "Assign a payroll component to an employee to apply it in future payroll runs."
+    },
+    "table": {
+      "code": "Code",
+      "name": "Name",
+      "type": "Type",
+      "method": "Method",
+      "value": "Value",
+      "employee": "Employee",
+      "component": "Component"
+    },
+    "form": {
+      "dialogTitle": "New Payroll Component",
+      "code": "Code",
+      "name": "Name",
+      "type": "Type",
+      "method": "Calculation Method",
+      "amount": "Amount",
+      "amountOverride": "Amount Override (optional)",
+      "percentage": "Percentage",
+      "percentageBase": "Percentage Base",
+      "effectiveDate": "Effective Date"
+    },
+    "validation": {
+      "componentRequired": "Select a payroll component"
+    },
+    "deleteDialog": {
+      "title": "Delete Payroll Component",
+      "message": "Are you sure you want to delete {{name}}?"
+    },
+    "removeAssignmentDialog": {
+      "title": "Remove Assignment",
+      "message": "Remove this component assignment for {{name}}?"
+    }
+  },
+  "statutoryRules": {
+    "title": "Statutory Rules",
+    "newRuleSet": "New Rule Set",
+    "disclaimer": "Statutory rule sets are fully configurable starting points — verify rates and bands against current local law before relying on them for real payroll.",
+    "taxBands": "Tax Bands",
+    "addTaxBand": "Add Band",
+    "contributionRules": "Contribution Rules",
+    "addContributionRule": "Add Rule",
+    "empty": {
+      "title": "No statutory rule sets yet",
+      "description": "Create a rule set to define progressive tax bands and statutory contribution rates."
+    },
+    "table": {
+      "name": "Name",
+      "code": "Code",
+      "lowerBound": "Lower Bound",
+      "upperBound": "Upper Bound",
+      "rate": "Rate",
+      "employeeRate": "Employee Rate",
+      "employerRate": "Employer Rate"
+    },
+    "form": {
+      "countryCode": "Country Code (ISO 2-letter)",
+      "description": "Description (optional)",
+      "bandOrder": "Band Order"
+    },
+    "validation": {
+      "countryCode": "Enter a 2-letter country code"
+    },
+    "deleteDialog": {
+      "title": "Delete Rule Set",
+      "message": "Are you sure you want to delete {{name}}?"
+    }
+  },
+  "payrollSettings": {
+    "title": "Payroll Settings",
+    "description": "Configure the default pay frequency, overtime multiplier and chart-of-account mappings used when posting payroll to the general ledger.",
+    "accountsHint": "Leave any mapping unset to skip posting that category to the general ledger.",
+    "sections": {
+      "general": "General",
+      "accounts": "Chart of Account Mappings"
+    },
+    "fields": {
+      "statutory_rule_set_id": "Statutory Rule Set",
+      "overtime_multiplier": "Overtime Multiplier",
+      "standard_working_days_per_month": "Standard Working Days per Month",
+      "standard_hours_per_day": "Standard Hours per Day",
+      "salary_expense_account_id": "Salary Expense Account",
+      "allowance_expense_account_id": "Allowance Expense Account",
+      "overtime_expense_account_id": "Overtime Expense Account",
+      "bonus_expense_account_id": "Bonus Expense Account",
+      "employer_contribution_expense_account_id": "Employer Contribution Expense Account",
+      "payroll_payable_account_id": "Payroll Payable Account",
+      "tax_payable_account_id": "Tax Payable Account",
+      "statutory_contributions_payable_account_id": "Statutory Contributions Payable Account",
+      "loan_receivable_account_id": "Loan Receivable Account",
+      "advance_receivable_account_id": "Advance Receivable Account",
+      "other_deductions_payable_account_id": "Other Deductions Payable Account",
+      "bank_cash_account_id": "Bank / Cash Account"
+    }
+  },
+  "payrollPeriods": {
+    "title": "Payroll Periods",
+    "newPeriod": "New Period",
+    "createRun": "Create Payroll Run",
+    "locked": "Locked",
+    "empty": {
+      "title": "No payroll periods yet",
+      "description": "Create a payroll period to start processing a payroll run."
+    },
+    "table": {
+      "name": "Name",
+      "dates": "Period",
+      "paymentDate": "Payment Date",
+      "latestRun": "Latest Run"
+    },
+    "form": {
+      "periodStart": "Period Start",
+      "periodEnd": "Period End",
+      "paymentDate": "Payment Date"
+    },
+    "deleteDialog": {
+      "title": "Delete Payroll Period",
+      "message": "Are you sure you want to delete period {{name}}?"
+    }
+  },
+  "payrollRuns": {
+    "title": "Payroll Run",
+    "employeesTitle": "Employees",
+    "calculate": "Calculate",
+    "recalculate": "Recalculate",
+    "submitForApproval": "Submit for Approval",
+    "approve": "Approve",
+    "reject": "Reject",
+    "rejectReason": "Reason for rejection",
+    "finalize": "Finalize",
+    "include": "Include in run",
+    "exclude": "Exclude from run",
+    "earnings": "Earnings",
+    "deductions": "Deductions",
+    "employerContributions": "Employer Contributions",
+    "postToAccounting": "Post to Accounting",
+    "postedNotice": "This run has been posted to the general ledger as a balanced journal entry.",
+    "generatePayments": "Generate Salary Payments",
+    "viewPayslips": "View Payslips ({{count}})",
+    "paymentsTitle": "Salary Payments",
+    "exportCsv": "Export CSV",
+    "markPaid": "Mark Paid",
+    "markFailed": "Mark Failed",
+    "exceptionsWarning": "{{count}} employee(s) have exceptions that must be resolved before this run can be submitted for approval.",
+    "summary": {
+      "gross": "Total Gross",
+      "deductions": "Total Deductions",
+      "net": "Total Net Pay",
+      "employerContributions": "Employer Contributions",
+      "employerCost": "Total Employer Cost",
+      "employeeCount": "Employees"
+    },
+    "table": {
+      "employee": "Employee",
+      "basicSalary": "Basic Salary",
+      "gross": "Gross",
+      "deductions": "Deductions",
+      "net": "Net Pay",
+      "amount": "Amount",
+      "method": "Method"
+    },
+    "toast": {
+      "calculated": "Payroll run calculated.",
+      "submitted": "Payroll run submitted for approval.",
+      "approved": "Payroll run approved.",
+      "rejected": "Payroll run rejected.",
+      "finalized": "Payroll run finalized.",
+      "employeeUpdated": "Employee inclusion status updated.",
+      "posted": "Payroll run posted to accounting.",
+      "paymentsGenerated": "Salary payment batch generated.",
+      "paymentUpdated": "Payment status updated."
+    }
+  },
+  "payslips": {
+    "title": "Payslips",
+    "download": "Download PDF",
+    "empty": {
+      "title": "No payslips yet",
+      "description": "Payslips are generated automatically when a payroll run is finalized."
+    },
+    "table": {
+      "number": "Payslip No",
+      "employee": "Employee",
+      "period": "Period",
+      "gross": "Gross",
+      "net": "Net Pay",
+      "ytdNet": "YTD Net"
+    }
+  },
+  "performanceReviews": {
+    "title": "Performance Reviews",
+    "newReview": "New Review",
+    "submit": "Submit",
+    "acknowledge": "Acknowledge",
+    "empty": {
+      "title": "No performance reviews yet",
+      "description": "Create a performance review to track an employee's goals and KPIs."
+    },
+    "table": {
+      "employee": "Employee",
+      "period": "Review Period",
+      "rating": "Rating"
+    },
+    "form": {
+      "periodStart": "Period Start",
+      "periodEnd": "Period End",
+      "reviewDate": "Review Date",
+      "overallRating": "Overall Rating (0-5)",
+      "strengths": "Strengths",
+      "areasForImprovement": "Areas for Improvement",
+      "goals": "Goals",
+      "comments": "Reviewer Comments",
+      "employeeComments": "Your Comments (optional)"
+    },
+    "deleteDialog": {
+      "title": "Delete Performance Review",
+      "message": "Are you sure you want to delete this review for {{name}}?"
+    }
+  },
+  "disciplinary": {
+    "title": "Disciplinary Records",
+    "newRecord": "New Record",
+    "acknowledge": "Acknowledge",
+    "resolve": "Resolve",
+    "empty": {
+      "title": "No disciplinary records yet",
+      "description": "Issue a disciplinary record to document an incident and the action taken."
+    },
+    "table": {
+      "employee": "Employee",
+      "date": "Incident Date",
+      "category": "Category",
+      "severity": "Severity"
+    },
+    "form": {
+      "description": "Description",
+      "actionTaken": "Action Taken (optional)"
+    },
+    "deleteDialog": {
+      "title": "Delete Disciplinary Record",
+      "message": "Are you sure you want to delete this record for {{name}}?"
+    }
+  },
+  "assets": {
+    "title": "Employee Assets",
+    "newAsset": "Assign Asset",
+    "return": "Return Asset",
+    "empty": {
+      "title": "No assets assigned yet",
+      "description": "Assign company assets like laptops, phones or vehicles to employees."
+    },
+    "table": {
+      "employee": "Employee",
+      "type": "Type",
+      "name": "Asset Name",
+      "serial": "Serial Number",
+      "assignedDate": "Assigned Date"
+    },
+    "form": {
+      "serialNumber": "Serial Number (optional)",
+      "conditionAtAssignment": "Condition at Assignment (optional)",
+      "conditionAtReturn": "Condition at Return (optional)",
+      "notes": "Notes (optional)"
+    },
+    "deleteDialog": {
+      "title": "Delete Asset Record",
+      "message": "Are you sure you want to delete asset {{name}}?"
+    }
+  },
+  "exits": {
+    "title": "Exit Management",
+    "newExit": "Initiate Exit",
+    "complete": "Complete Exit",
+    "assetsCleared": "Assets Cleared",
+    "handoverCompleted": "Handover Completed",
+    "empty": {
+      "title": "No exit records yet",
+      "description": "Initiate an exit process when an employee resigns, retires, or is terminated."
+    },
+    "table": {
+      "employee": "Employee",
+      "type": "Exit Type",
+      "lastWorkingDate": "Last Working Date",
+      "settlement": "Final Settlement"
+    },
+    "form": {
+      "noticeDate": "Notice Date",
+      "reason": "Reason (optional)"
+    },
+    "summary": {
+      "unusedLeaveDays": "Unused Leave Days",
+      "leavePayout": "Leave Payout",
+      "outstandingLoan": "Outstanding Loan",
+      "outstandingAdvance": "Outstanding Advance",
+      "finalSettlement": "Final Settlement"
+    }
+  },
+  "vacancies": {
+    "title": "Job Vacancies",
+    "newVacancy": "New Vacancy",
+    "close": "Close Vacancy",
+    "empty": {
+      "title": "No job vacancies yet",
+      "description": "Post a job vacancy to start receiving applications."
+    },
+    "table": {
+      "title": "Title",
+      "openings": "Openings",
+      "applications": "Applications"
+    },
+    "form": {
+      "employmentType": "Employment Type (optional)",
+      "description": "Description (optional)",
+      "requirements": "Requirements (optional)"
+    },
+    "deleteDialog": {
+      "title": "Delete Vacancy",
+      "message": "Are you sure you want to delete vacancy {{title}}?"
+    }
+  },
+  "candidates": {
+    "title": "Candidates",
+    "newCandidate": "New Candidate",
+    "empty": {
+      "title": "No candidates yet",
+      "description": "Add a candidate to start tracking their applications."
+    },
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "source": "Source"
+    },
+    "form": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "notes": "Notes (optional)"
+    },
+    "deleteDialog": {
+      "title": "Delete Candidate",
+      "message": "Are you sure you want to delete {{name}}?"
+    }
+  },
+  "applications": {
+    "title": "Job Applications",
+    "newApplication": "New Application",
+    "scheduleInterview": "Schedule Interview",
+    "hire": "Hire Candidate",
+    "hireConfirm": "This will create an employee record for {{name}} and start their onboarding checklist.",
+    "moveToStage": "Move to Stage",
+    "interviewsTitle": "Interviews",
+    "noInterviews": "No interviews scheduled yet.",
+    "empty": {
+      "title": "No applications yet",
+      "description": "Link a candidate to a vacancy to create an application."
+    },
+    "table": {
+      "candidate": "Candidate",
+      "vacancy": "Vacancy",
+      "appliedDate": "Applied Date"
+    },
+    "form": {
+      "scheduledAt": "Scheduled At",
+      "mode": "Mode",
+      "location": "Location (optional)"
+    }
+  },
+  "onboarding": {
+    "title": "Employee Onboarding",
+    "empty": {
+      "title": "No onboarding checklists yet",
+      "description": "Onboarding checklists are created automatically when a candidate is hired."
+    },
+    "table": {
+      "employee": "Employee",
+      "progress": "Progress"
+    }
+  },
+  "loans": {
+    "title": "Employee Loans",
+    "newLoan": "New Loan",
+    "submit": "Submit for approval",
+    "approve": "Approve",
+    "reject": "Reject",
+    "rejectReason": "Reason for rejection",
+    "empty": {
+      "title": "No loans yet",
+      "description": "Create a loan to start a repayment schedule for an employee."
+    },
+    "table": {
+      "number": "Loan No",
+      "employee": "Employee",
+      "principal": "Principal",
+      "installment": "Installment"
+    },
+    "form": {
+      "principal": "Principal Amount",
+      "interestRate": "Interest Rate % (optional)",
+      "installments": "Number of Installments",
+      "startDate": "Start Date",
+      "reason": "Reason (optional)"
+    },
+    "deleteDialog": {
+      "title": "Delete Loan",
+      "message": "Are you sure you want to delete loan {{number}}?"
+    }
+  },
+  "advances": {
+    "title": "Salary Advances",
+    "newAdvance": "New Advance",
+    "submit": "Submit for approval",
+    "approve": "Approve",
+    "reject": "Reject",
+    "rejectReason": "Reason for rejection",
+    "empty": {
+      "title": "No salary advances yet",
+      "description": "Create a salary advance to start a repayment schedule for an employee."
+    },
+    "table": {
+      "number": "Advance No",
+      "employee": "Employee",
+      "amount": "Amount",
+      "installment": "Installment"
+    },
+    "form": {
+      "amount": "Amount",
+      "installments": "Number of Installments",
+      "requestDate": "Request Date",
+      "reason": "Reason (optional)"
+    },
+    "deleteDialog": {
+      "title": "Delete Salary Advance",
+      "message": "Are you sure you want to delete advance {{number}}?"
+    }
+  },
+  "overtimeRequests": {
+    "title": "Overtime Requests",
+    "newRequest": "New Request",
+    "approve": "Approve",
+    "reject": "Reject",
+    "rejectReason": "Reason for rejection",
+    "empty": {
+      "title": "No overtime requests yet",
+      "description": "Submit an overtime request so approved hours can be paid at the configured multiplier."
+    },
+    "table": {
+      "employee": "Employee",
+      "date": "Date",
+      "hours": "Hours"
+    },
+    "form": {
+      "reason": "Reason (optional)"
+    },
+    "deleteDialog": {
+      "title": "Delete Overtime Request",
+      "message": "Are you sure you want to delete the overtime request for {{name}} on {{date}}?"
+    }
+  },
   "toast": {
     "departmentCreated": "Department created.",
     "departmentDeleted": "Department deleted.",
@@ -114,6 +1079,124 @@
     "employeeDeleted": "Employee deleted.",
     "attendanceCreated": "Attendance record created.",
     "attendanceUpdated": "Attendance record updated.",
-    "attendanceDeleted": "Attendance record deleted."
+    "attendanceDeleted": "Attendance record deleted.",
+    "designationCreated": "Designation created.",
+    "designationDeleted": "Designation deleted.",
+    "documentUploaded": "Document uploaded.",
+    "documentVerified": "Document verified.",
+    "documentRejected": "Document rejected.",
+    "documentDeleted": "Document deleted.",
+    "contractCreated": "Contract created.",
+    "contractSubmitted": "Contract submitted for approval.",
+    "contractApproved": "Contract approved.",
+    "contractRejected": "Contract rejected.",
+    "contractDeleted": "Contract deleted.",
+    "attendanceImported": "Attendance import complete: {{count}} records created.",
+    "shiftCreated": "Shift created.",
+    "shiftDeleted": "Shift deleted.",
+    "shiftAssigned": "Shift assigned.",
+    "shiftAssignmentRemoved": "Shift assignment removed.",
+    "leaveTypeCreated": "Leave type created.",
+    "leaveTypeDeleted": "Leave type deleted.",
+    "leaveRequestCreated": "Leave request submitted.",
+    "leaveRequestApproved": "Leave request approved.",
+    "leaveRequestRejected": "Leave request rejected.",
+    "leaveRequestCancelled": "Leave request cancelled.",
+    "timesheetCreated": "Timesheet created.",
+    "timesheetApproved": "Timesheet approved.",
+    "timesheetRejected": "Timesheet rejected.",
+    "publicHolidayCreated": "Public holiday created.",
+    "publicHolidayDeleted": "Public holiday deleted.",
+    "payrollComponentCreated": "Payroll component created.",
+    "payrollComponentDeleted": "Payroll component deleted.",
+    "payrollComponentAssigned": "Payroll component assigned.",
+    "payrollComponentUnassigned": "Payroll component assignment removed.",
+    "statutoryRuleSetCreated": "Statutory rule set created.",
+    "statutoryRuleSetDeleted": "Statutory rule set deleted.",
+    "taxBandCreated": "Tax band added.",
+    "taxBandDeleted": "Tax band removed.",
+    "contributionRuleCreated": "Contribution rule added.",
+    "contributionRuleDeleted": "Contribution rule removed.",
+    "payrollSettingsUpdated": "Payroll settings updated.",
+    "payrollPeriodCreated": "Payroll period created.",
+    "payrollPeriodDeleted": "Payroll period deleted.",
+    "loanCreated": "Loan created.",
+    "loanDeleted": "Loan deleted.",
+    "loanSubmitted": "Loan submitted for approval.",
+    "loanApproved": "Loan approved and disbursed.",
+    "loanRejected": "Loan rejected.",
+    "advanceCreated": "Salary advance created.",
+    "advanceDeleted": "Salary advance deleted.",
+    "advanceSubmitted": "Salary advance submitted for approval.",
+    "advanceApproved": "Salary advance approved and disbursed.",
+    "advanceRejected": "Salary advance rejected.",
+    "overtimeRequestCreated": "Overtime request created.",
+    "overtimeRequestDeleted": "Overtime request deleted.",
+    "overtimeRequestApproved": "Overtime request approved.",
+    "overtimeRequestRejected": "Overtime request rejected.",
+    "reviewCreated": "Performance review created.",
+    "reviewSubmitted": "Performance review submitted.",
+    "reviewAcknowledged": "Performance review acknowledged.",
+    "reviewDeleted": "Performance review deleted.",
+    "disciplinaryCreated": "Disciplinary record created.",
+    "disciplinaryAcknowledged": "Disciplinary record acknowledged.",
+    "disciplinaryResolved": "Disciplinary record resolved.",
+    "disciplinaryDeleted": "Disciplinary record deleted.",
+    "assetAssigned": "Asset assigned.",
+    "assetReturned": "Asset returned.",
+    "assetDeleted": "Asset record deleted.",
+    "exitInitiated": "Exit process initiated.",
+    "exitUpdated": "Exit record updated.",
+    "exitCompleted": "Exit process completed.",
+    "vacancyCreated": "Job vacancy created.",
+    "vacancyClosed": "Job vacancy closed.",
+    "vacancyDeleted": "Job vacancy deleted.",
+    "candidateCreated": "Candidate added.",
+    "candidateDeleted": "Candidate deleted.",
+    "applicationCreated": "Application created.",
+    "applicationStatusUpdated": "Application status updated.",
+    "interviewScheduled": "Interview scheduled.",
+    "candidateHired": "Candidate hired and onboarding started.",
+    "taskUpdated": "Onboarding task updated."
+  },
+  "myHr": {
+    "title": "My Workspace",
+    "tabs": {
+      "profile": "Profile",
+      "attendance": "Attendance",
+      "leave": "Leave",
+      "payslips": "Payslips",
+      "assets": "Assets"
+    },
+    "profile": {
+      "employeeNumber": "Employee Number",
+      "department": "Department",
+      "designation": "Designation",
+      "employmentType": "Employment Type",
+      "status": "Status",
+      "hireDate": "Hire Date",
+      "email": "Email",
+      "phone": "Phone",
+      "empty": {
+        "title": "No profile found",
+        "description": "Your account isn't linked to an employee record yet. Contact HR to have one set up."
+      }
+    },
+    "attendance": {
+      "empty": {
+        "title": "No attendance records yet",
+        "description": "Your attendance history will appear here once records are logged."
+      }
+    },
+    "leave": {
+      "requestsTitle": "My Leave Requests",
+      "newRequest": "Request Leave",
+      "daysAvailable": "days available",
+      "cancelled": "Leave request cancelled.",
+      "empty": {
+        "title": "No leave requests yet",
+        "description": "Submit a leave request to start tracking your time off."
+      }
+    }
   }
 }

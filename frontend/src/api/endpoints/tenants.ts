@@ -36,6 +36,7 @@ export async function registerTenant(payload: RegisterTenantPayload): Promise<Au
 
   const { data } = await api.post<AuthResponse>('/tenants/register', form, {
     headers: { 'Content-Type': 'multipart/form-data' },
+    skipErrorToast: true,
   });
 
   return data;

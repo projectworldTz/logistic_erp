@@ -156,7 +156,7 @@ class ProofOfDeliveryTest extends TestCase
                 'name' => 'Portal A',
                 'email' => 'portal-a@example.test',
                 'customer_id' => $customerAId,
-                'role' => 'Customer Portal User',
+                'roles' => ['Customer Portal User'],
                 'password' => 'PortalPass123',
             ])->assertCreated();
 

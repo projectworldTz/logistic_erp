@@ -29,7 +29,6 @@ import SendIcon from '@mui/icons-material/Send';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useForm, Controller, useFieldArray, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -133,9 +132,6 @@ export function QuotationsPage() {
       invalidateQuotations();
       showToast(t('toast.statusUpdated'));
     },
-    onError: (error: AxiosError<{ message?: string }>) => {
-      showToast(error.response?.data?.message ?? t('toast.statusUpdateFailed'), 'error');
-    },
   });
 
   const submitMutation = useMutation({
@@ -151,9 +147,6 @@ export function QuotationsPage() {
     onSuccess: () => {
       invalidateQuotations();
       showToast(t('toast.approved'));
-    },
-    onError: (error: AxiosError<{ message?: string }>) => {
-      showToast(error.response?.data?.message ?? t('toast.approveFailed'), 'error');
     },
   });
 

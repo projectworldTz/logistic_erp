@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { disableTwoFactor, enableTwoFactor, setupTwoFactor } from '../../../api/endpoints/auth';
+import { ChangePasswordForm } from '../../../components/common/ChangePasswordForm';
 import { useAuthStore } from '../../../hooks/useAuth';
 import { useToast } from '../../../hooks/useToast';
 
@@ -89,6 +90,10 @@ export function AccountSecurityPage() {
       <Typography variant="h5" fontWeight={700}>
         {t('title')}
       </Typography>
+
+      <ChangePasswordForm namespace="security" />
+
+      <Divider />
 
       <Stack spacing={2}>
         <Stack direction="row" spacing={1.5} alignItems="center">

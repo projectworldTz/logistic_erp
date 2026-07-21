@@ -63,6 +63,16 @@ const STATUS_CATEGORY: Record<string, StatusCategory> = {
   empty_return: 'success',
   present: 'success',
   absent: 'error',
+  // HR & Payroll vocab (employees/contracts/documents)
+  pending_verification: 'warning',
+  pending_approval: 'warning',
+  probation: 'warning',
+  terminated: 'error',
+  suspended: 'error',
+  renewed: 'success',
+  // Demurrage/detention charge lifecycle
+  invoiced: 'success',
+  waived: 'neutral',
 };
 
 const CATEGORY_STYLE: Record<StatusCategory, { color: ChipProps['color']; icon: ReactElement }> = {

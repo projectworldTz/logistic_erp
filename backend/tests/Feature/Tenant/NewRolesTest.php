@@ -44,7 +44,7 @@ class NewRolesTest extends TestCase
             ->postJson('/api/v1/users', [
                 'name' => 'Test User',
                 'email' => $email,
-                'role' => $role,
+                'roles' => [$role],
                 'password' => 'RolePass123',
             ])->assertCreated();
 

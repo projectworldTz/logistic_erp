@@ -106,6 +106,38 @@ class RolePermissionSeederService
     }
 
     /**
+     * Create any tenant_roles entries added to config/rbac.php *after* a
+     * tenant was first provisioned (e.g. a new "HR Manager" role) as an
+     * actual Role row for every existing tenant. seedForTenant() only runs
+     * at registration time, so without this, a role added later would only
+     * ever exist for brand-new tenants — existing tenants would have no
+     * such role to assign at all. Only inserts the missing rows; existing
+     * roles/assignments are untouched.
+     */
+    public function backfillMissingTenantRoles(): void
+    {
+        $tenantRoles = config('rbac.tenant_roles', []);
+        $now = now();
+
+        Tenant::query()->pluck('id')->each(function (int $tenantId) use ($tenantRoles, $now) {
+            $existing = Role::query()->where('tenant_id', $tenantId)->whereIn('name', $tenantRoles)->pluck('name')->all();
+            $missing = array_values(array_diff($tenantRoles, $existing));
+
+            if (empty($missing)) {
+                return;
+            }
+
+            DB::table('roles')->insert(array_map(fn (string $roleName) => [
+                'name' => $roleName,
+                'guard_name' => 'web',
+                'tenant_id' => $tenantId,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ], $missing));
+        });
+    }
+
+    /**
      * Re-sync every existing role's permissions (global + every tenant's)
      * from the current config/rbac.php. Safe to run repeatedly, and safe
      * against tenants that predate a newly added permission module: roles
@@ -115,6 +147,8 @@ class RolePermissionSeederService
      */
     public function resyncAllExistingRoles(): void
     {
+        $this->backfillMissingTenantRoles();
+
         app(PermissionRegistrar::class)->setPermissionsTeamId(PermissionRegistry::PLATFORM_TEAM_ID);
         Role::query()->where('tenant_id', PermissionRegistry::PLATFORM_TEAM_ID)->get()
             ->each(fn (Role $role) => $this->syncRolePermissions($role, $role->name));

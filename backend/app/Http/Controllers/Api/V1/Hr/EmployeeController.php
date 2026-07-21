@@ -11,13 +11,16 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
+    private const WITH = ['department', 'branch', 'designation', 'reportingManager'];
+
     public function index(Request $request)
     {
         return EmployeeResource::collection(
             Employee::query()
-                ->with(['department', 'branch'])
+                ->with(self::WITH)
                 ->when($request->query('status'), fn ($query, $status) => $query->where('status', $status))
                 ->when($request->query('department_id'), fn ($query, $id) => $query->where('department_id', $id))
+                ->when($request->query('designation_id'), fn ($query, $id) => $query->where('designation_id', $id))
                 ->latest()
                 ->paginate(20)
         );
@@ -27,19 +30,19 @@ class EmployeeController extends Controller
     {
         $employee = Employee::query()->create($request->validated())->refresh();
 
-        return new EmployeeResource($employee->load(['department', 'branch']));
+        return new EmployeeResource($employee->load(self::WITH));
     }
 
     public function show(Employee $employee)
     {
-        return new EmployeeResource($employee->load(['department', 'branch', 'user']));
+        return new EmployeeResource($employee->load([...self::WITH, 'user']));
     }
 
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
         $employee->update($request->validated());
 
-        return new EmployeeResource($employee->load(['department', 'branch']));
+        return new EmployeeResource($employee->load(self::WITH));
     }
 
     public function destroy(Employee $employee)

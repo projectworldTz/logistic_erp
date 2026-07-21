@@ -52,7 +52,7 @@ class UserManagementTest extends TestCase
                 'name' => 'Rashid Kombo',
                 'email' => 'rashid@acme.test',
                 'phone' => '+254700000000',
-                'role' => 'Clearing Officer',
+                'roles' => ['Clearing Officer'],
                 'password' => 'StaffPass123',
             ])
             ->assertCreated()
@@ -77,15 +77,41 @@ class UserManagementTest extends TestCase
             ->postJson('/api/v1/users', [
                 'name' => 'Rashid Kombo',
                 'email' => 'rashid@acme.test',
-                'role' => 'Clearing Officer',
+                'roles' => ['Clearing Officer'],
                 'password' => 'StaffPass123',
             ]);
         $userId = $invite->json('data.id');
 
         $this->withHeader('Authorization', "Bearer {$token}")
-            ->putJson("/api/v1/users/{$userId}", ['role' => 'Warehouse Manager'])
+            ->putJson("/api/v1/users/{$userId}", ['roles' => ['Warehouse Manager']])
             ->assertOk()
             ->assertJsonPath('data.roles', ['Warehouse Manager']);
+    }
+
+    public function test_owner_can_assign_multiple_roles_to_a_user(): void
+    {
+        $registration = $this->registerTenant();
+        $token = $registration['token'];
+
+        $invite = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson('/api/v1/users', [
+                'name' => 'Rashid Kombo',
+                'email' => 'rashid@acme.test',
+                'roles' => ['Clearing Officer'],
+                'password' => 'StaffPass123',
+            ]);
+        $userId = $invite->json('data.id');
+
+        $response = $this->withHeader('Authorization', "Bearer {$token}")
+            ->putJson("/api/v1/users/{$userId}", ['roles' => ['Clearing Officer', 'Warehouse Manager']])
+            ->assertOk();
+
+        $this->assertEqualsCanonicalizing(['Clearing Officer', 'Warehouse Manager'], $response->json('data.roles'));
+
+        // Permissions should be the union of both roles' permissions.
+        $permissions = $response->json('data.permissions');
+        $this->assertContains('clearing.files.view', $permissions);
+        $this->assertContains('warehouse.items.view', $permissions);
     }
 
     public function test_owner_can_suspend_and_activate_a_user(): void
@@ -97,7 +123,7 @@ class UserManagementTest extends TestCase
             ->postJson('/api/v1/users', [
                 'name' => 'Rashid Kombo',
                 'email' => 'rashid@acme.test',
-                'role' => 'Clearing Officer',
+                'roles' => ['Clearing Officer'],
                 'password' => 'StaffPass123',
             ]);
         $userId = $invite->json('data.id');
@@ -134,7 +160,7 @@ class UserManagementTest extends TestCase
         $ownerId = $registration['user']['id'];
 
         $this->withHeader('Authorization', "Bearer {$token}")
-            ->putJson("/api/v1/users/{$ownerId}", ['role' => 'Sales Manager'])
+            ->putJson("/api/v1/users/{$ownerId}", ['roles' => ['Sales Manager']])
             ->assertStatus(422);
     }
 
@@ -165,7 +191,7 @@ class UserManagementTest extends TestCase
         $this->postJson('/api/v1/users', [
             'name' => 'New Guy',
             'email' => 'newguy@acme.test',
-            'role' => 'Clearing Officer',
+            'roles' => ['Clearing Officer'],
             'password' => 'StaffPass123',
         ])->assertForbidden();
 

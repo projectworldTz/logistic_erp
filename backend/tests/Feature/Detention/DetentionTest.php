@@ -140,12 +140,65 @@ class DetentionTest extends TestCase
         $response = $this->withHeader('Authorization', "Bearer {$token}")
             ->postJson("/api/v1/containers/items/{$containerId}/detention/calculate");
 
-        $response->assertCreated();
-        $data = $response->json('data');
+        // Not gated out yet — nothing to charge, no charge row created.
+        $response->assertOk();
+        $this->assertNull($response->json('data'));
+        $this->assertEquals('within_free_days', $response->json('reason'));
+        $this->assertDatabaseCount('detention_charges', 0);
+    }
 
-        $this->assertEquals(0, $data['detention_days']);
-        $this->assertEquals(0, $data['chargeable_days']);
-        $this->assertEquals(0, $data['amount']);
+    public function test_recalculating_with_no_new_time_out_of_port_does_not_duplicate_the_charge(): void
+    {
+        $registration = $this->registerTenant();
+        $token = $registration['token'];
+        $customerId = $this->createCustomer($token);
+        $this->createRateCard($token);
+
+        $containerId = $this->createContainer($token, $customerId, [
+            'gate_out_date' => now()->subDays(10)->toDateString(),
+        ]);
+
+        $first = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson("/api/v1/containers/items/{$containerId}/detention/calculate");
+        $first->assertCreated();
+        $this->assertEquals(200, $first->json('data.amount'));
+
+        $second = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson("/api/v1/containers/items/{$containerId}/detention/calculate");
+
+        $second->assertOk();
+        $this->assertNull($second->json('data'));
+        $this->assertEquals('no_new_charge', $second->json('reason'));
+        $this->assertDatabaseCount('detention_charges', 1);
+    }
+
+    public function test_recalculating_after_more_time_out_of_port_charges_only_the_incremental_days(): void
+    {
+        $registration = $this->registerTenant();
+        $token = $registration['token'];
+        $customerId = $this->createCustomer($token);
+        $this->createRateCard($token);
+
+        $containerId = $this->createContainer($token, $customerId, [
+            'gate_out_date' => now()->subDays(10)->toDateString(),
+        ]);
+
+        $first = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson("/api/v1/containers/items/{$containerId}/detention/calculate");
+        $first->assertCreated();
+        $this->assertEquals(6, $first->json('data.chargeable_days'));
+        $this->assertEquals(200, $first->json('data.amount'));
+
+        $this->travel(2)->days();
+
+        $second = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson("/api/v1/containers/items/{$containerId}/detention/calculate");
+        $second->assertCreated();
+        // Only the 2 new days, at tier 2's $50/day rate.
+        $this->assertEquals(2, $second->json('data.chargeable_days'));
+        $this->assertEquals(100, $second->json('data.amount'));
+
+        $this->assertDatabaseCount('detention_charges', 2);
     }
 
     public function test_dashboard_lists_only_containers_gated_out_and_not_yet_returned_empty(): void

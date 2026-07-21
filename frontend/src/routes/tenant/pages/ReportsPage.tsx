@@ -71,6 +71,9 @@ const EXPORT_MODULES: { value: ExportModule; labelKey: string; permission: strin
   { value: 'invoices', labelKey: 'export.modules.invoices', permission: 'finance.invoices.view' },
   { value: 'expenses', labelKey: 'export.modules.expenses', permission: 'expenses.items.view' },
   { value: 'profit', labelKey: 'export.modules.profit', permission: 'reports.view' },
+  { value: 'employees', labelKey: 'export.modules.employees', permission: 'hr.employees.view' },
+  { value: 'payslips', labelKey: 'export.modules.payslips', permission: 'hr.payslips.view.all' },
+  { value: 'leave_requests', labelKey: 'export.modules.leaveRequests', permission: 'hr.leave.view' },
 ];
 
 const IMPORT_MODULES: { value: ImportModule; labelKey: string; permission: string }[] = [
@@ -166,6 +169,8 @@ function BreakdownCard({ title, total, byStatus }: BreakdownCardProps) {
 
 function DataExportCard() {
   const { t } = useTranslation('reports');
+  const { t: tc } = useTranslation('common');
+  const { showToast } = useToast();
   const permissions = useAuthStore((s) => s.user?.permissions) ?? [];
   const allowedModules = EXPORT_MODULES.filter((m) => permissions.includes(m.permission));
   const [module, setModule] = useState<ExportModule | ''>(allowedModules[0]?.value ?? '');
@@ -173,6 +178,7 @@ function DataExportCard() {
 
   const exportMutation = useMutation({
     mutationFn: () => downloadReportExport(module as ExportModule, format),
+    onMutate: () => showToast(tc('toast.downloading'), 'info'),
     onSuccess: (blob) => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -180,6 +186,7 @@ function DataExportCard() {
       link.download = `${module}-${new Date().toISOString().slice(0, 10)}.${format}`;
       link.click();
       window.URL.revokeObjectURL(url);
+      showToast(tc('toast.downloaded'), 'success');
     },
   });
 
@@ -246,6 +253,8 @@ function DataExportCard() {
 
 function DataImportCard() {
   const { t } = useTranslation('reports');
+  const { t: tc } = useTranslation('common');
+  const { showToast } = useToast();
   const queryClient = useQueryClient();
   const permissions = useAuthStore((s) => s.user?.permissions) ?? [];
   const allowedModules = IMPORT_MODULES.filter((m) => permissions.includes(m.permission));
@@ -255,8 +264,10 @@ function DataImportCard() {
 
   const importMutation = useMutation({
     mutationFn: (file: File) => importReportData(module as ImportModule, file),
+    onMutate: () => showToast(tc('toast.uploading'), 'info'),
     onSuccess: (data) => {
       setResult(data);
+      showToast(tc('toast.uploaded'), 'success');
       if (module === 'customers') queryClient.invalidateQueries({ queryKey: ['customers'] });
       if (module === 'leads') queryClient.invalidateQueries({ queryKey: ['leads'] });
     },

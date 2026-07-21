@@ -152,7 +152,7 @@ class ComplianceDocumentTest extends TestCase
             ->postJson('/api/v1/users', [
                 'name' => 'Restricted User',
                 'email' => 'restricted@acme.test',
-                'role' => 'Document Controller',
+                'roles' => ['Document Controller'],
                 'password' => 'RestrictedPass123',
             ])->assertCreated();
 

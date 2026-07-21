@@ -24,6 +24,7 @@ import { useToast } from '../../../hooks/useToast';
 
 export function BackupRestorePage() {
   const { t } = useTranslation('settings');
+  const { t: tc } = useTranslation('common');
   const { showToast } = useToast();
   const { data: company } = useQuery({ queryKey: ['tenant', 'company'], queryFn: fetchCompany });
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -32,6 +33,7 @@ export function BackupRestorePage() {
 
   const exportMutation = useMutation({
     mutationFn: downloadBackup,
+    onMutate: () => showToast(tc('toast.downloading'), 'info'),
     onSuccess: (blob) => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -45,6 +47,7 @@ export function BackupRestorePage() {
 
   const restoreMutation = useMutation({
     mutationFn: restoreBackup,
+    onMutate: () => showToast(tc('toast.uploading'), 'info'),
     onSuccess: () => {
       closeDialog();
       showToast(t('backup.toast.restored'));

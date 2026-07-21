@@ -16,6 +16,7 @@ class DataImportController extends Controller
     private const MODULE_PERMISSIONS = [
         'customers' => 'crm.customers.manage',
         'leads' => 'crm.leads.manage',
+        'attendance' => 'hr.attendance.manage',
     ];
 
     public function import(Request $request, string $module, DataImportService $service)
