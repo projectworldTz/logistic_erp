@@ -40,6 +40,7 @@ use App\Services\Payroll\PayrollCalculationService;
 use App\Support\Tenancy\TenantContext;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\PermissionRegistrar;
 
 /**
@@ -73,23 +74,29 @@ class TraceHrPayrollDataSeeder extends Seeder
         app(TenantContext::class)->set($tenantId);
         app(PermissionRegistrar::class)->setPermissionsTeamId($tenantId);
 
-        $departments = $this->seedDepartments($tenantId, $branchId);
-        $designations = $this->seedDesignations($tenantId);
-        $employees = $this->seedEmployees($tenantId, $departments, $designations, $branchId);
-        $this->seedContracts($tenantId, $employees);
-        $this->seedPublicHolidays($tenantId);
-        $this->seedAttendance($tenantId, $employees);
-        $leaveTypes = $this->seedLeaveTypesAndBalances($tenantId, $employees);
-        $this->seedLeaveRequests($tenantId, $employees, $leaveTypes, $owner->id);
-        $ruleSet = $this->seedStatutoryRuleSet($tenantId);
-        $components = $this->seedPayrollComponents($tenantId);
-        $this->assignPayrollComponents($tenantId, $employees, $components);
-        $accounts = $this->seedPayrollAccounts($tenantId);
-        $this->seedPayrollSettings($tenantId, $ruleSet, $accounts);
-        $this->runFullPayrollCycle($tenantId, $owner);
-        $this->seedLoans($tenantId, $employees, $owner->id);
-        $this->seedAssets($tenantId, $employees, $owner->id);
-        $this->seedPerformanceReviews($tenantId, $employees, $owner->id);
+        // Wrapped in a transaction so a failure partway through (e.g. a
+        // missing permission during seedContracts()) rolls back everything
+        // instead of leaving orphaned departments/employees behind for the
+        // next attempt to collide with.
+        DB::transaction(function () use ($tenantId, $branchId, $owner) {
+            $departments = $this->seedDepartments($tenantId, $branchId);
+            $designations = $this->seedDesignations($tenantId);
+            $employees = $this->seedEmployees($tenantId, $departments, $designations, $branchId);
+            $this->seedContracts($tenantId, $employees);
+            $this->seedPublicHolidays($tenantId);
+            $this->seedAttendance($tenantId, $employees);
+            $leaveTypes = $this->seedLeaveTypesAndBalances($tenantId, $employees);
+            $this->seedLeaveRequests($tenantId, $employees, $leaveTypes, $owner->id);
+            $ruleSet = $this->seedStatutoryRuleSet($tenantId);
+            $components = $this->seedPayrollComponents($tenantId);
+            $this->assignPayrollComponents($tenantId, $employees, $components);
+            $accounts = $this->seedPayrollAccounts($tenantId);
+            $this->seedPayrollSettings($tenantId, $ruleSet, $accounts);
+            $this->runFullPayrollCycle($tenantId, $owner);
+            $this->seedLoans($tenantId, $employees, $owner->id);
+            $this->seedAssets($tenantId, $employees, $owner->id);
+            $this->seedPerformanceReviews($tenantId, $employees, $owner->id);
+        });
     }
 
     private function seedDepartments(int $tenantId, ?int $branchId): array
