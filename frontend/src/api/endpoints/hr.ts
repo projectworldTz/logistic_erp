@@ -72,12 +72,18 @@ export async function fetchEmployee(id: number): Promise<Employee> {
   return data.data;
 }
 
-export async function createEmployee(payload: Partial<Employee>): Promise<Employee> {
+type CreateEmployeePayload = Partial<Employee> & {
+  identity_verification_id?: number;
+};
+
+type UpdateEmployeePayload = Partial<Employee> & { identity_override_reason?: string };
+
+export async function createEmployee(payload: CreateEmployeePayload): Promise<Employee> {
   const { data } = await api.post<{ data: Employee }>('/hr/employees', payload);
   return data.data;
 }
 
-export async function updateEmployee(id: number, payload: Partial<Employee>): Promise<Employee> {
+export async function updateEmployee(id: number, payload: UpdateEmployeePayload): Promise<Employee> {
   const { data } = await api.put<{ data: Employee }>(`/hr/employees/${id}`, payload);
   return data.data;
 }

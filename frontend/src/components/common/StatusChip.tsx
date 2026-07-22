@@ -73,6 +73,15 @@ const STATUS_CATEGORY: Record<string, StatusCategory> = {
   // Demurrage/detention charge lifecycle
   invoiced: 'success',
   waived: 'neutral',
+  // Identity verification lifecycle
+  not_verified: 'neutral',
+  verified: 'success',
+  not_found: 'error',
+  provider_unavailable: 'error',
+  manually_overridden: 'warning',
+  requires_review: 'warning',
+  manually_verified: 'success',
+  rate_limited: 'warning',
 };
 
 const CATEGORY_STYLE: Record<StatusCategory, { color: ChipProps['color']; icon: ReactElement }> = {

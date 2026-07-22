@@ -70,6 +70,16 @@ class StoreEmployeeRequest extends FormRequest
             'statutory_details.*' => ['nullable', 'string', 'max:255'],
 
             'notes' => ['nullable', 'string'],
+
+            // Identity Verification — see App\Services\Identity\IdentityVerificationService.
+            // Linking a confirmed verification is all that's needed here;
+            // IdentityVerificationService::applyToEmployee() pulls the
+            // document type/number/country from the verification record and
+            // its short-lived raw-number cache, not from this request.
+            'identity_verification_id' => [
+                'nullable',
+                Rule::exists('employee_identity_verifications', 'id')->where('tenant_id', $tenantId),
+            ],
         ];
     }
 }

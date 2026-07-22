@@ -28,6 +28,7 @@ const PATHS = [
   '/app/hr/candidates',
   '/app/hr/job-applications',
   '/app/hr/onboarding',
+  '/app/hr/identity-settings',
 ];
 
 export function HrTabs() {
@@ -67,6 +68,7 @@ export function HrTabs() {
       <Tab label={t('tabs.candidates')} />
       <Tab label={t('tabs.applications')} />
       <Tab label={t('tabs.onboarding')} />
+      <Tab label={t('tabs.identitySettings')} />
     </Tabs>
   );
 }

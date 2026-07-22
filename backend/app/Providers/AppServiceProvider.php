@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Anthropic\Client as AnthropicClient;
+use App\Contracts\IdentityVerificationProvider;
 use App\Contracts\Notifications\SmsChannel;
 use App\Contracts\Notifications\WhatsAppChannel;
 use App\Models\Account;
@@ -107,11 +108,13 @@ use App\Observers\TrackingEventObserver;
 use App\Observers\UserObserver;
 use App\Observers\VehicleObserver;
 use App\Observers\WarehouseItemObserver;
+use App\Services\Identity\IdentityProviderFactory;
 use App\Services\Notifications\Channels\BeemSmsChannel;
 use App\Services\Notifications\Channels\LogSmsChannel;
 use App\Services\Notifications\Channels\LogWhatsAppChannel;
 use App\Support\Tenancy\TenantContext;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
@@ -132,6 +135,7 @@ class AppServiceProvider extends ServiceProvider
             AnthropicClient::class,
             fn () => new AnthropicClient(apiKey: config('services.anthropic.api_key') ?: 'not-configured'),
         );
+        $this->app->bind(IdentityVerificationProvider::class, fn () => IdentityProviderFactory::make());
     }
 
     /**
@@ -140,6 +144,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         RateLimiter::for('api', fn ($request) => Limit::perMinute(60)->by($request->user()?->id ?: $request->ip()));
+
+        Event::subscribe(\App\Listeners\Identity\IdentityAuditSubscriber::class);
+        Event::subscribe(\App\Listeners\Identity\IdentityNotificationSubscriber::class);
 
         User::observe(UserObserver::class);
         Lead::observe(LeadObserver::class);

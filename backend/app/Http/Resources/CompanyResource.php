@@ -33,6 +33,7 @@ class CompanyResource extends JsonResource
             'phone' => $this->phone,
             'email' => $this->email,
             'website' => $this->website,
+            'require_identity_verification_before_payroll' => $this->require_identity_verification_before_payroll,
         ];
     }
 }

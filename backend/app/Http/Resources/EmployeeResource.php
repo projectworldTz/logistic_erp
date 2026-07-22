@@ -58,6 +58,16 @@ class EmployeeResource extends JsonResource
             'statutory_details' => $this->statutory_details,
             'notes' => $this->notes,
             'created_at' => $this->created_at,
+            // Identity Verification — status only, never the raw identity
+            // number (that's never returned by any resource once saved).
+            'identity_document_type' => $this->identity_document_type?->value,
+            'identity_country_code' => $this->identity_country_code,
+            'identity_provider' => $this->identity_provider,
+            'identity_reference' => $this->identity_reference,
+            'identity_verification_status' => $this->identity_verification_status?->value,
+            'identity_verified' => $this->identity_verified,
+            'identity_verified_at' => $this->identity_verified_at,
+            'identity_last_synced_at' => $this->identity_last_synced_at,
         ];
     }
 }

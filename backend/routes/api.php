@@ -51,6 +51,12 @@ Route::prefix('v1')->group(function () {
         ->name('employee-documents.download')
         ->middleware(['signed', 'throttle:30,1']);
 
+    // Same model as the employee-document download above — the signature
+    // is the authorization for a manual identity-review supporting file.
+    Route::get('identity-manual-reviews/{review}/download', [Hr\IdentityManualReviewController::class, 'download'])
+        ->name('identity-manual-reviews.download')
+        ->middleware(['signed', 'throttle:30,1']);
+
     Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
         Route::post('auth/logout', [AuthController::class, 'logout']);
         Route::get('auth/me', [AuthController::class, 'me']);
@@ -267,6 +273,22 @@ Route::prefix('v1')->group(function () {
                 Route::post('employee-documents/{employeeDocument}/verify', [Hr\EmployeeDocumentController::class, 'verify'])->middleware('permission:hr.employees.documents.manage');
                 Route::post('employee-documents/{employeeDocument}/reject', [Hr\EmployeeDocumentController::class, 'reject'])->middleware('permission:hr.employees.documents.manage');
                 Route::delete('employee-documents/{employeeDocument}', [Hr\EmployeeDocumentController::class, 'destroy'])->middleware('permission:hr.employees.documents.manage');
+
+                // Identity Verification — provider-agnostic, see App\Contracts\IdentityVerificationProvider.
+                Route::post('identity-verifications', [Hr\IdentityVerificationController::class, 'store'])->middleware('permission:identity.verify');
+                Route::get('identity-verifications/{verification}', [Hr\IdentityVerificationController::class, 'show'])->middleware('permission:identity.view');
+                Route::post('identity-verifications/{verification}/confirm', [Hr\IdentityVerificationController::class, 'confirm'])->middleware('permission:identity.confirm');
+                Route::post('identity-verifications/{verification}/reject', [Hr\IdentityVerificationController::class, 'reject'])->middleware('permission:identity.reject');
+                Route::post('identity-verifications/{verification}/retry', [Hr\IdentityVerificationController::class, 'retry'])->middleware('permission:identity.verify');
+                Route::post('identity-verifications/{verification}/manual-review', [Hr\IdentityManualReviewController::class, 'store'])->middleware('permission:identity.manual-review.create');
+
+                Route::post('identity-manual-reviews/{review}/approve', [Hr\IdentityManualReviewController::class, 'approve'])->middleware('permission:identity.manual-review.approve');
+                Route::post('identity-manual-reviews/{review}/reject', [Hr\IdentityManualReviewController::class, 'reject'])->middleware('permission:identity.manual-review.reject');
+
+                Route::get('employees/{employee}/identity-verifications', [Hr\EmployeeIdentityController::class, 'index'])->middleware('permission:identity.view');
+                Route::get('employees/{employee}/identity-manual-reviews', [Hr\IdentityManualReviewController::class, 'index'])->middleware('permission:identity.view');
+                Route::post('employees/{employee}/identity-resync', [Hr\EmployeeIdentityController::class, 'resync'])->middleware('permission:identity.resync');
+                Route::get('identity-provider-settings', [Hr\IdentityProviderSettingsController::class, 'show'])->middleware('permission:identity.settings.manage');
 
                 Route::get('designations', [Hr\DesignationController::class, 'index'])->middleware('permission:hr.designations.view');
                 Route::post('designations', [Hr\DesignationController::class, 'store'])->middleware('permission:hr.designations.manage');

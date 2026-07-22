@@ -40,12 +40,13 @@ import {
   updateEmployee,
 } from '../../../../api/endpoints/hr';
 import { fetchBranches } from '../../../../api/endpoints/dashboard';
-import type { Employee } from '../../../../types';
+import type { Employee, EmployeeIdentityVerification } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
 import { StatusChip } from '../../../../components/common/StatusChip';
 import { useToast } from '../../../../hooks/useToast';
 import { HrTabs } from './HrTabs';
+import { IdentityVerificationPanel } from './identity/IdentityVerificationPanel';
 
 const STATUS_OPTIONS: Employee['status'][] = ['active', 'on_leave', 'probation', 'suspended', 'terminated'];
 const EMPLOYMENT_TYPE_OPTIONS: Employee['employment_type'][] = [
@@ -53,17 +54,25 @@ const EMPLOYMENT_TYPE_OPTIONS: Employee['employment_type'][] = [
 ];
 
 function buildSchema(t: (key: string) => string) {
-  return z.object({
-    department_id: z.number().optional(),
-    branch_id: z.number().optional(),
-    designation_id: z.number().optional(),
-    name: z.string().min(1, t('validation.nameRequired')).max(255),
-    email: z.string().email(t('validation.invalidEmail')).optional().or(z.literal('')),
-    phone: z.string().optional(),
-    job_title: z.string().optional(),
-    employment_type: z.enum(EMPLOYMENT_TYPE_OPTIONS as [Employee['employment_type'], ...Employee['employment_type'][]]),
-    hire_date: z.string().min(1, t('validation.hireDateRequired')),
-  });
+  return z
+    .object({
+      department_id: z.number().optional(),
+      branch_id: z.number().optional(),
+      designation_id: z.number().optional(),
+      name: z.string().max(255).optional(),
+      first_name: z.string().max(255).optional(),
+      middle_name: z.string().max(255).optional(),
+      last_name: z.string().max(255).optional(),
+      date_of_birth: z.string().optional(),
+      gender: z.string().optional(),
+      nationality: z.string().optional(),
+      email: z.string().email(t('validation.invalidEmail')).optional().or(z.literal('')),
+      phone: z.string().optional(),
+      job_title: z.string().optional(),
+      employment_type: z.enum(EMPLOYMENT_TYPE_OPTIONS as [Employee['employment_type'], ...Employee['employment_type'][]]),
+      hire_date: z.string().min(1, t('validation.hireDateRequired')),
+    })
+    .refine((data) => !!data.name || !!data.first_name, { message: t('validation.nameRequired'), path: ['name'] });
 }
 
 type FormValues = z.infer<ReturnType<typeof buildSchema>>;
@@ -77,6 +86,8 @@ export function EmployeesPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
   const [pendingDelete, setPendingDelete] = useState<Employee | null>(null);
+  const [identityVerification, setIdentityVerification] = useState<EmployeeIdentityVerification | null>(null);
+  const [identityLocked, setIdentityLocked] = useState(false);
 
   const { data, isLoading } = useQuery({ queryKey: ['hr', 'employees'], queryFn: () => fetchEmployees() });
   const { data: departments } = useQuery({ queryKey: ['hr', 'departments'], queryFn: fetchDepartments });
@@ -126,6 +137,7 @@ export function EmployeesPage() {
     control,
     handleSubmit,
     reset,
+    getValues,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -134,17 +146,27 @@ export function EmployeesPage() {
 
   const openCreateDialog = () => {
     setEditingEmployee(null);
+    setIdentityVerification(null);
+    setIdentityLocked(false);
     reset({ employment_type: 'full_time', hire_date: new Date().toISOString().slice(0, 10) });
     setDialogOpen(true);
   };
 
   const openEditDialog = (employee: Employee) => {
     setEditingEmployee(employee);
+    setIdentityVerification(null);
+    setIdentityLocked(employee.identity_verified);
     reset({
       department_id: employee.department_id ?? undefined,
       branch_id: employee.branch_id ?? undefined,
       designation_id: employee.designation_id ?? undefined,
       name: employee.name,
+      first_name: employee.first_name ?? undefined,
+      middle_name: employee.middle_name ?? undefined,
+      last_name: employee.last_name ?? undefined,
+      date_of_birth: employee.date_of_birth?.slice(0, 10) ?? undefined,
+      gender: employee.gender ?? undefined,
+      nationality: employee.nationality ?? undefined,
       email: employee.email ?? '',
       phone: employee.phone ?? '',
       job_title: employee.job_title ?? '',
@@ -154,11 +176,34 @@ export function EmployeesPage() {
     setDialogOpen(true);
   };
 
+  const handleIdentityConfirmed = (verification: EmployeeIdentityVerification) => {
+    setIdentityVerification(verification);
+    setIdentityLocked(true);
+    if (verification.person) {
+      const person = verification.person;
+      reset({
+        ...getValues(),
+        first_name: person.first_name,
+        middle_name: person.middle_name ?? undefined,
+        last_name: person.last_name,
+        name: person.full_name,
+        date_of_birth: person.date_of_birth ?? undefined,
+        gender: person.gender ?? undefined,
+        nationality: person.nationality ?? undefined,
+      });
+    }
+  };
+
+  const handleIdentityCleared = () => {
+    setIdentityVerification(null);
+    setIdentityLocked(false);
+  };
+
   const onSubmitForm = (values: FormValues) => {
     if (editingEmployee) {
       updateMutation.mutate({ id: editingEmployee.id, payload: values });
     } else {
-      createMutation.mutate(values);
+      createMutation.mutate({ ...values, identity_verification_id: identityVerification?.id });
     }
   };
 
@@ -248,18 +293,39 @@ export function EmployeesPage() {
         </Paper>
       )}
 
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} fullWidth maxWidth="xs">
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} fullWidth maxWidth="sm">
         <DialogTitle>{editingEmployee ? t('employees.form.editDialogTitle') : t('employees.form.dialogTitle')}</DialogTitle>
         <Stack component="form" onSubmit={handleSubmit(onSubmitForm)}>
           <DialogContent>
             <Stack spacing={2}>
+              {!editingEmployee && (
+                <IdentityVerificationPanel onConfirmed={handleIdentityConfirmed} onCleared={handleIdentityCleared} />
+              )}
               <TextField
                 label={t('employees.form.name')}
                 fullWidth
+                disabled={identityLocked}
                 {...register('name')}
                 error={!!errors.name}
                 helperText={errors.name?.message}
               />
+              <Stack direction="row" spacing={2}>
+                <TextField label={t('identity.card.firstName')} fullWidth disabled={identityLocked} {...register('first_name')} />
+                <TextField label={t('identity.card.middleName')} fullWidth disabled={identityLocked} {...register('middle_name')} />
+                <TextField label={t('identity.card.lastName')} fullWidth disabled={identityLocked} {...register('last_name')} />
+              </Stack>
+              <Stack direction="row" spacing={2}>
+                <TextField
+                  label={t('identity.card.dateOfBirth')}
+                  type="date"
+                  fullWidth
+                  disabled={identityLocked}
+                  slotProps={{ inputLabel: { shrink: true } }}
+                  {...register('date_of_birth')}
+                />
+                <TextField label={t('identity.card.gender')} fullWidth disabled={identityLocked} {...register('gender')} />
+                <TextField label={t('identity.card.nationality')} fullWidth disabled={identityLocked} {...register('nationality')} />
+              </Stack>
               <TextField label={t('employees.form.jobTitle')} fullWidth {...register('job_title')} />
               <TextField
                 label={t('employees.form.email')}

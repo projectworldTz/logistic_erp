@@ -25,7 +25,8 @@
     "vacancies": "Nafasi za Kazi",
     "candidates": "Waombaji",
     "applications": "Maombi",
-    "onboarding": "Uanzishaji"
+    "onboarding": "Uanzishaji",
+    "identitySettings": "Uthibitisho wa Utambulisho"
   },
   "statuses": {
     "active": "Hai",
@@ -1197,6 +1198,110 @@
         "title": "Bado hakuna maombi ya likizo",
         "description": "Wasilisha ombi la likizo ili kuanza kufuatilia muda wako wa mapumziko."
       }
+    }
+  },
+  "identity": {
+    "sectionTitle": "Uthibitisho wa Utambulisho",
+    "sectionHelp": "Thibitisha utambulisho wa mfanyakazi kabla ya kukamilisha usajili. Maelezo yaliyothibitishwa yatajaza sehemu zilizo hapa chini kiotomatiki.",
+    "documentType": "Aina ya Hati ya Utambulisho",
+    "documentTypes": {
+      "national_id": "Namba ya Kitambulisho cha Taifa",
+      "passport": "Namba ya Pasipoti",
+      "other": "Hati Nyingine ya Utambulisho"
+    },
+    "identityNumber": "Namba ya Utambulisho",
+    "country": "Nchi",
+    "verify": "Thibitisha Utambulisho",
+    "verifying": "Inathibitisha…",
+    "verifyAgain": "Thibitisha Tena",
+    "retry": "Jaribu Tena",
+    "confirm": "Thibitisha Utambulisho",
+    "reject": "Kataa Ulinganifu",
+    "confirming": "Inathibitisha…",
+    "rejecting": "Inakataa…",
+    "confirmed": "Utambulisho umethibitishwa — sehemu zilizo hapa chini zimejazwa na kufungwa.",
+    "rejected": "Ulinganifu umekataliwa. Unaweza kujaribu tena kwa namba nyingine ya utambulisho.",
+    "sendForReview": "Peleka kwa Ukaguzi wa Kibinadamu",
+    "verifiedBadge": "Imethibitishwa",
+    "testProviderBadge": "Mtoa Huduma wa Majaribio",
+    "testProviderNote": "Haujaunganishwa na huduma rasmi ya utambulisho ya serikali.",
+    "card": {
+      "fullName": "Jina Kamili",
+      "firstName": "Jina la Kwanza",
+      "middleName": "Jina la Kati",
+      "lastName": "Jina la Ukoo",
+      "dateOfBirth": "Tarehe ya Kuzaliwa",
+      "gender": "Jinsia",
+      "nationality": "Uraia",
+      "documentType": "Aina ya Hati",
+      "identityNumber": "Namba ya Utambulisho",
+      "documentStatus": "Hali ya Hati",
+      "provider": "Mtoa Huduma wa Uthibitisho",
+      "reference": "Kumbukumbu ya Uthibitisho",
+      "verifiedAt": "Tarehe ya Uthibitisho"
+    },
+    "statuses": {
+      "not_verified": "Haijathibitishwa",
+      "pending": "Uthibitisho Unasubiri",
+      "verified": "Imethibitishwa",
+      "failed": "Uthibitisho Umeshindwa",
+      "not_found": "Utambulisho Haukupatikana",
+      "inactive": "Utambulisho Haufanyi Kazi",
+      "expired": "Utambulisho Umeisha Muda",
+      "provider_unavailable": "Mtoa Huduma Hapatikani",
+      "rejected": "Imekataliwa na HR",
+      "manually_overridden": "Imebadilishwa Kwa Mkono",
+      "requires_review": "Inahitaji Ukaguzi",
+      "manually_verified": "Imethibitishwa kwa Mkono",
+      "rate_limited": "Kikomo cha Kiwango Kimefikiwa"
+    },
+    "errors": {
+      "not_found": "Utambulisho haukupatikana.",
+      "inactive": "Hati ya utambulisho haifanyi kazi.",
+      "expired": "Hati ya utambulisho imeisha muda wake.",
+      "provider_unavailable": "Mtoa huduma wa utambulisho hapatikani kwa sasa.",
+      "failed": "Taarifa zilizoingizwa hazilingani na rekodi ya utambulisho.",
+      "rate_limited": "Majaribio mengi ya uthibitisho. Jaribu tena baadaye."
+    },
+    "manualReview": {
+      "title": "Peleka kwa Ukaguzi wa Kibinadamu",
+      "reason": "Sababu",
+      "supportingDocumentType": "Aina ya Hati Inayounga Mkono",
+      "supportingDocumentNumber": "Namba ya Hati Inayounga Mkono",
+      "file": "Pakia Hati Inayounga Mkono",
+      "notes": "Maelezo",
+      "submit": "Wasilisha kwa Ukaguzi",
+      "submitted": "Imepelekwa kwa ukaguzi wa kibinadamu — meneja ataamua baada ya kukaguliwa.",
+      "approve": "Idhinisha",
+      "reject": "Kataa",
+      "reviewerNotes": "Maelezo ya Mkaguzi",
+      "approved": "Ukaguzi wa kibinadamu umeidhinishwa.",
+      "rejectedDecision": "Ukaguzi wa kibinadamu umekataliwa."
+    },
+    "override": {
+      "title": "Badilisha Sehemu Iliyotoka kwa Utambulisho",
+      "help": "Utambulisho wa mfanyakazi huyu tayari ulithibitishwa. Kubadilisha sehemu hii kunahitaji sababu iliyoandikwa.",
+      "reason": "Sababu ya Kubadilisha",
+      "confirm": "Hifadhi Mabadiliko"
+    },
+    "payroll": {
+      "notVerified": "Haijathibitishwa",
+      "verified": "Imethibitishwa",
+      "pendingReview": "Inasubiri Ukaguzi",
+      "failed": "Uthibitisho Umeshindwa",
+      "manuallyVerified": "Imethibitishwa kwa Mkono",
+      "requiresReverification": "Inahitaji Uthibitisho Mpya"
+    },
+    "providerSettings": {
+      "title": "Mipangilio ya Mtoa Huduma wa Utambulisho",
+      "activeProvider": "Mtoa Huduma Anayotumika",
+      "totalRequests": "Maombi Yote",
+      "successfulRequests": "Yaliyofanikiwa",
+      "failedRequests": "Yaliyoshindwa",
+      "lastSuccessful": "Lililofanikiwa Mwisho",
+      "lastFailed": "Lililoshindwa Mwisho",
+      "averageResponseTime": "Muda wa Wastani wa Majibu",
+      "seconds": "sekunde"
     }
   }
 }

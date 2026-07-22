@@ -34,6 +34,11 @@
     "taxNumber": "Tax Number",
     "website": "Website"
   },
+  "identity": {
+    "title": "Identity Verification",
+    "requireBeforePayroll": "Require identity verification before payroll activation",
+    "help": "When enabled, employees without a confirmed identity verification are still created but blocked from being included in a payroll run, with a clear reason shown on the run."
+  },
   "currency": {
     "title": "Currency",
     "help": "Every screen, invoice, payslip, and report displays amounts in this currency. Switching it converts existing figures for display using the rate below — nothing stored is changed.",

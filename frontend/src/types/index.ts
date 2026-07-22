@@ -36,6 +36,7 @@ export interface Company {
   phone: string | null;
   email: string | null;
   website: string | null;
+  require_identity_verification_before_payroll: boolean;
 }
 
 export interface Branch {
@@ -601,6 +602,107 @@ export interface Employee {
   statutory_details: Record<string, string> | null;
   notes: string | null;
   created_at: string;
+  identity_document_type: IdentityDocumentTypeValue | null;
+  identity_country_code: string | null;
+  identity_provider: string | null;
+  identity_reference: string | null;
+  identity_verification_status: IdentityVerificationStatusValue | null;
+  identity_verified: boolean;
+  identity_verified_at: string | null;
+  identity_last_synced_at: string | null;
+}
+
+export type IdentityDocumentTypeValue = 'national_id' | 'passport' | 'other';
+
+export type IdentityVerificationStatusValue =
+  | 'not_verified'
+  | 'pending'
+  | 'verified'
+  | 'failed'
+  | 'not_found'
+  | 'inactive'
+  | 'expired'
+  | 'provider_unavailable'
+  | 'rejected'
+  | 'manually_overridden'
+  | 'requires_review'
+  | 'manually_verified'
+  | 'rate_limited';
+
+export interface VerifiedPerson {
+  first_name: string;
+  middle_name: string | null;
+  last_name: string;
+  full_name: string;
+  date_of_birth: string | null;
+  gender: string | null;
+  nationality: string | null;
+  country_code: string;
+  photo_url: string | null;
+}
+
+export interface VerifiedDocument {
+  type: IdentityDocumentTypeValue;
+  number_masked: string;
+  status: string;
+  expiry_date: string | null;
+}
+
+export interface EmployeeIdentityVerification {
+  id: number;
+  employee_id: number | null;
+  identity_document_type: IdentityDocumentTypeValue;
+  identity_number_masked: string;
+  identity_country_code: string | null;
+  provider: string;
+  provider_reference: string | null;
+  status: IdentityVerificationStatusValue;
+  result_message: string | null;
+  failure_reason: string | null;
+  verified: boolean;
+  person: VerifiedPerson | null;
+  document: VerifiedDocument | null;
+  requested_by?: string;
+  confirmed_by?: string;
+  rejected_by?: string;
+  requested_at: string;
+  responded_at: string | null;
+  confirmed_at: string | null;
+  rejected_at: string | null;
+  created_at: string;
+}
+
+export interface EmployeeIdentityManualReview {
+  id: number;
+  employee_id: number | null;
+  verification_id: number | null;
+  status: 'pending' | 'approved' | 'rejected';
+  reason: string;
+  notes: string | null;
+  reviewer_notes: string | null;
+  supporting_document_type: string | null;
+  supporting_document_number: string | null;
+  download_url: string | null;
+  submitted_by?: string;
+  reviewed_by?: string;
+  submitted_at: string;
+  reviewed_at: string | null;
+  created_at: string;
+}
+
+export interface IdentityProviderSettings {
+  provider_key: string;
+  provider_name: string;
+  is_live: boolean;
+  require_identity_verification_before_payroll: boolean;
+  stats: {
+    total_requests: number;
+    successful_requests: number;
+    failed_requests: number;
+    last_successful_at: string | null;
+    last_failed_at: string | null;
+    average_response_seconds: number | null;
+  };
 }
 
 export interface EmployeeSalary {

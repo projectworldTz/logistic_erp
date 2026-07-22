@@ -90,6 +90,9 @@ export function resolveNotificationLink(
       return '/app/hr/payroll-periods';
     case 'exit_record':
       return '/app/hr/exit-records';
+    case 'identity_verification':
+    case 'identity_manual_review':
+      return '/app/hr/employees';
     default:
       return null;
   }

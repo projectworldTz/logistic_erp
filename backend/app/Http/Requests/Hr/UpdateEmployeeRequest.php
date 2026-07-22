@@ -75,6 +75,11 @@ class UpdateEmployeeRequest extends FormRequest
             'statutory_details.*' => ['nullable', 'string', 'max:255'],
 
             'notes' => ['nullable', 'string'],
+
+            // Required by EmployeeController::update() whenever an
+            // identity-sourced field is changed on an already-verified
+            // employee — see IDENTITY_SOURCED_FIELDS there.
+            'identity_override_reason' => ['nullable', 'string', 'max:1000'],
         ];
     }
 }

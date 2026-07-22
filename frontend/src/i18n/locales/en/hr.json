@@ -25,7 +25,8 @@
     "vacancies": "Vacancies",
     "candidates": "Candidates",
     "applications": "Applications",
-    "onboarding": "Onboarding"
+    "onboarding": "Onboarding",
+    "identitySettings": "Identity Verification"
   },
   "statuses": {
     "active": "Active",
@@ -1197,6 +1198,110 @@
         "title": "No leave requests yet",
         "description": "Submit a leave request to start tracking your time off."
       }
+    }
+  },
+  "identity": {
+    "sectionTitle": "Identity Verification",
+    "sectionHelp": "Verify the employee's identity before completing registration. Confirmed details auto-fill the fields below.",
+    "documentType": "Identity Document Type",
+    "documentTypes": {
+      "national_id": "National Identification Number",
+      "passport": "Passport Number",
+      "other": "Other Identity Document"
+    },
+    "identityNumber": "Identity Number",
+    "country": "Country",
+    "verify": "Verify Identity",
+    "verifying": "Verifying…",
+    "verifyAgain": "Verify Again",
+    "retry": "Retry",
+    "confirm": "Confirm Identity",
+    "reject": "Reject Match",
+    "confirming": "Confirming…",
+    "rejecting": "Rejecting…",
+    "confirmed": "Identity confirmed — fields below have been filled in and locked.",
+    "rejected": "Match rejected. You can try again with a different identity number.",
+    "sendForReview": "Send for Manual Review",
+    "verifiedBadge": "Verified",
+    "testProviderBadge": "Test Provider",
+    "testProviderNote": "Not connected to an official government identity service.",
+    "card": {
+      "fullName": "Full Name",
+      "firstName": "First Name",
+      "middleName": "Middle Name",
+      "lastName": "Last Name",
+      "dateOfBirth": "Date of Birth",
+      "gender": "Gender",
+      "nationality": "Nationality",
+      "documentType": "Document Type",
+      "identityNumber": "Identity Number",
+      "documentStatus": "Document Status",
+      "provider": "Verification Provider",
+      "reference": "Verification Reference",
+      "verifiedAt": "Verification Date"
+    },
+    "statuses": {
+      "not_verified": "Not Verified",
+      "pending": "Verification Pending",
+      "verified": "Verified",
+      "failed": "Verification Failed",
+      "not_found": "Identity Not Found",
+      "inactive": "Identity Inactive",
+      "expired": "Identity Expired",
+      "provider_unavailable": "Provider Unavailable",
+      "rejected": "Rejected by HR",
+      "manually_overridden": "Manually Overridden",
+      "requires_review": "Requires Review",
+      "manually_verified": "Manually Verified",
+      "rate_limited": "Rate Limited"
+    },
+    "errors": {
+      "not_found": "Identity not found.",
+      "inactive": "The identity document is inactive.",
+      "expired": "The identity document has expired.",
+      "provider_unavailable": "The identity provider is temporarily unavailable.",
+      "failed": "The entered information does not match the identity record.",
+      "rate_limited": "Too many verification attempts. Try again later."
+    },
+    "manualReview": {
+      "title": "Send for Manual Review",
+      "reason": "Reason",
+      "supportingDocumentType": "Supporting Document Type",
+      "supportingDocumentNumber": "Supporting Document Number",
+      "file": "Supporting Document Upload",
+      "notes": "Notes",
+      "submit": "Submit for Review",
+      "submitted": "Sent for manual review — a manager will decide once it's reviewed.",
+      "approve": "Approve",
+      "reject": "Reject",
+      "reviewerNotes": "Reviewer Notes",
+      "approved": "Manual review approved.",
+      "rejectedDecision": "Manual review rejected."
+    },
+    "override": {
+      "title": "Override Identity-Sourced Field",
+      "help": "This employee's identity was already verified. Changing this field requires a documented reason.",
+      "reason": "Override Reason",
+      "confirm": "Save Override"
+    },
+    "payroll": {
+      "notVerified": "Not Verified",
+      "verified": "Verified",
+      "pendingReview": "Pending Review",
+      "failed": "Verification Failed",
+      "manuallyVerified": "Manually Verified",
+      "requiresReverification": "Requires Re-verification"
+    },
+    "providerSettings": {
+      "title": "Identity Provider Settings",
+      "activeProvider": "Active Provider",
+      "totalRequests": "Total Requests",
+      "successfulRequests": "Successful",
+      "failedRequests": "Failed",
+      "lastSuccessful": "Last Successful",
+      "lastFailed": "Last Failed",
+      "averageResponseTime": "Average Response Time",
+      "seconds": "seconds"
     }
   }
 }

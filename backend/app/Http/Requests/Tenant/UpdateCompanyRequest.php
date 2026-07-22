@@ -34,6 +34,7 @@ class UpdateCompanyRequest extends FormRequest
             'notify_email_enabled' => ['sometimes', 'boolean'],
             'notify_sms_enabled' => ['sometimes', 'boolean'],
             'notify_whatsapp_enabled' => ['sometimes', 'boolean'],
+            'require_identity_verification_before_payroll' => ['sometimes', 'boolean'],
         ];
     }
 }

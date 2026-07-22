@@ -34,6 +34,7 @@ class Company extends Model
         'phone',
         'email',
         'website',
+        'require_identity_verification_before_payroll',
     ];
 
     protected $casts = [
@@ -41,6 +42,7 @@ class Company extends Model
         'notify_sms_enabled' => 'boolean',
         'notify_whatsapp_enabled' => 'boolean',
         'usd_to_tzs_rate' => 'decimal:4',
+        'require_identity_verification_before_payroll' => 'boolean',
     ];
 
     public function tenant(): BelongsTo

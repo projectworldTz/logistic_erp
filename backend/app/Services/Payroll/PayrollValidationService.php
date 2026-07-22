@@ -2,6 +2,7 @@
 
 namespace App\Services\Payroll;
 
+use App\Models\Company;
 use App\Models\Employee;
 use App\Models\PayrollPeriod;
 
@@ -53,6 +54,12 @@ class PayrollValidationService
 
         if (! $activeContract) {
             $warnings[] = 'No active employment contract found — falling back to the employee record salary.';
+        }
+
+        $requireIdentityVerification = Company::query()->value('require_identity_verification_before_payroll');
+
+        if ($requireIdentityVerification && ! $employee->identity_verified) {
+            $blocking[] = 'Payroll activation is blocked: identity verification is required by company policy and this employee has not been verified.';
         }
 
         return ['blocking' => $blocking, 'warnings' => $warnings];

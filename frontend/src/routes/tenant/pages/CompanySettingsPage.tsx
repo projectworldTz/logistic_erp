@@ -42,6 +42,7 @@ type FormValues = Pick<
   | 'notify_email_enabled'
   | 'notify_sms_enabled'
   | 'notify_whatsapp_enabled'
+  | 'require_identity_verification_before_payroll'
 >;
 
 const DEFAULT_PRIMARY = '#1a56db';
@@ -81,6 +82,7 @@ export function CompanySettingsPage() {
         notify_email_enabled: company.notify_email_enabled,
         notify_sms_enabled: company.notify_sms_enabled,
         notify_whatsapp_enabled: company.notify_whatsapp_enabled,
+        require_identity_verification_before_payroll: company.require_identity_verification_before_payroll,
       });
     }
   }, [company, reset]);
@@ -241,6 +243,25 @@ export function CompanySettingsPage() {
         </Stack>
         <Typography variant="caption" color="text.secondary">
           {t('notifications.help')}
+        </Typography>
+
+        <Typography variant="h6">{t('identity.title')}</Typography>
+        <Stack direction="row" spacing={2} flexWrap="wrap">
+          <FormControlLabel
+            control={
+              <Controller
+                name="require_identity_verification_before_payroll"
+                control={control}
+                render={({ field }) => (
+                  <Checkbox checked={!!field.value} onChange={(e) => field.onChange(e.target.checked)} />
+                )}
+              />
+            }
+            label={t('identity.requireBeforePayroll')}
+          />
+        </Stack>
+        <Typography variant="caption" color="text.secondary">
+          {t('identity.help')}
         </Typography>
 
         <Typography variant="h6">{t('currency.title')}</Typography>

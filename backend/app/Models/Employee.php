@@ -4,8 +4,11 @@ namespace App\Models;
 
 use App\Enums\EmployeeStatus;
 use App\Enums\EmploymentType;
+use App\Enums\IdentityDocumentType;
+use App\Enums\IdentityVerificationStatus;
 use App\Enums\PreferredPaymentMethod;
 use App\Models\Concerns\BelongsToTenant;
+use App\Support\Identity\IdentityNumberHasher;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -66,6 +69,20 @@ class Employee extends Model
         'pay_currency',
         // Configurable statutory identifiers
         'statutory_details',
+        // Identity verification
+        'identity_document_type',
+        'identity_number',
+        'identity_country_code',
+        'identity_provider',
+        'identity_reference',
+        'identity_verification_status',
+        'identity_verified',
+        'identity_verified_at',
+        'identity_verified_by',
+        'identity_last_synced_at',
+        'identity_override_reason',
+        'identity_overridden_by',
+        'identity_overridden_at',
     ];
 
     protected $casts = [
@@ -83,6 +100,13 @@ class Employee extends Model
         'national_id_number' => 'encrypted',
         'bank_account_number' => 'encrypted',
         'mobile_money_number' => 'encrypted',
+        'identity_document_type' => IdentityDocumentType::class,
+        'identity_number' => 'encrypted',
+        'identity_verification_status' => IdentityVerificationStatus::class,
+        'identity_verified' => 'boolean',
+        'identity_verified_at' => 'datetime',
+        'identity_last_synced_at' => 'datetime',
+        'identity_overridden_at' => 'datetime',
     ];
 
     protected static function booted(): void
@@ -92,6 +116,21 @@ class Employee extends Model
                 $employee->name = trim(implode(' ', array_filter([
                     $employee->first_name, $employee->middle_name, $employee->last_name,
                 ])));
+            }
+
+            if ($employee->isDirty('identity_number') && $employee->identity_number && $employee->identity_document_type) {
+                // On create, this "saving" hook fires before BelongsToTenant's
+                // "creating" hook has stamped tenant_id — fall back to the
+                // active tenant context rather than depend on hook ordering.
+                $tenantId = $employee->tenant_id ?? app(\App\Support\Tenancy\TenantContext::class)->id();
+
+                if ($tenantId) {
+                    $employee->identity_number_hash = IdentityNumberHasher::hash(
+                        $employee->identity_number,
+                        $employee->identity_document_type->value,
+                        $tenantId,
+                    );
+                }
             }
         });
     }
@@ -189,5 +228,25 @@ class Employee extends Model
     public function onboardingChecklist(): HasOne
     {
         return $this->hasOne(OnboardingChecklist::class);
+    }
+
+    public function identityVerifications(): HasMany
+    {
+        return $this->hasMany(EmployeeIdentityVerification::class);
+    }
+
+    public function identityManualReviews(): HasMany
+    {
+        return $this->hasMany(EmployeeIdentityManualReview::class);
+    }
+
+    public function identityVerifiedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'identity_verified_by');
+    }
+
+    public function identityOverriddenBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'identity_overridden_by');
     }
 }

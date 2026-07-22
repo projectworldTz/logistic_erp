@@ -34,6 +34,11 @@
     "taxNumber": "Namba ya Kodi",
     "website": "Tovuti"
   },
+  "identity": {
+    "title": "Uthibitisho wa Utambulisho",
+    "requireBeforePayroll": "Hitaji uthibitisho wa utambulisho kabla ya uanzishaji wa malipo",
+    "help": "Ikiwashwa, wafanyakazi wasio na uthibitisho wa utambulisho uliothibitishwa bado wataundwa lakini watazuiwa kujumuishwa kwenye mzunguko wa malipo, ikiwa na sababu wazi inayoonyeshwa kwenye mzunguko huo."
+  },
   "currency": {
     "title": "Sarafu",
     "help": "Kila skrini, ankara, slipu ya mshahara, na ripoti huonyesha kiasi kwa sarafu hii. Kubadilisha huifanya kubadilisha takwimu zilizopo kwa ajili ya kuonyesha kwa kutumia kiwango kilicho hapa chini — hakuna kilichohifadhiwa kinachobadilika.",

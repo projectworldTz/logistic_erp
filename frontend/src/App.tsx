@@ -48,6 +48,7 @@ import { PublicHolidaysPage } from './routes/tenant/pages/hr/PublicHolidaysPage'
 import { PayrollComponentsPage } from './routes/tenant/pages/hr/PayrollComponentsPage';
 import { StatutoryRulesPage } from './routes/tenant/pages/hr/StatutoryRulesPage';
 import { PayrollSettingsPage } from './routes/tenant/pages/hr/PayrollSettingsPage';
+import { IdentityProviderSettingsPage } from './routes/tenant/pages/hr/identity/IdentityProviderSettingsPage';
 import { PayrollPeriodsPage } from './routes/tenant/pages/hr/PayrollPeriodsPage';
 import { PayrollRunDetailPage } from './routes/tenant/pages/hr/PayrollRunDetailPage';
 import { LoansAdvancesPage } from './routes/tenant/pages/hr/LoansAdvancesPage';
@@ -144,6 +145,7 @@ export default function App() {
           <Route path="hr/payroll-components" element={<PayrollComponentsPage />} />
           <Route path="hr/statutory-rules" element={<StatutoryRulesPage />} />
           <Route path="hr/payroll-settings" element={<PayrollSettingsPage />} />
+          <Route path="hr/identity-settings" element={<IdentityProviderSettingsPage />} />
           <Route path="hr/payroll-periods" element={<PayrollPeriodsPage />} />
           <Route path="hr/payroll-runs/:id" element={<PayrollRunDetailPage />} />
           <Route path="hr/loans-advances" element={<LoansAdvancesPage />} />
