@@ -1,6 +1,14 @@
-import { Tab, Tabs } from '@mui/material';
+import { Tab, Tabs, alpha } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useThemeMode } from '../../../../app/theme/ThemeProvider';
+
+// HR gets its own accent so the module reads as a distinct "place" in the
+// app, while staying inside the same validated palette family used for the
+// HR dashboard's payroll stat card — related to, not clashing with, the
+// primary blue used everywhere else.
+const VIOLET = { light: '#4a3aa7', dark: '#9085e9' };
+const VIOLET_CONTRAST = { light: '#ffffff', dark: '#1e1b4b' };
 
 const PATHS = [
   '/app/hr',
@@ -35,6 +43,9 @@ export function HrTabs() {
   const { t } = useTranslation('hr');
   const location = useLocation();
   const navigate = useNavigate();
+  const { mode } = useThemeMode();
+  const accent = VIOLET[mode];
+  const accentContrast = VIOLET_CONTRAST[mode];
 
   const value = PATHS.reduce(
     (bestIndex, path, index) => (location.pathname.startsWith(path) && path.length > PATHS[bestIndex].length ? index : bestIndex),
@@ -42,7 +53,41 @@ export function HrTabs() {
   );
 
   return (
-    <Tabs value={value} onChange={(_, next) => navigate(PATHS[next])} variant="scrollable" scrollButtons="auto" sx={{ mb: 3 }}>
+    <Tabs
+      value={value}
+      onChange={(_, next) => navigate(PATHS[next])}
+      variant="standard"
+      TabIndicatorProps={{ sx: { display: 'none' } }}
+      sx={{
+        mb: 3,
+        minHeight: 0,
+        bgcolor: alpha(accent, mode === 'dark' ? 0.16 : 0.08),
+        border: '1px solid',
+        borderColor: alpha(accent, mode === 'dark' ? 0.35 : 0.22),
+        borderRadius: 3,
+        p: 1,
+        '& .MuiTabs-flexContainer': { flexWrap: 'wrap', gap: 0.75 },
+        '& .MuiTab-root': {
+          minHeight: 36,
+          py: 0.75,
+          px: 1.5,
+          borderRadius: 8,
+          textTransform: 'none',
+          fontWeight: 600,
+          border: '1px solid transparent',
+          color: 'text.secondary',
+          transition: 'background-color 0.15s ease, color 0.15s ease',
+          '&:hover': {
+            bgcolor: alpha(accent, 0.18),
+            color: accent,
+          },
+        },
+        '& .MuiTab-root.Mui-selected': {
+          bgcolor: accent,
+          color: accentContrast,
+        },
+      }}
+    >
       <Tab label={t('tabs.dashboard')} />
       <Tab label={t('tabs.employees')} />
       <Tab label={t('tabs.departments')} />
