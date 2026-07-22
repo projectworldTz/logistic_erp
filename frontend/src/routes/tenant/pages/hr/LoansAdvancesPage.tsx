@@ -51,7 +51,7 @@ import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
 import { StatusChip } from '../../../../components/common/StatusChip';
 import { usePermission } from '../../../../hooks/usePermission';
 import { useToast } from '../../../../hooks/useToast';
-import { formatCurrency } from '../../../../utils/currency';
+import { useCurrencyFormatter } from '../../../../hooks/useCurrency';
 import { HrTabs } from './HrTabs';
 
 function buildLoanSchema(t: (key: string) => string) {
@@ -81,6 +81,7 @@ type AdvanceFormValues = z.infer<ReturnType<typeof buildAdvanceSchema>>;
 
 export function LoansAdvancesPage() {
   const { t } = useTranslation('hr');
+  const { format } = useCurrencyFormatter();
   const { t: tc } = useTranslation('common');
   const queryClient = useQueryClient();
   const { showToast } = useToast();
@@ -241,8 +242,8 @@ export function LoansAdvancesPage() {
                   <TableRow key={loan.id}>
                     <TableCell>{loan.loan_number ?? '—'}</TableCell>
                     <TableCell>{loan.employee?.name ?? '—'}</TableCell>
-                    <TableCell align="right">{formatCurrency(Number(loan.principal_amount))}</TableCell>
-                    <TableCell align="right">{formatCurrency(Number(loan.installment_amount))}</TableCell>
+                    <TableCell align="right">{format(Number(loan.principal_amount))}</TableCell>
+                    <TableCell align="right">{format(Number(loan.installment_amount))}</TableCell>
                     <TableCell>
                       <StatusChip status={loan.status} label={t(`loanStatuses.${loan.status}`)} />
                     </TableCell>
@@ -321,8 +322,8 @@ export function LoansAdvancesPage() {
                   <TableRow key={advance.id}>
                     <TableCell>{advance.advance_number ?? '—'}</TableCell>
                     <TableCell>{advance.employee?.name ?? '—'}</TableCell>
-                    <TableCell align="right">{formatCurrency(Number(advance.amount))}</TableCell>
-                    <TableCell align="right">{formatCurrency(Number(advance.installment_amount))}</TableCell>
+                    <TableCell align="right">{format(Number(advance.amount))}</TableCell>
+                    <TableCell align="right">{format(Number(advance.installment_amount))}</TableCell>
                     <TableCell>
                       <StatusChip status={advance.status} label={t(`loanStatuses.${advance.status}`)} />
                     </TableCell>

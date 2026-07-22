@@ -47,7 +47,7 @@ import { StatusChip } from '../../../../components/common/StatusChip';
 import { useAuthStore } from '../../../../hooks/useAuth';
 import { usePermission } from '../../../../hooks/usePermission';
 import { useToast } from '../../../../hooks/useToast';
-import { formatCurrency } from '../../../../utils/currency';
+import { useCurrencyFormatter } from '../../../../hooks/useCurrency';
 import { HrTabs } from './HrTabs';
 
 const EMPLOYMENT_TYPE_OPTIONS: EmploymentType[] = [
@@ -71,6 +71,7 @@ type FormValues = z.infer<ReturnType<typeof buildSchema>>;
 
 export function EmployeeContractsPage() {
   const { t } = useTranslation('hr');
+  const { format } = useCurrencyFormatter();
   const { t: tc } = useTranslation('common');
   const queryClient = useQueryClient();
   const { showToast } = useToast();
@@ -208,7 +209,7 @@ export function EmployeeContractsPage() {
                     <TableCell>{contract.contract_number ?? '—'}</TableCell>
                     <TableCell>{contract.employee?.name ?? '—'}</TableCell>
                     <TableCell>{t(`employmentTypes.${contract.employment_type}`)}</TableCell>
-                    <TableCell align="right">{formatCurrency(Number(contract.basic_salary))}</TableCell>
+                    <TableCell align="right">{format(Number(contract.basic_salary))}</TableCell>
                     <TableCell>{contract.effective_date.slice(0, 10)}</TableCell>
                     <TableCell>
                       <StatusChip status={contract.status} label={t(`contractStatuses.${contract.status}`)} />

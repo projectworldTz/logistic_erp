@@ -33,6 +33,7 @@ import type { DemurrageCharge, DemurrageDashboardRow } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { StatWidgetCard } from '../../../../components/common/StatWidgetCard';
 import { StatusChip } from '../../../../components/common/StatusChip';
+import { useCurrencyFormatter } from '../../../../hooks/useCurrency';
 import { useToast } from '../../../../hooks/useToast';
 import { DemurrageTabs } from './DemurrageTabs';
 
@@ -47,6 +48,7 @@ export function DemurrageDashboardPage() {
   const { t: tc } = useTranslation('common');
   const queryClient = useQueryClient();
   const { showToast } = useToast();
+  const { format, convert } = useCurrencyFormatter();
   const [pendingWaive, setPendingWaive] = useState<DemurrageCharge | null>(null);
   const [waiveReason, setWaiveReason] = useState('');
 
@@ -96,8 +98,7 @@ export function DemurrageDashboardPage() {
 
   const accruingCount = rows.filter((row) => row.risk_level === 'accruing').length;
   const atRiskCount = rows.filter((row) => row.risk_level === 'at_risk').length;
-  const totalAccrued = rows.reduce((sum, row) => sum + row.accrued_amount, 0);
-  const currency = rows[0]?.currency ?? 'TZS';
+  const totalAccrued = rows.reduce((sum, row) => sum + convert(row.accrued_amount, row.currency), 0);
 
   if (isLoading) {
     return <CircularProgress />;
@@ -119,7 +120,7 @@ export function DemurrageDashboardPage() {
           <StatWidgetCard label={t('stats.atRisk')} value={atRiskCount} />
         </Grid>
         <Grid size={{ xs: 12, sm: 4 }}>
-          <StatWidgetCard label={t('stats.totalAccrued')} value={`${currency} ${totalAccrued.toLocaleString()}`} />
+          <StatWidgetCard label={t('stats.totalAccrued')} value={format(totalAccrued)} />
         </Grid>
       </Grid>
 
@@ -152,7 +153,7 @@ export function DemurrageDashboardPage() {
                     <TableCell align="right">{row.dwell_days}</TableCell>
                     <TableCell align="right">{row.free_days_remaining}</TableCell>
                     <TableCell align="right">
-                      {row.currency} {row.accrued_amount.toLocaleString()}
+                      {format(row.accrued_amount, row.currency)}
                     </TableCell>
                     <TableCell>
                       <Chip label={t(`risk.${row.risk_level}`)} size="small" color={RISK_COLOR[row.risk_level]} />
@@ -203,7 +204,7 @@ export function DemurrageDashboardPage() {
                     <TableCell>{charge.customer?.company_name ?? '—'}</TableCell>
                     <TableCell align="right">{charge.chargeable_days}</TableCell>
                     <TableCell align="right">
-                      {charge.currency} {Number(charge.amount).toLocaleString()}
+                      {format(Number(charge.amount), charge.currency)}
                     </TableCell>
                     <TableCell>
                       <StatusChip status={charge.status} label={t(`statuses.${charge.status}`)} />

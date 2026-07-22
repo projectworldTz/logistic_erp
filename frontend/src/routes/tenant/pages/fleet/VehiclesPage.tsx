@@ -42,6 +42,7 @@ import {
 import type { Vehicle, VehicleLog } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
+import { useCurrencyFormatter } from '../../../../hooks/useCurrency';
 import { useToast } from '../../../../hooks/useToast';
 
 const STATUS_COLOR: Record<Vehicle['status'], 'default' | 'info' | 'warning' | 'success' | 'error'> = {
@@ -95,6 +96,7 @@ type LogFormValues = z.infer<ReturnType<typeof buildLogSchema>>;
 
 export function VehiclesPage() {
   const { t } = useTranslation('fleet');
+  const { format } = useCurrencyFormatter();
   const { t: tc } = useTranslation('common');
   const queryClient = useQueryClient();
   const { showToast } = useToast();
@@ -450,7 +452,7 @@ export function VehiclesPage() {
                       </TableCell>
                       <TableCell>{log.log_date}</TableCell>
                       <TableCell>{log.description}</TableCell>
-                      <TableCell align="right">{log.cost ? `${log.currency ?? ''} ${log.cost}` : '—'}</TableCell>
+                      <TableCell align="right">{log.cost ? format(Number(log.cost), log.currency) : '—'}</TableCell>
                       <TableCell align="right">
                         <IconButton size="small" onClick={() => deleteLogMutation.mutate(log.id)}>
                           <DeleteIcon fontSize="small" />

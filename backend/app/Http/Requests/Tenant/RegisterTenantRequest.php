@@ -27,7 +27,7 @@ class RegisterTenantRequest extends FormRequest
             'company.country' => ['required', 'string', 'max:100'],
             'company.city' => ['required', 'string', 'max:100'],
             'company.address' => ['required', 'string', 'max:255'],
-            'company.currency' => ['required', 'string', 'size:3'],
+            'company.currency' => ['required', 'string', 'in:USD,TZS'],
             'company.timezone' => ['required', 'string', 'max:100'],
             'company.industry' => ['required', 'string', 'max:100'],
             'logo' => ['nullable', 'image', 'max:2048'],

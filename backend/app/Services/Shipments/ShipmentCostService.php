@@ -4,7 +4,9 @@ namespace App\Services\Shipments;
 
 use App\Enums\ExpenseStatus;
 use App\Enums\InvoiceStatus;
+use App\Models\Company;
 use App\Models\Shipment;
+use App\Support\Currency\CurrencyConverter;
 
 class ShipmentCostService
 {
@@ -12,21 +14,26 @@ class ShipmentCostService
     {
         $shipment->loadMissing(['invoices.customer', 'expenses.customer', 'expenses.creator']);
 
+        $company = Company::query()->firstOrFail();
+        $currency = $company->currency;
+
+        $toSystem = fn (float $amount, ?string $from) => CurrencyConverter::toSystemCurrency($amount, $from, $company);
+
         $billedRevenue = $shipment->invoices
             ->whereIn('status', [InvoiceStatus::Sent, InvoiceStatus::Paid, InvoiceStatus::Overdue])
-            ->sum('total_amount');
+            ->sum(fn ($invoice) => $toSystem((float) $invoice->total_amount, $invoice->currency));
 
         $collectedRevenue = $shipment->invoices
             ->where('status', InvoiceStatus::Paid)
-            ->sum('total_amount');
+            ->sum(fn ($invoice) => $toSystem((float) $invoice->total_amount, $invoice->currency));
 
         $confirmedCost = $shipment->expenses
             ->whereIn('status', [ExpenseStatus::Approved, ExpenseStatus::Paid])
-            ->sum('amount');
+            ->sum(fn ($expense) => $toSystem((float) $expense->amount, $expense->currency));
 
         $pendingCost = $shipment->expenses
             ->where('status', ExpenseStatus::Submitted)
-            ->sum('amount');
+            ->sum(fn ($expense) => $toSystem((float) $expense->amount, $expense->currency));
 
         $profit = $billedRevenue - $confirmedCost;
         $marginPercent = $billedRevenue > 0 ? round(($profit / $billedRevenue) * 100, 2) : null;
@@ -36,14 +43,10 @@ class ShipmentCostService
             ->groupBy(fn ($expense) => $expense->category->value)
             ->map(fn ($group, $category) => [
                 'category' => $category,
-                'amount' => (float) $group->sum('amount'),
+                'amount' => (float) $group->sum(fn ($expense) => $toSystem((float) $expense->amount, $expense->currency)),
             ])
             ->values()
             ->all();
-
-        $currency = $shipment->invoices->first()?->currency
-            ?? $shipment->expenses->first()?->currency
-            ?? 'TZS';
 
         return [
             'currency' => $currency,

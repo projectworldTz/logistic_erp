@@ -50,6 +50,7 @@ import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
 import { StatusChip } from '../../../../components/common/StatusChip';
 import { useAuthStore } from '../../../../hooks/useAuth';
+import { useCurrencyFormatter } from '../../../../hooks/useCurrency';
 import { useToast } from '../../../../hooks/useToast';
 
 // Stable reference: an inline `?? []` fallback in a Zustand selector returns
@@ -94,6 +95,7 @@ export function QuotationsPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { showToast } = useToast();
+  const { format } = useCurrencyFormatter();
   const schema = buildSchema(t);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingQuotation, setEditingQuotation] = useState<Quotation | null>(null);
@@ -296,7 +298,7 @@ export function QuotationsPage() {
                     </TableCell>
                     <TableCell>{quotation.valid_until}</TableCell>
                     <TableCell>
-                      {quotation.currency} {quotation.total_amount}
+                      {format(Number(quotation.total_amount), quotation.currency)}
                     </TableCell>
                     <TableCell>
                       <Stack spacing={0.5}>

@@ -19,6 +19,7 @@ class CompanyResource extends JsonResource
             'city' => $this->city,
             'address' => $this->address,
             'currency' => $this->currency,
+            'usd_to_tzs_rate' => (float) $this->usd_to_tzs_rate,
             'timezone' => $this->timezone,
             'industry' => $this->industry,
             'logo_url' => $this->logo_path ? Storage::disk('public')->url($this->logo_path) : null,

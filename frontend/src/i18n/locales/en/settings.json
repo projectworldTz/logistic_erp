@@ -34,6 +34,13 @@
     "taxNumber": "Tax Number",
     "website": "Website"
   },
+  "currency": {
+    "title": "Currency",
+    "help": "Every screen, invoice, payslip, and report displays amounts in this currency. Switching it converts existing figures for display using the rate below — nothing stored is changed.",
+    "systemCurrency": "System Currency",
+    "rate": "Exchange Rate (1 USD = ? TZS)",
+    "rateHelp": "Used to convert between USD and TZS wherever the two currencies meet."
+  },
   "saving": "Saving…",
   "saveChanges": "Save Changes",
   "subscription": {

@@ -79,9 +79,9 @@
     </table>
 
     <table class="amounts">
-        <tr><td class="label">Subtotal</td><td class="value">{{ $invoice->currency }} {{ number_format((float) $invoice->subtotal, 2) }}</td></tr>
-        <tr><td class="label">Tax</td><td class="value">{{ $invoice->currency }} {{ number_format((float) $invoice->tax_amount, 2) }}</td></tr>
-        <tr class="total-row"><td class="label">{{ $isReceipt ? 'Amount Paid' : 'Total Due' }}</td><td class="value">{{ $invoice->currency }} {{ number_format((float) $invoice->total_amount, 2) }}</td></tr>
+        <tr><td class="label">Subtotal</td><td class="value">{{ $displayCurrency }} {{ number_format($displaySubtotal, 2) }}</td></tr>
+        <tr><td class="label">Tax</td><td class="value">{{ $displayCurrency }} {{ number_format($displayTax, 2) }}</td></tr>
+        <tr class="total-row"><td class="label">{{ $isReceipt ? 'Amount Paid' : 'Total Due' }}</td><td class="value">{{ $displayCurrency }} {{ number_format($displayTotal, 2) }}</td></tr>
     </table>
 
     @if($invoice->notes)

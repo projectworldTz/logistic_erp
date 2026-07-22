@@ -7,6 +7,7 @@ import {
   CircularProgress,
   FormControlLabel,
   Grid,
+  MenuItem,
   Stack,
   TextField,
   Typography,
@@ -26,6 +27,7 @@ type FormValues = Pick<
   | 'city'
   | 'address'
   | 'currency'
+  | 'usd_to_tzs_rate'
   | 'timezone'
   | 'industry'
   | 'registration_number'
@@ -64,6 +66,7 @@ export function CompanySettingsPage() {
         city: company.city,
         address: company.address,
         currency: company.currency,
+        usd_to_tzs_rate: company.usd_to_tzs_rate,
         timezone: company.timezone,
         industry: company.industry,
         registration_number: company.registration_number ?? '',
@@ -240,6 +243,35 @@ export function CompanySettingsPage() {
           {t('notifications.help')}
         </Typography>
 
+        <Typography variant="h6">{t('currency.title')}</Typography>
+        <Typography variant="caption" color="text.secondary">
+          {t('currency.help')}
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <Controller
+              name="currency"
+              control={control}
+              render={({ field }) => (
+                <TextField select label={t('currency.systemCurrency')} fullWidth {...field} value={field.value ?? ''}>
+                  <MenuItem value="TZS">TZS — Tanzanian Shilling</MenuItem>
+                  <MenuItem value="USD">USD — US Dollar</MenuItem>
+                </TextField>
+              )}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              label={t('currency.rate')}
+              type="number"
+              fullWidth
+              inputProps={{ step: '0.0001', min: '0.0001' }}
+              helperText={t('currency.rateHelp')}
+              {...register('usd_to_tzs_rate', { valueAsNumber: true })}
+            />
+          </Grid>
+        </Grid>
+
         <Grid container spacing={2}>
           <Grid size={12}>
             <TextField label={t('fields.companyName')} fullWidth {...register('name')} />
@@ -253,13 +285,10 @@ export function CompanySettingsPage() {
           <Grid size={12}>
             <TextField label={t('fields.address')} fullWidth {...register('address')} />
           </Grid>
-          <Grid size={{ xs: 12, sm: 4 }}>
-            <TextField label={tc('labels.currency')} fullWidth {...register('currency')} />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 4 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <TextField label={t('fields.timezone')} fullWidth {...register('timezone')} />
           </Grid>
-          <Grid size={{ xs: 12, sm: 4 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <TextField label={t('fields.industry')} fullWidth {...register('industry')} />
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>

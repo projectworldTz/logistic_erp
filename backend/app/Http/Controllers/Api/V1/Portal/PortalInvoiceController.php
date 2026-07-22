@@ -8,6 +8,7 @@ use App\Http\Resources\InvoiceResource;
 use App\Models\Company;
 use App\Models\Invoice;
 use App\Services\Tracking\ShipmentTrackingQrService;
+use App\Support\Currency\CurrencyConverter;
 use App\Support\Pdf\BrandColors;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -63,6 +64,10 @@ class PortalInvoiceController extends Controller
             'isReceipt' => $invoice->status === InvoiceStatus::Paid,
             'trackingQrDataUri' => $trackingQrDataUri,
             'brand' => BrandColors::forCompany($company->primary_color),
+            'displayCurrency' => $company->currency,
+            'displaySubtotal' => CurrencyConverter::toSystemCurrency((float) $invoice->subtotal, $invoice->currency, $company),
+            'displayTax' => CurrencyConverter::toSystemCurrency((float) $invoice->tax_amount, $invoice->currency, $company),
+            'displayTotal' => CurrencyConverter::toSystemCurrency((float) $invoice->total_amount, $invoice->currency, $company),
         ]);
 
         $prefix = $invoice->status === InvoiceStatus::Paid ? 'receipt' : 'invoice';

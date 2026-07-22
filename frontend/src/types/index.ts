@@ -22,6 +22,7 @@ export interface Company {
   city: string;
   address: string;
   currency: string;
+  usd_to_tzs_rate: number;
   timezone: string;
   industry: string;
   logo_url: string | null;

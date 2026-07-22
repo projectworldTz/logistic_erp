@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { fetchHrDashboard } from '../../../../api/endpoints/hr';
 import { StatWidgetCard } from '../../../../components/common/StatWidgetCard';
 import { useThemeMode } from '../../../../app/theme/ThemeProvider';
-import { formatCurrency } from '../../../../utils/currency';
+import { useCurrencyFormatter } from '../../../../hooks/useCurrency';
 import { HrTabs } from './HrTabs';
 
 // Validated categorical slots from the design system's reference palette
@@ -26,6 +26,7 @@ const RED = { light: '#e34948', dark: '#e66767' };
 
 export function HrDashboardPage() {
   const { t } = useTranslation('hr');
+  const { format } = useCurrencyFormatter();
   const { mode } = useThemeMode();
   const pick = (palette: { light: string; dark: string }) => palette[mode];
 
@@ -95,7 +96,7 @@ export function HrDashboardPage() {
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <StatWidgetCard
             label={t('dashboard.stats.outstandingLoans')}
-            value={formatCurrency(Number(data.loans.outstanding_loan_balance))}
+            value={format(Number(data.loans.outstanding_loan_balance))}
             icon={<PaymentsRoundedIcon />}
             accentColor={pick(GREEN)}
           />
@@ -130,8 +131,8 @@ export function HrDashboardPage() {
                   height={280}
                   xAxis={[{ scaleType: 'point', data: trend.map((r) => r.period_name) }]}
                   series={[
-                    { data: trend.map((r) => Number(r.total_net)), label: t('dashboard.charts.netPay'), color: pick(BLUE), area: true, valueFormatter: (v) => formatCurrency(v ?? 0) },
-                    { data: trend.map((r) => Number(r.total_employer_cost)), label: t('dashboard.charts.employerCost'), color: pick(VIOLET), valueFormatter: (v) => formatCurrency(v ?? 0) },
+                    { data: trend.map((r) => Number(r.total_net)), label: t('dashboard.charts.netPay'), color: pick(BLUE), area: true, valueFormatter: (v) => format(v ?? 0) },
+                    { data: trend.map((r) => Number(r.total_employer_cost)), label: t('dashboard.charts.employerCost'), color: pick(VIOLET), valueFormatter: (v) => format(v ?? 0) },
                   ]}
                 />
               </CardContent>

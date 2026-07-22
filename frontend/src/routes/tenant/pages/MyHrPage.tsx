@@ -48,7 +48,7 @@ import type { Payslip } from '../../../types';
 import { EmptyState } from '../../../components/common/EmptyState';
 import { StatusChip } from '../../../components/common/StatusChip';
 import { useToast } from '../../../hooks/useToast';
-import { formatCurrency } from '../../../utils/currency';
+import { useCurrencyFormatter } from '../../../hooks/useCurrency';
 import { downloadBlobAsFile } from '../../../utils/downloadFile';
 
 interface LeaveRequestFormValues {
@@ -312,6 +312,7 @@ function LeaveTab() {
 
 function PayslipsTab() {
   const { t } = useTranslation('hr');
+  const { format } = useCurrencyFormatter();
   const { data, isLoading } = useQuery({ queryKey: ['hr', 'my', 'payslips'], queryFn: () => fetchPayslips() });
   const rows = data?.data ?? [];
 
@@ -339,8 +340,8 @@ function PayslipsTab() {
               <TableRow key={payslip.id}>
                 <TableCell>{payslip.payslip_number ?? '—'}</TableCell>
                 <TableCell>{payslip.period?.name ?? '—'}</TableCell>
-                <TableCell align="right">{formatCurrency(Number(payslip.gross_pay))}</TableCell>
-                <TableCell align="right">{formatCurrency(Number(payslip.net_pay))}</TableCell>
+                <TableCell align="right">{format(Number(payslip.gross_pay))}</TableCell>
+                <TableCell align="right">{format(Number(payslip.net_pay))}</TableCell>
                 <TableCell align="right">
                   <Tooltip title={t('payslips.download')}>
                     <IconButton size="small" onClick={() => handleDownload(payslip)}>

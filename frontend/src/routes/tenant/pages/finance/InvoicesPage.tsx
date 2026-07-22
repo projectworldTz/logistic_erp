@@ -43,6 +43,7 @@ import type { Invoice } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
 import { StatusChip } from '../../../../components/common/StatusChip';
+import { useCurrencyFormatter } from '../../../../hooks/useCurrency';
 import { useToast } from '../../../../hooks/useToast';
 import { downloadBlobAsFile } from '../../../../utils/downloadFile';
 
@@ -71,6 +72,7 @@ type FormValues = z.infer<ReturnType<typeof buildSchema>>;
 
 export function InvoicesPage() {
   const { t } = useTranslation('finance');
+  const { format } = useCurrencyFormatter();
   const { t: tc } = useTranslation('common');
   const queryClient = useQueryClient();
   const { showToast } = useToast();
@@ -181,7 +183,7 @@ export function InvoicesPage() {
                     <TableCell>{invoice.customer?.company_name ?? '—'}</TableCell>
                     <TableCell>{invoice.due_date}</TableCell>
                     <TableCell>
-                      {invoice.currency} {invoice.total_amount}
+                      {format(Number(invoice.total_amount), invoice.currency)}
                     </TableCell>
                     <TableCell>
                       <Select

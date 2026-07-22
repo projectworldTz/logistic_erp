@@ -7,6 +7,7 @@ use App\Enums\InvoiceStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Account;
 use App\Models\ClearingFile;
+use App\Models\Company;
 use App\Models\Container;
 use App\Models\Customer;
 use App\Models\Document;
@@ -18,6 +19,7 @@ use App\Models\Quotation;
 use App\Models\Shipment;
 use App\Models\Vehicle;
 use App\Models\WarehouseItem;
+use App\Support\Currency\CurrencyConverter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -31,6 +33,8 @@ class ReportsController extends Controller
     public function overview(Request $request)
     {
         $branchId = $request->query('branch_id');
+        $company = Company::query()->firstOrFail();
+        $toSystem = fn (float $amount, ?string $from) => CurrencyConverter::toSystemCurrency($amount, $from, $company);
 
         $shipments = Shipment::query()->when($branchId, fn ($q) => $q->where('branch_id', $branchId));
         $invoices = Invoice::query()->when($branchId, fn ($q) => $q->where('branch_id', $branchId));
@@ -73,8 +77,8 @@ class ReportsController extends Controller
             'finance' => [
                 'invoices_total' => (clone $invoices)->count(),
                 'invoices_by_status' => $this->countsByStatus(Invoice::class, $branchId),
-                'outstanding_amount' => (clone $invoices)->whereIn('status', ['sent', 'overdue'])->sum('total_amount'),
-                'paid_amount' => (clone $invoices)->where('status', 'paid')->sum('total_amount'),
+                'outstanding_amount' => round((clone $invoices)->whereIn('status', ['sent', 'overdue'])->get(['total_amount', 'currency'])->sum(fn ($i) => $toSystem((float) $i->total_amount, $i->currency)), 2),
+                'paid_amount' => round((clone $invoices)->where('status', 'paid')->get(['total_amount', 'currency'])->sum(fn ($i) => $toSystem((float) $i->total_amount, $i->currency)), 2),
             ],
             'accounting' => [
                 'accounts_total' => Account::query()->count(),
@@ -95,6 +99,8 @@ class ReportsController extends Controller
     public function profit(Request $request)
     {
         $branchId = $request->query('branch_id');
+        $company = Company::query()->firstOrFail();
+        $toSystem = fn (float $amount, ?string $from) => CurrencyConverter::toSystemCurrency($amount, $from, $company);
 
         $shipments = Shipment::query()
             ->with(['customer', 'invoices', 'expenses'])
@@ -102,14 +108,14 @@ class ReportsController extends Controller
             ->where(fn ($q) => $q->whereHas('invoices')->orWhereHas('expenses'))
             ->get();
 
-        $rows = $shipments->map(function (Shipment $shipment) {
+        $rows = $shipments->map(function (Shipment $shipment) use ($toSystem) {
             $billedRevenue = (float) $shipment->invoices
                 ->whereIn('status', [InvoiceStatus::Sent, InvoiceStatus::Paid, InvoiceStatus::Overdue])
-                ->sum('total_amount');
+                ->sum(fn ($invoice) => $toSystem((float) $invoice->total_amount, $invoice->currency));
 
             $confirmedCost = (float) $shipment->expenses
                 ->whereIn('status', [ExpenseStatus::Approved, ExpenseStatus::Paid])
-                ->sum('amount');
+                ->sum(fn ($expense) => $toSystem((float) $expense->amount, $expense->currency));
 
             $profit = $billedRevenue - $confirmedCost;
 
@@ -167,13 +173,15 @@ class ReportsController extends Controller
     {
         $from = $request->query('from') ? Carbon::parse($request->query('from')) : now()->subMonths(11)->startOfMonth();
         $to = $request->query('to') ? Carbon::parse($request->query('to'))->endOfDay() : now();
+        $company = Company::query()->firstOrFail();
+        $toSystem = fn (float $amount, ?string $sourceCurrency) => CurrencyConverter::toSystemCurrency($amount, $sourceCurrency, $company);
 
         $vatByMonth = Invoice::query()
             ->where('status', InvoiceStatus::Paid)
             ->whereBetween('issue_date', [$from, $to])
-            ->get(['issue_date', 'tax_amount'])
+            ->get(['issue_date', 'tax_amount', 'currency'])
             ->groupBy(fn (Invoice $invoice) => $invoice->issue_date->format('Y-m'))
-            ->map(fn ($group) => round((float) $group->sum('tax_amount'), 2))
+            ->map(fn ($group) => round((float) $group->sum(fn ($invoice) => $toSystem((float) $invoice->tax_amount, $invoice->currency)), 2))
             ->sortKeys();
 
         $dutyByMonth = ClearingFile::query()

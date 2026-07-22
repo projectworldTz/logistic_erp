@@ -32,6 +32,7 @@ export interface PayslipVerification {
   employee_name: string | null;
   period_name: string | null;
   net_pay: string;
+  currency: string;
   generated_at: string;
 }
 

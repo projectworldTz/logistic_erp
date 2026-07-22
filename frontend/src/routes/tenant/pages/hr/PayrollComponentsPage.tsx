@@ -41,7 +41,7 @@ import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
 import { StatusChip } from '../../../../components/common/StatusChip';
 import { useToast } from '../../../../hooks/useToast';
-import { formatCurrency } from '../../../../utils/currency';
+import { useCurrencyFormatter } from '../../../../hooks/useCurrency';
 import { HrTabs } from './HrTabs';
 
 const TYPE_OPTIONS: PayrollComponent['type'][] = ['earning', 'deduction', 'employer_contribution'];
@@ -77,6 +77,7 @@ type AssignFormValues = z.infer<ReturnType<typeof buildAssignSchema>>;
 
 export function PayrollComponentsPage() {
   const { t } = useTranslation('hr');
+  const { format } = useCurrencyFormatter();
   const { t: tc } = useTranslation('common');
   const queryClient = useQueryClient();
   const { showToast } = useToast();
@@ -206,7 +207,7 @@ export function PayrollComponentsPage() {
                     <TableCell>{t(`payrollComponentTypes.${component.type}`)}</TableCell>
                     <TableCell>{t(`payrollCalculationMethods.${component.calculation_method}`)}</TableCell>
                     <TableCell align="right">
-                      {component.calculation_method === 'fixed' && component.amount ? formatCurrency(Number(component.amount)) : null}
+                      {component.calculation_method === 'fixed' && component.amount ? format(Number(component.amount)) : null}
                       {component.calculation_method === 'percentage' && component.percentage ? `${component.percentage}%` : null}
                       {component.calculation_method === 'formula' ? '—' : null}
                     </TableCell>

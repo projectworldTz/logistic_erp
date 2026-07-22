@@ -47,6 +47,7 @@ import type { Expense } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
 import { StatusChip } from '../../../../components/common/StatusChip';
+import { useCurrencyFormatter } from '../../../../hooks/useCurrency';
 import { useToast } from '../../../../hooks/useToast';
 import { usePermission } from '../../../../hooks/usePermission';
 import { useAuthStore } from '../../../../hooks/useAuth';
@@ -89,6 +90,7 @@ export function ExpensesPage() {
   const { t: tc } = useTranslation('common');
   const queryClient = useQueryClient();
   const { showToast } = useToast();
+  const { format } = useCurrencyFormatter();
   const canApprove = usePermission('expenses.items.approve');
   const canViewCustomers = usePermission('crm.customers.view');
   const canViewShipments = usePermission('shipments.items.view');
@@ -279,7 +281,7 @@ export function ExpensesPage() {
                     <TableCell>{t(`categories.${expense.category}`)}</TableCell>
                     <TableCell>{expense.description}</TableCell>
                     <TableCell align="right">
-                      {expense.currency} {expense.amount}
+                      {format(Number(expense.amount), expense.currency)}
                     </TableCell>
                     <TableCell>{expense.expense_date.slice(0, 10)}</TableCell>
                     <TableCell>

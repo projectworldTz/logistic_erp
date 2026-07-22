@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Demurrage\StoreDemurrageRateCardRequest;
 use App\Http\Requests\Demurrage\UpdateDemurrageRateCardRequest;
 use App\Http\Resources\DemurrageRateCardResource;
+use App\Models\Company;
 use App\Models\DemurrageRateCard;
 use Illuminate\Support\Facades\DB;
 
@@ -23,6 +24,7 @@ class DemurrageRateCardController extends Controller
         $data = $request->validated();
         $tiers = $data['tiers'];
         unset($data['tiers']);
+        $data['currency'] ??= Company::query()->value('currency') ?? 'TZS';
 
         $rateCard = DB::transaction(function () use ($data, $tiers) {
             $rateCard = DemurrageRateCard::query()->create($data);

@@ -38,7 +38,9 @@ import {
 import type { DemurrageRateCard } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
 import { ConfirmDialog } from '../../../../components/common/ConfirmDialog';
+import { useCurrencyFormatter } from '../../../../hooks/useCurrency';
 import { useToast } from '../../../../hooks/useToast';
+import { formatCurrency } from '../../../../utils/currency';
 import { DemurrageTabs } from './DemurrageTabs';
 
 const TYPE_OPTIONS = ['dry_20', 'dry_40', 'dry_40_hc', 'reefer_20', 'reefer_40', 'open_top', 'flat_rack', 'tank'] as const;
@@ -69,6 +71,7 @@ export function DemurrageRateCardsPage() {
   const { t: tc } = useTranslation('common');
   const queryClient = useQueryClient();
   const { showToast } = useToast();
+  const { systemCurrency } = useCurrencyFormatter();
   const schema = buildSchema(t);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [pendingDelete, setPendingDelete] = useState<DemurrageRateCard | null>(null);
@@ -138,7 +141,12 @@ export function DemurrageRateCardsPage() {
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => {
-            reset();
+            reset({
+              currency: systemCurrency,
+              free_days: 5,
+              is_default: false,
+              tiers: [{ from_day: 1, to_day: null, daily_rate: 0 }],
+            });
             setDialogOpen(true);
           }}
         >
@@ -180,7 +188,7 @@ export function DemurrageRateCardsPage() {
                     <TableCell>{rateCard.currency}</TableCell>
                     <TableCell>
                       {rateCard.tiers
-                        .map((tier) => `${tier.from_day}-${tier.to_day ?? '∞'}: ${tier.daily_rate}/day`)
+                        .map((tier) => `${tier.from_day}-${tier.to_day ?? '∞'}: ${formatCurrency(tier.daily_rate, rateCard.currency)}/day`)
                         .join(', ')}
                     </TableCell>
                     <TableCell align="right">

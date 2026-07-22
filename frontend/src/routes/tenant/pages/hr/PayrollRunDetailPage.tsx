@@ -52,11 +52,12 @@ import type { PayrollRunEmployee, SalaryPayment } from '../../../../types';
 import { StatusChip } from '../../../../components/common/StatusChip';
 import { usePermission } from '../../../../hooks/usePermission';
 import { useToast } from '../../../../hooks/useToast';
-import { formatCurrency } from '../../../../utils/currency';
+import { useCurrencyFormatter } from '../../../../hooks/useCurrency';
 import { downloadBlobAsFile } from '../../../../utils/downloadFile';
 
 export function PayrollRunDetailPage() {
   const { t } = useTranslation('hr');
+  const { format } = useCurrencyFormatter();
   const { t: tc } = useTranslation('common');
   const { id } = useParams();
   const runId = Number(id);
@@ -178,11 +179,11 @@ export function PayrollRunDetailPage() {
 
       <Paper variant="outlined" sx={{ p: 3 }}>
         <Stack direction="row" spacing={4} flexWrap="wrap" useFlexGap>
-          <SummaryStat label={t('payrollRuns.summary.gross')} value={formatCurrency(Number(run.total_gross))} />
-          <SummaryStat label={t('payrollRuns.summary.deductions')} value={formatCurrency(Number(run.total_deductions))} />
-          <SummaryStat label={t('payrollRuns.summary.net')} value={formatCurrency(Number(run.total_net))} highlight />
-          <SummaryStat label={t('payrollRuns.summary.employerContributions')} value={formatCurrency(Number(run.total_employer_contributions))} />
-          <SummaryStat label={t('payrollRuns.summary.employerCost')} value={formatCurrency(Number(run.total_employer_cost))} />
+          <SummaryStat label={t('payrollRuns.summary.gross')} value={format(Number(run.total_gross))} />
+          <SummaryStat label={t('payrollRuns.summary.deductions')} value={format(Number(run.total_deductions))} />
+          <SummaryStat label={t('payrollRuns.summary.net')} value={format(Number(run.total_net))} highlight />
+          <SummaryStat label={t('payrollRuns.summary.employerContributions')} value={format(Number(run.total_employer_contributions))} />
+          <SummaryStat label={t('payrollRuns.summary.employerCost')} value={format(Number(run.total_employer_cost))} />
           <SummaryStat label={t('payrollRuns.summary.employeeCount')} value={String(run.employee_count ?? runEmployees.length)} />
         </Stack>
       </Paper>
@@ -358,15 +359,16 @@ function RunEmployeeRow({
   onToggleStatus: (status: 'included' | 'excluded') => void;
 }) {
   const { t } = useTranslation('hr');
+  const { format } = useCurrencyFormatter();
 
   return (
     <>
       <TableRow hover onClick={onToggle} sx={{ cursor: 'pointer' }}>
         <TableCell>{runEmployee.employee?.name ?? '—'}</TableCell>
-        <TableCell align="right">{formatCurrency(Number(runEmployee.basic_salary))}</TableCell>
-        <TableCell align="right">{formatCurrency(Number(runEmployee.gross_pay))}</TableCell>
-        <TableCell align="right">{formatCurrency(Number(runEmployee.total_deductions))}</TableCell>
-        <TableCell align="right">{formatCurrency(Number(runEmployee.net_pay))}</TableCell>
+        <TableCell align="right">{format(Number(runEmployee.basic_salary))}</TableCell>
+        <TableCell align="right">{format(Number(runEmployee.gross_pay))}</TableCell>
+        <TableCell align="right">{format(Number(runEmployee.total_deductions))}</TableCell>
+        <TableCell align="right">{format(Number(runEmployee.net_pay))}</TableCell>
         <TableCell>
           <StatusChip status={runEmployee.status} label={t(`payrollRunEmployeeStatuses.${runEmployee.status}`)} />
         </TableCell>
@@ -410,11 +412,12 @@ function PaymentRow({
   onMark: (status: 'paid' | 'failed') => void;
 }) {
   const { t } = useTranslation('hr');
+  const { format } = useCurrencyFormatter();
 
   return (
     <TableRow>
       <TableCell>{payment.employee?.name ?? '—'}</TableCell>
-      <TableCell align="right">{formatCurrency(Number(payment.amount))}</TableCell>
+      <TableCell align="right">{format(Number(payment.amount))}</TableCell>
       <TableCell>{t(`paymentMethods.${payment.payment_method}`)}</TableCell>
       <TableCell>
         <StatusChip status={payment.status} label={t(`salaryPaymentStatuses.${payment.status}`)} />
@@ -440,6 +443,7 @@ function PaymentRow({
 }
 
 function LineItemList({ title, items }: { title: string; items: { id: number; label: string; amount: string }[] }) {
+  const { format } = useCurrencyFormatter();
   if (items.length === 0) return null;
 
   return (
@@ -450,7 +454,7 @@ function LineItemList({ title, items }: { title: string; items: { id: number; la
       {items.map((item) => (
         <Stack key={item.id} direction="row" justifyContent="space-between">
           <Typography variant="body2">{item.label}</Typography>
-          <Chip size="small" variant="outlined" label={formatCurrency(Number(item.amount))} />
+          <Chip size="small" variant="outlined" label={format(Number(item.amount))} />
         </Stack>
       ))}
     </Stack>

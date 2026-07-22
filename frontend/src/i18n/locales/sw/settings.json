@@ -34,6 +34,13 @@
     "taxNumber": "Namba ya Kodi",
     "website": "Tovuti"
   },
+  "currency": {
+    "title": "Sarafu",
+    "help": "Kila skrini, ankara, slipu ya mshahara, na ripoti huonyesha kiasi kwa sarafu hii. Kubadilisha huifanya kubadilisha takwimu zilizopo kwa ajili ya kuonyesha kwa kutumia kiwango kilicho hapa chini — hakuna kilichohifadhiwa kinachobadilika.",
+    "systemCurrency": "Sarafu ya Mfumo",
+    "rate": "Kiwango cha Ubadilishaji (Dola 1 = ? TZS)",
+    "rateHelp": "Hutumika kubadilisha kati ya USD na TZS popote sarafu hizi mbili zinapokutana."
+  },
   "saving": "Inahifadhi…",
   "saveChanges": "Hifadhi Mabadiliko",
   "subscription": {

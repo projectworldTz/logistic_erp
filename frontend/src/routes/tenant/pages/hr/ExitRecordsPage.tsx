@@ -43,7 +43,7 @@ import { EmptyState } from '../../../../components/common/EmptyState';
 import { StatusChip } from '../../../../components/common/StatusChip';
 import { usePermission } from '../../../../hooks/usePermission';
 import { useToast } from '../../../../hooks/useToast';
-import { formatCurrency } from '../../../../utils/currency';
+import { useCurrencyFormatter } from '../../../../hooks/useCurrency';
 import { HrTabs } from './HrTabs';
 
 type ExitType = 'resignation' | 'termination' | 'retirement' | 'end_of_contract' | 'redundancy';
@@ -249,6 +249,7 @@ function ExitRow({
 }) {
   const { t } = useTranslation('hr');
   const { t: tc } = useTranslation('common');
+  const { format } = useCurrencyFormatter();
 
   return (
     <>
@@ -257,7 +258,7 @@ function ExitRow({
         <TableCell>{t(`exitTypes.${record.exit_type}`)}</TableCell>
         <TableCell>{record.last_working_date.slice(0, 10)}</TableCell>
         <TableCell align="right">
-          {record.final_settlement_amount !== null ? formatCurrency(Number(record.final_settlement_amount)) : '—'}
+          {record.final_settlement_amount !== null ? format(Number(record.final_settlement_amount)) : '—'}
         </TableCell>
         <TableCell>
           <StatusChip status={record.status} label={t(`exitStatuses.${record.status}`)} />
@@ -288,10 +289,10 @@ function ExitRow({
             <Stack spacing={2}>
               <Stack direction="row" spacing={4} flexWrap="wrap" useFlexGap>
                 <SettlementStat label={t('exits.summary.unusedLeaveDays')} value={record.unused_leave_days ?? '—'} />
-                <SettlementStat label={t('exits.summary.leavePayout')} value={record.leave_payout_amount ? formatCurrency(Number(record.leave_payout_amount)) : '—'} />
-                <SettlementStat label={t('exits.summary.outstandingLoan')} value={record.outstanding_loan_balance ? formatCurrency(Number(record.outstanding_loan_balance)) : '—'} />
-                <SettlementStat label={t('exits.summary.outstandingAdvance')} value={record.outstanding_advance_balance ? formatCurrency(Number(record.outstanding_advance_balance)) : '—'} />
-                <SettlementStat label={t('exits.summary.finalSettlement')} value={record.final_settlement_amount ? formatCurrency(Number(record.final_settlement_amount)) : '—'} highlight />
+                <SettlementStat label={t('exits.summary.leavePayout')} value={record.leave_payout_amount ? format(Number(record.leave_payout_amount)) : '—'} />
+                <SettlementStat label={t('exits.summary.outstandingLoan')} value={record.outstanding_loan_balance ? format(Number(record.outstanding_loan_balance)) : '—'} />
+                <SettlementStat label={t('exits.summary.outstandingAdvance')} value={record.outstanding_advance_balance ? format(Number(record.outstanding_advance_balance)) : '—'} />
+                <SettlementStat label={t('exits.summary.finalSettlement')} value={record.final_settlement_amount ? format(Number(record.final_settlement_amount)) : '—'} highlight />
               </Stack>
               {canManage && record.status !== 'completed' && (
                 <Stack direction="row" spacing={2}>

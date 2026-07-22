@@ -20,6 +20,7 @@ class Company extends Model
         'city',
         'address',
         'currency',
+        'usd_to_tzs_rate',
         'timezone',
         'industry',
         'logo_path',
@@ -39,6 +40,7 @@ class Company extends Model
         'notify_email_enabled' => 'boolean',
         'notify_sms_enabled' => 'boolean',
         'notify_whatsapp_enabled' => 'boolean',
+        'usd_to_tzs_rate' => 'decimal:4',
     ];
 
     public function tenant(): BelongsTo

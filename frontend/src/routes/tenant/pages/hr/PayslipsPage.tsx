@@ -17,12 +17,13 @@ import { useTranslation } from 'react-i18next';
 import { downloadPayslipPdf, fetchPayslips } from '../../../../api/endpoints/hr';
 import type { Payslip } from '../../../../types';
 import { EmptyState } from '../../../../components/common/EmptyState';
-import { formatCurrency } from '../../../../utils/currency';
+import { useCurrencyFormatter } from '../../../../hooks/useCurrency';
 import { downloadBlobAsFile } from '../../../../utils/downloadFile';
 import { HrTabs } from './HrTabs';
 
 export function PayslipsPage() {
   const { t } = useTranslation('hr');
+  const { format } = useCurrencyFormatter();
   const { t: tc } = useTranslation('common');
 
   const { data, isLoading } = useQuery({ queryKey: ['hr', 'payslips'], queryFn: () => fetchPayslips() });
@@ -67,9 +68,9 @@ export function PayslipsPage() {
                     <TableCell>{payslip.payslip_number ?? '—'}</TableCell>
                     <TableCell>{payslip.employee?.name ?? '—'}</TableCell>
                     <TableCell>{payslip.period?.name ?? '—'}</TableCell>
-                    <TableCell align="right">{formatCurrency(Number(payslip.gross_pay))}</TableCell>
-                    <TableCell align="right">{formatCurrency(Number(payslip.net_pay))}</TableCell>
-                    <TableCell align="right">{formatCurrency(Number(payslip.ytd_net))}</TableCell>
+                    <TableCell align="right">{format(Number(payslip.gross_pay))}</TableCell>
+                    <TableCell align="right">{format(Number(payslip.net_pay))}</TableCell>
+                    <TableCell align="right">{format(Number(payslip.ytd_net))}</TableCell>
                     <TableCell align="right">
                       <Tooltip title={t('payslips.download')}>
                         <IconButton size="small" onClick={() => handleDownload(payslip)}>

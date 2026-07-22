@@ -11,6 +11,7 @@ use App\Http\Requests\Quotations\StoreQuotationRequest;
 use App\Http\Requests\Quotations\UpdateQuotationRequest;
 use App\Http\Resources\QuotationResource;
 use App\Http\Resources\ShipmentResource;
+use App\Models\Company;
 use App\Models\Quotation;
 use App\Models\Shipment;
 use App\Services\Quotations\QuotationItemService;
@@ -39,6 +40,7 @@ class QuotationController extends Controller
         $data = $request->validated();
         $items = $data['items'] ?? null;
         unset($data['items']);
+        $data['currency'] ??= Company::query()->value('currency') ?? 'TZS';
 
         $quotation = DB::transaction(function () use ($data, $items, $itemService) {
             $quotation = Quotation::query()->create($data)->refresh();

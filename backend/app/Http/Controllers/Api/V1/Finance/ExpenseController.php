@@ -10,6 +10,7 @@ use App\Http\Requests\Finance\RejectExpenseRequest;
 use App\Http\Requests\Finance\StoreExpenseRequest;
 use App\Http\Requests\Finance\UpdateExpenseRequest;
 use App\Http\Resources\ExpenseResource;
+use App\Models\Company;
 use App\Models\Expense;
 use App\Services\Finance\ExpenseService;
 use App\Services\Workflow\ApprovalEngine;
@@ -34,8 +35,11 @@ class ExpenseController extends Controller
 
     public function store(StoreExpenseRequest $request)
     {
+        $data = $request->validated();
+        $data['currency'] ??= Company::query()->value('currency') ?? 'TZS';
+
         $expense = Expense::query()->create([
-            ...$request->validated(),
+            ...$data,
             'created_by' => Auth::id(),
         ])->refresh();
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Detention\StoreDetentionRateCardRequest;
 use App\Http\Requests\Detention\UpdateDetentionRateCardRequest;
 use App\Http\Resources\DetentionRateCardResource;
+use App\Models\Company;
 use App\Models\DetentionRateCard;
 use Illuminate\Support\Facades\DB;
 
@@ -23,6 +24,7 @@ class DetentionRateCardController extends Controller
         $data = $request->validated();
         $tiers = $data['tiers'];
         unset($data['tiers']);
+        $data['currency'] ??= Company::query()->value('currency') ?? 'TZS';
 
         $rateCard = DB::transaction(function () use ($data, $tiers) {
             $rateCard = DetentionRateCard::query()->create($data);

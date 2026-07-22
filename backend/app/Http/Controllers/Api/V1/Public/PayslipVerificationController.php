@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Payslip;
 use App\Models\Scopes\TenantScope;
 use Illuminate\Http\JsonResponse;
@@ -25,12 +26,17 @@ class PayslipVerificationController extends Controller
 
         abort_if(! $payslip, 404);
 
+        $currency = Company::withoutGlobalScope(TenantScope::class)
+            ->where('tenant_id', $payslip->tenant_id)
+            ->value('currency') ?? 'TZS';
+
         return response()->json([
             'data' => [
                 'payslip_number' => $payslip->payslip_number,
                 'employee_name' => $payslip->employee?->name,
                 'period_name' => $payslip->payrollRun->period?->name,
                 'net_pay' => $payslip->net_pay,
+                'currency' => $currency,
                 'generated_at' => $payslip->created_at,
             ],
         ]);

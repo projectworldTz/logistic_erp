@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Grid, Stack, TextField, Typography } from '@mui/material';
+import { Button, Grid, MenuItem, Stack, TextField, Typography } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +14,7 @@ function buildSchema(t: (key: string) => string) {
     country: z.string().min(1, t('companyDetails.validation.countryRequired')),
     city: z.string().min(1, t('companyDetails.validation.cityRequired')),
     address: z.string().min(1, t('companyDetails.validation.addressRequired')),
-    currency: z.string().length(3, t('companyDetails.validation.currencyFormat')),
+    currency: z.enum(['TZS', 'USD'], { message: t('companyDetails.validation.currencyFormat') }),
     timezone: z.string().min(1, t('companyDetails.validation.timezoneRequired')),
     industry: z.string().min(1, t('companyDetails.validation.industryRequired')),
   });
@@ -73,12 +73,17 @@ export function StepCompanyDetails({ onNext, onBack }: StepCompanyDetailsProps) 
         </Grid>
         <Grid size={{ xs: 12, sm: 4 }}>
           <TextField
+            select
             label={t('companyDetails.form.currency')}
             fullWidth
             {...register('currency')}
             error={!!errors.currency}
             helperText={errors.currency?.message}
-          />
+            defaultValue={company.currency}
+          >
+            <MenuItem value="TZS">TZS — Tanzanian Shilling</MenuItem>
+            <MenuItem value="USD">USD — US Dollar</MenuItem>
+          </TextField>
         </Grid>
         <Grid size={{ xs: 12, sm: 4 }}>
           <TextField label={t('companyDetails.form.timezone')} fullWidth {...register('timezone')} error={!!errors.timezone} helperText={errors.timezone?.message} />

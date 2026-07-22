@@ -49,8 +49,8 @@ import { StatWidgetCard } from '../../../../components/common/StatWidgetCard';
 import { StatusChip } from '../../../../components/common/StatusChip';
 import { TrackingQrCode } from '../../../../components/common/TrackingQrCode';
 import { useAuthStore } from '../../../../hooks/useAuth';
+import { useCurrencyFormatter } from '../../../../hooks/useCurrency';
 import { useToast } from '../../../../hooks/useToast';
-import { formatCurrency } from '../../../../utils/currency';
 
 // Validated categorical slots from the design system's reference palette (dataviz skill).
 const CATEGORY_COLORS = ['#2a78d6', '#008300', '#e87ba4', '#eda100', '#1baf7a', '#eb6834', '#4a3aa7', '#e34948'];
@@ -98,6 +98,7 @@ function toLocalDateTimeInputValue(date: Date): string {
 
 export function ShipmentDetailPage() {
   const { t } = useTranslation('shipments');
+  const { format } = useCurrencyFormatter();
   const { t: tc } = useTranslation('common');
   const { t: tf } = useTranslation('finance');
   const { t: tex } = useTranslation('expenses');
@@ -263,19 +264,19 @@ export function ShipmentDetailPage() {
                 <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                   <StatWidgetCard
                     label={t('detail.costs.billedRevenue')}
-                    value={formatCurrency(costSummary.revenue.billed, costSummary.currency)}
+                    value={format(costSummary.revenue.billed, costSummary.currency)}
                   />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                   <StatWidgetCard
                     label={t('detail.costs.confirmedCost')}
-                    value={formatCurrency(costSummary.cost.confirmed, costSummary.currency)}
+                    value={format(costSummary.cost.confirmed, costSummary.currency)}
                   />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                   <StatWidgetCard
                     label={t('detail.costs.profit')}
-                    value={formatCurrency(costSummary.profit, costSummary.currency)}
+                    value={format(costSummary.profit, costSummary.currency)}
                   />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 3 }}>
@@ -337,7 +338,7 @@ export function ShipmentDetailPage() {
                             <TableCell>
                               <StatusChip status={invoice.status} label={tf(`statuses.${invoice.status}`)} />
                             </TableCell>
-                            <TableCell align="right">{formatCurrency(invoice.total_amount, invoice.currency)}</TableCell>
+                            <TableCell align="right">{format(Number(invoice.total_amount), invoice.currency)}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -367,7 +368,7 @@ export function ShipmentDetailPage() {
                             <TableCell>
                               <StatusChip status={expense.status} label={tex(`statuses.${expense.status}`)} />
                             </TableCell>
-                            <TableCell align="right">{formatCurrency(expense.amount, expense.currency)}</TableCell>
+                            <TableCell align="right">{format(Number(expense.amount), expense.currency)}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>

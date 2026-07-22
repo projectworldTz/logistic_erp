@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Api\V1\Tenant;
 
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use App\Models\Company;
 use App\Models\Employee;
 use App\Models\Invoice;
 use App\Models\Shipment;
 use App\Models\Vehicle;
 use App\Models\WarehouseItem;
+use App\Support\Currency\CurrencyConverter;
 use Illuminate\Support\Collection;
 
 class BranchRollupController extends Controller
@@ -21,18 +23,20 @@ class BranchRollupController extends Controller
     public function index()
     {
         $branches = Branch::query()->get();
+        $company = Company::query()->firstOrFail();
 
-        $rows = $branches->map(fn (Branch $branch) => $this->buildRow($branch->id, $branch->name, $branch->is_default))
-            ->push($this->buildRow(null, 'Unassigned', false))
+        $rows = $branches->map(fn (Branch $branch) => $this->buildRow($branch->id, $branch->name, $branch->is_default, $company))
+            ->push($this->buildRow(null, 'Unassigned', false, $company))
             ->values();
 
         return response()->json(['data' => $rows]);
     }
 
-    private function buildRow(?int $branchId, string $branchName, bool $isDefault): array
+    private function buildRow(?int $branchId, string $branchName, bool $isDefault, Company $company): array
     {
         $shipments = Shipment::query()->where('branch_id', $branchId);
         $invoices = Invoice::query()->where('branch_id', $branchId);
+        $toSystem = fn (float $amount, ?string $from) => CurrencyConverter::toSystemCurrency($amount, $from, $company);
 
         return [
             'branch_id' => $branchId,
@@ -44,8 +48,8 @@ class BranchRollupController extends Controller
             'shipments_total' => (clone $shipments)->count(),
             'shipments_by_status' => $this->countsByStatus((clone $shipments)),
             'invoices_total' => (clone $invoices)->count(),
-            'revenue_paid' => (float) (clone $invoices)->where('status', 'paid')->sum('total_amount'),
-            'revenue_outstanding' => (float) (clone $invoices)->whereIn('status', ['sent', 'overdue'])->sum('total_amount'),
+            'revenue_paid' => round((clone $invoices)->where('status', 'paid')->get(['total_amount', 'currency'])->sum(fn ($i) => $toSystem((float) $i->total_amount, $i->currency)), 2),
+            'revenue_outstanding' => round((clone $invoices)->whereIn('status', ['sent', 'overdue'])->get(['total_amount', 'currency'])->sum(fn ($i) => $toSystem((float) $i->total_amount, $i->currency)), 2),
         ];
     }
 

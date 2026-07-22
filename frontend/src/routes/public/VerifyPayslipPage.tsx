@@ -50,7 +50,7 @@ export function VerifyPayslipPage() {
                 </Stack>
                 <Stack spacing={0.5}>
                   <Typography variant="body2" color="text.secondary">{t('verify.netPay')}</Typography>
-                  <Typography variant="body1" fontWeight={600}>{formatCurrency(Number(data.net_pay))}</Typography>
+                  <Typography variant="body1" fontWeight={600}>{formatCurrency(Number(data.net_pay), data.currency)}</Typography>
                 </Stack>
               </Stack>
             )}

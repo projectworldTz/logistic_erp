@@ -13,6 +13,7 @@ use App\Enums\WarehouseItemStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DashboardSummaryResource;
 use App\Models\ClearingFile;
+use App\Models\Company;
 use App\Models\Container;
 use App\Models\FreightBooking;
 use App\Models\Invoice;
@@ -21,6 +22,7 @@ use App\Models\Shipment;
 use App\Models\TenantDashboardSetting;
 use App\Models\Vehicle;
 use App\Models\WarehouseItem;
+use App\Support\Currency\CurrencyConverter;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -55,7 +57,11 @@ class DashboardController extends Controller
         }
 
         if ($user->can('finance.invoices.view')) {
-            $widgets['revenue'] = (float) Invoice::query()->where('status', InvoiceStatus::Paid)->sum('total_amount');
+            $company = Company::query()->firstOrFail();
+            $widgets['revenue'] = round(Invoice::query()
+                ->where('status', InvoiceStatus::Paid)
+                ->get(['total_amount', 'currency'])
+                ->sum(fn ($invoice) => CurrencyConverter::toSystemCurrency((float) $invoice->total_amount, $invoice->currency, $company)), 2);
             $widgets['outstanding_invoices'] = Invoice::query()->whereIn('status', [InvoiceStatus::Sent, InvoiceStatus::Overdue])->count();
         }
 

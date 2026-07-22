@@ -14,7 +14,7 @@ export interface CompanyDraft {
   country: string;
   city: string;
   address: string;
-  currency: string;
+  currency: 'TZS' | 'USD';
   timezone: string;
   industry: string;
 }
